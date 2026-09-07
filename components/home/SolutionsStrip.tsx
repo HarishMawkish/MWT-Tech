@@ -1,11 +1,14 @@
 const solutions = [
+  { name: "SAP", logo: "/images/solutions/sap_.png" },
+  { name: "Salesforce", logo: "https://zql0rfjwszzixew9.public.blob.vercel-storage.com/solutions/Salesforce%20Logo.jpeg" },
+  { name: "Odoo", logo: "https://zql0rfjwszzixew9.public.blob.vercel-storage.com/solutions/odoo_logo.svg" },
+  { name: "Databricks", logo: "/images/Databricks_Logo.png" },
   { name: "Microsoft", logo: "https://zql0rfjwszzixew9.public.blob.vercel-storage.com/solutions/Microsoft.webp" },
   { name: "AWS", logo: "https://zql0rfjwszzixew9.public.blob.vercel-storage.com/solutions/AWS.png" },
   { name: "Google Cloud", logo: "https://zql0rfjwszzixew9.public.blob.vercel-storage.com/solutions/Google%20Cloud.png" },
-  { name: "Salesforce", logo: "https://zql0rfjwszzixew9.public.blob.vercel-storage.com/solutions/Salesforce%20Logo.jpeg" },
-  { name: "Odoo", logo: "https://zql0rfjwszzixew9.public.blob.vercel-storage.com/solutions/odoo_logo.svg" },
   { name: "Swyftflo", logo: "https://zql0rfjwszzixew9.public.blob.vercel-storage.com/solutions/Swyftflo.png" },
-  { name: "Databricks", logo: "/images/Databricks_Logo.png" },
+  { name: "RISE", logo: "/images/solutions/rise.jpg" },
+  { name: "GROW", logo: "/images/solutions/grow.jpg" },
 ];
 
 export function SolutionsStrip() {

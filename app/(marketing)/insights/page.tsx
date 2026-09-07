@@ -54,11 +54,7 @@ export default async function InsightsPage() {
 
           {blogs.length === 0 ? (
             <p className="mt-8 text-sm text-mw-ink/50">
-              No blog posts yet — add one in the{" "}
-              <Link href="/studio" className="text-mw-secondary hover:underline">
-                Studio
-              </Link>
-              .
+              No blog posts yet.
             </p>
           ) : (
             <div className="mt-8 grid gap-8 lg:grid-cols-3">

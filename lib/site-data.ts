@@ -314,8 +314,8 @@ export const clients = [
 ];
 
 export const partners = [
-  { name: "Samishti Infotec", relationship: "SAP Partner" },
-  { name: "Levarus", relationship: "Salesforce Partner" },
+  { name: "Samishti Infotec", relationship: "SAP Gold Partner", url: "https://samishti.com" },
+  { name: "Levarus", relationship: "Salesforce Summit Platinum Partner", url: "https://levarus.com" },
 ];
 
 export const leadership = [
