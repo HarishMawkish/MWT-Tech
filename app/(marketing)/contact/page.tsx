@@ -60,7 +60,10 @@ export default async function ContactPage({
             <div className="mt-3 flex flex-wrap gap-3">
               {partners.map((p) => (
                 <span key={p.name} className="rounded-full border border-mw-line px-4 py-1.5 text-sm text-mw-ink/70">
-                  {p.name} &middot; {p.relationship}
+                  <a href={p.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-mw-primary hover:text-mw-secondary hover:underline">
+                    {p.name}
+                  </a>{" "}
+                  &middot; {p.relationship}
                 </span>
               ))}
             </div>
