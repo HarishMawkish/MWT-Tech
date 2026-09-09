@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { isLowPowerDevice } from "@/lib/device-performance";
 
 /**
  * A subtle, persistent particle field pinned to the viewport (position:
@@ -18,10 +19,15 @@ export function FlowScene() {
     if (!container) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const lowPower = isLowPowerDevice();
 
     let renderer: THREE.WebGLRenderer;
     try {
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
+      renderer = new THREE.WebGLRenderer({
+        antialias: !lowPower,
+        alpha: true,
+        powerPreference: "low-power",
+      });
     } catch {
       return;
     }
@@ -32,7 +38,7 @@ export function FlowScene() {
     const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 60);
     camera.position.set(0, 0, 12);
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1 : 1.75));
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
 
@@ -41,8 +47,10 @@ export function FlowScene() {
     const rig = new THREE.Group();
     scene.add(rig);
 
-    // Sparse drifting node field.
-    const NODE_COUNT = 220;
+    // Sparse drifting node field. Fewer nodes on lower-power hardware — this
+    // sits dim and out-of-focus behind real content, so the difference is
+    // essentially imperceptible while the per-frame cost drops a lot.
+    const NODE_COUNT = lowPower ? 90 : 220;
     const positions = new Float32Array(NODE_COUNT * 3);
     for (let i = 0; i < NODE_COUNT; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 26;
@@ -106,8 +114,9 @@ export function FlowScene() {
 
     const animate = () => {
       frameId = requestAnimationFrame(animate);
+      const dt = clock.getDelta();
+      if (document.hidden) return;
       if (!reduceMotion) {
-        const dt = clock.getDelta();
         rig.rotation.y += dt * 0.015;
         rig.rotation.x += dt * 0.006;
       }

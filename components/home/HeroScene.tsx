@@ -7,6 +7,7 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { FilmPass } from "three/examples/jsm/postprocessing/FilmPass.js";
 import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
+import { isLowPowerDevice } from "@/lib/device-performance";
 
 // Organic, slowly-drifting noise field — replaces the old wireframe
 // icosahedron core/shell as the scene's background layer. Two octaves of
@@ -88,10 +89,15 @@ export function HeroScene({ className = "" }: { className?: string }) {
     if (!container) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const lowPower = isLowPowerDevice();
 
     let renderer: THREE.WebGLRenderer;
     try {
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
+      renderer = new THREE.WebGLRenderer({
+        antialias: !lowPower,
+        alpha: true,
+        powerPreference: "low-power",
+      });
     } catch {
       return; // No WebGL available — the CSS gradient backdrop still holds the hero.
     }
@@ -102,7 +108,7 @@ export function HeroScene({ className = "" }: { className?: string }) {
     const camera = new THREE.PerspectiveCamera(48, 1, 0.1, 100);
     camera.position.set(0, 0, 7.2);
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1 : 2));
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
 
@@ -134,7 +140,9 @@ export function HeroScene({ className = "" }: { className?: string }) {
     scene.add(bgMesh);
 
     // Particle field — nodes scattered in a shell around the center.
-    const NODE_COUNT = 460;
+    // Fewer particles on lower-power hardware; visually near-identical at
+    // normal viewing distance, meaningfully cheaper to render every frame.
+    const NODE_COUNT = lowPower ? 200 : 460;
     const positions = new Float32Array(NODE_COUNT * 3);
     for (let i = 0; i < NODE_COUNT; i++) {
       const radius = 3.4 + Math.random() * 2.1;
@@ -184,14 +192,16 @@ export function HeroScene({ className = "" }: { className?: string }) {
 
     // --- Postprocessing: subtle bloom + film grain, then output pass for
     // correct color space handling since the composer bypasses the
-    // renderer's default output conversion. ---
-    const composer = new EffectComposer(renderer);
-    composer.addPass(new RenderPass(scene, camera));
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.55, 0.4, 0.15);
-    composer.addPass(bloomPass);
-    const filmPass = new FilmPass(0.3, false);
-    composer.addPass(filmPass);
-    composer.addPass(new OutputPass());
+    // renderer's default output conversion. Skipped on low-power devices —
+    // bloom in particular costs several extra full-screen passes per frame,
+    // and the scene still looks intentional without it, just less glowy. ---
+    const composer = lowPower ? null : new EffectComposer(renderer);
+    if (composer) {
+      composer.addPass(new RenderPass(scene, camera));
+      composer.addPass(new UnrealBloomPass(new THREE.Vector2(1, 1), 0.55, 0.4, 0.15));
+      composer.addPass(new FilmPass(0.3, false));
+      composer.addPass(new OutputPass());
+    }
 
     // Pointer parallax.
     const pointer = { x: 0, y: 0 };
@@ -214,7 +224,7 @@ export function HeroScene({ className = "" }: { className?: string }) {
       camera.aspect = clientWidth / clientHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(clientWidth, clientHeight);
-      composer.setSize(clientWidth, clientHeight);
+      composer?.setSize(clientWidth, clientHeight);
 
       // Overscan slightly so the background plane always fully covers the
       // frustum even as aspect ratio changes.
@@ -233,6 +243,10 @@ export function HeroScene({ className = "" }: { className?: string }) {
       frameId = requestAnimationFrame(animate);
       const dt = clock.getDelta();
 
+      // Don't waste GPU/battery rendering a backgrounded tab — invisible to
+      // the user either way, but stops burning cycles when they've tabbed away.
+      if (document.hidden) return;
+
       bgUniforms.uTime.value += dt;
 
       if (!reduceMotion) {
@@ -245,7 +259,11 @@ export function HeroScene({ className = "" }: { className?: string }) {
         rig.rotation.x = -pointer.y * 0.15;
       }
 
-      composer.render();
+      if (composer) {
+        composer.render();
+      } else {
+        renderer.render(scene, camera);
+      }
     };
     animate();
 
@@ -259,7 +277,7 @@ export function HeroScene({ className = "" }: { className?: string }) {
       linkGeo.dispose();
       (particles.material as THREE.Material).dispose();
       (links.material as THREE.Material).dispose();
-      composer.dispose();
+      composer?.dispose();
       renderer.dispose();
       if (renderer.domElement.parentNode === container) {
         container.removeChild(renderer.domElement);

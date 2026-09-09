@@ -3,7 +3,7 @@ import { Hero } from "@/components/home/Hero";
 import { MarqueeStrip } from "@/components/home/MarqueeStrip";
 import { SolutionsStrip } from "@/components/home/SolutionsStrip";
 import { StatCounter } from "@/components/home/StatCounter";
-import { FlowScene } from "@/components/home/FlowScene";
+import { FlowScene } from "@/components/home/FlowSceneLoader";
 import { Timeline } from "@/components/home/Timeline";
 import { ServiceMosaic } from "@/components/home/ServiceMosaic";
 import { IndustryMosaic } from "@/components/home/IndustryMosaic";

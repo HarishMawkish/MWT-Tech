@@ -183,7 +183,7 @@ export default function AboutPage() {
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
             <div className="relative h-[420px] overflow-hidden rounded-3xl border border-white/10">
               <Image
-                src="/images/brand/malick.JPG"
+                src="/images/brand/malick2.jpeg"
                 alt="Hatim Malick - Chairman"
                 fill
                 className="object-cover"
