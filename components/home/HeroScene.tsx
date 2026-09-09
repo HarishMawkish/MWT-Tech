@@ -77,9 +77,10 @@ const bgFragmentShader = /* glsl */ `
  * particle field of nodes with sparse "data link" lines — representing
  * the brand idea of interconnected enterprise systems (SAP / Salesforce /
  * Odoo / AI) resolving into one coherent structure. Bloom + film grain
- * postprocessing for a more premium/cinematic finish. Reacts to pointer
- * movement (parallax) rather than scroll — deliberately not scroll-linked,
- * so the hero never eats extra scroll distance from the user.
+ * postprocessing for a more premium/cinematic finish (skipped on
+ * lower-power devices). Drifts on a fixed, predetermined rotation rather
+ * than following the pointer — smoother and frame-rate independent, and
+ * removes the need for a pointermove listener entirely.
  */
 export function HeroScene({ className = "" }: { className?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -116,7 +117,7 @@ export function HeroScene({ className = "" }: { className?: string }) {
     const jade = new THREE.Color("#1c6b51");
     const bgColor = new THREE.Color("#020604");
 
-    // Root rig — everything nested here parallaxes gently toward the pointer.
+    // Root rig — everything nested here drifts on a fixed rotation.
     const rig = new THREE.Group();
     scene.add(rig);
 
@@ -140,9 +141,9 @@ export function HeroScene({ className = "" }: { className?: string }) {
     scene.add(bgMesh);
 
     // Particle field — nodes scattered in a shell around the center.
-    // Fewer particles on lower-power hardware; visually near-identical at
-    // normal viewing distance, meaningfully cheaper to render every frame.
-    const NODE_COUNT = lowPower ? 200 : 460;
+    // Reduced further from the original 460/200 split for smoother, more
+    // consistent rendering across devices.
+    const NODE_COUNT = lowPower ? 130 : 260;
     const positions = new Float32Array(NODE_COUNT * 3);
     for (let i = 0; i < NODE_COUNT; i++) {
       const radius = 3.4 + Math.random() * 2.1;
@@ -203,16 +204,6 @@ export function HeroScene({ className = "" }: { className?: string }) {
       composer.addPass(new OutputPass());
     }
 
-    // Pointer parallax.
-    const pointer = { x: 0, y: 0 };
-    const target = { x: 0, y: 0 };
-    const onPointerMove = (e: PointerEvent) => {
-      const rect = container.getBoundingClientRect();
-      target.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      target.y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
-    };
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-
     const frustumHeightAtZ = (z: number) => {
       const vFov = (camera.fov * Math.PI) / 180;
       return 2 * Math.tan(vFov / 2) * Math.abs(camera.position.z - z);
@@ -253,10 +244,10 @@ export function HeroScene({ className = "" }: { className?: string }) {
         particles.rotation.y += dt * 0.03;
         links.rotation.y += dt * 0.03;
 
-        pointer.x += (target.x - pointer.x) * 0.04;
-        pointer.y += (target.y - pointer.y) * 0.04;
-        rig.rotation.y = pointer.x * 0.25;
-        rig.rotation.x = -pointer.y * 0.15;
+        // Fixed, predetermined drift instead of pointer-follow — smooth and
+        // consistent regardless of frame rate, no pointermove listener needed.
+        rig.rotation.y += dt * 0.025;
+        rig.rotation.x = Math.sin(bgUniforms.uTime.value * 0.08) * 0.06;
       }
 
       if (composer) {
@@ -270,7 +261,6 @@ export function HeroScene({ className = "" }: { className?: string }) {
     return () => {
       cancelAnimationFrame(frameId);
       ro.disconnect();
-      window.removeEventListener("pointermove", onPointerMove);
       bgMesh.geometry.dispose();
       bgMaterial.dispose();
       particleGeo.dispose();

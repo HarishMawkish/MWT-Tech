@@ -47,10 +47,8 @@ export function FlowScene() {
     const rig = new THREE.Group();
     scene.add(rig);
 
-    // Sparse drifting node field. Fewer nodes on lower-power hardware — this
-    // sits dim and out-of-focus behind real content, so the difference is
-    // essentially imperceptible while the per-frame cost drops a lot.
-    const NODE_COUNT = lowPower ? 90 : 220;
+    // Sparse drifting node field. Reduced further for smoother rendering.
+    const NODE_COUNT = lowPower ? 60 : 140;
     const positions = new Float32Array(NODE_COUNT * 3);
     for (let i = 0; i < NODE_COUNT; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 26;
