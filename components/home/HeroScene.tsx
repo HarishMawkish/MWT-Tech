@@ -7,6 +7,7 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { FilmPass } from "three/examples/jsm/postprocessing/FilmPass.js";
 import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
+import { isLowPowerDevice } from "@/lib/device-performance";
 
 // Organic, slowly-drifting noise field — replaces the old wireframe
 // icosahedron core/shell as the scene's background layer. Two octaves of
@@ -76,9 +77,10 @@ const bgFragmentShader = /* glsl */ `
  * particle field of nodes with sparse "data link" lines — representing
  * the brand idea of interconnected enterprise systems (SAP / Salesforce /
  * Odoo / AI) resolving into one coherent structure. Bloom + film grain
- * postprocessing for a more premium/cinematic finish. Reacts to pointer
- * movement (parallax) rather than scroll — deliberately not scroll-linked,
- * so the hero never eats extra scroll distance from the user.
+ * postprocessing for a more premium/cinematic finish (skipped on
+ * lower-power devices). Drifts on a fixed, predetermined rotation rather
+ * than following the pointer — smoother and frame-rate independent, and
+ * removes the need for a pointermove listener entirely.
  */
 export function HeroScene({ className = "" }: { className?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -88,10 +90,15 @@ export function HeroScene({ className = "" }: { className?: string }) {
     if (!container) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const lowPower = isLowPowerDevice();
 
     let renderer: THREE.WebGLRenderer;
     try {
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
+      renderer = new THREE.WebGLRenderer({
+        antialias: !lowPower,
+        alpha: true,
+        powerPreference: "low-power",
+      });
     } catch {
       return; // No WebGL available — the CSS gradient backdrop still holds the hero.
     }
@@ -102,7 +109,7 @@ export function HeroScene({ className = "" }: { className?: string }) {
     const camera = new THREE.PerspectiveCamera(48, 1, 0.1, 100);
     camera.position.set(0, 0, 7.2);
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1 : 2));
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
 
@@ -110,7 +117,7 @@ export function HeroScene({ className = "" }: { className?: string }) {
     const jade = new THREE.Color("#1c6b51");
     const bgColor = new THREE.Color("#020604");
 
-    // Root rig — everything nested here parallaxes gently toward the pointer.
+    // Root rig — everything nested here drifts on a fixed rotation.
     const rig = new THREE.Group();
     scene.add(rig);
 
@@ -134,7 +141,9 @@ export function HeroScene({ className = "" }: { className?: string }) {
     scene.add(bgMesh);
 
     // Particle field — nodes scattered in a shell around the center.
-    const NODE_COUNT = 460;
+    // Reduced further from the original 460/200 split for smoother, more
+    // consistent rendering across devices.
+    const NODE_COUNT = lowPower ? 130 : 260;
     const positions = new Float32Array(NODE_COUNT * 3);
     for (let i = 0; i < NODE_COUNT; i++) {
       const radius = 3.4 + Math.random() * 2.1;
@@ -184,24 +193,16 @@ export function HeroScene({ className = "" }: { className?: string }) {
 
     // --- Postprocessing: subtle bloom + film grain, then output pass for
     // correct color space handling since the composer bypasses the
-    // renderer's default output conversion. ---
-    const composer = new EffectComposer(renderer);
-    composer.addPass(new RenderPass(scene, camera));
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.55, 0.4, 0.15);
-    composer.addPass(bloomPass);
-    const filmPass = new FilmPass(0.3, false);
-    composer.addPass(filmPass);
-    composer.addPass(new OutputPass());
-
-    // Pointer parallax.
-    const pointer = { x: 0, y: 0 };
-    const target = { x: 0, y: 0 };
-    const onPointerMove = (e: PointerEvent) => {
-      const rect = container.getBoundingClientRect();
-      target.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      target.y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
-    };
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    // renderer's default output conversion. Skipped on low-power devices —
+    // bloom in particular costs several extra full-screen passes per frame,
+    // and the scene still looks intentional without it, just less glowy. ---
+    const composer = lowPower ? null : new EffectComposer(renderer);
+    if (composer) {
+      composer.addPass(new RenderPass(scene, camera));
+      composer.addPass(new UnrealBloomPass(new THREE.Vector2(1, 1), 0.55, 0.4, 0.15));
+      composer.addPass(new FilmPass(0.3, false));
+      composer.addPass(new OutputPass());
+    }
 
     const frustumHeightAtZ = (z: number) => {
       const vFov = (camera.fov * Math.PI) / 180;
@@ -214,7 +215,7 @@ export function HeroScene({ className = "" }: { className?: string }) {
       camera.aspect = clientWidth / clientHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(clientWidth, clientHeight);
-      composer.setSize(clientWidth, clientHeight);
+      composer?.setSize(clientWidth, clientHeight);
 
       // Overscan slightly so the background plane always fully covers the
       // frustum even as aspect ratio changes.
@@ -233,33 +234,40 @@ export function HeroScene({ className = "" }: { className?: string }) {
       frameId = requestAnimationFrame(animate);
       const dt = clock.getDelta();
 
+      // Don't waste GPU/battery rendering a backgrounded tab — invisible to
+      // the user either way, but stops burning cycles when they've tabbed away.
+      if (document.hidden) return;
+
       bgUniforms.uTime.value += dt;
 
       if (!reduceMotion) {
         particles.rotation.y += dt * 0.03;
         links.rotation.y += dt * 0.03;
 
-        pointer.x += (target.x - pointer.x) * 0.04;
-        pointer.y += (target.y - pointer.y) * 0.04;
-        rig.rotation.y = pointer.x * 0.25;
-        rig.rotation.x = -pointer.y * 0.15;
+        // Fixed, predetermined drift instead of pointer-follow — smooth and
+        // consistent regardless of frame rate, no pointermove listener needed.
+        rig.rotation.y += dt * 0.025;
+        rig.rotation.x = Math.sin(bgUniforms.uTime.value * 0.08) * 0.06;
       }
 
-      composer.render();
+      if (composer) {
+        composer.render();
+      } else {
+        renderer.render(scene, camera);
+      }
     };
     animate();
 
     return () => {
       cancelAnimationFrame(frameId);
       ro.disconnect();
-      window.removeEventListener("pointermove", onPointerMove);
       bgMesh.geometry.dispose();
       bgMaterial.dispose();
       particleGeo.dispose();
       linkGeo.dispose();
       (particles.material as THREE.Material).dispose();
       (links.material as THREE.Material).dispose();
-      composer.dispose();
+      composer?.dispose();
       renderer.dispose();
       if (renderer.domElement.parentNode === container) {
         container.removeChild(renderer.domElement);

@@ -12,12 +12,34 @@ const solutions = [
 ];
 
 export function SolutionsStrip() {
+  const loop = [...solutions, ...solutions];
+
   return (
     <div className="mw-glow-strip border-y border-white/10 py-10">
       <p className="relative z-10 mb-6 text-center text-xs font-semibold uppercase tracking-[0.25em] text-white/40">
         Solutions We Provide
       </p>
-      <div className="relative z-10 mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-4 px-6">
+
+      {/* Mobile only: fixed-width cards can't fit more than one per row on a
+          phone screen, which turned this into a long vertical list. Below
+          `sm`, use the same auto-scrolling marquee pattern as MarqueeStrip
+          instead. Desktop/tablet (`sm:` and up) keeps the original
+          wrapped-grid layout, completely unchanged. */}
+      <div className="mw-edge-fade relative z-10 overflow-hidden sm:hidden">
+        <div className="mw-marquee-track flex w-max items-center gap-4">
+          {loop.map((s, i) => (
+            <div
+              key={`${s.name}-${i}`}
+              className="flex h-20 w-44 shrink-0 items-center justify-center rounded-xl bg-white px-6 py-4 shadow-sm"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={s.logo} alt={s.name} className="h-full w-full object-contain" />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="relative z-10 mx-auto hidden max-w-5xl items-center justify-center gap-4 px-6 sm:flex sm:flex-wrap">
         {solutions.map((s) => (
           <div
             key={s.name}

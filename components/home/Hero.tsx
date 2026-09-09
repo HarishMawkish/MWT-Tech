@@ -1,10 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { HeroScene } from "./HeroScene";
+import dynamic from "next/dynamic";
 import { StatCounter } from "./StatCounter";
 import { IconStack, IconGrid, IconOrbit, IconShield, IconSpark } from "./icons";
 import { siteConfig, stats } from "@/lib/site-data";
+
+// Loaded lazily, client-side only: this pulls in the full `three` library
+// (plus postprocessing modules), which is heavy to download/parse/execute.
+// Deferring it off the initial-load path keeps the rest of the page
+// interactive sooner — the scene still renders the same way, just a beat
+// after first paint instead of blocking it. No loading UI needed since the
+// section's own CSS gradient background already holds the space visually.
+const HeroScene = dynamic(() => import("./HeroScene").then((mod) => mod.HeroScene), {
+  ssr: false,
+});
 
 const ecosystem = [
   { name: "SAP", logo: "/images/solutions/SAP.jpg" },
