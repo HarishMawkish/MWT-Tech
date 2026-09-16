@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import { CtaBand, Eyebrow, Section } from "@/components/ui";
 import { insights } from "@/lib/site-data";
-import { getAllBlogSlugs, getBlogPostBySlug, getAllBlogPosts } from "@/lib/sanity/queries";
+import { getAllBlogSlugs, getBlogPostBySlug, getAllBlogPosts, type SanityBlogPost } from "@/lib/sanity/queries";
 import { urlFor } from "@/lib/sanity/image";
 
 export const revalidate = 60;
@@ -47,7 +47,15 @@ export default async function InsightDetailPage({
   if (!insight && !blogPost) notFound();
 
   const moreInsights = insights.filter((p) => p.slug !== slug).slice(0, 2);
-  const otherBlogs = blogPost ? (await getAllBlogPosts()).filter((p) => p.slug !== slug).slice(0, 2) : [];
+
+  let otherBlogs: SanityBlogPost[] = [];
+  if (blogPost) {
+    const allBlogs = await getAllBlogPosts();
+    const rest = allBlogs.filter((p) => p.slug !== slug);
+    const sameCategory = rest.filter((p) => p.category?._id === blogPost.category?._id);
+    const different = rest.filter((p) => p.category?._id !== blogPost.category?._id);
+    otherBlogs = [...sameCategory, ...different].slice(0, 2);
+  }
 
   return (
     <>
@@ -65,7 +73,7 @@ export default async function InsightDetailPage({
           ) : (
             blogPost && (
               <>
-                <Eyebrow>Blog</Eyebrow>
+                <Eyebrow>{blogPost.category?.title ?? "Blog"}</Eyebrow>
                 <h1 className="mt-5 font-display text-3xl font-bold text-white sm:text-4xl">{blogPost.title}</h1>
                 <p className="mt-4 text-sm text-white/50">
                   {new Date(blogPost.publishedAt).toLocaleDateString()}
@@ -141,7 +149,10 @@ export default async function InsightDetailPage({
                     <Image src={urlFor(p.coverImage).width(500).height(260).url()} alt={p.title} fill className="object-cover" />
                   </div>
                   <div className="p-6">
-                    <h3 className="font-display text-lg font-bold text-mw-primary">{p.title}</h3>
+                    <span className="text-xs font-semibold uppercase tracking-widest text-mw-secondary">
+                      {p.category?.title ?? "Blog"}
+                    </span>
+                    <h3 className="mt-2 font-display text-lg font-bold text-mw-primary">{p.title}</h3>
                   </div>
                 </Link>
               ))}

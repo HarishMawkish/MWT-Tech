@@ -27,6 +27,14 @@ export const blogPost = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "category",
+      title: "Category",
+      description: 'Which subsection this post belongs to, e.g. "News" or "Articles". Create new categories from the Blog Category document type.',
+      type: "reference",
+      to: [{ type: "blogCategory" }],
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: "content",
       title: "Content",
       type: "array",
@@ -41,6 +49,6 @@ export const blogPost = defineType({
     }),
   ],
   preview: {
-    select: { title: "title", media: "coverImage" },
+    select: { title: "title", media: "coverImage", subtitle: "category.title" },
   },
 });
