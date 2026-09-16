@@ -21,14 +21,18 @@ export default function IndustriesPage() {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {industries.map((i) => (
             <div key={i.slug} className="rounded-2xl border border-mw-line p-6">
-              <h3 className="font-display text-lg font-bold text-mw-primary">{i.name}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-mw-ink/65">{i.description}</p>
+              <h3 className="font-display text-lg font-bold text-mw-primary">
+                {i.name}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-mw-ink/65">
+                {i.description}
+              </p>
             </div>
           ))}
         </div>
       </Section>
 
-      <section className="border-t border-mw-line bg-mw-primary">
+      <section className="border-t border-mw-line bg-secondary">
         <Section className="text-center">
           <Eyebrow>Common Across Every Sector</Eyebrow>
           <h2 className="mx-auto mt-4 max-w-2xl font-display text-3xl font-bold text-white sm:text-4xl">
