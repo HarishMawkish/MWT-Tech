@@ -26,10 +26,42 @@ function IconStrategy({ className = "h-6 w-6" }: { className?: string }) {
 function IconPlatform({ className = "h-6 w-6" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className}>
-      <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.8" />
-      <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.8" />
-      <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.8" />
-      <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.8" />
+      <rect
+        x="3"
+        y="3"
+        width="7"
+        height="7"
+        rx="1.5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
+      <rect
+        x="14"
+        y="3"
+        width="7"
+        height="7"
+        rx="1.5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
+      <rect
+        x="3"
+        y="14"
+        width="7"
+        height="7"
+        rx="1.5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
+      <rect
+        x="14"
+        y="14"
+        width="7"
+        height="7"
+        rx="1.5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
     </svg>
   );
 }
@@ -91,8 +123,8 @@ export default function AboutPage() {
             Business outcomes first. Technology second.
           </h1>
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-gray-300">
-            We bridge business strategy and technology — delivering high-impact ERP, CRM, and AI
-            solutions that drive real transformation.
+            We bridge business strategy and technology — delivering high-impact
+            ERP, CRM, and AI solutions that drive real transformation.
           </p>
         </div>
       </div>
@@ -108,8 +140,8 @@ export default function AboutPage() {
               Our Culture &amp; Principles.
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-gray-300">
-              A collaborative, high-energy environment built around long-term client outcomes and
-              innovation.
+              A collaborative, high-energy environment built around long-term
+              client outcomes and innovation.
             </p>
           </div>
 
@@ -127,7 +159,9 @@ export default function AboutPage() {
                   <h3 className="mt-6 font-display text-xl font-bold tracking-tight text-white">
                     {card.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-gray-400">{card.body}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-gray-400">
+                    {card.body}
+                  </p>
                   {card.badges && (
                     <div className="mt-5 flex flex-wrap gap-2">
                       {card.badges.map((b) => (
@@ -152,7 +186,7 @@ export default function AboutPage() {
         <Section className="!py-0 lg:!py-0">
           <div className="relative h-[535px] overflow-hidden rounded-3xl border border-white/10">
             <Image
-              src="/images/untitled-03773.JPG"
+              src="/images/culture.JPG"
               alt="Mawkish team and workspace"
               fill
               className="object-cover scale-100"
@@ -195,10 +229,13 @@ export default function AboutPage() {
               <div className="font-display text-2xl font-bold tracking-tight text-white">
                 Hatim Malick
               </div>
-              <div className="mt-1 text-sm font-medium text-mw-mint">Chairman, Mawkish Group</div>
+              <div className="mt-1 text-sm font-medium text-mw-mint">
+                Chairman, Mawkish Group
+              </div>
               <p className="mt-5 text-base leading-relaxed text-gray-300">
-                Provides strategic oversight across Mawkish Group&apos;s portfolio, guiding long-term
-                regional growth and enterprise partnerships across South Asia and the Middle East.
+                Provides strategic oversight across Mawkish Group&apos;s
+                portfolio, guiding long-term regional growth and enterprise
+                partnerships across South Asia and the Middle East.
               </p>
             </div>
           </div>
@@ -209,10 +246,13 @@ export default function AboutPage() {
               <div className="font-display text-2xl font-bold tracking-tight text-white">
                 Michael Gunawardena
               </div>
-              <div className="mt-1 text-sm font-medium text-mw-mint">Chief Executive Officer</div>
+              <div className="mt-1 text-sm font-medium text-mw-mint">
+                Chief Executive Officer
+              </div>
               <p className="mt-5 text-base leading-relaxed text-gray-300">
-                13+ years of leadership in business operations, client management, and enterprise
-                transformation. Michael leads Mawkish&apos;s growth strategy and multi-platform advisory
+                13+ years of leadership in business operations, client
+                management, and enterprise transformation. Michael leads
+                Mawkish&apos;s growth strategy and multi-platform advisory
                 across SAP, Salesforce, and Odoo.
               </p>
             </div>
@@ -253,12 +293,19 @@ export default function AboutPage() {
               </thead>
               <tbody>
                 {regions.map((r) => (
-                  <tr key={r.region} className="border-b border-white/5 last:border-0">
-                    <td className="px-6 py-4 text-sm font-semibold text-white">{r.region}</td>
+                  <tr
+                    key={r.region}
+                    className="border-b border-white/5 last:border-0"
+                  >
+                    <td className="px-6 py-4 text-sm font-semibold text-white">
+                      {r.region}
+                    </td>
                     <td className="px-6 py-4">
                       <span
                         className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${
-                          r.activeMarket ? "bg-mw-mint/10 text-mw-mint" : "bg-white/5 text-white/50"
+                          r.activeMarket
+                            ? "bg-mw-mint/10 text-mw-mint"
+                            : "bg-white/5 text-white/50"
                         }`}
                       >
                         <span
@@ -269,8 +316,12 @@ export default function AboutPage() {
                         {r.activeMarket ? "Active" : "Expansion"}
                       </span>
                     </td>
-                    <td className="hidden px-6 py-4 text-sm text-white/60 sm:table-cell">{r.presence}</td>
-                    <td className="hidden px-6 py-4 text-sm text-white/60 lg:table-cell">{r.focus}</td>
+                    <td className="hidden px-6 py-4 text-sm text-white/60 sm:table-cell">
+                      {r.presence}
+                    </td>
+                    <td className="hidden px-6 py-4 text-sm text-white/60 lg:table-cell">
+                      {r.focus}
+                    </td>
                   </tr>
                 ))}
               </tbody>
