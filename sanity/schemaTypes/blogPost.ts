@@ -15,7 +15,8 @@ export const blogPost = defineType({
       name: "slug",
       title: "Slug",
       type: "slug",
-      description: "Used in the post's URL — click \"Generate\" after entering a title.",
+      description:
+        'Used in the post\'s URL — click "Generate" after entering a title.',
       options: { source: "title", maxLength: 96 },
       validation: (rule) => rule.required(),
     }),
@@ -29,7 +30,8 @@ export const blogPost = defineType({
     defineField({
       name: "category",
       title: "Category",
-      description: 'Which subsection this post belongs to, e.g. "News" or "Articles". Create new categories from the Blog Category document type.',
+      description:
+        'Which subsection this post belongs to, e.g. "News" or "Articles". Create new categories from the Blog Category document type.',
       type: "reference",
       to: [{ type: "blogCategory" }],
       validation: (rule) => rule.required(),
@@ -42,8 +44,16 @@ export const blogPost = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "orderRank",
+      title: "Order Rank",
+      type: "string",
+      hidden: true,
+    }),
+    defineField({
       name: "publishedAt",
-      title: "Published At",
+      title: "Published Date",
+      description:
+        'The date shown to readers on the post ("Published on ..."). You can set this to any date you like. This is separate from the post\'s position on the site — drag posts up/down in the "Blog Posts" list in the sidebar to control that.',
       type: "datetime",
       initialValue: () => new Date().toISOString(),
     }),
