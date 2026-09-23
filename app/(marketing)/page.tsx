@@ -10,7 +10,12 @@ import { IndustryMosaic } from "@/components/home/IndustryMosaic";
 import { serviceIconBySlug, IconGrid } from "@/components/home/icons";
 import { Reveal } from "@/components/Reveal";
 import { CtaBand, Section } from "@/components/ui";
+import { NewsAndEvents } from "@/components/home/NewsAndEvents";
 import { painPoints, partners, services, stats } from "@/lib/site-data";
+
+// Revalidate periodically so News & Events picks up new/reordered posts
+// from Sanity without needing a full redeploy.
+export const revalidate = 60;
 
 const growSlugs = [
   "sap-solutions",
@@ -246,6 +251,8 @@ export default function Home() {
       </div>
 
       <CtaBand />
+
+      <NewsAndEvents />
     </>
   );
 }
