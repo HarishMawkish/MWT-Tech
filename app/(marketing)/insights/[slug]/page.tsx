@@ -5,7 +5,12 @@ import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import { CtaBand, Eyebrow, Section } from "@/components/ui";
 import { insights } from "@/lib/site-data";
-import { getAllBlogSlugs, getBlogPostBySlug, getAllBlogPosts, type SanityBlogPost } from "@/lib/sanity/queries";
+import {
+  getAllBlogSlugs,
+  getBlogPostBySlug,
+  getAllBlogPosts,
+  type SanityBlogPost,
+} from "@/lib/sanity/queries";
 import { urlFor } from "@/lib/sanity/image";
 
 export const revalidate = 60;
@@ -52,8 +57,12 @@ export default async function InsightDetailPage({
   if (blogPost) {
     const allBlogs = await getAllBlogPosts();
     const rest = allBlogs.filter((p) => p.slug !== slug);
-    const sameCategory = rest.filter((p) => p.category?._id === blogPost.category?._id);
-    const different = rest.filter((p) => p.category?._id !== blogPost.category?._id);
+    const sameCategory = rest.filter(
+      (p) => p.category?._id === blogPost.category?._id,
+    );
+    const different = rest.filter(
+      (p) => p.category?._id !== blogPost.category?._id,
+    );
     otherBlogs = [...sameCategory, ...different].slice(0, 2);
   }
 
@@ -61,20 +70,27 @@ export default async function InsightDetailPage({
     <>
       <section className="mw-dark-section mw-glow-grid relative overflow-hidden">
         <div className="mx-auto max-w-3xl px-6 py-24 lg:px-8">
-          <Link href="/insights" className="text-sm font-semibold text-mw-mint hover:text-white">
+          <Link
+            href="/insights"
+            className="text-sm font-semibold text-mw-mint hover:text-white"
+          >
             &larr; Insights &amp; Perspectives
           </Link>
           {insight ? (
             <>
               <Eyebrow>{insight.category}</Eyebrow>
-              <h1 className="mt-5 font-display text-3xl font-bold text-white sm:text-4xl">{insight.title}</h1>
+              <h1 className="mt-5 font-display text-3xl font-bold text-white sm:text-4xl">
+                {insight.title}
+              </h1>
               <p className="mt-4 text-sm text-white/50">{insight.readTime}</p>
             </>
           ) : (
             blogPost && (
               <>
                 <Eyebrow>{blogPost.category?.title ?? "Blog"}</Eyebrow>
-                <h1 className="mt-5 font-display text-3xl font-bold text-white sm:text-4xl">{blogPost.title}</h1>
+                <h1 className="mt-5 font-display text-3xl font-bold text-white sm:text-4xl">
+                  {blogPost.title}
+                </h1>
                 <p className="mt-4 text-sm text-white/50">
                   {new Date(blogPost.publishedAt).toLocaleDateString()}
                 </p>
@@ -114,7 +130,9 @@ export default async function InsightDetailPage({
       {insight && moreInsights.length > 0 && (
         <section className="border-t border-mw-line bg-mw-paper">
           <Section>
-            <h2 className="font-display text-2xl font-bold text-mw-primary">More perspectives</h2>
+            <h2 className="font-display text-2xl font-bold text-mw-primary">
+              More perspectives
+            </h2>
             <div className="mt-8 grid gap-6 sm:grid-cols-2">
               {moreInsights.map((p) => (
                 <Link
@@ -125,7 +143,9 @@ export default async function InsightDetailPage({
                   <span className="text-xs font-semibold uppercase tracking-widest text-mw-secondary">
                     {p.category}
                   </span>
-                  <h3 className="mt-2 font-display text-lg font-bold text-mw-primary">{p.title}</h3>
+                  <h3 className="mt-2 font-display text-lg font-bold text-mw-primary">
+                    {p.title}
+                  </h3>
                   <p className="mt-2 text-sm text-mw-ink/65">{p.excerpt}</p>
                 </Link>
               ))}
@@ -137,22 +157,31 @@ export default async function InsightDetailPage({
       {blogPost && otherBlogs.length > 0 && (
         <section className="border-t border-mw-line bg-mw-paper">
           <Section>
-            <h2 className="font-display text-2xl font-bold text-mw-primary">More from the blog</h2>
+            <h2 className="font-display text-2xl font-bold text-mw-primary">
+              More from the blog
+            </h2>
             <div className="mt-8 grid gap-6 sm:grid-cols-2">
               {otherBlogs.map((p) => (
                 <Link
                   key={p.slug}
                   href={`/insights/${p.slug}`}
-                  className="overflow-hidden rounded-2xl border border-mw-line bg-white transition hover:border-mw-secondary"
+                  className="overflow-hidden rounded-2xl border border-mw-line bg-primary transition hover:border-mw-secondary"
                 >
                   <div className="relative h-32 w-full">
-                    <Image src={urlFor(p.coverImage).width(500).height(260).url()} alt={p.title} fill className="object-cover" />
+                    <Image
+                      src={urlFor(p.coverImage).width(500).height(260).url()}
+                      alt={p.title}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                   <div className="p-6">
                     <span className="text-xs font-semibold uppercase tracking-widest text-mw-secondary">
                       {p.category?.title ?? "Blog"}
                     </span>
-                    <h3 className="mt-2 font-display text-lg font-bold text-mw-primary">{p.title}</h3>
+                    <h3 className="mt-2 font-display text-lg font-bold text-mw-primary">
+                      {p.title}
+                    </h3>
                   </div>
                 </Link>
               ))}
