@@ -250,9 +250,9 @@ export default function Home() {
 
       </div>
 
-      <NewsAndEvents />
-
       <CtaBand />
+
+      <NewsAndEvents />
     </>
   );
 }

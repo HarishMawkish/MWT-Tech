@@ -25,9 +25,12 @@ export async function NewsAndEvents() {
             href={`/insights/${post.slug}`}
             className="group flex flex-col overflow-hidden rounded-2xl border border-mw-line transition hover:border-mw-secondary hover:shadow-lg hover:shadow-mw-secondary/5"
           >
-            <div className="relative h-44 w-full">
+            <div
+              className="relative w-full bg-mw-paper"
+              style={{ aspectRatio: post.coverImageAspectRatio || 16 / 9 }}
+            >
               <Image
-                src={urlFor(post.coverImage).width(600).height(340).url()}
+                src={urlFor(post.coverImage).width(800).url()}
                 alt={post.title}
                 fill
                 className="object-cover"

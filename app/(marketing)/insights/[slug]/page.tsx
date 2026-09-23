@@ -94,12 +94,12 @@ export default async function InsightDetailPage({
         ) : (
           blogPost && (
             <>
-              <div className="relative mb-10 h-72 w-full overflow-hidden rounded-2xl sm:h-96">
+              <div className="relative mb-10 h-72 w-full overflow-hidden rounded-2xl bg-mw-paper sm:h-96">
                 <Image
-                  src={urlFor(blogPost.coverImage).width(1200).height(800).url()}
+                  src={urlFor(blogPost.coverImage).width(1600).url()}
                   alt={blogPost.title}
                   fill
-                  className="object-cover"
+                  className="object-contain"
                   priority
                 />
               </div>
