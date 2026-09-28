@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { PageHero, Section } from "@/components/ui";
+import { BlogCard } from "@/components/BlogCard";
 import { insights } from "@/lib/site-data";
 import { getAllBlogPosts, getAllBlogCategories, groupBlogPostsByCategory } from "@/lib/sanity/queries";
-import { urlFor } from "@/lib/sanity/image";
 
 export const metadata: Metadata = {
   title: "Insights & Perspectives",
@@ -64,34 +63,9 @@ export default async function InsightsPage() {
                   <h3 className="font-display text-lg font-bold text-mw-secondary">
                     {category?.title ?? "Uncategorized"}
                   </h3>
-                  <div className="mt-6 grid gap-8 lg:grid-cols-3">
+                  <div className="mt-6 grid items-stretch gap-8 lg:grid-cols-3">
                     {posts.map((post) => (
-                      <Link
-                        key={post.slug}
-                        href={`/insights/${post.slug}`}
-                        className="group flex flex-col overflow-hidden rounded-2xl border border-mw-line transition hover:border-mw-secondary hover:shadow-lg hover:shadow-mw-secondary/5"
-                      >
-                        <div
-                          className="relative w-full bg-mw-paper"
-                          style={{ aspectRatio: post.coverImageAspectRatio || 16 / 9 }}
-                        >
-                          <Image
-                            src={urlFor(post.coverImage).width(800).url()}
-                            alt={post.title}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                        <div className="flex flex-1 flex-col p-7">
-                          <h2 className="font-display text-xl font-bold text-mw-primary">{post.title}</h2>
-                          <div className="mt-6 flex items-center justify-between text-xs text-mw-ink/50">
-                            <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
-                            <span className="font-semibold text-mw-secondary opacity-0 transition group-hover:opacity-100">
-                              Read &rarr;
-                            </span>
-                          </div>
-                        </div>
-                      </Link>
+                      <BlogCard key={post.slug} post={post} showExcerpt={false} />
                     ))}
                   </div>
                 </div>
