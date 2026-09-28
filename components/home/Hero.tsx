@@ -12,9 +12,12 @@ import { siteConfig, stats } from "@/lib/site-data";
 // interactive sooner — the scene still renders the same way, just a beat
 // after first paint instead of blocking it. No loading UI needed since the
 // section's own CSS gradient background already holds the space visually.
-const HeroScene = dynamic(() => import("./HeroScene").then((mod) => mod.HeroScene), {
-  ssr: false,
-});
+const HeroScene = dynamic(
+  () => import("./HeroScene").then((mod) => mod.HeroScene),
+  {
+    ssr: false,
+  },
+);
 
 const ecosystem = [
   { name: "SAP", logo: "/images/solutions/SAP.jpg" },
@@ -53,14 +56,16 @@ export function Hero() {
         />
 
         <h1 className="relative mt-7 max-w-4xl font-display text-4xl leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-[76px] lg:leading-[1.03] lg:tracking-[-2.5px]">
-          Technology that creates real <span className="mw-text-gradient">business outcomes</span>
+          Technology that creates real{" "}
+          <span className="mw-text-gradient">business outcomes</span>
         </h1>
 
         {/* Subtext — bumped from white/70 to white/85 so it doesn't wash
             out against the dark backdrop. */}
         <p className="relative mt-6 max-w-xl text-balance text-sm leading-relaxed text-white/85 sm:text-base">
-          We architect and implement SAP, Salesforce, Odoo, and AI-driven systems that turn disconnected
-          operations into one connected, intelligent platform.
+          We architect and implement SAP, Salesforce, Odoo, and AI-driven
+          systems that turn disconnected operations into one connected,
+          intelligent platform.
         </p>
 
         {/* Live ecosystem ticker — small scrolling credibility strip */}
@@ -74,7 +79,11 @@ export function Hero() {
               >
                 {item.logo ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={item.logo} alt={item.name} className="h-5 w-5 object-contain" />
+                  <img
+                    src={item.logo}
+                    alt={item.name}
+                    className="h-5 w-5 object-contain"
+                  />
                 ) : (
                   <IconSpark className="h-4 w-4 text-mw-void" />
                 )}

@@ -3,7 +3,11 @@ import Link from "next/link";
 import { PageHero, Section } from "@/components/ui";
 import { BlogCard } from "@/components/BlogCard";
 import { insights } from "@/lib/site-data";
-import { getAllBlogPosts, getAllBlogCategories, groupBlogPostsByCategory } from "@/lib/sanity/queries";
+import {
+  getAllBlogPosts,
+  getAllBlogCategories,
+  groupBlogPostsByCategory,
+} from "@/lib/sanity/queries";
 
 export const metadata: Metadata = {
   title: "Insights & Perspectives",
@@ -15,7 +19,10 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function InsightsPage() {
-  const [blogs, categories] = await Promise.all([getAllBlogPosts(), getAllBlogCategories()]);
+  const [blogs, categories] = await Promise.all([
+    getAllBlogPosts(),
+    getAllBlogCategories(),
+  ]);
   const blogGroups = groupBlogPostsByCategory(blogs, categories);
 
   return (
@@ -37,8 +44,12 @@ export default async function InsightsPage() {
               <span className="text-xs font-semibold uppercase tracking-widest text-mw-secondary">
                 {post.category}
               </span>
-              <h2 className="mt-3 font-display text-xl font-bold text-mw-primary">{post.title}</h2>
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-mw-ink/65">{post.excerpt}</p>
+              <h2 className="mt-3 break-words hyphens-auto overflow-hidden font-display text-lg font-bold leading-tight text-mw-primary sm:text-xl">
+                {post.title}
+              </h2>
+              <p className="mt-3 flex-1 text-sm leading-relaxed text-mw-ink/65">
+                {post.excerpt}
+              </p>
               <div className="mt-6 flex items-center justify-between text-xs text-mw-ink/50">
                 <span>{post.readTime}</span>
                 <span className="font-semibold text-mw-secondary opacity-0 transition group-hover:opacity-100">
@@ -50,12 +61,12 @@ export default async function InsightsPage() {
         </div>
 
         <div className="mt-16 border-t border-mw-line pt-16">
-          <h2 className="font-display text-2xl font-bold text-mw-primary">Blogs</h2>
+          <h2 className="font-display text-2xl font-bold text-mw-primary">
+            Blogs
+          </h2>
 
           {blogGroups.length === 0 ? (
-            <p className="mt-8 text-sm text-mw-ink/50">
-              No blog posts yet.
-            </p>
+            <p className="mt-8 text-sm text-mw-ink/50">No blog posts yet.</p>
           ) : (
             <div className="mt-8 space-y-14">
               {blogGroups.map(({ category, posts }) => (
@@ -65,7 +76,11 @@ export default async function InsightsPage() {
                   </h3>
                   <div className="mt-6 grid items-stretch gap-8 lg:grid-cols-3">
                     {posts.map((post) => (
-                      <BlogCard key={post.slug} post={post} showExcerpt={false} />
+                      <BlogCard
+                        key={post.slug}
+                        post={post}
+                        showExcerpt={false}
+                      />
                     ))}
                   </div>
                 </div>

@@ -19,7 +19,10 @@ export function Section({
   id?: string;
 }) {
   return (
-    <section id={id} className={`mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32 ${className}`}>
+    <section
+      id={id}
+      className={`mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32 ${className}`}
+    >
       {children}
     </section>
   );
@@ -33,8 +36,8 @@ export function CtaBand() {
           Let&rsquo;s talk about the outcome you&rsquo;re trying to reach.
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-white/70">
-          Tell us about the challenge you&rsquo;re facing — we&rsquo;ll help you design a practical path from where
-          you are to where you need to be.
+          Tell us about the challenge you&rsquo;re facing — we&rsquo;ll help you
+          design a practical path from where you are to where you need to be.
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link
@@ -68,8 +71,12 @@ export function PageHero({
     <section className="mw-dark-section mw-glow-grid relative overflow-hidden">
       <div className="mx-auto max-w-4xl px-6 py-24 text-center lg:px-8">
         <Eyebrow>{eyebrow}</Eyebrow>
-        <h1 className="mt-5 font-display text-5xl text-white sm:text-6xl">{title}</h1>
-        <p className="mx-auto mt-5 max-w-2xl text-lg text-white/70">{description}</p>
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-center break-words">
+          {title}
+        </h1>
+        <p className="mx-auto mt-5 max-w-2xl text-lg text-white/70">
+          {description}
+        </p>
       </div>
     </section>
   );
