@@ -168,7 +168,18 @@ export default async function InsightDetailPage({
                   href={`/insights/${p.slug}`}
                   className="overflow-hidden rounded-2xl border border-mw-line bg-primary transition hover:border-mw-secondary"
                 >
-                  <div className="relative h-48 w-full">
+                  {/* Universal 16:9 frame. The full, uncropped photo sits on
+                      top (object-contain, original quality); a tiny blurred
+                      copy of the same photo fills whatever space is left so
+                      the frame is always filled edge to edge. */}
+                  <div className="relative aspect-[16/9] w-full overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={urlFor(p.coverImage).width(48).blur(20).url()}
+                      alt=""
+                      aria-hidden="true"
+                      className="absolute inset-0 h-full w-full scale-110 object-cover opacity-70 blur-xl"
+                    />
                     <Image
                       src={urlFor(p.coverImage).width(800).url()}
                       alt={p.title}
