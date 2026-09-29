@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { PageHero, Section } from "@/components/ui";
+import { BlogCard } from "@/components/BlogCard";
 import { insights } from "@/lib/site-data";
-import { getAllBlogPosts, getAllBlogCategories, groupBlogPostsByCategory } from "@/lib/sanity/queries";
-import { urlFor } from "@/lib/sanity/image";
+import {
+  getAllBlogPosts,
+  getAllBlogCategories,
+  groupBlogPostsByCategory,
+} from "@/lib/sanity/queries";
 
 export const metadata: Metadata = {
   title: "Insights & Perspectives",
@@ -16,7 +19,10 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function InsightsPage() {
-  const [blogs, categories] = await Promise.all([getAllBlogPosts(), getAllBlogCategories()]);
+  const [blogs, categories] = await Promise.all([
+    getAllBlogPosts(),
+    getAllBlogCategories(),
+  ]);
   const blogGroups = groupBlogPostsByCategory(blogs, categories);
 
   return (
@@ -38,8 +44,12 @@ export default async function InsightsPage() {
               <span className="text-xs font-semibold uppercase tracking-widest text-mw-secondary">
                 {post.category}
               </span>
-              <h2 className="mt-3 font-display text-xl font-bold text-mw-primary">{post.title}</h2>
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-mw-ink/65">{post.excerpt}</p>
+              <h2 className="mt-3 break-words hyphens-auto overflow-hidden font-display text-lg font-bold leading-tight text-mw-primary sm:text-xl">
+                {post.title}
+              </h2>
+              <p className="mt-3 flex-1 text-sm leading-relaxed text-mw-ink/65">
+                {post.excerpt}
+              </p>
               <div className="mt-6 flex items-center justify-between text-xs text-mw-ink/50">
                 <span>{post.readTime}</span>
                 <span className="font-semibold text-mw-secondary opacity-0 transition group-hover:opacity-100">
@@ -51,12 +61,12 @@ export default async function InsightsPage() {
         </div>
 
         <div className="mt-16 border-t border-mw-line pt-16">
-          <h2 className="font-display text-2xl font-bold text-mw-primary">Blogs</h2>
+          <h2 className="font-display text-2xl font-bold text-mw-primary">
+            Blogs
+          </h2>
 
           {blogGroups.length === 0 ? (
-            <p className="mt-8 text-sm text-mw-ink/50">
-              No blog posts yet.
-            </p>
+            <p className="mt-8 text-sm text-mw-ink/50">No blog posts yet.</p>
           ) : (
             <div className="mt-8 space-y-14">
               {blogGroups.map(({ category, posts }) => (
@@ -64,34 +74,13 @@ export default async function InsightsPage() {
                   <h3 className="font-display text-lg font-bold text-mw-secondary">
                     {category?.title ?? "Uncategorized"}
                   </h3>
-                  <div className="mt-6 grid gap-8 lg:grid-cols-3">
+                  <div className="mt-6 grid items-stretch gap-8 lg:grid-cols-3">
                     {posts.map((post) => (
-                      <Link
+                      <BlogCard
                         key={post.slug}
-                        href={`/insights/${post.slug}`}
-                        className="group flex flex-col overflow-hidden rounded-2xl border border-mw-line transition hover:border-mw-secondary hover:shadow-lg hover:shadow-mw-secondary/5"
-                      >
-                        <div
-                          className="relative w-full bg-mw-paper"
-                          style={{ aspectRatio: post.coverImageAspectRatio || 16 / 9 }}
-                        >
-                          <Image
-                            src={urlFor(post.coverImage).width(800).url()}
-                            alt={post.title}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                        <div className="flex flex-1 flex-col p-7">
-                          <h2 className="font-display text-xl font-bold text-mw-primary">{post.title}</h2>
-                          <div className="mt-6 flex items-center justify-between text-xs text-mw-ink/50">
-                            <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
-                            <span className="font-semibold text-mw-secondary opacity-0 transition group-hover:opacity-100">
-                              Read &rarr;
-                            </span>
-                          </div>
-                        </div>
-                      </Link>
+                        post={post}
+                        showExcerpt={false}
+                      />
                     ))}
                   </div>
                 </div>
