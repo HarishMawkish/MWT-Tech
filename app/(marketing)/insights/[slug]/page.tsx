@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import { CtaBand, Eyebrow, Section } from "@/components/ui";
+import { BlogImageSlideshow } from "@/components/BlogImageSlideshow";
 import { insights } from "@/lib/site-data";
 import {
   getAllBlogSlugs,
@@ -110,15 +111,15 @@ export default async function InsightDetailPage({
         ) : (
           blogPost && (
             <>
-              <div className="relative mb-10 h-72 w-full overflow-hidden rounded-2xl bg-mw-paper sm:h-96">
-                <Image
-                  src={urlFor(blogPost.coverImage).width(1600).url()}
-                  alt={blogPost.title}
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
+              <BlogImageSlideshow
+                images={[
+                  { src: urlFor(blogPost.coverImage).width(1600).url(), alt: blogPost.title },
+                  ...(blogPost.galleryImages ?? []).map((img, i) => ({
+                    src: urlFor(img).width(1600).url(),
+                    alt: img.alt || `${blogPost.title} — photo ${i + 2}`,
+                  })),
+                ]}
+              />
               <div className="prose prose-lg max-w-none text-mw-ink/75 prose-headings:font-display prose-headings:text-mw-primary prose-a:text-mw-secondary">
                 <PortableText value={blogPost.content} />
               </div>
@@ -167,12 +168,24 @@ export default async function InsightDetailPage({
                   href={`/insights/${p.slug}`}
                   className="overflow-hidden rounded-2xl border border-mw-line bg-primary transition hover:border-mw-secondary"
                 >
-                  <div className="relative h-32 w-full">
+                  {/* Universal 16:9 frame. The full, uncropped photo sits on
+                      top (object-contain, original quality); a tiny blurred
+                      copy of the same photo fills whatever space is left so
+                      the frame is always filled edge to edge. */}
+                  <div className="relative aspect-[16/9] w-full overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={urlFor(p.coverImage).width(48).blur(20).url()}
+                      alt=""
+                      aria-hidden="true"
+                      className="absolute inset-0 h-full w-full scale-110 object-cover opacity-70 blur-xl"
+                    />
                     <Image
-                      src={urlFor(p.coverImage).width(500).height(260).url()}
+                      src={urlFor(p.coverImage).width(800).url()}
                       alt={p.title}
                       fill
-                      className="object-cover"
+                      sizes="(min-width: 768px) 384px, 100vw"
+                      className="object-contain"
                     />
                   </div>
                   <div className="p-6">

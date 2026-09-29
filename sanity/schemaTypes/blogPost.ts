@@ -28,6 +28,28 @@ export const blogPost = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "galleryImages",
+      title: "Additional Photos",
+      description:
+        "Optional. When added, the post page cycles through the cover image followed by these photos in a looping slideshow. The cover image is still what appears on cards and previews.",
+      type: "array",
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+          fields: [
+            defineField({
+              name: "alt",
+              title: "Alt text",
+              type: "string",
+              description: "Short description for screen readers.",
+            }),
+          ],
+        },
+      ],
+      options: { layout: "grid" },
+    }),
+    defineField({
       name: "category",
       title: "Category",
       description:
