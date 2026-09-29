@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Hero } from "@/components/home/Hero";
 import { MarqueeStrip } from "@/components/home/MarqueeStrip";
 import { SolutionsStrip } from "@/components/home/SolutionsStrip";
@@ -124,12 +125,17 @@ export default function Home() {
                 delay={150}
                 className="mt-10 overflow-hidden rounded-3xl border border-white/10 shadow-[0_0_40px_rgba(127,217,180,0.08)]"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/images/untitled-03846.JPG"
-                  alt=""
-                  className="h-72 w-full object-cover sm:h-80 lg:h-96"
-                />
+                {/* Source file is ~12 MB — next/image resizes/compresses it
+                    so the browser isn't decoding a huge JPEG mid-scroll. */}
+                <div className="relative h-72 w-full sm:h-80 lg:h-96">
+                  <Image
+                    src="/images/untitled-03846.JPG"
+                    alt=""
+                    fill
+                    sizes="(min-width: 1024px) 45vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
               </Reveal>
             </div>
           </div>
@@ -139,7 +145,7 @@ export default function Home() {
               const Icon = serviceIconBySlug[s.slug] ?? IconGrid;
               return (
                 <Reveal key={s.slug} delay={i * 100}>
-                  <div className="group rounded-3xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-xl transition-all duration-500 hover:border-mw-mint/30 hover:shadow-2xl hover:shadow-mw-mint/10">
+                  <div className="group rounded-3xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-500 hover:border-mw-mint/30 hover:shadow-2xl hover:shadow-mw-mint/10">
                     <div className="flex items-center gap-4">
                       <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-mw-mint/25 bg-mw-mint/5 text-mw-mint">
                         <Icon className="h-5 w-5" />

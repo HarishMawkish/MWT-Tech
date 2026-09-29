@@ -16,20 +16,31 @@ import { industryIconBySlug, IconLayers } from "./icons";
 export function IndustryMosaic() {
   const trackRef = useRef<HTMLDivElement>(null);
 
+  const rafRef = useRef(0);
+
+  // Coalesce scroll events to one update per frame, and batch all layout
+  // reads before any style writes to avoid forced synchronous reflow.
   const handleScroll = () => {
-    const track = trackRef.current;
-    if (!track) return;
-    const cards = track.querySelectorAll<HTMLElement>("[data-industry-card]");
-    cards.forEach((card) => {
-      const icon = card.querySelector<HTMLElement>("[data-industry-icon]");
-      if (!icon) return;
-      const rect = card.getBoundingClientRect();
+    if (rafRef.current) return;
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = 0;
+      const track = trackRef.current;
+      if (!track) return;
       const trackRect = track.getBoundingClientRect();
-      // Distance of this card's center from the track's center, normalized.
-      const cardCenter = rect.left + rect.width / 2;
       const trackCenter = trackRect.left + trackRect.width / 2;
-      const offset = (cardCenter - trackCenter) / trackRect.width;
-      icon.style.transform = `translateX(${offset * -14}px)`;
+      const cards = track.querySelectorAll<HTMLElement>("[data-industry-card]");
+      const updates: [HTMLElement, number][] = [];
+      cards.forEach((card) => {
+        const icon = card.querySelector<HTMLElement>("[data-industry-icon]");
+        if (!icon) return;
+        const rect = card.getBoundingClientRect();
+        // Distance of this card's center from the track's center, normalized.
+        const offset = (rect.left + rect.width / 2 - trackCenter) / trackRect.width;
+        updates.push([icon, offset * -14]);
+      });
+      updates.forEach(([icon, x]) => {
+        icon.style.transform = `translateX(${x}px)`;
+      });
     });
   };
 
@@ -47,7 +58,7 @@ export function IndustryMosaic() {
               key={ind.slug}
               href="/industries"
               data-industry-card
-              className="group relative flex w-52 shrink-0 snap-start flex-col justify-between gap-6 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:border-mw-mint/40 hover:shadow-[0_0_30px_rgba(127,217,180,0.15)]"
+              className="group relative flex w-52 shrink-0 snap-start flex-col justify-between gap-6 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-mw-mint/40 hover:shadow-[0_0_30px_rgba(127,217,180,0.15)]"
             >
               <div
                 aria-hidden="true"
