@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Hero } from "@/components/home/Hero";
 import { MarqueeStrip } from "@/components/home/MarqueeStrip";
 import { SolutionsStrip } from "@/components/home/SolutionsStrip";
@@ -31,7 +32,9 @@ function SectionTag({ children }: { children: string }) {
   return (
     <div className="inline-flex items-center gap-3">
       <span className="h-px w-10 bg-mw-mint" />
-      <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">{children}</span>
+      <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
+        {children}
+      </span>
     </div>
   );
 }
@@ -58,10 +61,12 @@ export default function Home() {
         <div className="relative z-10 order-2 flex flex-col justify-center px-6 py-16 lg:order-2 lg:min-h-screen lg:px-16 lg:py-24">
           <Reveal className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
             <SectionTag>Who We Are</SectionTag>
-            <h2 className="mt-4 font-display text-4xl text-white sm:text-5xl lg:text-6xl">Mawkish Technologies</h2>
+            <h2 className="mt-4 font-display text-4xl text-white sm:text-5xl lg:text-6xl">
+              Mawkish Technologies
+            </h2>
             <p className="mt-4 text-sm leading-relaxed text-white/65 sm:text-base">
-              Founded on a simple belief: technology projects should create measurable business outcomes,
-              not just deploy software.
+              Founded on a simple belief: technology projects should create
+              measurable business outcomes, not just deploy software.
             </p>
             <Link
               href="/about"
@@ -71,16 +76,23 @@ export default function Home() {
               <span aria-hidden="true">&rarr;</span>
             </Link>
           </Reveal>
-          <Reveal delay={150} className="mx-auto mt-12 w-full max-w-xl border-t border-white/10 pt-8 lg:mx-0">
+          <Reveal
+            delay={150}
+            className="mx-auto mt-12 w-full max-w-xl border-t border-white/10 pt-8 lg:mx-0"
+          >
             <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
               {stats.map((s) => (
                 <div key={s.label} className="text-center lg:text-left">
                   <div className="font-display text-4xl text-mw-mint sm:text-5xl">
                     <StatCounter value={Number(s.value)} />
                   </div>
-                  <div className="mt-2 text-xs font-medium text-white/70 sm:text-sm">{s.label}</div>
+                  <div className="mt-2 text-xs font-medium text-white/70 sm:text-sm">
+                    {s.label}
+                  </div>
                   {"detail" in s && s.detail && (
-                    <div className="mt-0.5 text-[11px] text-white/40">{s.detail}</div>
+                    <div className="mt-0.5 text-[11px] text-white/40">
+                      {s.detail}
+                    </div>
                   )}
                 </div>
               ))}
@@ -100,20 +112,30 @@ export default function Home() {
               <Reveal>
                 <SectionTag>Platforms We Grow With</SectionTag>
                 <h2 className="mt-4 font-display text-4xl font-extrabold tracking-tight text-white lg:text-6xl">
-                  Make You Grow, <span className="italic text-mw-mint">Together</span>.
+                  Make You Grow,{" "}
+                  <span className="italic text-mw-mint">Together</span>.
                 </h2>
                 <p className="mt-4 max-w-md text-sm leading-relaxed text-white/65 sm:text-base">
-                  Mawkish delivers certified, multi-platform enterprise solutions — SAP, Salesforce, Odoo,
-                  and AI — architected around how your business actually runs.
+                  Mawkish delivers certified, multi-platform enterprise
+                  solutions — SAP, Salesforce, Odoo, and AI — architected around
+                  how your business actually runs.
                 </p>
               </Reveal>
-              <Reveal delay={150} className="mt-10 overflow-hidden rounded-3xl border border-white/10 shadow-[0_0_40px_rgba(127,217,180,0.08)]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/images/untitled-03846.JPG"
-                  alt=""
-                  className="h-72 w-full object-cover sm:h-80 lg:h-96"
-                />
+              <Reveal
+                delay={150}
+                className="mt-10 overflow-hidden rounded-3xl border border-white/10 shadow-[0_0_40px_rgba(127,217,180,0.08)]"
+              >
+                {/* Source file is ~12 MB — next/image resizes/compresses it
+                    so the browser isn't decoding a huge JPEG mid-scroll. */}
+                <div className="relative h-72 w-full sm:h-80 lg:h-96">
+                  <Image
+                    src="/images/untitled-03846.JPG"
+                    alt=""
+                    fill
+                    sizes="(min-width: 1024px) 45vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
               </Reveal>
             </div>
           </div>
@@ -123,14 +145,18 @@ export default function Home() {
               const Icon = serviceIconBySlug[s.slug] ?? IconGrid;
               return (
                 <Reveal key={s.slug} delay={i * 100}>
-                  <div className="group rounded-3xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-xl transition-all duration-500 hover:border-mw-mint/30 hover:shadow-2xl hover:shadow-mw-mint/10">
+                  <div className="group rounded-3xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-500 hover:border-mw-mint/30 hover:shadow-2xl hover:shadow-mw-mint/10">
                     <div className="flex items-center gap-4">
                       <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-mw-mint/25 bg-mw-mint/5 text-mw-mint">
                         <Icon className="h-5 w-5" />
                       </div>
-                      <h3 className="font-display text-xl text-white sm:text-2xl">{s.name}</h3>
+                      <h3 className="font-display text-xl text-white sm:text-2xl">
+                        {s.name}
+                      </h3>
                     </div>
-                    <p className="my-4 text-base leading-relaxed text-gray-300">{s.description}</p>
+                    <p className="my-4 text-base leading-relaxed text-gray-300">
+                      {s.description}
+                    </p>
                     <div className="flex flex-wrap gap-2">
                       {s.outcomes.slice(0, 4).map((o) => (
                         <span
@@ -173,8 +199,8 @@ export default function Home() {
                 Discover, Design, Implement, Optimize.
               </h2>
               <p className="mt-4 text-sm text-white/55 sm:text-base">
-                Every engagement begins with understanding business objectives before technology
-                recommendations are made.
+                Every engagement begins with understanding business objectives
+                before technology recommendations are made.
               </p>
             </Reveal>
             <div className="mt-14">
@@ -195,11 +221,15 @@ export default function Home() {
             className="pointer-events-none absolute bottom-0 right-0 hidden h-64 w-64 lg:block lg:h-80 lg:w-80"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/demo/image4.jpg" alt="" className="h-full w-full object-cover opacity-30" />
+            <img
+              src="/images/demo/image4.jpg"
+              alt=""
+              className="h-full w-full object-cover opacity-30"
+            />
             <div className="absolute inset-0 bg-gradient-to-tl from-transparent via-black/60 to-black" />
           </div>
 
-          <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[42%_58%] lg:gap-16 lg:px-8 lg:py-32">
+          <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-[minmax(0,1fr)] gap-12 px-6 py-24 lg:grid-cols-[42%_58%] lg:gap-16 lg:px-8 lg:py-32">
             <Reveal>
               <SectionTag>The Problem We Solve</SectionTag>
               <h2 className="mt-4 font-display text-3xl font-extrabold leading-tight text-white sm:text-4xl lg:text-5xl">
@@ -240,14 +270,16 @@ export default function Home() {
                 className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold text-mw-mint transition-colors hover:text-white"
               >
                 Explore industries
-                <span aria-hidden="true" className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+                <span
+                  aria-hidden="true"
+                  className="inline-block transition-transform duration-300 group-hover:translate-x-1"
+                >
                   &rarr;
                 </span>
               </Link>
             </Reveal>
           </div>
         </section>
-
       </div>
 
       <CtaBand />

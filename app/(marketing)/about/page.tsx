@@ -151,7 +151,7 @@ export default function AboutPage() {
               return (
                 <div
                   key={card.title}
-                  className="rounded-3xl border border-white/10 bg-white/[0.02] p-8 backdrop-blur-xl transition hover:border-mw-mint/30 hover:bg-white/[0.04]"
+                  className="rounded-3xl border border-white/10 bg-white/[0.02] p-8 transition hover:border-mw-mint/30 hover:bg-white/[0.04]"
                 >
                   <div className="grid h-12 w-12 place-items-center rounded-2xl border border-mw-mint/25 bg-mw-mint/5 text-mw-mint">
                     <Icon />
@@ -189,10 +189,11 @@ export default function AboutPage() {
               src="/images/culture.JPG"
               alt="Mawkish team and workspace"
               fill
+              sizes="(min-width: 1280px) 1200px, 100vw"
               className="object-cover scale-100"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-            <div className="absolute bottom-6 left-6 max-w-xs rounded-2xl border border-white/15 bg-black/40 p-5 backdrop-blur-xl">
+            <div className="absolute bottom-6 left-6 max-w-xs rounded-2xl border border-white/15 bg-black/40 p-5">
               <p className="text-sm font-medium leading-relaxed text-white">
                 Friendly, collaborative, and innovation-driven culture.
               </p>
@@ -220,12 +221,13 @@ export default function AboutPage() {
                 src="/images/brand/malick2.jpeg"
                 alt="Hatim Malick - Chairman"
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
                 style={{ objectPosition: "75% 30%" }}
               />
               <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 to-transparent" />
             </div>
-            <div className="flex min-h-[420px] flex-col justify-center rounded-3xl border border-white/10 bg-white/[0.02] p-10 backdrop-blur-xl">
+            <div className="flex min-h-[420px] flex-col justify-center rounded-3xl border border-white/10 bg-white/[0.02] p-10">
               <div className="font-display text-2xl font-bold tracking-tight text-white">
                 Hatim Malick
               </div>
@@ -242,7 +244,7 @@ export default function AboutPage() {
 
           {/* CEO */}
           <div className="grid gap-10 border-t border-white/5 pt-12 lg:grid-cols-2 lg:items-center">
-            <div className="order-2 flex min-h-[420px] flex-col justify-center rounded-3xl border border-white/10 bg-white/[0.02] p-10 backdrop-blur-xl lg:order-1">
+            <div className="order-2 flex min-h-[420px] flex-col justify-center rounded-3xl border border-white/10 bg-white/[0.02] p-10 lg:order-1">
               <div className="font-display text-2xl font-bold tracking-tight text-white">
                 Michael Gunawardena
               </div>
@@ -261,6 +263,7 @@ export default function AboutPage() {
                 src="/images/brand/michael.JPG"
                 alt="Michael Gunawardena - CEO"
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
               <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 to-transparent" />
@@ -281,7 +284,7 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div className="mt-12 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-xl">
+          <div className="mt-12 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
             <table className="w-full text-left">
               <thead>
                 <tr className="border-b border-white/10 text-xs font-semibold uppercase tracking-widest text-white/40">

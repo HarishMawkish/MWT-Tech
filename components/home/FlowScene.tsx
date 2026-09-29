@@ -24,7 +24,7 @@ export function FlowScene() {
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({
-        antialias: !lowPower,
+        antialias: false, // faint 1px points/lines — MSAA isn't worth the fill cost on a fullscreen layer
         alpha: true,
         powerPreference: "low-power",
       });
@@ -38,7 +38,7 @@ export function FlowScene() {
     const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 60);
     camera.position.set(0, 0, 12);
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1 : 1.75));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
 
@@ -109,21 +109,46 @@ export function FlowScene() {
 
     const clock = new THREE.Clock();
     let frameId = 0;
+    let inView = false;
 
     const animate = () => {
       frameId = requestAnimationFrame(animate);
-      const dt = clock.getDelta();
-      if (document.hidden) return;
+      const dt = Math.min(clock.getDelta(), 0.1);
       if (!reduceMotion) {
         rig.rotation.y += dt * 0.015;
         rig.rotation.x += dt * 0.006;
       }
       renderer.render(scene, camera);
     };
-    animate();
+
+    // This canvas is position:fixed, so it used to render a full-viewport
+    // WebGL frame on every tick for the entire page visit — even while the
+    // hero, footer, etc. were on screen. Only run (and show) it while the
+    // .mw-flow wrapper it belongs to is actually in the viewport.
+    const start = () => {
+      if (frameId || !inView || document.hidden) return;
+      clock.getDelta();
+      animate();
+    };
+    const stop = () => {
+      cancelAnimationFrame(frameId);
+      frameId = 0;
+    };
+    const flowRoot = container.parentElement ?? container;
+    const io = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      container.style.visibility = inView ? "visible" : "hidden";
+      if (inView) start();
+      else stop();
+    });
+    io.observe(flowRoot);
+    const onVisibility = () => (document.hidden ? stop() : start());
+    document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
-      cancelAnimationFrame(frameId);
+      stop();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       ro.disconnect();
       particleGeo.dispose();
       linkGeo.dispose();

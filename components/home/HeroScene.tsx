@@ -47,7 +47,7 @@ const bgFragmentShader = /* glsl */ `
   float fbm(vec2 p) {
     float v = 0.0;
     float amp = 0.5;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 4; i++) {
       v += amp * noise(p);
       p *= 2.02;
       amp *= 0.5;
@@ -109,7 +109,7 @@ export function HeroScene({ className = "" }: { className?: string }) {
     const camera = new THREE.PerspectiveCamera(48, 1, 0.1, 100);
     camera.position.set(0, 0, 7.2);
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1 : 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1 : 1.5));
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
 
@@ -229,14 +229,11 @@ export function HeroScene({ className = "" }: { className?: string }) {
 
     const clock = new THREE.Clock();
     let frameId = 0;
+    let inView = true;
 
     const animate = () => {
       frameId = requestAnimationFrame(animate);
-      const dt = clock.getDelta();
-
-      // Don't waste GPU/battery rendering a backgrounded tab — invisible to
-      // the user either way, but stops burning cycles when they've tabbed away.
-      if (document.hidden) return;
+      const dt = Math.min(clock.getDelta(), 0.1);
 
       bgUniforms.uTime.value += dt;
 
@@ -256,10 +253,34 @@ export function HeroScene({ className = "" }: { className?: string }) {
         renderer.render(scene, camera);
       }
     };
-    animate();
+
+    // The hero scrolls out of view almost immediately — keeping bloom + film
+    // + a 5-octave noise shader running behind the rest of the page was the
+    // main source of scroll jank. Only run the loop while the hero is
+    // actually visible and the tab is foregrounded.
+    const start = () => {
+      if (frameId || !inView || document.hidden) return;
+      clock.getDelta(); // discard the time spent paused
+      animate();
+    };
+    const stop = () => {
+      cancelAnimationFrame(frameId);
+      frameId = 0;
+    };
+    const io = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      if (inView) start();
+      else stop();
+    });
+    io.observe(container);
+    const onVisibility = () => (document.hidden ? stop() : start());
+    document.addEventListener("visibilitychange", onVisibility);
+    start();
 
     return () => {
-      cancelAnimationFrame(frameId);
+      stop();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       ro.disconnect();
       bgMesh.geometry.dispose();
       bgMaterial.dispose();
