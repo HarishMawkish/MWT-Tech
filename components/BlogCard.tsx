@@ -48,7 +48,7 @@ export function BlogCard({
       href={`/insights/${post.slug}`}
       className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-mw-line transition hover:border-mw-secondary hover:shadow-lg hover:shadow-mw-secondary/5"
     >
-      <div className="w-full shrink-0 overflow-hidden bg-mw-paper">
+      <div className="w-full shrink-0 overflow-hidden">
         {imageUrl ? (
           <Image
             src={imageUrl}

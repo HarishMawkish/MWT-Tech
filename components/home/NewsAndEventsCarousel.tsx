@@ -98,7 +98,7 @@ export function NewsAndEventsCarousel({ posts }: NewsAndEventsCarouselProps) {
                 {/* Every blog gets exactly the same image frame. The source
                     image's native aspect ratio no longer changes the card
                     or carousel height. */}
-                <div className="relative aspect-[16/9] w-full overflow-hidden bg-mw-paper">
+                <div className="relative aspect-[16/9] w-full overflow-hidden">
                   <Image
                     src={urlFor(post.coverImage).width(1200).height(675).fit("crop").url()}
                     alt={post.title}
