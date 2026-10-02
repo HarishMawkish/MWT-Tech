@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export type SlideshowImage = { src: string; alt: string };
 
-const AUTO_PLAY_MS = 5000;
+const AUTO_PLAY_MS = 3000;
 
 /**
  * Looping cross-fade slideshow for a blog post's cover + additional photos.
