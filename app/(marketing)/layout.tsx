@@ -7,7 +7,6 @@ import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { PageWatermark } from "@/components/PageWatermark";
 import { SiteLoader } from "@/components/SiteLoader";
-import Script from "next/script";
 
 // Montserrat — main/heading text. Clean geometric letterforms.
 const montserrat = Montserrat({
@@ -56,7 +55,7 @@ export const metadata: Metadata = {
 // Runs before hydration so the correct theme class is present on first
 // paint — no flash of the wrong theme. Kept inline (not a separate file)
 // so it's part of the initial HTML and executes synchronously.
-const themeInitScript = `(function(){try{var stored=localStorage.getItem('mw-theme');var isDark=stored?stored==='dark':true;if(isDark){document.documentElement.classList.add('dark');}document.documentElement.style.colorScheme=isDark?'dark':'light';}catch(e){}})();`;
+const themeInitScript = `(function(){try{var stored=localStorage.getItem('mw-theme');var isDark=stored?stored==='dark':true;document.documentElement.classList.toggle('dark',isDark);document.documentElement.style.colorScheme=isDark?'dark':'light';}catch(e){}})();`;
 
 export default function RootLayout({
   children,
@@ -66,16 +65,18 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${montserrat.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${montserrat.variable} ${inter.variable} ${jetbrainsMono.variable} dark h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        {/* Plain inline script in <head> so it runs synchronously before first
+            paint. (next/script's beforeInteractive injects via Next's JS
+            bootstrap, which in production runs after paint and left the page
+            in light mode.) The `dark` class above is the server-rendered
+            default; this only switches to light if the visitor chose it. */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="min-h-full flex flex-col">
-        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <Script
-          id="theme-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: themeInitScript }}
-        />
         <ThemeProvider>
           {/* Splash sits above absolutely everything, including the navbar,
               and fades out once the page is ready — the navbar is already
