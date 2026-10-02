@@ -120,7 +120,7 @@ export default async function InsightDetailPage({
                   })),
                 ]}
               />
-              <div className="prose prose-lg max-w-none text-mw-ink/75 prose-headings:font-display prose-headings:text-mw-primary prose-a:text-mw-secondary">
+              <div className="prose prose-lg max-w-none text-mw-ink/75 prose-headings:font-display prose-headings:text-mw-primary prose-a:text-mw-secondary prose-strong:font-bold prose-strong:text-mw-primary">
                 <PortableText value={blogPost.content} />
               </div>
             </>
