@@ -42,13 +42,13 @@ export function CtaBand() {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/contact"
-            className="rounded-full bg-mw-mint px-6 py-3 text-sm font-semibold text-mw-void transition hover:bg-white hover:text-mw-void"
+            className="rounded-full bg-mw-mint px-6 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-mw-void active:scale-[0.97]"
           >
             Schedule a Consultation
           </Link>
           <Link
             href="/contact?intent=proposal"
-            className="rounded-full border border-white/25 px-6 py-3 text-sm font-semibold text-white transition hover:border-mw-mint hover:text-mw-mint"
+            className="rounded-full border border-white/25 px-6 py-3 text-sm font-semibold text-white transition hover:border-mw-mint hover:text-mw-mint active:scale-[0.97]"
           >
             Request a Proposal
           </Link>
@@ -62,22 +62,59 @@ export function PageHero({
   eyebrow,
   title,
   description,
+  children,
 }: {
   eyebrow: string;
   title: string;
   description: string;
+  children?: ReactNode;
 }) {
   return (
-    <section className="mw-dark-section mw-glow-grid relative overflow-hidden">
-      <div className="mx-auto max-w-4xl px-6 py-24 text-center lg:px-8">
+    <section className="mw-dark-section relative overflow-hidden">
+      {/* A single soft light from above gives the page depth without noise. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[28rem]"
+        style={{
+          background:
+            "radial-gradient(60% 100% at 50% 0%, rgba(28,107,81,0.32) 0%, rgba(28,107,81,0.08) 45%, rgba(0,0,0,0) 75%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-4xl px-6 pb-24 pt-20 text-center lg:px-8 lg:pb-32 lg:pt-28">
         <Eyebrow>{eyebrow}</Eyebrow>
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-center break-words">
+        <h1 className="mx-auto mt-7 max-w-4xl text-balance font-display text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
           {title}
         </h1>
-        <p className="mx-auto mt-5 max-w-2xl text-lg text-white/70">
+        <p className="mx-auto mt-6 max-w-2xl text-balance text-lg leading-relaxed text-white/70 sm:text-xl">
           {description}
         </p>
+        {children && <div className="mt-10 flex flex-wrap items-center justify-center gap-4">{children}</div>}
       </div>
     </section>
+  );
+}
+
+/** Section opener: a short rule, a small label, and a display heading. */
+export function SectionHead({
+  tag,
+  title,
+  id,
+  className = "",
+}: {
+  tag: string;
+  title: string;
+  id?: string;
+  className?: string;
+}) {
+  return (
+    <div className={`max-w-2xl ${className}`}>
+      <div className="inline-flex items-center gap-3">
+        <span className="h-px w-10 bg-mw-mint" />
+        <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">{tag}</span>
+      </div>
+      <h2 id={id} className="mt-5 text-balance font-display text-3xl text-white sm:text-5xl">
+        {title}
+      </h2>
+    </div>
   );
 }

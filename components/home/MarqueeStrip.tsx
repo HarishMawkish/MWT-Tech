@@ -4,7 +4,7 @@ export function MarqueeStrip() {
   const loop = [...clients, ...clients];
   return (
     <div className="mw-glow-strip border-y border-white/10 py-10">
-      <p className="relative z-10 mb-6 text-center text-xs font-semibold uppercase tracking-[0.25em] text-white/40">
+      <p className="relative z-10 mb-6 text-center text-xs font-semibold uppercase tracking-[0.25em] text-white/55">
         Trusted by leading enterprises
       </p>
       <div className="mw-edge-fade relative z-10 overflow-hidden">
@@ -12,7 +12,7 @@ export function MarqueeStrip() {
           {loop.map((client, i) => (
             <div
               key={`${client.name}-${i}`}
-              className="flex h-20 w-44 shrink-0 items-center justify-center rounded-xl bg-white px-6 py-4 shadow-sm sm:h-24 sm:w-52"
+              className="flex h-20 w-44 shrink-0 items-center justify-center rounded-2xl bg-white/95 px-6 py-4 shadow-sm sm:h-20 sm:w-48"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

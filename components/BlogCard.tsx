@@ -1,7 +1,19 @@
 import Image from "next/image";
-import Link from "next/link";
+import { SpotlightLink } from "@/components/SpotlightLink";
 import { excerptFromPlainText, type SanityBlogPost } from "@/lib/sanity/queries";
 import { urlFor } from "@/lib/sanity/image";
+
+// Fixed locale + UTC so the server and the browser always print the same
+// date (a bare toLocaleDateString() differs by visitor and can mismatch on
+// hydration).
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
 
 /**
  * Single source of truth for a blog preview card, used by both the homepage
@@ -37,11 +49,11 @@ export function BlogCard({
   const backdropUrl = hasImage ? urlFor(post.coverImage).width(48).blur(20).url() : null;
 
   return (
-    <Link
+    <SpotlightLink
       href={`/insights/${post.slug}`}
-      className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-mw-line transition hover:border-mw-secondary hover:shadow-lg hover:shadow-mw-secondary/5"
+      className="group flex h-full w-full flex-col rounded-3xl"
     >
-      <div className="relative aspect-[16/9] w-full shrink-0 overflow-hidden">
+      <div className="relative aspect-[16/9] w-full shrink-0 overflow-hidden bg-black/40">
         {imageUrl && backdropUrl ? (
           <>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -53,39 +65,46 @@ export function BlogCard({
             />
             <Image
               src={imageUrl}
-              alt={post.title}
+              alt=""
               fill
               sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
-              className="object-contain transition duration-500 group-hover:scale-[1.03]"
+              className="object-contain transition duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
             />
           </>
         ) : (
           // Post with no cover image: keep the same slot so the card height
           // still matches its neighbours instead of jumping short.
-          <div className="flex aspect-[16/9] w-full items-center justify-center text-xs font-semibold uppercase tracking-widest text-mw-ink/30">
+          <div className="flex aspect-[16/9] w-full items-center justify-center text-xs font-semibold uppercase tracking-widest text-white/30">
             Mawkish
           </div>
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-7">
-        <h3 className="line-clamp-2 min-h-[3.5rem] font-display text-xl font-bold leading-7 text-mw-primary">
+      <div className="flex flex-1 flex-col p-6 sm:p-7">
+        <time dateTime={post.publishedAt} className="text-xs font-medium uppercase tracking-widest text-white/50">
+          {formatDate(post.publishedAt)}
+        </time>
+
+        <h3 className="mt-3 line-clamp-3 font-display text-xl leading-snug text-white">
           {post.title}
         </h3>
 
         {showExcerpt && (
-          <p className="mt-3 line-clamp-3 min-h-[4.5rem] text-sm leading-6 text-mw-ink/65">
+          <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/65">
             {excerptFromPlainText(post.plainText)}
           </p>
         )}
 
-        <div className="mt-auto flex items-center justify-between pt-6 text-xs text-mw-ink/50">
-          <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
-          <span className="font-semibold text-mw-secondary opacity-0 transition group-hover:opacity-100">
-            Read &rarr;
+        <span className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-semibold text-white/90">
+          Read article
+          <span
+            aria-hidden="true"
+            className="inline-block transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5"
+          >
+            &rarr;
           </span>
-        </div>
+        </span>
       </div>
-    </Link>
+    </SpotlightLink>
   );
 }

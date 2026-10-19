@@ -1,4 +1,5 @@
 import { Section } from "@/components/ui";
+import { Reveal } from "@/components/Reveal";
 import { BlogCard } from "@/components/BlogCard";
 import { getBlogPostsByCategoryTitle } from "@/lib/sanity/queries";
 
@@ -23,9 +24,17 @@ export async function NewsAndEvents() {
 
   return (
     <Section>
-      <h2 className="font-display text-3xl font-bold text-mw-primary">
-        {CATEGORY_TITLE}
-      </h2>
+      <Reveal>
+        <div className="inline-flex items-center gap-3">
+          <span className="h-px w-10 bg-mw-mint" />
+          <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
+            Latest
+          </span>
+        </div>
+        <h2 className="mt-4 font-display text-4xl text-white sm:text-5xl">
+          {CATEGORY_TITLE}
+        </h2>
+      </Reveal>
 
       {useMarquee ? (
         <div className="mw-edge-fade relative mt-10 -mx-6 overflow-hidden px-6 lg:-mx-8 lg:px-8">

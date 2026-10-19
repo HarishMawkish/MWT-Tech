@@ -1,6 +1,14 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* Tailwind's dark: variant follows the .dark class set by the theme
+   provider, not the OS preference. */
+@custom-variant dark {
+  &:where(.dark, .dark *) {
+    @slot;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #0a1f16;
@@ -56,11 +64,52 @@ body {
   transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1), color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-h1, h2, h3, h4 {
-  font-family: var(--font-display), var(--font-sans), sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
+/* Heading defaults live in the base layer so utility classes
+   (leading-*, tracking-*, normal-case, font-*) can still override them. */
+@layer base {
+  h1, h2, h3, h4 {
+    font-family: var(--font-display), var(--font-sans), sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    /* Tracking is size-specific: large display text reads too loose at a
+       fixed value, so it tightens as the heading grows. */
+    letter-spacing: -0.01em;
+    line-height: 1.12;
+  }
+
+  h1 {
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+  }
+
+  h2 {
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  h3, h4 {
+    letter-spacing: 0;
+    line-height: 1.2;
+  }
+}
+
+/* Keyboard focus: a visible ring on every interactive element, shown only
+   for keyboard navigation (not on mouse press). */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-mw-secondary);
+  outline-offset: 3px;
+  border-radius: 0.5rem;
+}
+
+.dark :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible,
+.mw-dark-section :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline-color: #7fd9b4;
+}
+
+/* Feedback on press, not release: every button-like control responds the
+   instant it is touched. */
+:where(button, [role="button"]):not(:disabled):active {
+  transform: scale(0.97);
 }
 
 /* Retained as a no-op so any lingering references don't break — the
@@ -380,13 +429,37 @@ header {
   transition: opacity 0.6s ease;
 }
 
+/* Scroll-edge effect: content fades out under the floating header instead
+   of colliding with the logo. The blur is masked so it dissolves with no
+   hard edge or divider line. */
+header::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -28px 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.94) 0%, rgba(0, 0, 0, 0.82) 60%, rgba(0, 0, 0, 0) 100%);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  header::before {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: #000;
+  }
+}
+
 .mw-loading-lock header {
   opacity: 0;
   pointer-events: none;
 }
 
 .mw-loader {
-  transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .mw-loader-exit {
@@ -437,7 +510,7 @@ header {
 .mw-loader-bar span {
   display: block;
   transform: translateX(-100%);
-  animation: mw-loader-bar-fill 1.4s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
+  animation: mw-loader-bar-fill 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
 }
 
 @keyframes mw-loader-bar-fill {
@@ -445,10 +518,29 @@ header {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Gentler equivalent, not nothing: cross-fade instead of sliding. */
   .mw-reveal {
-    opacity: 1;
+    opacity: 0;
     transform: none;
-    transition: none;
+    transition: opacity 0.3s ease;
+    transition-delay: 0ms !important;
+  }
+  .mw-reveal.mw-in {
+    opacity: 1;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  .mw-node,
+  .mw-loader-ring-outer {
+    animation: none;
+  }
+  .mw-glass-hover,
+  .mw-tilt {
+    transition: border-color 0.3s ease;
+  }
+  :where(button, [role="button"]):not(:disabled):active {
+    transform: none;
   }
   .mw-glass-hover:hover {
     transform: none;
@@ -471,5 +563,105 @@ header {
   }
   body {
     transition: none;
+  }
+}
+
+/* Frostier, near-solid surfaces for people who ask for less transparency. */
+@media (prefers-reduced-transparency: reduce) {
+  .mw-glass {
+    background: #0d221a;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  header [class*="backdrop-blur"] {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  header .bg-white\/70,
+  header .bg-white\/80,
+  header .bg-white\/95 {
+    background-color: #ffffff;
+  }
+}
+
+/* Higher contrast: defined borders and more opaque glass. */
+@media (prefers-contrast: more) {
+  .mw-glass {
+    background: rgba(5, 15, 10, 0.92);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  .mw-reveal {
+    transition-duration: 0.2s;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Spotlight surface — premium card material. A faint glass fill with a
+   hairline edge; on hover a soft green light and a glowing edge follow the
+   pointer (--mx / --my are set by SpotlightLink).
+   --------------------------------------------------------------------- */
+.mw-spot {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.065) 0%, rgba(255, 255, 255, 0.018) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease, border-color 0.6s ease;
+}
+
+.mw-spot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: radial-gradient(460px circle at var(--mx, 50%) var(--my, 0%), rgba(28, 107, 81, 0.38), transparent 62%);
+}
+
+.mw-spot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 0%), rgba(46, 150, 115, 0.85), transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.mw-spot:hover::before,
+.mw-spot:hover::after,
+.mw-spot:focus-visible::before,
+.mw-spot:focus-visible::after {
+  opacity: 1;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .mw-spot:hover {
+    transform: translateY(-4px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 30px 60px -20px rgba(0, 0, 0, 0.7);
+  }
+}
+
+/* Icon tile used on service cards: a deep-green gradient with a bright hairline. */
+.mw-icon-tile {
+  background: linear-gradient(145deg, #1c6b51 0%, #114232 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 8px 24px -8px rgba(28, 107, 81, 0.7);
+}
+
+/* Non-link spotlight cards: light follows the pointer, but no lift. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .mw-spot--still:hover {
+    transform: none;
   }
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { CtaBand, Section } from "@/components/ui";
+import { Reveal } from "@/components/Reveal";
 import { regions } from "@/lib/site-data";
 
 export const metadata: Metadata = {
@@ -104,28 +105,37 @@ export default function AboutPage() {
   return (
     <>
       {/* SECTION 1: Hero Split (50/50 full-bleed) */}
-      <div className="grid h-screen w-full grid-cols-1 bg-[#000100] lg:grid-cols-2">
+      <div className="grid min-h-[calc(100svh-104px)] w-full grid-cols-1 bg-[#000100] lg:grid-cols-2">
         <div className="relative order-last h-full overflow-hidden lg:order-first">
           <Image
             src="https://zql0rfjwszzixew9.public.blob.vercel-storage.com/background/untitled-03672.JPG"
-            alt="Mawkish Vision"
+            alt="Two Mawkish colleagues talking through a project in the office"
             fill
             priority
             className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#000100] via-transparent to-transparent" />
+          {/* Soft fade into the copy panel so the photo and the panel read as
+              one surface instead of two pieces butted together. */}
+          <div className="absolute inset-y-0 right-0 hidden w-1/3 bg-gradient-to-r from-transparent to-[#080d0c] lg:block" />
         </div>
         <div className="flex flex-col justify-center border-l border-white/10 bg-[#080d0c] px-8 py-20 lg:px-16">
-          <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
-            About Mawkish
-          </span>
-          <h1 className="mt-5 font-display text-4xl font-bold leading-[1.1] tracking-tight text-white lg:text-5xl">
-            Business outcomes first. Technology second.
-          </h1>
-          <p className="mt-6 max-w-lg text-lg leading-relaxed text-gray-300">
-            We bridge business strategy and technology — delivering high-impact
-            ERP, CRM, and AI solutions that drive real transformation.
-          </p>
+          <Reveal>
+            <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
+              About Mawkish
+            </span>
+          </Reveal>
+          <Reveal delay={80}>
+            <h1 className="mt-5 font-display text-4xl font-bold text-white lg:text-5xl">
+              Business outcomes first. Technology second.
+            </h1>
+          </Reveal>
+          <Reveal delay={160}>
+            <p className="mt-6 max-w-lg text-lg leading-relaxed text-gray-300">
+              We bridge business strategy and technology — delivering high-impact
+              ERP, CRM, and AI solutions that drive real transformation.
+            </p>
+          </Reveal>
         </div>
       </div>
 
@@ -134,7 +144,7 @@ export default function AboutPage() {
         <Section className="!py-12 lg:!py-16">
           <div className="max-w-2xl">
             <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
-              Our Culture
+              Who we are
             </span>
             <h2 className="mt-5 font-display text-4xl font-bold tracking-tight text-white lg:text-5xl">
               Our Culture &amp; Principles.
@@ -146,13 +156,11 @@ export default function AboutPage() {
           </div>
 
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {cultureCards.map((card) => {
+            {cultureCards.map((card, i) => {
               const Icon = card.icon;
               return (
-                <div
-                  key={card.title}
-                  className="rounded-3xl border border-white/10 bg-white/[0.02] p-8 transition hover:border-mw-mint/30 hover:bg-white/[0.04]"
-                >
+                <Reveal key={card.title} delay={i * 90} className="h-full">
+                <div className="h-full rounded-3xl border border-white/10 bg-white/[0.02] p-8 transition duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-mw-mint/30 hover:bg-white/[0.04]">
                   <div className="grid h-12 w-12 place-items-center rounded-2xl border border-mw-mint/25 bg-mw-mint/5 text-mw-mint">
                     <Icon />
                   </div>
@@ -167,7 +175,7 @@ export default function AboutPage() {
                       {card.badges.map((b) => (
                         <span
                           key={b}
-                          className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-mw-mint/90"
+                          className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-mw-mint"
                         >
                           {b}
                         </span>
@@ -175,6 +183,7 @@ export default function AboutPage() {
                     </div>
                   )}
                 </div>
+                </Reveal>
               );
             })}
           </div>
@@ -193,7 +202,7 @@ export default function AboutPage() {
               className="object-cover scale-100"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-            <div className="absolute bottom-6 left-6 max-w-xs rounded-2xl border border-white/15 bg-black/40 p-5">
+            <div className="absolute bottom-6 left-6 max-w-xs rounded-2xl border border-white/15 border-t-white/30 bg-black/35 p-5 backdrop-blur-xl backdrop-saturate-150">
               <p className="text-sm font-medium leading-relaxed text-white">
                 Friendly, collaborative, and innovation-driven culture.
               </p>
@@ -207,7 +216,7 @@ export default function AboutPage() {
         <Section className="!py-12 lg:!py-16 space-y-16">
           <div className="max-w-2xl">
             <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
-              Leadership
+              The people
             </span>
             <h2 className="mt-5 font-display text-4xl font-bold tracking-tight text-white lg:text-5xl">
               Leadership.
@@ -215,11 +224,12 @@ export default function AboutPage() {
           </div>
 
           {/* Chairman */}
+          <Reveal>
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
             <div className="relative h-[420px] overflow-hidden rounded-3xl border border-white/10">
               <Image
                 src="/images/brand/malick2.jpeg"
-                alt="Hatim Malick - Chairman"
+                alt="Hatim Malick - Founder & Director"
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
@@ -228,11 +238,11 @@ export default function AboutPage() {
               <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 to-transparent" />
             </div>
             <div className="flex min-h-[420px] flex-col justify-center rounded-3xl border border-white/10 bg-white/[0.02] p-10">
-              <div className="font-display text-2xl font-bold tracking-tight text-white">
+              <h3 className="font-display text-2xl font-bold normal-case tracking-tight text-white">
                 Hatim Malick
-              </div>
+              </h3>
               <div className="mt-1 text-sm font-medium text-mw-mint">
-                Chairman, Mawkish Group
+                Founder &amp; Director
               </div>
               <p className="mt-5 text-base leading-relaxed text-gray-300">
                 Provides strategic oversight across Mawkish Group&apos;s
@@ -242,14 +252,17 @@ export default function AboutPage() {
             </div>
           </div>
 
+          </Reveal>
+
           {/* CEO */}
+          <Reveal>
           <div className="grid gap-10 border-t border-white/5 pt-12 lg:grid-cols-2 lg:items-center">
             <div className="order-2 flex min-h-[420px] flex-col justify-center rounded-3xl border border-white/10 bg-white/[0.02] p-10 lg:order-1">
-              <div className="font-display text-2xl font-bold tracking-tight text-white">
+              <h3 className="font-display text-2xl font-bold normal-case tracking-tight text-white">
                 Michael Gunawardena
-              </div>
+              </h3>
               <div className="mt-1 text-sm font-medium text-mw-mint">
-                Chief Executive Officer
+                Director &amp; CEO
               </div>
               <p className="mt-5 text-base leading-relaxed text-gray-300">
                 13+ years of leadership in business operations, client
@@ -261,7 +274,7 @@ export default function AboutPage() {
             <div className="relative order-1 h-[420px] overflow-hidden rounded-3xl border border-white/10 lg:order-2">
               <Image
                 src="/images/brand/michael.JPG"
-                alt="Michael Gunawardena - CEO"
+                alt="Michael Gunawardena - Director & CEO"
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
@@ -269,6 +282,50 @@ export default function AboutPage() {
               <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 to-transparent" />
             </div>
           </div>
+          </Reveal>
+
+          {/* Nafaz */}
+          <Reveal>
+          <div className="mt-12 grid gap-10 border-t border-white/5 pt-12 lg:grid-cols-2 lg:items-center">
+            <div className="relative h-[420px] overflow-hidden rounded-3xl border border-white/10">
+              {/* Blurred copy fills the frame so the full portrait can sit
+                  uncropped on top while the box keeps the same shape as the others. */}
+              <Image
+                src="/images/brand/nafaz.jpeg"
+                alt=""
+                aria-hidden
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="scale-125 object-cover blur-2xl"
+              />
+              <Image
+                src="/images/brand/nafaz.jpeg"
+                alt="Nafaz Jalaldeen"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-contain"
+              />
+              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 to-transparent" />
+            </div>
+            <div className="flex min-h-[420px] flex-col justify-center rounded-3xl border border-white/10 bg-white/[0.02] p-10">
+              <h3 className="font-display text-2xl font-bold normal-case tracking-tight text-white">
+                Nafaz Jalaldeen
+              </h3>
+              <div className="mt-1 text-sm font-medium text-mw-mint">
+                Director &amp; CRO
+              </div>
+              <p className="mt-5 text-base leading-relaxed text-gray-300">
+                Nafaz brings over a decade of experience in technology
+                consulting and enterprise sales across Sri Lanka and the Middle
+                East. At Mawkish Technologies, he connects client priorities
+                with the right solutions across our technology portfolio. His
+                expertise in commercial strategy, partnerships, and executive
+                engagement helps Mawkish win complex projects and build lasting
+                client relationships.
+              </p>
+            </div>
+          </div>
+          </Reveal>
         </Section>
       </section>
 
@@ -286,23 +343,29 @@ export default function AboutPage() {
 
           <div className="mt-12 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
             <table className="w-full text-left">
+              <caption className="sr-only">Mawkish regional footprint by market, status, presence and focus</caption>
               <thead>
-                <tr className="border-b border-white/10 text-xs font-semibold uppercase tracking-widest text-white/40">
-                  <th className="px-6 py-4">Region</th>
-                  <th className="px-6 py-4">Status</th>
-                  <th className="hidden px-6 py-4 sm:table-cell">Presence</th>
-                  <th className="hidden px-6 py-4 lg:table-cell">Focus</th>
+                <tr className="border-b border-white/10 text-xs font-semibold uppercase tracking-widest text-white/55">
+                  <th scope="col" className="px-6 py-4">Region</th>
+                  <th scope="col" className="px-6 py-4">Status</th>
+                  <th scope="col" className="hidden px-6 py-4 sm:table-cell">Presence</th>
+                  <th scope="col" className="hidden px-6 py-4 lg:table-cell">Focus</th>
                 </tr>
               </thead>
               <tbody>
                 {regions.map((r) => (
                   <tr
                     key={r.region}
-                    className="border-b border-white/5 last:border-0"
+                    className="border-b border-white/5 transition-colors last:border-0 hover:bg-white/[0.03]"
                   >
-                    <td className="px-6 py-4 text-sm font-semibold text-white">
+                    <th scope="row" className="px-6 py-4 text-left text-sm font-semibold text-white">
                       {r.region}
-                    </td>
+                      {/* Small screens hide the Presence/Focus columns, so
+                          their content moves under the region name. */}
+                      <span className="mt-0.5 block text-xs font-normal text-white/55 sm:hidden">
+                        {r.presence} · {r.focus}
+                      </span>
+                    </th>
                     <td className="px-6 py-4">
                       <span
                         className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${
@@ -319,10 +382,11 @@ export default function AboutPage() {
                         {r.activeMarket ? "Active" : "Expansion"}
                       </span>
                     </td>
-                    <td className="hidden px-6 py-4 text-sm text-white/60 sm:table-cell">
+                    <td className="hidden px-6 py-4 text-sm text-white/70 sm:table-cell">
                       {r.presence}
+                      <span className="mt-0.5 block text-xs text-white/50 lg:hidden">{r.focus}</span>
                     </td>
-                    <td className="hidden px-6 py-4 text-sm text-white/60 lg:table-cell">
+                    <td className="hidden px-6 py-4 text-sm text-white/70 lg:table-cell">
                       {r.focus}
                     </td>
                   </tr>

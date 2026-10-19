@@ -35,7 +35,7 @@ export function Hero() {
   return (
     <section
       style={{ backgroundColor: "#020604" }}
-      className="mw-void-bg relative flex min-h-[100svh] flex-col overflow-hidden"
+      className="mw-void-bg relative flex min-h-[calc(100svh-104px)] flex-col overflow-hidden"
     >
       {/* WebGL network scene — reacts to pointer movement, not scroll */}
       <HeroScene className="absolute inset-0" />
@@ -102,14 +102,14 @@ export function Hero() {
             />
             <Link
               href={siteConfig.primaryCta.href}
-              className="rounded-full bg-mw-mint px-7 py-3 text-sm font-semibold text-mw-void shadow-lg shadow-mw-mint/30 transition hover:bg-white"
+              className="rounded-full bg-mw-mint px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-mw-mint/30 transition hover:bg-white hover:text-mw-void active:scale-[0.97]"
             >
               {siteConfig.primaryCta.label}
             </Link>
           </div>
           <Link
             href="/services"
-            className="rounded-full border border-white/25 px-7 py-3 text-sm font-semibold text-white transition hover:border-mw-mint hover:text-mw-mint"
+            className="rounded-full border border-white/25 px-7 py-3 text-sm font-semibold text-white transition hover:border-white/60 hover:text-white active:scale-[0.97]"
           >
             Explore Our Services
           </Link>
@@ -127,11 +127,11 @@ export function Hero() {
                 key={s.label}
                 className="mw-glass mw-glass-hover rounded-2xl px-4 py-5 text-center sm:px-5 sm:py-6"
               >
-                <Icon className="mx-auto h-5 w-5 text-mw-mint/80" />
+                <Icon className="mx-auto h-5 w-5 text-mw-mint" />
                 <div className="mt-2 font-display text-4xl text-white sm:text-5xl">
                   <StatCounter value={Number(s.value)} />
                 </div>
-                <div className="mw-hud mt-1.5 text-[10px] leading-snug text-white/60 sm:text-[11px]">
+                <div className="mt-1.5 text-xs font-medium leading-snug tracking-wide text-white/70">
                   {s.label}
                 </div>
               </div>
