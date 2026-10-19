@@ -47,7 +47,7 @@ export default function Home() {
       <SolutionsStrip />
 
       {/* Story + stats — full-bleed photo on the left, green CSS glow on the right */}
-      <section className="mw-glow-section relative grid min-h-screen overflow-hidden lg:grid-cols-2">
+      <section className="mw-glow-section relative grid grid-cols-1 min-h-screen overflow-hidden lg:grid-cols-2">
         <div className="relative order-1 h-72 sm:h-96 lg:order-1 lg:h-auto lg:min-h-screen">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

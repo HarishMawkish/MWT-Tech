@@ -62,7 +62,7 @@ export async function NewsAndEvents() {
         </div>
       ) : (
         // Grid items stretch by default, so all cards in a row match height.
-        <div className="mt-10 grid items-stretch gap-8 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 items-stretch gap-8 lg:grid-cols-3">
           {posts.map((post) => (
             <BlogCard key={post.slug} post={post} />
           ))}

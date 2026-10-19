@@ -64,7 +64,7 @@ export default function IndustriesPage() {
             </div>
           </Reveal>
 
-          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {industries.map((ind, i) => {
               const Icon = industryIconBySlug[ind.slug] ?? IconLayers;
               return (
@@ -99,7 +99,7 @@ export default function IndustriesPage() {
           style={{ background: "radial-gradient(50% 100% at 50% 0%, rgba(28,107,81,0.16) 0%, rgba(0,0,0,0) 80%)" }}
         />
         <Section className="relative !py-20 lg:!py-28">
-          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
             <Reveal>
               <div className="lg:sticky lg:top-32">
                 <div className="inline-flex items-center gap-3">

@@ -24,7 +24,7 @@ export default async function ContactPage({
         description="Tell us about the challenge you're facing. A member of our team will follow up to schedule a consultation."
       />
 
-      <Section className="grid gap-14 lg:grid-cols-[1.2fr_1fr]">
+      <Section className="grid grid-cols-1 gap-14 lg:grid-cols-[1.2fr_1fr]">
         <div className="rounded-2xl border border-mw-line p-8">
           <ContactForm defaultIntent={intent} />
         </div>

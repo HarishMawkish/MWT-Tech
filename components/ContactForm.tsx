@@ -65,7 +65,7 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-mw-ink/80">
             Full name
@@ -94,7 +94,7 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
         </div>
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="company" className="mb-1.5 block text-sm font-medium text-mw-ink/80">
             Company

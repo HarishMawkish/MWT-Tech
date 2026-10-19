@@ -145,7 +145,7 @@ export default async function ServiceDetailPage({
             </h2>
           </Reveal>
 
-          <ol className="mt-14 grid gap-5 md:grid-cols-3">
+          <ol className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-3">
             {service.outcomes.map((o, i) => (
               <Reveal key={o} delay={i * 100} className="h-full">
                 <li className="flex h-full min-h-[15rem] flex-col rounded-[2rem] border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.015] p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.07)]">
@@ -167,7 +167,7 @@ export default async function ServiceDetailPage({
                 More {service.category === "core" ? "core platforms" : "future services"}
               </h2>
             </Reveal>
-            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((s, i) => {
                 return (
                   <Reveal key={s.slug} delay={i * 80} className="h-full">

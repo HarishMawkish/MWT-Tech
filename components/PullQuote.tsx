@@ -1,6 +1,6 @@
 export function PullQuote() {
   return (
-    <div className="mw-glass grid gap-10 rounded-3xl p-8 transition-shadow duration-700 hover:shadow-[0_0_60px_rgba(127,217,180,0.1)] sm:p-12 lg:grid-cols-[auto_1fr] lg:items-center lg:gap-16">
+    <div className="mw-glass grid grid-cols-1 gap-10 rounded-3xl p-8 transition-shadow duration-700 hover:shadow-[0_0_60px_rgba(127,217,180,0.1)] sm:p-12 lg:grid-cols-[auto_1fr] lg:items-center lg:gap-16">
       <div className="relative mx-auto h-40 w-40 shrink-0 lg:mx-0">
         <span className="absolute -left-2 -top-2 h-6 w-6 border-l-2 border-t-2 border-mw-mint transition-all duration-500 group-hover:-left-3 group-hover:-top-3" />
         <span className="absolute -right-2 -top-2 h-6 w-6 border-r-2 border-t-2 border-mw-mint" />

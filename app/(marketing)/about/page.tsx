@@ -155,7 +155,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {cultureCards.map((card, i) => {
               const Icon = card.icon;
               return (
@@ -225,7 +225,7 @@ export default function AboutPage() {
 
           {/* Chairman */}
           <Reveal>
-          <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center">
             <div className="relative h-[420px] overflow-hidden rounded-3xl border border-white/10">
               <Image
                 src="/images/brand/malick2.jpeg"
@@ -256,7 +256,7 @@ export default function AboutPage() {
 
           {/* CEO */}
           <Reveal>
-          <div className="grid gap-10 border-t border-white/5 pt-12 lg:grid-cols-2 lg:items-center">
+          <div className="grid grid-cols-1 gap-10 border-t border-white/5 pt-12 lg:grid-cols-2 lg:items-center">
             <div className="order-2 flex min-h-[420px] flex-col justify-center rounded-3xl border border-white/10 bg-white/[0.02] p-10 lg:order-1">
               <h3 className="font-display text-2xl font-bold normal-case tracking-tight text-white">
                 Michael Gunawardena
@@ -286,7 +286,7 @@ export default function AboutPage() {
 
           {/* Nafaz */}
           <Reveal>
-          <div className="mt-12 grid gap-10 border-t border-white/5 pt-12 lg:grid-cols-2 lg:items-center">
+          <div className="mt-12 grid grid-cols-1 gap-10 border-t border-white/5 pt-12 lg:grid-cols-2 lg:items-center">
             <div className="relative h-[420px] overflow-hidden rounded-3xl border border-white/10">
               {/* Blurred copy fills the frame so the full portrait can sit
                   uncropped on top while the box keeps the same shape as the others. */}
