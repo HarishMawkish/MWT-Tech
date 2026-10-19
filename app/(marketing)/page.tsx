@@ -70,7 +70,7 @@ export default function Home() {
             </p>
             <Link
               href="/about"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-mw-mint px-6 py-3 text-sm font-semibold text-mw-void transition hover:bg-white"
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-mw-mint px-6 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-mw-void active:scale-[0.97]"
             >
               More about our story
               <span aria-hidden="true">&rarr;</span>
@@ -90,7 +90,7 @@ export default function Home() {
                     {s.label}
                   </div>
                   {"detail" in s && s.detail && (
-                    <div className="mt-0.5 text-[11px] text-white/40">
+                    <div className="mt-0.5 text-xs text-white/55">
                       {s.detail}
                     </div>
                   )}
@@ -169,12 +169,12 @@ export default function Home() {
                     </div>
                     <Link
                       href="/services"
-                      className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-mw-mint transition-colors hover:text-white"
+                      className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/90 transition-colors hover:text-white"
                     >
                       Explore {s.name}
                       <span
                         aria-hidden="true"
-                        className="inline-block transition-transform duration-300 group-hover:translate-x-1.5"
+                        className="inline-block text-mw-mint transition-transform duration-300 group-hover:translate-x-1.5"
                       >
                         &rarr;
                       </span>
@@ -267,12 +267,12 @@ export default function Home() {
               </div>
               <Link
                 href="/industries"
-                className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold text-mw-mint transition-colors hover:text-white"
+                className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/90 transition-colors hover:text-white"
               >
                 Explore industries
                 <span
                   aria-hidden="true"
-                  className="inline-block transition-transform duration-300 group-hover:translate-x-1"
+                  className="inline-block text-mw-mint transition-transform duration-300 group-hover:translate-x-1"
                 >
                   &rarr;
                 </span>
@@ -282,9 +282,9 @@ export default function Home() {
         </section>
       </div>
 
-      <CtaBand />
-
       <NewsAndEvents />
+
+      <CtaBand />
     </>
   );
 }

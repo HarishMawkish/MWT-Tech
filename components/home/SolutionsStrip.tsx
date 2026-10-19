@@ -16,7 +16,7 @@ export function SolutionsStrip() {
 
   return (
     <div className="mw-glow-strip border-y border-white/10 py-10">
-      <p className="relative z-10 mb-6 text-center text-xs font-semibold uppercase tracking-[0.25em] text-white/40">
+      <p className="relative z-10 mb-6 text-center text-xs font-semibold uppercase tracking-[0.25em] text-white/55">
         Solutions We Provide
       </p>
 
@@ -39,11 +39,11 @@ export function SolutionsStrip() {
         </div>
       </div>
 
-      <div className="relative z-10 mx-auto hidden max-w-5xl items-center justify-center gap-4 px-6 sm:flex sm:flex-wrap">
+      <div className="relative z-10 mx-auto hidden max-w-5xl grid-cols-3 gap-3 px-6 sm:grid lg:grid-cols-5">
         {solutions.map((s) => (
           <div
             key={s.name}
-            className="flex h-20 w-44 shrink-0 items-center justify-center rounded-xl bg-white px-6 py-4 shadow-sm sm:h-24 sm:w-52"
+            className="flex h-20 items-center justify-center rounded-2xl bg-white/95 px-5 py-3 shadow-sm transition duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-white"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={s.logo} alt={s.name} className="h-full w-full object-contain" />

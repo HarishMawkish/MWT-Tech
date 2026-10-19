@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { industries } from "@/lib/site-data";
 import { industryIconBySlug, IconLayers } from "./icons";
 
@@ -17,6 +17,7 @@ export function IndustryMosaic() {
   const trackRef = useRef<HTMLDivElement>(null);
 
   const rafRef = useRef(0);
+  const [active, setActive] = useState(0);
 
   // Coalesce scroll events to one update per frame, and batch all layout
   // reads before any style writes to avoid forced synchronous reflow.
@@ -29,6 +30,17 @@ export function IndustryMosaic() {
       const trackRect = track.getBoundingClientRect();
       const trackCenter = trackRect.left + trackRect.width / 2;
       const cards = track.querySelectorAll<HTMLElement>("[data-industry-card]");
+      // Which card sits nearest the left edge drives the position dots.
+      let nearest = 0;
+      let best = Infinity;
+      cards.forEach((card, i) => {
+        const d = Math.abs(card.getBoundingClientRect().left - trackRect.left);
+        if (d < best) {
+          best = d;
+          nearest = i;
+        }
+      });
+      setActive(nearest);
       const updates: [HTMLElement, number][] = [];
       cards.forEach((card) => {
         const icon = card.querySelector<HTMLElement>("[data-industry-icon]");
@@ -80,8 +92,13 @@ export function IndustryMosaic() {
 
       {/* Scroll hint dots */}
       <div className="mt-3 flex items-center gap-1.5" aria-hidden="true">
-        {industries.map((ind) => (
-          <span key={ind.slug} className="h-1 w-4 rounded-full bg-white/15" />
+        {industries.map((ind, i) => (
+          <span
+            key={ind.slug}
+            className={`h-1 rounded-full transition-all duration-300 ${
+              i === active ? "w-6 bg-mw-mint" : "w-4 bg-white/20"
+            }`}
+          />
         ))}
       </div>
     </div>

@@ -17,22 +17,33 @@ export function NewsAndEventsCarousel({ posts }: NewsAndEventsCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animate, setAnimate] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
 
   // Add the first slide again at the end so the transition from the final
   // blog back to the first blog can be made seamless.
   const slides = posts.length > 1 ? [...posts, posts[0]] : posts;
 
   useEffect(() => {
-    if (posts.length <= 1 || isPaused) return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduceMotion(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setReduceMotion(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  useEffect(() => {
+    if (posts.length <= 1 || isPaused || reduceMotion) return;
 
     const timer = window.setInterval(() => {
       setCurrentIndex((index) => index + 1);
     }, AUTO_PLAY_MS);
 
     return () => window.clearInterval(timer);
-  }, [posts.length, isPaused]);
+  }, [posts.length, isPaused, reduceMotion]);
 
-  const handleTransitionEnd = () => {
+  const handleTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
+    // Ignore bubbled transitions from the cards inside (image hover scale etc).
+    if (e.target !== e.currentTarget) return;
     if (posts.length > 1 && currentIndex === posts.length) {
       // Once the cloned first slide is visible, silently jump back to the
       // real first slide. The user sees a continuous loop.
@@ -61,12 +72,19 @@ export function NewsAndEventsCarousel({ posts }: NewsAndEventsCarouselProps) {
 
   const goPrevious = () => {
     if (posts.length <= 1) return;
-    setAnimate(true);
-
     if (currentIndex === 0) {
-      // Keep previous navigation simple and avoid exposing a visible jump.
-      setCurrentIndex(posts.length - 1);
+      // Mirror the forward loop: silently jump to the cloned first slide
+      // (identical to slide 0), then slide backwards to the last real one.
+      setAnimate(false);
+      setCurrentIndex(posts.length);
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          setAnimate(true);
+          setCurrentIndex(posts.length - 1);
+        });
+      });
     } else {
+      setAnimate(true);
       setCurrentIndex((index) => index - 1);
     }
   };
@@ -76,6 +94,11 @@ export function NewsAndEventsCarousel({ posts }: NewsAndEventsCarouselProps) {
       className="relative mx-auto mt-10 w-full max-w-5xl"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
+      onFocus={() => setIsPaused(true)}
+      onBlur={() => setIsPaused(false)}
+      role={posts.length > 1 ? "region" : undefined}
+      aria-roledescription={posts.length > 1 ? "carousel" : undefined}
+      aria-label={posts.length > 1 ? "Latest insights" : undefined}
     >
       <div className="overflow-hidden rounded-3xl">
         <div
@@ -110,7 +133,7 @@ export function NewsAndEventsCarousel({ posts }: NewsAndEventsCarouselProps) {
                 </div>
 
                 <div className="flex min-h-[230px] flex-col p-6 sm:p-8">
-                  <h3 className="line-clamp-2 font-display text-2xl font-bold text-mw-primary sm:text-3xl">
+                  <h3 className="line-clamp-2 font-display text-2xl font-bold text-white sm:text-3xl">
                     {post.title}
                   </h3>
 
@@ -139,7 +162,7 @@ export function NewsAndEventsCarousel({ posts }: NewsAndEventsCarouselProps) {
             type="button"
             aria-label="Previous blog"
             onClick={goPrevious}
-            className="absolute left-3 top-[38%] grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-black/55 text-xl text-white backdrop-blur-md transition hover:bg-black/75 sm:left-5"
+            className="absolute left-3 top-[38%] grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-black/55 text-xl text-white backdrop-blur-md transition hover:bg-black/75 sm:left-5"
           >
             &larr;
           </button>
@@ -148,7 +171,7 @@ export function NewsAndEventsCarousel({ posts }: NewsAndEventsCarouselProps) {
             type="button"
             aria-label="Next blog"
             onClick={goNext}
-            className="absolute right-3 top-[38%] grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-black/55 text-xl text-white backdrop-blur-md transition hover:bg-black/75 sm:right-5"
+            className="absolute right-3 top-[38%] grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-black/55 text-xl text-white backdrop-blur-md transition hover:bg-black/75 sm:right-5"
           >
             &rarr;
           </button>
@@ -160,17 +183,22 @@ export function NewsAndEventsCarousel({ posts }: NewsAndEventsCarouselProps) {
                 type="button"
                 aria-label={`Show blog ${index + 1}: ${post.title}`}
                 onClick={() => goTo(index)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  currentIndex % posts.length === index
-                    ? "w-8 bg-mw-secondary"
-                    : "w-2 bg-mw-ink/20 hover:bg-mw-ink/40"
-                }`}
-              />
+                aria-current={currentIndex % posts.length === index}
+                className="group/dot grid h-6 place-items-center px-1"
+              >
+                <span
+                  className={`block h-1.5 rounded-full transition-all duration-300 ${
+                    currentIndex % posts.length === index
+                      ? "w-8 bg-mw-secondary"
+                      : "w-2 bg-mw-ink/20 group-hover/dot:bg-mw-ink/40"
+                  }`}
+                />
+              </button>
             ))}
           </div>
 
           <p className="mt-3 text-center text-xs text-mw-ink/45">
-            {isPaused ? "Paused" : "Automatically advancing"} · {currentIndex % posts.length + 1} of {posts.length}
+            {isPaused || reduceMotion ? "Paused" : "Automatically advancing"} · {currentIndex % posts.length + 1} of {posts.length}
           </p>
         </>
       )}

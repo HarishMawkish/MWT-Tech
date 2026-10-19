@@ -4,7 +4,6 @@ import { Montserrat, Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { PageWatermark } from "@/components/PageWatermark";
 import { SiteLoader } from "@/components/SiteLoader";
 
@@ -52,11 +51,6 @@ export const metadata: Metadata = {
   },
 };
 
-// Runs before hydration so the correct theme class is present on first
-// paint — no flash of the wrong theme. Kept inline (not a separate file)
-// so it's part of the initial HTML and executes synchronously.
-const themeInitScript = `(function(){try{var stored=localStorage.getItem('mw-theme');var isDark=stored?stored==='dark':true;document.documentElement.classList.toggle('dark',isDark);document.documentElement.style.colorScheme=isDark?'dark':'light';}catch(e){}})();`;
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -66,31 +60,21 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${montserrat.variable} ${inter.variable} ${jetbrainsMono.variable} dark h-full antialiased`}
-      suppressHydrationWarning
+      style={{ colorScheme: "dark" }}
     >
-      <head>
-        {/* Plain inline script in <head> so it runs synchronously before first
-            paint. (next/script's beforeInteractive injects via Next's JS
-            bootstrap, which in production runs after paint and left the page
-            in light mode.) The `dark` class above is the server-rendered
-            default; this only switches to light if the visitor chose it. */}
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      </head>
       <body className="min-h-full flex flex-col">
-        <ThemeProvider>
-          {/* Splash sits above absolutely everything, including the navbar,
-              and fades out once the page is ready — the navbar is already
-              rendered underneath it the whole time, so the fade genuinely
-              reveals it rather than the navbar popping in afterwards. */}
-          <SiteLoader />
-          <div aria-hidden="true" className="mw-scanline" />
-          <PageWatermark />
-          <div className="relative z-10 flex min-h-full flex-1 flex-col">
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-        </ThemeProvider>
+        {/* Splash sits above absolutely everything, including the navbar,
+            and fades out once the page is ready — the navbar is already
+            rendered underneath it the whole time, so the fade genuinely
+            reveals it rather than the navbar popping in afterwards. */}
+        <SiteLoader />
+        <div aria-hidden="true" className="mw-scanline" />
+        <PageWatermark />
+        <div className="relative z-10 flex min-h-full flex-1 flex-col">
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

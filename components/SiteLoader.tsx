@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 const STORAGE_KEY = "mw-loader-shown";
-const EXIT_DURATION = 900; // ms — keep in sync with the CSS transition on .mw-loader
+const EXIT_DURATION = 500; // ms — keep in sync with the CSS transition on .mw-loader
 
 type Phase = "loading" | "exiting" | "done";
 
@@ -27,7 +27,7 @@ export function SiteLoader() {
 
     document.documentElement.classList.add("mw-loading-lock");
 
-    const minTime = new Promise<void>((resolve) => setTimeout(resolve, 1400));
+    const minTime = new Promise<void>((resolve) => setTimeout(resolve, 700));
     const pageReady = new Promise<void>((resolve) => {
       if (document.readyState === "complete") {
         resolve();
@@ -74,7 +74,6 @@ export function SiteLoader() {
         <div className="mw-loader-bar relative mt-9 h-px w-40 overflow-hidden bg-white/10">
           <span className="block h-full w-full bg-mw-mint" />
         </div>
-        <p className="mw-hud relative mt-4 text-[10px] text-white/35"></p>
       </div>
     </div>
   );
