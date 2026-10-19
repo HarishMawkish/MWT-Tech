@@ -106,7 +106,7 @@ export default function AboutPage() {
     <>
       {/* SECTION 1: Hero Split (50/50 full-bleed) */}
       <div className="grid min-h-[calc(100svh-104px)] w-full grid-cols-1 bg-[#000100] lg:grid-cols-2">
-        <div className="relative order-last h-full overflow-hidden lg:order-first">
+        <div className="relative order-last h-[22rem] overflow-hidden sm:h-[28rem] lg:order-first lg:h-full">
           <Image
             src="https://zql0rfjwszzixew9.public.blob.vercel-storage.com/background/untitled-03672.JPG"
             alt="Two Mawkish colleagues talking through a project in the office"
