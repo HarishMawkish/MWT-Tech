@@ -53,7 +53,7 @@ export default async function InsightsPage() {
             <SectionHead tag="Perspectives" title="How we think about it." id="perspectives-title" />
           </Reveal>
 
-          <div className="mt-14 grid gap-5 lg:grid-cols-3 lg:grid-rows-2">
+          <div className="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-3 lg:grid-rows-2">
             {featured && (
               <Reveal className="h-full lg:col-span-2 lg:row-span-2">
                 <SpotlightLink
@@ -165,7 +165,7 @@ export default async function InsightsPage() {
                           </span>
                         </div>
                       </Reveal>
-                      <div className="mt-8 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                      <div className="mt-8 grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
                         {posts.map((post, i) => (
                           <Reveal key={post.slug} delay={(i % 3) * 80} className="h-full">
                             <BlogCard post={post} showExcerpt={false} />

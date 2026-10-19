@@ -69,7 +69,7 @@ export default function ServicesPage() {
             <SectionHead tag="Core Platforms" title="SAP, Salesforce & Odoo implementation." id="core-title" />
           </Reveal>
 
-          <div className="mt-14 grid gap-5 lg:grid-cols-3">
+          <div className="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-3">
             {core.map((s, i) => {
               return (
                 <Reveal key={s.slug} delay={i * 100} className="h-full">
@@ -124,7 +124,7 @@ export default function ServicesPage() {
             <SectionHead tag="Future Service Areas" title="Where we're expanding next." id="future-title" />
           </Reveal>
 
-          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {future.map((s, i) => {
               return (
                 <Reveal key={s.slug} delay={(i % 3) * 80} className="h-full">

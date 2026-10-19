@@ -235,6 +235,9 @@ body {
 
 html {
   scroll-behavior: smooth;
+  /* Last-resort guard: a stray wide element must never create sideways
+     scroll on a phone. `clip` (unlike hidden) keeps position: sticky working. */
+  overflow-x: clip;
 }
 
 /* Glassmorphism */

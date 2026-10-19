@@ -219,7 +219,7 @@ export default async function InsightDetailPage({
             <Reveal>
               <SectionHead tag="Keep reading" title="More perspectives" id="more-title" />
             </Reveal>
-            <div className="mt-12 grid gap-5 sm:grid-cols-2">
+            <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2">
               {moreInsights.map((p, i) => (
                 <Reveal key={p.slug} delay={i * 90} className="h-full">
                   <SpotlightLink
@@ -251,7 +251,7 @@ export default async function InsightDetailPage({
             <Reveal>
               <SectionHead tag="Keep reading" title="More from the blog" id="more-title" />
             </Reveal>
-            <div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2">
+            <div className="mt-12 grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2">
               {otherBlogs.map((p, i) => (
                 <Reveal key={p.slug} delay={i * 90} className="h-full">
                   <BlogCard post={p} showExcerpt={false} />

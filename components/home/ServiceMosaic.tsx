@@ -3,7 +3,7 @@ import { serviceIconBySlug, IconGrid } from "./icons";
 
 export function ServiceMosaic() {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {services.slice(0, 6).map((s, i) => {
         const Icon = serviceIconBySlug[s.slug] ?? IconGrid;
         return (

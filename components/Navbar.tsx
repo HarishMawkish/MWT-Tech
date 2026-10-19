@@ -117,8 +117,8 @@ export function Navbar() {
       <div
         aria-hidden="true"
         onClick={() => setOpen(false)}
-        className={`fixed inset-0 -z-10 bg-black/50 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
-          open ? "opacity-100" : "pointer-events-none opacity-0"
+        className={`fixed inset-0 -z-10 bg-black/50 backdrop-blur-sm transition-[opacity,visibility] duration-300 lg:hidden ${
+          open ? "visible opacity-100" : "invisible pointer-events-none opacity-0"
         }`}
       />
 
@@ -127,8 +127,10 @@ export function Navbar() {
       <div
         id="mobile-menu"
         inert={!open}
-        className={`mx-6 origin-top-right rounded-2xl border border-white/10 bg-[#0a1812]/95 p-4 shadow-xl backdrop-blur-xl transition duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
-          open ? "translate-y-0 scale-100 opacity-100" : "pointer-events-none -translate-y-2 scale-95 opacity-0"
+        className={`absolute inset-x-6 top-full origin-top-right rounded-2xl border border-white/10 bg-[#0a1812]/95 p-4 shadow-xl backdrop-blur-xl transition-[opacity,transform,visibility] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
+          open
+            ? "visible translate-y-0 scale-100 opacity-100"
+            : "invisible pointer-events-none -translate-y-2 scale-95 opacity-0"
         }`}
       >
         <nav aria-label="Mobile" className="flex max-h-[70svh] flex-col gap-1 overflow-y-auto">

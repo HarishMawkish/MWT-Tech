@@ -8,7 +8,7 @@ export function Timeline() {
         <span className="mw-travel-dot hidden lg:block" />
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-4 lg:gap-6">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-4 lg:gap-6">
         {methodology.map((m) => (
           <div key={m.step} className="relative pl-12 lg:pl-0 lg:pt-12">
             <div className="absolute left-0 top-0 grid h-9 w-9 place-items-center rounded-full border border-mw-mint/50 bg-mw-void text-xs font-semibold tracking-wider text-white/85 lg:left-0 lg:top-0">
