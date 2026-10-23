@@ -1,3 +1,4 @@
+import { orderRankField } from "@sanity/orderable-document-list";
 import { defineField, defineType } from "sanity";
 
 export const blogPost = defineType({
@@ -65,12 +66,10 @@ export const blogPost = defineType({
       of: [{ type: "block" }],
       validation: (rule) => rule.required(),
     }),
-    defineField({
-      name: "orderRank",
-      title: "Order Rank",
-      type: "string",
-      hidden: true,
-    }),
+    // Gives every new post a rank after the current last one, so it lands at
+    // the bottom of the drag-and-drop list and is immediately editable. (A plain
+    // string field gets no rank, which is what forced a manual "Reset Order".)
+    orderRankField({ type: "blogPost", newItemPosition: "after" }),
     defineField({
       name: "publishedAt",
       title: "Published Date",

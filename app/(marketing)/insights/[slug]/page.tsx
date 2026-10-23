@@ -5,6 +5,7 @@ import { PortableText } from "@portabletext/react";
 import { CtaBand, Eyebrow, SectionHead } from "@/components/ui";
 import { BlogCard } from "@/components/BlogCard";
 import { BlogImageSlideshow } from "@/components/BlogImageSlideshow";
+import { BlogGallery, type GalleryImage } from "@/components/BlogGallery";
 import { ReadingProgress } from "@/components/ReadingProgress";
 import { Reveal } from "@/components/Reveal";
 import { SpotlightLink } from "@/components/SpotlightLink";
@@ -16,6 +17,7 @@ import {
   type SanityBlogPost,
 } from "@/lib/sanity/queries";
 import { urlFor } from "@/lib/sanity/image";
+import { splitContentAtMiddle } from "@/lib/sanity/splitContent";
 
 export const revalidate = 60;
 
@@ -90,6 +92,17 @@ export default async function InsightDetailPage({
     );
     otherBlogs = [...sameCategory, ...different].slice(0, 2);
   }
+
+  const galleryImages: GalleryImage[] = blogPost
+    ? [blogPost.coverImage, ...(blogPost.galleryImages ?? [])].map((img, i) => ({
+        thumb: urlFor(img).width(1200).url(),
+        full: urlFor(img).width(2400).url(),
+        alt: String(("alt" in img && img.alt) || (i === 0 ? blogPost.title : `${blogPost.title} — photo ${i + 1}`)),
+      }))
+    : [];
+  // The photo break goes at the paragraph break nearest the middle; it only
+  // appears when there are several photos and a sensible place to put it.
+  const halves = galleryImages.length > 1 && blogPost ? splitContentAtMiddle(blogPost.content) : null;
 
   const category = insight ? insight.category : (blogPost?.category?.title ?? "Blog");
   const title = insight ? insight.title : (blogPost?.title ?? "");
@@ -183,8 +196,20 @@ export default async function InsightDetailPage({
             </div>
           ) : (
             blogPost && (
-              <div className="prose prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-bold prose-headings:normal-case prose-headings:tracking-tight prose-headings:text-white prose-p:leading-[1.8] prose-p:text-white/75 prose-li:text-white/75 prose-a:text-white prose-a:decoration-mw-mint prose-a:underline-offset-4 hover:prose-a:decoration-white prose-strong:font-semibold prose-strong:text-white prose-blockquote:border-mw-mint prose-blockquote:text-white/90">
-                <PortableText value={blogPost.content} />
+              <div>
+                <div className="prose prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-bold prose-headings:normal-case prose-headings:tracking-tight prose-headings:text-white prose-p:leading-[1.8] prose-p:text-white/75 prose-li:text-white/75 prose-a:text-white prose-a:decoration-mw-mint prose-a:underline-offset-4 hover:prose-a:decoration-white prose-strong:font-semibold prose-strong:text-white prose-blockquote:border-mw-mint prose-blockquote:text-white/90">
+                  <PortableText value={halves ? halves[0] : blogPost.content} />
+                </div>
+                {halves && (
+                  <div className="relative left-1/2 my-14 w-screen max-w-5xl -translate-x-1/2 px-6 lg:my-20 lg:px-8">
+                    <BlogGallery images={galleryImages} />
+                  </div>
+                )}
+                {halves && (
+                  <div className="prose prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-bold prose-headings:normal-case prose-headings:tracking-tight prose-headings:text-white prose-p:leading-[1.8] prose-p:text-white/75 prose-li:text-white/75 prose-a:text-white prose-a:decoration-mw-mint prose-a:underline-offset-4 hover:prose-a:decoration-white prose-strong:font-semibold prose-strong:text-white prose-blockquote:border-mw-mint prose-blockquote:text-white/90">
+                    <PortableText value={halves[1]} />
+                  </div>
+                )}
               </div>
             )
           )}

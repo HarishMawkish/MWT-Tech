@@ -49,9 +49,10 @@ const blogPostFields = /* groq */ `
 
 // Posts are manually ordered via drag-and-drop in the Studio (the
 // "Blog Posts" list uses @sanity/orderable-document-list, which maintains
-// this `orderRank` field automatically) rather than sorted by date.
+// this `orderRank` field automatically) rather than sorted by date. A post
+// with no rank yet sorts to the bottom ("~" sorts after every rank string).
 const allBlogPostsQuery = /* groq */ `
-  *[_type == "blogPost"] | order(orderRank asc) {
+  *[_type == "blogPost"] | order(coalesce(orderRank, "~") asc, _createdAt asc) {
     ${blogPostFields}
   }
 `;
@@ -76,7 +77,7 @@ const allBlogCategoriesQuery = /* groq */ `
 `;
 
 const blogPostsByCategoryTitleQuery = /* groq */ `
-  *[_type == "blogPost" && category->title == $categoryTitle] | order(orderRank asc) {
+  *[_type == "blogPost" && category->title == $categoryTitle] | order(coalesce(orderRank, "~") asc, _createdAt asc) {
     ${blogPostFields}
   }
 `;
