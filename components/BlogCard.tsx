@@ -43,7 +43,7 @@ export function BlogCard({
   showExcerpt?: boolean;
 }) {
   const hasImage = Boolean(post.coverImage?.asset);
-  const imageUrl = hasImage ? urlFor(post.coverImage).width(800).auto("format").url() : null;
+  const imageUrl = hasImage ? urlFor(post.coverImage).width(1200).url() : null;
   // Tiny blurred copy of the same photo, used to fill any space the
   // uncropped image doesn't cover in the 16:9 frame.
   const backdropUrl = hasImage ? urlFor(post.coverImage).width(48).blur(20).url() : null;
@@ -68,6 +68,7 @@ export function BlogCard({
               alt=""
               fill
               sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+              unoptimized
               className="object-contain transition duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
             />
           </>

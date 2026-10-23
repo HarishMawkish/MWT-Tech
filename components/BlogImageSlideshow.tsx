@@ -65,6 +65,7 @@ export function BlogImageSlideshow({ images }: { images: SlideshowImage[] }) {
             alt={img.alt}
             fill
             sizes="(min-width: 1024px) 1024px, 100vw"
+            unoptimized
             className="object-contain"
             priority={i === 0}
           />
