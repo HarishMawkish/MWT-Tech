@@ -123,10 +123,11 @@ export function NewsAndEventsCarousel({ posts }: NewsAndEventsCarouselProps) {
                     or carousel height. */}
                 <div className="relative aspect-[16/9] w-full overflow-hidden">
                   <Image
-                    src={urlFor(post.coverImage).width(1200).height(675).fit("crop").url()}
+                    src={urlFor(post.coverImage).width(1600).height(900).fit("crop").url()}
                     alt={post.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 1024px"
+                    unoptimized
                     className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
                     priority={slideIndex === 0}
                   />

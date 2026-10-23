@@ -154,9 +154,9 @@ export default async function InsightDetailPage({
             <Reveal>
               <BlogImageSlideshow
                 images={[
-                  { src: urlFor(blogPost.coverImage).width(1600).url(), alt: blogPost.title },
+                  { src: urlFor(blogPost.coverImage).width(2000).url(), alt: blogPost.title },
                   ...(blogPost.galleryImages ?? []).map((img, i) => ({
-                    src: urlFor(img).width(1600).url(),
+                    src: urlFor(img).width(2000).url(),
                     alt: img.alt || `${blogPost.title} — photo ${i + 2}`,
                   })),
                 ]}
