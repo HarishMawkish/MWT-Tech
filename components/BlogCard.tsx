@@ -39,7 +39,11 @@ export function BlogCard({
   post,
   showExcerpt = true,
 }: {
-  post: SanityBlogPost;
+  // Only the fields a card actually renders, so callers (like the client-side
+  // Insights explorer) can pass a slim post without the full article body.
+  post: Pick<SanityBlogPost, "slug" | "title" | "coverImage" | "publishedAt"> & {
+    plainText?: string;
+  };
   showExcerpt?: boolean;
 }) {
   const hasImage = Boolean(post.coverImage?.asset);
@@ -92,7 +96,7 @@ export function BlogCard({
 
         {showExcerpt && (
           <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/65">
-            {excerptFromPlainText(post.plainText)}
+            {excerptFromPlainText(post.plainText ?? "")}
           </p>
         )}
 
