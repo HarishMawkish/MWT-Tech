@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { CtaBand, PageHero, Section, SectionHead } from "@/components/ui";
-import { BlogCard } from "@/components/BlogCard";
+import { BlogExplorer } from "@/components/BlogExplorer";
 import { Reveal } from "@/components/Reveal";
 import { SpotlightLink } from "@/components/SpotlightLink";
 import { insights } from "@/lib/site-data";
 import {
   getAllBlogPosts,
   getAllBlogCategories,
-  groupBlogPostsByCategory,
 } from "@/lib/sanity/queries";
 
 export const metadata: Metadata = {
@@ -35,7 +34,18 @@ export default async function InsightsPage() {
     getAllBlogPosts(),
     getAllBlogCategories(),
   ]);
-  const blogGroups = groupBlogPostsByCategory(blogs, categories);
+  // Slim copies for the client explorer: no article body is shipped, just the
+  // card fields plus a bounded chunk of text to search against.
+  const explorerPosts = blogs.map((post) => ({
+    slug: post.slug,
+    title: post.title,
+    coverImage: post.coverImage,
+    publishedAt: post.publishedAt,
+    categoryId: post.category?._id ?? null,
+    categoryTitle: post.category?.title ?? null,
+    searchText: `${post.title} ${post.category?.title ?? ""} ${post.plainText.slice(0, 1500)}`.toLowerCase(),
+  }));
+  const explorerCategories = categories.map((c) => ({ id: c._id, title: c.title }));
   const [featured, ...rest] = insights;
 
   return (
@@ -113,7 +123,7 @@ export default async function InsightsPage() {
         </Section>
       </section>
 
-      {/* From the field: Sanity posts grouped by category */}
+      {/* From the field: searchable, filterable archive of Sanity posts */}
       <section
         aria-labelledby="field-title"
         className="relative border-t border-white/10 bg-[#050a08]"
@@ -128,55 +138,12 @@ export default async function InsightsPage() {
             <SectionHead tag="From the field" title="News, events & articles." id="field-title" />
           </Reveal>
 
-          {blogGroups.length === 0 ? (
+          {explorerPosts.length === 0 ? (
             <p className="mt-12 text-base text-white/60">New posts are on their way.</p>
           ) : (
-            <>
-              {/* Jump links: wayfinding between categories */}
-              {blogGroups.length > 1 && (
-                <nav aria-label="Post categories" className="mt-10 flex flex-wrap gap-2">
-                  {blogGroups.map(({ category }) => {
-                    const id = category?._id ?? "uncategorized";
-                    return (
-                      <a
-                        key={id}
-                        href={`#cat-${id}`}
-                        className="inline-flex min-h-11 items-center rounded-full border border-white/15 bg-white/[0.04] px-5 text-sm font-semibold text-white/80 backdrop-blur-xl transition-colors hover:border-white/30 hover:bg-white/[0.08] hover:text-white active:scale-[0.97]"
-                      >
-                        {category?.title ?? "Uncategorized"}
-                      </a>
-                    );
-                  })}
-                </nav>
-              )}
-
-              <div className="mt-16 space-y-20">
-                {blogGroups.map(({ category, posts }) => {
-                  const id = category?._id ?? "uncategorized";
-                  return (
-                    <div key={id} id={`cat-${id}`} className="scroll-mt-32">
-                      <Reveal>
-                        <div className="flex items-end justify-between gap-6 border-b border-white/10 pb-5">
-                          <h3 className="font-display text-2xl text-white sm:text-3xl">
-                            {category?.title ?? "Uncategorized"}
-                          </h3>
-                          <span className="pb-1 text-sm text-white/50">
-                            {posts.length} {posts.length === 1 ? "post" : "posts"}
-                          </span>
-                        </div>
-                      </Reveal>
-                      <div className="mt-8 grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                        {posts.map((post, i) => (
-                          <Reveal key={post.slug} delay={(i % 3) * 80} className="h-full">
-                            <BlogCard post={post} showExcerpt={false} />
-                          </Reveal>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </>
+            <div className="mt-10">
+              <BlogExplorer posts={explorerPosts} categories={explorerCategories} />
+            </div>
           )}
         </Section>
       </section>
