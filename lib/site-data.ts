@@ -18,6 +18,10 @@ export const navLinks = [
     children: [
       { label: "All Services", href: "/services" },
       { label: "SAP Solutions", href: "/services/sap-solutions" },
+      {
+        label: "SAP Business AI Solutions",
+        href: "/services/sap-ai-solutions",
+      },
       { label: "Salesforce Solutions", href: "/services/salesforce-solutions" },
       { label: "Odoo Implementation", href: "/services/odoo-implementation" },
     ],
@@ -27,7 +31,11 @@ export const navLinks = [
 ];
 
 export const stats = [
-  { value: "4", label: "Enterprise Platforms", detail: "SAP, Salesforce & Odoo" },
+  {
+    value: "4",
+    label: "Enterprise Platforms",
+    detail: "SAP, Salesforce & Odoo",
+  },
   { value: "8", label: "Industries Served" },
   { value: "7", label: "Active & Target Markets" },
   { value: "6", label: "Core Operating Principles" },
@@ -111,7 +119,8 @@ export const services: Service[] = [
     slug: "sap-solutions",
     name: "SAP Solutions",
     category: "core",
-    summary: "Enterprise-grade operational excellence for organizations that need scale and control.",
+    summary:
+      "Enterprise-grade operational excellence for organizations that need scale and control.",
     description:
       "SAP provides the operational backbone for organizations managing complex processes across finance, supply chain, manufacturing, and operations. We help clients plan, implement, and optimize SAP so that the platform reflects how the business actually runs — not the other way around.",
     outcomes: [
@@ -120,11 +129,28 @@ export const services: Service[] = [
       "A platform built to scale with the organization",
     ],
   },
+
+  {
+    slug: "sap-ai-solutions",
+    name: "SAP Business AI Solutions",
+    category: "core",
+    summary:
+      "Enterprise-grade operational excellence for organizations that need scale and control.",
+    description:
+      "SAP provides the operational backbone for organizations managing complex processes across finance, supply chain, manufacturing, and operations. We help clients plan, implement, and optimize SAP so that the platform reflects how the business actually runs — not the other way around.",
+    outcomes: [
+      "Unified financial and operational reporting",
+      "Standardized processes across business units",
+      "A platform built to scale with the organization",
+    ],
+  },
+
   {
     slug: "salesforce-solutions",
     name: "Salesforce Solutions",
     category: "core",
-    summary: "Customer-centric growth and engagement built on the world's leading CRM platform.",
+    summary:
+      "Customer-centric growth and engagement built on the world's leading CRM platform.",
     description:
       "Salesforce helps organizations put the customer at the center of every decision. We design and implement Salesforce solutions that improve visibility into the customer journey, align sales and service teams, and turn customer data into growth.",
     outcomes: [
@@ -189,7 +215,8 @@ export const services: Service[] = [
     slug: "managed-services",
     name: "Managed Services",
     category: "future",
-    summary: "Ongoing support so platforms keep delivering value after go-live.",
+    summary:
+      "Ongoing support so platforms keep delivering value after go-live.",
     description:
       "Transformation doesn't end at go-live. Our managed services keep enterprise platforms running smoothly, secure, and aligned to evolving business needs.",
     outcomes: [
@@ -215,7 +242,8 @@ export const services: Service[] = [
     slug: "enterprise-integrations",
     name: "Enterprise Integrations",
     category: "future",
-    summary: "Connecting the systems that were never designed to talk to each other.",
+    summary:
+      "Connecting the systems that were never designed to talk to each other.",
     description:
       "Disconnected systems are one of the most common causes of lost visibility and duplicated effort. We design integrations across ERP, CRM, and third-party platforms so information flows the way the business needs it to.",
     outcomes: [
@@ -292,14 +320,55 @@ export type Region = {
 };
 
 export const regions: Region[] = [
-  { region: "Sri Lanka", activeMarket: true, targetMarket: true, presence: "Headquarters", focus: "SAP, Salesforce, Odoo, Digital Transformation" },
-  { region: "India", activeMarket: true, targetMarket: true, presence: "Delivery & Partner Ecosystem", focus: "SAP & Enterprise Applications" },
-  { region: "KSA", activeMarket: true, targetMarket: true, presence: "Expansion Market", focus: "SAP, Cloud & Transformation Projects" },
-  { region: "UAE", activeMarket: false, targetMarket: true, presence: "Partner Network", focus: "Digital Transformation & CRM" },
-  { region: "USA", activeMarket: false, targetMarket: true, presence: "Business Development Activities", focus: "Technology Consulting & Strategic Partnerships" },
-  { region: "Oman", activeMarket: false, targetMarket: true, presence: "Expansion Market", focus: "ERP & Business Process Transformation" },
-  { region: "Switzerland", activeMarket: false, targetMarket: true, presence: "Strategic Growth Market", focus: "Consulting & Enterprise Technology" },
-  
+  {
+    region: "Sri Lanka",
+    activeMarket: true,
+    targetMarket: true,
+    presence: "Headquarters",
+    focus: "SAP, Salesforce, Odoo, Digital Transformation",
+  },
+  {
+    region: "India",
+    activeMarket: true,
+    targetMarket: true,
+    presence: "Delivery & Partner Ecosystem",
+    focus: "SAP & Enterprise Applications",
+  },
+  {
+    region: "KSA",
+    activeMarket: true,
+    targetMarket: true,
+    presence: "Expansion Market",
+    focus: "SAP, Cloud & Transformation Projects",
+  },
+  {
+    region: "UAE",
+    activeMarket: false,
+    targetMarket: true,
+    presence: "Partner Network",
+    focus: "Digital Transformation & CRM",
+  },
+  {
+    region: "USA",
+    activeMarket: false,
+    targetMarket: true,
+    presence: "Business Development Activities",
+    focus: "Technology Consulting & Strategic Partnerships",
+  },
+  {
+    region: "Oman",
+    activeMarket: false,
+    targetMarket: true,
+    presence: "Expansion Market",
+    focus: "ERP & Business Process Transformation",
+  },
+  {
+    region: "Switzerland",
+    activeMarket: false,
+    targetMarket: true,
+    presence: "Strategic Growth Market",
+    focus: "Consulting & Enterprise Technology",
+  },
 ];
 
 export const clients = [
@@ -307,15 +376,29 @@ export const clients = [
   { name: "Eshwaran Brothers", logo: "/images/clients/eshwaran-brothers.png" },
   { name: "Link Natural Products", logo: "/images/clients/link-naturals.png" },
   { name: "Lanka Tiles", logo: "/images/clients/lanka-tiles.png" },
-  { name: "Ceylon Beverage Can", logo: "/images/clients/ceylon-beverage-can.png" },
+  {
+    name: "Ceylon Beverage Can",
+    logo: "/images/clients/ceylon-beverage-can.png",
+  },
   { name: "Royal Ceramics", logo: "/images/clients/royal-ceramics.png" },
-  { name: "Suwanda Industries", logo: "/images/clients/suwanda-industries.png" },
+  {
+    name: "Suwanda Industries",
+    logo: "/images/clients/suwanda-industries.png",
+  },
   { name: "Capital Maharajah", logo: "/images/clients/capital-maharajah.png" },
 ];
 
 export const partners = [
-  { name: "Samishti Infotec", relationship: "SAP Gold Partner", url: "https://samishti.com" },
-  { name: "Levarus", relationship: "Salesforce Summit Platinum Partner", url: "https://levarus.com" },
+  {
+    name: "Samishti Infotec",
+    relationship: "SAP Gold Partner",
+    url: "https://samishti.com",
+  },
+  {
+    name: "Levarus",
+    relationship: "Salesforce Summit Platinum Partner",
+    url: "https://levarus.com",
+  },
 ];
 
 export const leadership = [
