@@ -26,6 +26,9 @@ export type MenuLink = { label: string; href?: string; accent?: string };
 /** A titled column of offerings, the way Stripe and Accenture group a long menu. */
 export type MenuGroup = { title: string; items: (string | MenuLink)[] };
 
+/** A dark call-to-action card that sits in the grid beside the groups. */
+export type MenuCta = { title: string; body: string; label: string; href: string };
+
 export type MenuCategory = {
   id: string;
   label: string;
@@ -45,6 +48,8 @@ export type MenuCategory = {
   featured?: MenuFeatured[];
   /** Offerings under short headings (SAP only). Display-only for now. */
   groups?: MenuGroup[];
+  /** Sits in the last cell of the groups grid. */
+  cta?: MenuCta;
   /** Plain supporting points, for categories with a page. */
   bullets?: string[];
   logos?: MenuLogo[];
@@ -75,35 +80,40 @@ export const servicesMenu: MenuCategory[] = [
         mark: "/images/solutions/rise.jpg",
       },
     ],
+    descriptor: "Cloud ERP, AI & data",
     groups: [
       {
+        title: "Advise & plan",
+        items: [
+          "Cloud ERP Readiness Assessment",
+          "Fit-to-Standard Workshops",
+          "Licensing & Commercial Advisory",
+          "Two-Tier ERP for Subsidiaries",
+        ],
+      },
+      {
         title: "Implement & migrate",
-        items: [
-          "SAP Implementation",
-          "SAP ECC Migration",
-          "SAP S/4HANA On Prem Migration",
-          "SAP Integration",
-          "SAP Rollout",
-          "SAP BDC Deployment",
-          "SAP Analytics Cloud Deployment",
-          "SAP Group Reporting Deployment",
-        ],
+        items: ["Cloud ERP Implementation", "Move from ECC & On-Premise", "Data Migration", "Rollouts & Localisation"],
       },
       {
-        title: "Run & build",
-        items: [
-          "SAP Support Service",
-          "SAP BTP Development",
-          "SAP Application Development & Automation",
-          "SAP Cloud ERP Licensing",
-          "SAP Cloud ERP Commercial Construct",
-        ],
+        title: "Extend & integrate",
+        items: ["SAP BTP Extensions & Apps", "Process Automation with SAP Build", "SAP & Non-SAP Integration"],
       },
       {
-        title: "AI",
-        items: ["SAP Business AI Deployment", "SAP Joule Deployment"],
+        title: "Run & optimise",
+        items: ["Application Management Support", "Release & Upgrade Management", "Test Automation", "Security, Roles & Authorisations"],
+      },
+      {
+        title: "AI & data",
+        items: ["SAP Business AI", "Joule & AI Agents", "SAP Business Data Cloud", "SAP Analytics Cloud", "Group Reporting & Consolidation"],
       },
     ],
+    cta: {
+      title: "Not sure where to start with Cloud ERP?",
+      body: "A two-week readiness assessment maps your processes to SAP standard and gives you a costed roadmap.",
+      label: "Book an assessment",
+      href: "/contact",
+    },
   },
   {
     id: "salesforce",

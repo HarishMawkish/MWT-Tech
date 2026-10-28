@@ -72,11 +72,24 @@ export function DataFlow({ items }: { items: CloudCapability[] }) {
                           <span className="block truncate text-[11px] text-white/50">{c.tag}</span>
                         </span>
                       </button>
+                      {/* on a phone the detail opens right under the item that was tapped */}
+                      {sel === i && (
+                        <div className="sap-rise px-1 pb-1 pt-3 md:hidden" style={{ animationDuration: "0.4s" }}>
+                          <p className="text-[15px] leading-relaxed text-white/75">{c.body}</p>
+                          <Chips items={c.details} />
+                        </div>
+                      )}
                     </li>
                   ) : null,
                 )}
               </ul>
             </div>
+            {zi < zones.length - 1 && (
+              <svg viewBox="0 0 40 40" className="mx-auto h-8 w-8 md:hidden" fill="none" aria-hidden="true">
+                <path d="M20 4v26" stroke="var(--sf)" strokeWidth="2" className="sf-flow" />
+                <path d="M12 24l8 9 8-9" stroke="var(--sf)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            )}
             {zi < zones.length - 1 && (
               <svg viewBox="0 0 56 40" className="mx-auto hidden h-10 w-14 self-center md:block" fill="none" aria-hidden="true">
                 <path d="M2 20h46" stroke="var(--sf)" strokeWidth="2" className="sf-flow" />
@@ -87,7 +100,7 @@ export function DataFlow({ items }: { items: CloudCapability[] }) {
         ))}
       </div>
 
-      <div key={sel} className="sap-rise mt-8 grid gap-6 rounded-3xl border p-7 sm:p-9 lg:grid-cols-[0.6fr_1.4fr]" style={{ borderColor: tint(0.5), background: `linear-gradient(160deg, ${tint(0.13)}, rgba(255,255,255,0.02))`, animationDuration: "0.5s" }}>
+      <div key={sel} className="sap-rise mt-8 hidden gap-6 rounded-3xl border p-7 sm:p-9 md:grid lg:grid-cols-[0.6fr_1.4fr]" style={{ borderColor: tint(0.5), background: `linear-gradient(160deg, ${tint(0.13)}, rgba(255,255,255,0.02))`, animationDuration: "0.5s" }}>
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--sf)" }}>
             {zones.find((z) => z.id === cur.group)?.title} &middot; {cur.tag}
@@ -177,12 +190,13 @@ export function AgentTrace({ items }: { items: CloudCapability[] }) {
                   className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition-colors duration-300"
                   style={{ background: on ? tint(0.16) : "transparent" }}
                 >
-                  <span className="w-12 shrink-0 text-[11px] tabular-nums text-white/35">00:0{i}.{(i * 3 + 2) % 10}</span>
-                  <span className="w-[4.9rem] shrink-0 rounded px-2 py-1 text-center text-[10px] font-bold tracking-wider text-black" style={{ background: on ? "var(--sf)" : tint(0.55) }}>
+                  <span className="hidden w-12 shrink-0 text-[11px] tabular-nums text-white/35 sm:inline">00:0{i}.{(i * 3 + 2) % 10}</span>
+                  <span className="w-[4.6rem] shrink-0 rounded px-1.5 py-1 text-center text-[9.5px] font-bold tracking-wider text-black sm:w-[4.9rem] sm:px-2 sm:text-[10px]" style={{ background: on ? "var(--sf)" : tint(0.55) }}>
                     {kinds[i % kinds.length]}
                   </span>
-                  <span className={`min-w-0 flex-1 truncate text-[13px] ${on ? "text-white" : "text-white/70"}`}>
-                    {c.title} <span className="text-white/35">&mdash; {c.tag}</span>
+                  <span className="min-w-0 flex-1">
+                    <span className={`block truncate text-[13px] ${on ? "text-white" : "text-white/75"}`}>{c.title}</span>
+                    <span className="block truncate font-sans text-[11px] text-white/40">{c.tag}</span>
                   </span>
                   <span aria-hidden="true" className="text-xs transition-transform duration-300" style={{ color: "var(--sf)", transform: on ? "rotate(90deg)" : "none" }}>
                     &#9656;
@@ -190,7 +204,7 @@ export function AgentTrace({ items }: { items: CloudCapability[] }) {
                 </button>
                 <div className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${on ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
                   <div className="overflow-hidden">
-                    <p className="ml-[4.6rem] max-w-xl pb-3 pr-3 font-sans text-sm leading-relaxed text-white/65 sm:ml-[7.4rem]">{c.body}</p>
+                    <p className="ml-3 max-w-xl pb-3 pr-3 font-sans text-sm leading-relaxed text-white/65 sm:ml-[7.4rem]">{c.body}</p>
                   </div>
                 </div>
               </li>
@@ -204,7 +218,7 @@ export function AgentTrace({ items }: { items: CloudCapability[] }) {
         </ol>
       </div>
 
-      <div key={open} className="sap-rise self-start rounded-[1.75rem] border p-7 lg:sticky lg:top-28" style={{ borderColor: tint(0.5), background: `linear-gradient(160deg, ${tint(0.14)}, rgba(255,255,255,0.02))`, animationDuration: "0.45s" }}>
+      <div key={open} className="sap-rise hidden self-start rounded-[1.75rem] border p-7 lg:sticky lg:top-28 lg:block" style={{ borderColor: tint(0.5), background: `linear-gradient(160deg, ${tint(0.14)}, rgba(255,255,255,0.02))`, animationDuration: "0.45s" }}>
         <p className="font-mono text-[11px] font-bold tracking-wider" style={{ color: "var(--sf)" }}>
           STEP {Math.min(open, items.length - 1) + 1} / {items.length} &middot; {kinds[Math.min(open, items.length - 1) % kinds.length]}
         </p>
@@ -252,7 +266,7 @@ export function RewardWallet({ items }: { items: CloudCapability[] }) {
   return (
     <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.95fr] lg:gap-16">
       <div>
-        <div className="relative mx-auto h-[26rem] w-full max-w-[28rem] sm:h-[29rem]">
+        <div className="relative mx-auto h-[27.5rem] w-full max-w-[28rem] sm:h-[29rem]">
           {items.map((c, i) => {
             const d = (i - active + n) % n;
             const [a, b] = tones[i % tones.length];
@@ -272,7 +286,7 @@ export function RewardWallet({ items }: { items: CloudCapability[] }) {
                 onBlur={() => setHover((h) => (h === i ? null : h))}
                 onClick={() => (front ? next() : setActive(i))}
                 aria-label={front ? `${c.title}. Show the next card` : `Bring ${c.title} to the front`}
-                className="absolute left-0 right-0 top-0 mx-auto h-[13.5rem] w-full max-w-[26rem] origin-bottom-left overflow-hidden rounded-[1.6rem] p-6 text-left text-white outline-none transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] focus-visible:ring-2 focus-visible:ring-white sm:h-[15rem]"
+                className="absolute left-0 right-0 top-0 mx-auto h-[14.75rem] w-full max-w-[26rem] origin-bottom-left overflow-hidden rounded-[1.6rem] p-5 text-left text-white outline-none transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] focus-visible:ring-2 focus-visible:ring-white sm:h-[15rem] sm:p-6"
                 style={{
                   zIndex: away ? n + 1 : n - d,
                   transform,
@@ -299,7 +313,7 @@ export function RewardWallet({ items }: { items: CloudCapability[] }) {
                   <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/80">Member card {String(i + 1).padStart(2, "0")}</span>
                   <span className="h-7 w-10 rounded-md bg-white/30" />
                 </span>
-                <span className="relative mt-8 block font-display text-3xl leading-tight drop-shadow-sm transition-opacity duration-500 sm:mt-10 sm:text-[2rem]" style={{ opacity: front ? 1 : 0 }}>{c.title}</span>
+                <span className="relative mt-6 block font-display text-[1.7rem] leading-tight drop-shadow-sm transition-opacity duration-500 sm:mt-10 sm:text-[2rem]" style={{ opacity: front ? 1 : 0 }}>{c.title}</span>
                 <span className="relative mt-2 block text-sm font-medium text-white/85 transition-opacity duration-500" style={{ opacity: front ? 1 : 0 }}>{c.tag}</span>
                 <span aria-hidden="true" className="absolute inset-x-0 bottom-0 flex items-center justify-between px-6 pb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/70">
                   <span>{front ? "Click for the next card" : "Programme"}</span>

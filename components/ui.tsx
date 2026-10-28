@@ -82,7 +82,7 @@ export function PageHero({
       />
       <div className="relative mx-auto max-w-4xl px-6 pb-24 pt-20 text-center lg:px-8 lg:pb-32 lg:pt-28">
         <Eyebrow>{eyebrow}</Eyebrow>
-        <h1 className="mx-auto mt-7 max-w-4xl text-balance font-display text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+        <h1 className="mx-auto mt-7 max-w-4xl text-balance break-words font-display text-[clamp(1.5rem,7.2vw,2.25rem)] font-bold text-white sm:text-5xl lg:text-6xl">
           {title}
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-balance text-lg leading-relaxed text-white/70 sm:text-xl">
@@ -112,7 +112,7 @@ export function SectionHead({
         <span className="h-px w-10 bg-mw-mint" />
         <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">{tag}</span>
       </div>
-      <h2 id={id} className="mt-5 text-balance font-display text-3xl text-white sm:text-5xl">
+      <h2 id={id} className="mt-5 text-balance break-words font-display text-[clamp(1.5rem,7vw,1.875rem)] text-white sm:text-5xl">
         {title}
       </h2>
     </div>

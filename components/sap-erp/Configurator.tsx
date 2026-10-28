@@ -104,8 +104,8 @@ export function Configurator() {
               {on.size}/{mods.length}
             </span>
           </div>
-          <div>
-            <p className="font-display text-2xl text-white">Same system throughout.</p>
+          <div className="min-w-0 flex-1">
+            <p className="font-display text-xl text-white sm:text-2xl">Same system throughout.</p>
             <p className="mt-1 text-sm text-white/55">No re-implementation as you add more.</p>
           </div>
         </div>

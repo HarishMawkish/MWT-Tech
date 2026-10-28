@@ -227,38 +227,96 @@ export function HudProof({ stats }: { stats: CloudStat[] }) {
   );
 }
 
-/* =============================================== LOYALTY: a tier progress track */
+/* ========================================= LOYALTY: what the platform holds */
 
-export function TierProof({ stats }: { stats: CloudStat[] }) {
-  const [ref, seen] = useInView<HTMLDivElement>(0.3);
-  const tiers = ["Member", "Gold", "Platinum"];
+const countWord = ["", "One", "Two", "Three", "Four", "Five", "Six"];
+
+function Overlap({ items, seen }: { items: string[]; seen: boolean }) {
+  const pos = [[82, 74], [138, 74], [110, 122]];
   return (
-    <div ref={ref}>
-      <div className="relative hidden md:block">
-        <div className="absolute inset-x-[16.6%] top-7 h-1.5 rounded-full bg-white/[0.09]">
-          <div className="h-full rounded-full" style={{ width: seen ? "100%" : "0%", background: "linear-gradient(90deg, rgba(var(--sf-rgb),0.4), var(--sf))", boxShadow: "0 0 20px var(--sf)", transition: "width 2.2s cubic-bezier(0.23,1,0.32,1)" }} />
-        </div>
-        <ul className="relative grid grid-cols-3">
-          {stats.map((s, i) => (
-            <li key={s.label} className="flex flex-col items-center px-4 text-center">
-              <span className="relative grid h-16 w-16 place-items-center rounded-full border-2 font-display text-2xl text-white transition-all duration-700" style={{ borderColor: "var(--sf)", background: seen ? tint(0.5) : "#07100c", boxShadow: seen ? `0 0 40px ${tint(0.7)}` : "none", transitionDelay: `${0.5 + i * 0.6}s` }}>
-                <Num s={s} />
-              </span>
-              <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.22em]" style={{ color: "var(--sf)" }}>{tiers[i]}</p>
-              <p className="mt-4 max-w-[16rem] text-base leading-snug text-white/80">{s.label}</p>
-              <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/40">{s.source}</p>
-            </li>
+    <svg viewBox="0 0 220 190" className="mx-auto h-44 w-full max-w-[16rem]" fill="none" role="img" aria-label={items.join(", ")}>
+      <g className="sf-venn">
+        {items.map((t, i) => (
+          <g key={t} style={{ transform: seen ? "translate(0,0)" : `translate(${(110 - pos[i][0]) * 0.9}px, ${(98 - pos[i][1]) * 0.9}px)`, transition: `transform 1.4s cubic-bezier(0.23,1,0.32,1) ${i * 0.15}s` }}>
+            <circle cx={pos[i][0]} cy={pos[i][1]} r="50" fill={tint(0.2)} stroke="var(--sf)" strokeOpacity="0.8" strokeWidth="1.6" />
+          </g>
+        ))}
+        <circle cx="110" cy="98" r="14" fill="var(--sf)" fillOpacity="0.9" style={{ filter: "drop-shadow(0 0 12px var(--sf))" }} />
+      </g>
+      {items.map((t, i) => (
+        <text key={t} x={[64, 156, 110][i]} y={[58, 58, 150][i]} textAnchor="middle" fill="#fff" fontSize="12" fontWeight="700" letterSpacing="0.4">
+          {t}
+        </text>
+      ))}
+    </svg>
+  );
+}
+
+function Switch({ items }: { items: string[] }) {
+  return (
+    <div className="grid h-44 place-items-center">
+      <div className="relative w-64 rounded-full border border-white/15 bg-black/40 p-1.5">
+        <div className="relative grid grid-cols-2">
+          <span className="absolute inset-y-0 left-0 w-1/2">
+            <span className="sf-toggle block h-full w-full rounded-full" style={{ background: "linear-gradient(135deg, var(--sf), rgba(var(--sf-rgb),0.6))", boxShadow: "0 0 26px rgba(var(--sf-rgb),0.7)" }} />
+          </span>
+          {items.map((t) => (
+            <span key={t} className="relative z-10 py-3 text-center font-display text-lg tracking-wide text-white">
+              {t}
+            </span>
           ))}
-        </ul>
+        </div>
       </div>
-      <ul className="grid gap-4 md:hidden">
-        {stats.map((s) => (
-          <li key={s.label} className="sf-glass flex items-center gap-5 rounded-2xl p-5">
-            <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full font-display text-xl text-white" style={{ background: tint(0.4), border: "2px solid var(--sf)" }}><Num s={s} /></span>
-            <p className="text-sm leading-snug text-white/80">{s.label}</p>
+      <p className="-mt-6 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/45">One platform, either side</p>
+    </div>
+  );
+}
+
+function PunchCard({ items }: { items: string[] }) {
+  return (
+    <div className="grid h-44 content-center gap-4">
+      <div className="mx-auto flex gap-2.5 rounded-2xl border border-dashed px-4 py-3" style={{ borderColor: tint(0.6), background: tint(0.08) }} aria-hidden="true">
+        {items.map((_, i) => (
+          <span key={i} className="relative grid h-9 w-9 place-items-center rounded-full border" style={{ borderColor: tint(0.5) }}>
+            <span className="sf-stamp block h-5 w-5 rounded-full" style={{ background: "var(--sf)", boxShadow: "0 0 14px var(--sf)", animationDelay: `${i * 0.5}s` }} />
+          </span>
+        ))}
+      </div>
+      <ul className="flex flex-wrap justify-center gap-1.5 px-1">
+        {items.map((t) => (
+          <li key={t} className="rounded-full border px-2.5 py-1 text-[11px] font-medium text-white/85" style={{ borderColor: tint(0.4), background: tint(0.1) }}>
+            {t}
           </li>
         ))}
       </ul>
     </div>
+  );
+}
+
+/**
+ * Three figures that are really short lists, so each is drawn as the thing it
+ * counts: overlapping circles, a switch between two sides, and a card being
+ * punched. The number appears as a word, not a digit, so the three do not read as
+ * a sequence.
+ */
+export function ProgramProof({ stats }: { stats: CloudStat[] }) {
+  const [ref, seen] = useInView<HTMLUListElement>(0.3);
+  return (
+    <ul ref={ref} className="grid gap-5 md:grid-cols-3">
+      {stats.map((s, i) => (
+        <li key={s.label} className="sf-glass flex flex-col rounded-3xl p-7 sm:p-8">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em]" style={{ color: "var(--sf)" }}>
+            {countWord[s.value] ?? s.value}
+          </p>
+          <div className="mt-3 flex-1">
+            {i === 0 && <Overlap items={s.items ?? []} seen={seen} />}
+            {i === 1 && <Switch items={s.items ?? []} />}
+            {i === 2 && <PunchCard items={s.items ?? []} />}
+          </div>
+          <p className="mt-5 font-display text-xl leading-snug text-white first-letter:uppercase">{s.label}</p>
+          <p className="mt-4 border-t border-white/10 pt-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/40">{s.source}</p>
+        </li>
+      ))}
+    </ul>
   );
 }

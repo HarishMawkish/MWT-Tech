@@ -49,7 +49,7 @@ function Pipeline() {
             <p className="text-[10px] uppercase tracking-[0.2em] text-white/40">Forecast</p>
             <p className="font-display text-3xl text-white">$4.2M</p>
           </div>
-          <svg viewBox="0 0 140 44" className="h-11 w-36" fill="none" aria-hidden="true">
+          <svg viewBox="0 0 140 44" className="h-11 w-28 shrink-0 sm:w-36" fill="none" aria-hidden="true">
             <path d="M2 38 C22 36 30 22 50 24 S78 30 92 16 S118 8 138 4" pathLength="1" className="sf-draw" stroke={A} strokeWidth="2.4" strokeLinecap="round" style={{ filter: `drop-shadow(0 0 6px ${tint(0.8)})` }} />
           </svg>
         </div>
@@ -93,8 +93,8 @@ function Console() {
   const cases = [0, 1, 2, 3];
   return (
     <Frame label="Service console">
-      <div className="grid grid-cols-[0.8fr_1.25fr] gap-0">
-        <div className="space-y-2 border-r border-white/10 p-4">
+      <div className="grid gap-0 sm:grid-cols-[0.8fr_1.25fr]">
+        <div className="hidden space-y-2 border-r border-white/10 p-4 sm:block">
           {cases.map((i) => (
             <div key={i} className="flex items-center gap-2 rounded-lg border p-2" style={{ borderColor: i === 1 ? tint(0.6) : "rgba(255,255,255,0.08)", background: i === 1 ? tint(0.12) : "rgba(255,255,255,0.03)" }}>
               <span className="h-6 w-6 shrink-0 rounded-full bg-white/15" />
@@ -107,7 +107,7 @@ function Console() {
           ))}
         </div>
 
-        <div className="flex min-h-[18rem] flex-col justify-end gap-3 p-4 text-[11.5px] leading-snug">
+        <div className="flex min-h-[16rem] flex-col justify-end gap-3 p-4 text-[11.5px] leading-snug sm:min-h-[18rem]">
           <div className="sf-cycle max-w-[85%] self-start rounded-2xl rounded-bl-sm bg-white/10 px-3.5 py-2 text-white/85" style={{ animationDelay: "0s" }}>
             Hi, my order hasn&apos;t arrived and it was due Tuesday.
           </div>
@@ -149,12 +149,12 @@ function Journey() {
           </linearGradient>
         </defs>
         <rect x="22" y="160" width="104" height="64" rx="14" fill={tint(0.16)} stroke={A} strokeOpacity="0.7" />
-        <text x="74" y="188" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="700">Segment</text>
-        <text x="74" y="206" textAnchor="middle" fill="#fff" fillOpacity="0.55" fontSize="9.5">At-risk, high value</text>
+        <text x="74" y="188" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="700">Segment</text>
+        <text x="74" y="206" textAnchor="middle" fill="#fff" fillOpacity="0.55" fontSize="11">High value</text>
 
         <path d="M126 192 H190" stroke="url(#jg)" strokeWidth="1.6" className="sf-flow" />
         <path d="M214 168 L238 192 L214 216 L190 192 Z" fill={tint(0.2)} stroke={A} strokeOpacity="0.85" />
-        <text x="214" y="196" textAnchor="middle" fill="#fff" fontSize="9" fontWeight="700">AI</text>
+        <text x="214" y="196" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="700">AI</text>
 
         {channels.map((c, i) => {
           const d = `M238 192 C300 192 310 ${c.y} 366 ${c.y}`;
@@ -166,12 +166,12 @@ function Journey() {
               </circle>
               <rect x="366" y={c.y - 22} width="130" height="44" rx="12" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.18)" />
               <circle cx="388" cy={c.y} r="9" fill={tint(0.25)} stroke={A} strokeOpacity="0.7" />
-              <text x="408" y={c.y + 4} fill="#fff" fontSize="11.5" fontWeight="600">{c.label}</text>
+              <text x="408" y={c.y + 4} fill="#fff" fontSize="14" fontWeight="600">{c.label}</text>
               <circle cx="478" cy={c.y} r="3" fill={A} className="sf-twinkle" style={{ animationDelay: `${i * 0.6}s` }} />
             </g>
           );
         })}
-        <text x="214" y="262" textAnchor="middle" fill="#fff" fillOpacity="0.5" fontSize="9.5">Campaign Agent picks the next best move</text>
+        <text x="214" y="262" textAnchor="middle" fill="#fff" fillOpacity="0.5" fontSize="11.5">Campaign Agent picks the next best move</text>
       </svg>
     </Frame>
   );
@@ -202,7 +202,7 @@ function Graph() {
               </circle>
               <circle cx={x} cy={y} r="22" fill="#06120d" stroke="rgba(255,255,255,0.22)" />
               <circle cx={x} cy={y} r="22" fill={tint(0.14)} />
-              <text x={x} y={y + 3.5} textAnchor="middle" fill="#fff" fontSize="10" fontWeight="700">{s}</text>
+              <text x={x} y={y + 4} textAnchor="middle" fill="#fff" fontSize="11.5" fontWeight="700">{s}</text>
             </g>
           );
         })}
@@ -210,7 +210,7 @@ function Graph() {
         <circle cx={cx} cy={cy} r="40" fill="#06120d" stroke={A} strokeWidth="1.6" />
         <circle cx={cx} cy={cy - 9} r="9" fill={A} fillOpacity="0.9" />
         <path d={`M${cx - 17} ${cy + 22} a17 15 0 0 1 34 0`} fill={A} fillOpacity="0.9" />
-        <text x={cx} y={cy + 62} textAnchor="middle" fill="#fff" fontSize="10.5" fontWeight="700" letterSpacing="1.4">ONE PROFILE</text>
+        <text x={cx} y={cy + 64} textAnchor="middle" fill="#fff" fontSize="12.5" fontWeight="700" letterSpacing="1.4">ONE PROFILE</text>
       </svg>
     </Frame>
   );
@@ -221,8 +221,8 @@ function Agent() {
   const steps = ["Understand the request", "Retrieve the order from CRM", "Update the case", "Reply and close"];
   return (
     <Frame label="Agent reasoning">
-      <div className="relative grid min-h-[22rem] grid-cols-[1fr_1.15fr] items-center gap-2 p-5">
-        <div className="relative grid place-items-center">
+      <div className="relative grid items-center gap-6 p-5 sm:min-h-[22rem] sm:grid-cols-[1fr_1.15fr] sm:gap-2">
+        <div className="relative grid min-h-[11rem] place-items-center sm:min-h-0">
           <span className="sf-ping absolute h-36 w-36 rounded-full" style={{ background: tint(0.22) }} aria-hidden="true" />
           <span className="sf-ping absolute h-36 w-36 rounded-full" style={{ background: tint(0.14), animationDelay: "1.2s" }} aria-hidden="true" />
           <span className="sap-float relative grid h-28 w-28 place-items-center rounded-full" style={{ background: `radial-gradient(circle at 32% 28%, #fff, ${A} 38%, rgba(var(--sf-rgb),0.25) 78%)`, boxShadow: `0 0 70px ${tint(0.7)}` }}>

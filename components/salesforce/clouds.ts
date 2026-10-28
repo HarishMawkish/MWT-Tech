@@ -20,6 +20,8 @@ export type CloudStat = {
   suffix?: string;
   label: string;
   source: string;
+  /** The things being counted, when a figure is really a short list. */
+  items?: string[];
 };
 
 export type CloudCapability = {
@@ -353,11 +355,11 @@ export const clouds: SalesforceCloud[] = [
       { title: "One platform, many programs", tag: "B2B and B2C", body: "Run multiple programs across brands and partners, including channel rewards and volume rebates, with tiering, gamification, clubs and redemption rules.", details: ["Rebates", "Gamification", "Clubs"] },
       { title: "Intelligence built in", tag: "Agentforce and analytics", body: "Agentforce streamlines program creation and surfaces next-best-offer recommendations, while built-in attribution and promotion analytics show results by offer, channel and audience.", details: ["Next best offer", "Attribution"] },
     ],
-    proofTitle: "What one platform covers.",
+    proofTitle: "What one platform holds.",
     stats: [
-      { value: 3, label: "connected capabilities on one platform: loyalty, offers and referrals", source: "Salesforce" },
-      { value: 2, label: "audiences, one platform: B2C and B2B programs", source: "Salesforce" },
-      { value: 5, label: "program styles: points, tiers, cash-back, punch cards and hybrids", source: "Salesforce" },
+      { value: 3, label: "connected capabilities on one platform", source: "Salesforce", items: ["Loyalty", "Offers", "Referrals"] },
+      { value: 2, label: "audiences served from the same platform", source: "Salesforce", items: ["B2C", "B2B"] },
+      { value: 5, label: "program styles you can build, and mix", source: "Salesforce", items: ["Points", "Tiers", "Cash-back", "Punch cards", "Hybrids"] },
     ],
     flowTitle: "From a program to a habit",
     flow: [

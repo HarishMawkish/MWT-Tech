@@ -81,7 +81,7 @@ export default async function ServiceDetailPage({
             <Eyebrow>{groupLabel}</Eyebrow>
           </Reveal>
           <Reveal delay={80}>
-            <h1 className="mx-auto mt-7 max-w-4xl text-balance font-display text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+            <h1 className="mx-auto mt-7 max-w-4xl text-balance break-words font-display text-[clamp(1.5rem,7.2vw,2.25rem)] font-bold text-white sm:text-5xl lg:text-6xl">
               {service.name}
             </h1>
           </Reveal>

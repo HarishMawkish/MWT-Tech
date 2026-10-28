@@ -1076,3 +1076,32 @@ header::before {
 @media (prefers-reduced-motion: reduce) {
   .sf-spin, .sf-spin-rev { animation: none !important; }
 }
+
+/* Loyalty figures: a switch that flips between audiences, and punches landing on a card. */
+@keyframes sf-toggle {
+  0%, 38% { transform: translateX(0); }
+  50%, 88% { transform: translateX(100%); }
+  100% { transform: translateX(0); }
+}
+@keyframes sf-stamp {
+  0%, 6% { transform: scale(0) rotate(-30deg); opacity: 0; }
+  14% { transform: scale(1.35) rotate(6deg); opacity: 1; }
+  22%, 86% { transform: scale(1) rotate(0); opacity: 1; }
+  96%, 100% { transform: scale(0.6); opacity: 0; }
+}
+@keyframes sf-venn { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+.sf-toggle { animation: sf-toggle 7s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+.sf-stamp { animation: sf-stamp 8s ease-in-out infinite both; }
+.sf-venn { transform-origin: 110px 98px; animation: sf-venn 9s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .sf-toggle, .sf-stamp, .sf-venn { animation: none !important; }
+  .sf-stamp { opacity: 1 !important; transform: none !important; }
+}
+
+/* Phones: frosted blur is costly on many cards at once, so the glass goes solid-ish. */
+@media (max-width: 640px) {
+  .sf-glass {
+    backdrop-filter: none;
+    background: linear-gradient(180deg, rgba(20, 26, 24, 0.92), rgba(10, 14, 13, 0.92));
+  }
+}

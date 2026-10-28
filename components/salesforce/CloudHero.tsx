@@ -34,7 +34,7 @@ export function CloudHero({ cloud }: { cloud: SalesforceCloud }) {
 
   const onMove = (e: React.PointerEvent) => {
     const el = root.current;
-    if (!el) return;
+    if (!el || e.pointerType !== "mouse") return;
     const r = el.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width;
     const y = (e.clientY - r.top) / r.height;
@@ -61,8 +61,8 @@ export function CloudHero({ cloud }: { cloud: SalesforceCloud }) {
     >
       {/* light */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <div className="sf-aurora-a absolute -left-[12%] -top-[28%] h-[44rem] w-[44rem] rounded-full blur-[110px]" style={{ background: "rgba(var(--sf-rgb),0.34)" }} />
-        <div className="sf-aurora-b absolute -right-[10%] top-[8%] h-[38rem] w-[38rem] rounded-full blur-[120px]" style={{ background: "rgba(var(--sf-rgb),0.2)" }} />
+        <div className="sf-aurora-a absolute -left-[12%] -top-[28%] h-[30rem] w-[30rem] rounded-full blur-[70px] sm:h-[44rem] sm:w-[44rem] sm:blur-[110px]" style={{ background: "rgba(var(--sf-rgb),0.34)" }} />
+        <div className="sf-aurora-b absolute -right-[10%] top-[8%] h-[26rem] w-[26rem] rounded-full blur-[80px] sm:h-[38rem] sm:w-[38rem] sm:blur-[120px]" style={{ background: "rgba(var(--sf-rgb),0.2)" }} />
         <div className="sf-grid-bg absolute inset-0" />
         <div className="absolute inset-0 transition-[background] duration-300" style={{ background: "radial-gradient(520px circle at var(--mx) var(--my), rgba(var(--sf-rgb),0.16), transparent 62%)" }} />
         {dots.map(([l, t, d], i) => (
@@ -89,17 +89,17 @@ export function CloudHero({ cloud }: { cloud: SalesforceCloud }) {
         </span>
       </nav>
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 pb-20 pt-10 lg:grid-cols-[1.12fr_0.88fr] lg:gap-8 lg:px-8 lg:pb-24 lg:pt-6">
-        <div>
-          <div className="sap-rise inline-flex items-center gap-3 rounded-full border px-4 py-2" style={{ borderColor: "rgba(var(--sf-rgb),0.45)", background: "rgba(var(--sf-rgb),0.1)" }}>
+      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-5 pb-16 pt-8 sm:gap-12 sm:px-6 sm:pb-20 sm:pt-10 lg:grid-cols-[1.12fr_0.88fr] lg:gap-8 lg:px-8 lg:pb-24 lg:pt-6">
+        <div className="min-w-0">
+          <div className="sap-rise inline-flex max-w-full items-center gap-2.5 rounded-full border px-3.5 py-2 sm:gap-3 sm:px-4" style={{ borderColor: "rgba(var(--sf-rgb),0.45)", background: "rgba(var(--sf-rgb),0.1)" }}>
             <span className="relative flex h-2 w-2">
               <span className="sf-ping absolute inline-flex h-full w-full rounded-full" style={{ background: "var(--sf)" }} />
               <span className="relative h-2 w-2 rounded-full" style={{ background: "var(--sf)" }} />
             </span>
-            <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/85">Salesforce &middot; {cloud.name}</span>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/85 sm:text-[11px] sm:tracking-[0.22em]">Salesforce &middot; {cloud.name}</span>
           </div>
 
-          <h1 className="mt-6 font-display text-[3rem] leading-[0.98] text-white sm:text-6xl lg:text-[3.7rem] xl:text-[4.5rem]">
+          <h1 className="mt-6 font-display text-[2.3rem] leading-[1] text-white min-[400px]:text-[2.8rem] sm:text-6xl lg:text-[3.7rem] xl:text-[4.5rem]">
             <span className="block">
               <Words text={cloud.headline[0]} start={150} />
             </span>
@@ -115,7 +115,7 @@ export function CloudHero({ cloud }: { cloud: SalesforceCloud }) {
           <div className="sap-rise mt-8 flex flex-wrap items-center gap-4" style={{ animationDelay: "950ms" }}>
             <Link
               href="/contact"
-              className="group relative inline-flex min-h-12 items-center gap-3 overflow-hidden rounded-full px-7 text-sm font-bold uppercase tracking-[0.12em] text-black transition-transform duration-300 active:scale-[0.97]"
+              className="group relative inline-flex min-h-12 items-center gap-3 overflow-hidden rounded-full px-6 text-[13px] font-bold uppercase tracking-[0.1em] text-black transition-transform duration-300 active:scale-[0.97] sm:px-7 sm:text-sm sm:tracking-[0.12em]"
               style={{ background: "var(--sf)", boxShadow: "0 18px 50px -14px rgba(var(--sf-rgb),0.9)" }}
             >
               <span className="sf-shine absolute inset-0" aria-hidden="true" />
@@ -136,7 +136,7 @@ export function CloudHero({ cloud }: { cloud: SalesforceCloud }) {
           </div>
         </div>
 
-        <div className="sap-rise relative" style={{ animationDelay: "500ms", animationDuration: "1.2s" }}>
+        <div className="sap-rise relative min-w-0" style={{ animationDelay: "500ms", animationDuration: "1.2s" }}>
           <span aria-hidden="true" className="absolute -inset-10 rounded-full blur-3xl" style={{ background: "rgba(var(--sf-rgb),0.2)" }} />
           <div
             className="relative transition-transform duration-300 ease-out will-change-transform"

@@ -8,6 +8,105 @@ import { ServicesMenu } from "./ServicesMenu";
 import { navLinks, siteConfig } from "@/lib/site-data";
 import { servicesMenu } from "@/lib/services-menu";
 
+function Chevron({ open }: { open: boolean }) {
+  return (
+    <svg viewBox="0 0 12 12" fill="none" aria-hidden="true" className={`h-3.5 w-3.5 transition-transform duration-300 ${open ? "rotate-180" : ""}`}>
+      <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** One category in the phone menu: its page, and, when it has them, its own pages folded away until asked for. */
+function MobileCategory({ c }: { c: (typeof servicesMenu)[number] }) {
+  const [open, setOpen] = useState(false);
+  const links: { label: string; href: string; accent?: string; tone?: string }[] = [
+    ...(c.featured ?? []).map((f) => ({ label: f.label, href: f.href, accent: "#7fd9b4" })),
+    ...(c.tiles ?? []).map((t) => ({ label: t.label, href: t.href, accent: t.accent })),
+  ];
+  return (
+    <div className="rounded-xl">
+      <div className="flex items-stretch">
+        {c.href ? (
+          <Link href={c.href} className="flex min-h-11 min-w-0 flex-1 items-center rounded-lg px-3 text-sm text-white/85 active:bg-white/10">
+            {c.label}
+          </Link>
+        ) : (
+          // No page behind it yet: listed, not linked.
+          <span className="flex min-h-11 min-w-0 flex-1 flex-col justify-center px-3 text-sm text-white/55">
+            {c.label}
+            {c.descriptor && <span className="text-xs text-white/35">{c.descriptor}</span>}
+          </span>
+        )}
+        {links.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-label={`${open ? "Hide" : "Show"} ${c.label} pages`}
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-lg text-white/60 active:bg-white/10"
+          >
+            <Chevron open={open} />
+          </button>
+        )}
+      </div>
+      {links.length > 0 && (
+        <div className={`grid transition-[grid-template-rows] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+          <div className="overflow-hidden">
+            <div className="ml-4 border-l border-white/10 pl-3">
+              {links.map((l) => (
+                <Link key={l.href} href={l.href} tabIndex={open ? 0 : -1} className="flex min-h-11 items-center gap-2.5 rounded-lg px-3 text-sm text-white/75 active:bg-white/10">
+                  <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: l.accent }} />
+                  {l.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** "Our Services" in the phone menu: the page, and a toggle that folds the whole list in and out. */
+function MobileServices({ link, active, pathname }: { link: (typeof navLinks)[number]; active: boolean; pathname: string }) {
+  const [open, setOpen] = useState(false);
+  useEffect(() => setOpen(false), [pathname]);
+  return (
+    <div>
+      <div className="flex items-stretch">
+        <Link
+          href={link.href}
+          aria-current={active ? "page" : undefined}
+          className={`flex min-h-11 flex-1 items-center rounded-lg px-3 text-xs font-semibold uppercase tracking-wider active:bg-white/10 ${active ? "text-mw-mint" : "text-white/85"}`}
+        >
+          {link.label}
+        </Link>
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-label={`${open ? "Hide" : "Show"} services`}
+          className="grid h-11 w-11 shrink-0 place-items-center rounded-lg text-white/70 active:bg-white/10"
+        >
+          <Chevron open={open} />
+        </button>
+      </div>
+      <div className={`grid transition-[grid-template-rows] duration-400 ease-[cubic-bezier(0.23,1,0.32,1)] ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+        <div className="overflow-hidden">
+          <div className="ml-3 border-l border-white/15 pl-3" inert={!open}>
+            <Link href="/services" className="flex min-h-11 items-center rounded-lg px-3 text-sm text-white/60 active:bg-white/10">
+              All Services
+            </Link>
+            {servicesMenu.map((c) => (
+              <MobileCategory key={c.id} c={c} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
@@ -154,9 +253,12 @@ export function Navbar() {
         }`}
       >
         <nav aria-label="Mobile" className="flex max-h-[70svh] flex-col gap-1 overflow-y-auto">
-          {navLinks.map((link) => (
-            <div key={link.href}>
+          {navLinks.map((link) =>
+            link.children ? (
+              <MobileServices key={link.href} link={link} active={isActive(link.href)} pathname={pathname} />
+            ) : (
               <Link
+                key={link.href}
                 href={link.href}
                 aria-current={isActive(link.href) ? "page" : undefined}
                 className={`flex min-h-11 items-center rounded-lg px-3 text-xs font-semibold uppercase tracking-wider active:bg-white/10 ${
@@ -165,72 +267,8 @@ export function Navbar() {
               >
                 {link.label}
               </Link>
-              {link.children && (
-                <div className="ml-3 border-l border-white/15 pl-3">
-                  <Link
-                    href="/services"
-                    className="flex min-h-11 items-center rounded-lg px-3 text-sm text-white/65 active:bg-white/10"
-                  >
-                    All Services
-                  </Link>
-                  {servicesMenu.map((c) => (
-                    <div key={c.id}>
-                      {c.href ? (
-                        <Link
-                          href={c.href}
-                          className="flex min-h-11 items-center rounded-lg px-3 text-sm text-white/80 active:bg-white/10"
-                        >
-                          {c.label}
-                        </Link>
-                      ) : (
-                        // No page behind it yet: listed, not linked.
-                        <span className="flex min-h-11 flex-col justify-center rounded-lg px-3 text-sm text-white/55">
-                          {c.label}
-                          {c.descriptor && <span className="text-xs text-white/35">{c.descriptor}</span>}
-                        </span>
-                      )}
-                      {(c.featured || c.tiles) && (
-                        <div className="ml-4 border-l border-white/10 pl-3">
-                          {c.tiles?.map((t) => (
-                            <Link
-                              key={t.href}
-                              href={t.href}
-                              className="flex min-h-11 items-center gap-2.5 rounded-lg px-3 text-sm text-white/80 active:bg-white/10"
-                            >
-                              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full" style={{ background: t.accent }} />
-                              {t.label}
-                            </Link>
-                          ))}
-                          {c.featured?.map((item) => (
-                            <Link
-                              key={item.href}
-                              href={item.href}
-                              className="flex min-h-11 items-center rounded-lg px-3 text-sm text-[#7fd9b4] active:bg-white/10"
-                            >
-                              {item.label}
-                            </Link>
-                          ))}
-                          {c.groups
-                            ?.flatMap((g) => g.items)
-                            .map((it) =>
-                              typeof it !== "string" && it.href ? (
-                                <Link
-                                  key={it.href}
-                                  href={it.href}
-                                  className="flex min-h-11 items-center rounded-lg px-3 text-sm text-white/75 active:bg-white/10"
-                                >
-                                  {it.label}
-                                </Link>
-                              ) : null,
-                            )}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+            ),
+          )}
 
           <Link
             href={siteConfig.primaryCta.href}

@@ -66,8 +66,8 @@ export function SalesBoard({ items }: { items: CloudCapability[] }) {
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/45 md:hidden">{l}</p>
             {items.map((c, i) =>
               c.group === l ? (
+                <div key={c.title}>
                 <button
-                  key={c.title}
                   type="button"
                   onPointerEnter={(e) => e.pointerType === "mouse" && setSel(i)}
                   onClick={() => setSel(i)}
@@ -85,13 +85,21 @@ export function SalesBoard({ items }: { items: CloudCapability[] }) {
                   </span>
                   <span className="mt-4 block font-display text-xl leading-tight text-white">{c.title}</span>
                 </button>
+                {/* on a phone the detail opens right under the card that was tapped */}
+                {sel === i && (
+                  <div className="sap-rise mt-2 rounded-2xl border p-5 md:hidden" style={{ borderColor: tint(0.5), background: tint(0.1), animationDuration: "0.4s" }}>
+                    <p className="text-base leading-relaxed text-white/80">{c.body}</p>
+                    <Chips items={c.details} />
+                  </div>
+                )}
+                </div>
               ) : null,
             )}
           </div>
         ))}
       </div>
 
-      <div key={sel} className="sap-rise mt-8 rounded-3xl border p-7 sm:p-9" style={{ borderColor: tint(0.5), background: `linear-gradient(160deg, ${tint(0.14)}, rgba(255,255,255,0.02))`, animationDuration: "0.5s" }}>
+      <div key={sel} className="sap-rise mt-8 hidden rounded-3xl border p-7 sm:p-9 md:block" style={{ borderColor: tint(0.5), background: `linear-gradient(160deg, ${tint(0.14)}, rgba(255,255,255,0.02))`, animationDuration: "0.5s" }}>
         <p className="text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--sf)" }}>
           {cur.group} &middot; {cur.tag}
         </p>
@@ -136,17 +144,17 @@ export function ServiceConsole({ items }: { items: CloudCapability[] }) {
       </div>
 
       <div className="grid md:grid-cols-[19rem_1fr]">
-        <ul className="border-b border-white/10 md:border-b-0 md:border-r">
+        <ul className="flex snap-x gap-2 overflow-x-auto border-b border-white/10 p-3 [scrollbar-width:none] md:block md:gap-0 md:overflow-visible md:border-b-0 md:border-r md:p-0 [&::-webkit-scrollbar]:hidden">
           {items.map((c, i) => {
             const on = i === index;
             return (
-              <li key={c.title}>
+              <li key={c.title} className="w-[13.5rem] shrink-0 snap-start md:w-auto">
                 <button
                   type="button"
                   onClick={() => pick(i)}
                   onPointerEnter={(e) => e.pointerType === "mouse" && pick(i)}
                   aria-pressed={on}
-                  className="relative flex w-full items-start gap-3 border-b border-white/[0.07] px-5 py-4 text-left transition-colors duration-300"
+                  className="relative flex h-full w-full items-start gap-3 overflow-hidden rounded-xl border border-white/[0.07] px-4 py-3.5 text-left transition-colors duration-300 md:rounded-none md:border-0 md:border-b md:px-5 md:py-4"
                   style={{ background: on ? tint(0.14) : "transparent" }}
                 >
                   <span className="absolute inset-y-0 left-0 w-[3px] transition-transform duration-500" style={{ background: "var(--sf)", transform: on ? "scaleY(1)" : "scaleY(0)" }} />
@@ -169,7 +177,7 @@ export function ServiceConsole({ items }: { items: CloudCapability[] }) {
           })}
         </ul>
 
-        <div key={index} className="sap-rise flex min-h-[26rem] flex-col p-6 sm:p-9" style={{ animationDuration: "0.5s" }}>
+        <div key={index} className="sap-rise flex min-h-[22rem] flex-col p-5 sm:p-9 md:min-h-[26rem]" style={{ animationDuration: "0.5s" }}>
           <div className="flex flex-wrap items-center gap-3">
             <h3 className="font-display text-3xl text-white sm:text-4xl">{cur.title}</h3>
             <span className="rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/70" style={{ borderColor: tint(0.5) }}>{cur.tag}</span>
@@ -263,21 +271,30 @@ export function JourneyMap({ items }: { items: CloudCapability[] }) {
         ))}
       </div>
 
-      <ol className="space-y-3 md:hidden">
-        {items.map((c, i) => (
-          <li key={c.title}>
-            <button type="button" onClick={() => setSel(i)} className="flex w-full items-center gap-4 rounded-2xl border p-4 text-left" style={{ borderColor: sel === i ? "var(--sf)" : "rgba(255,255,255,0.1)", background: sel === i ? tint(0.14) : "transparent" }}>
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full font-display text-white" style={{ background: tint(0.4) }}>{i + 1}</span>
-              <span className="font-display text-lg text-white">{c.title}</span>
+      <div className="md:hidden" role="group" aria-label="Campaign stops">
+        <div className="relative flex items-center justify-between px-1">
+          <span aria-hidden="true" className="absolute inset-x-6 top-1/2 h-0.5 -translate-y-1/2 rounded-full bg-white/10" />
+          <span aria-hidden="true" className="absolute left-6 top-1/2 h-0.5 -translate-y-1/2 rounded-full transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]" style={{ width: `calc((100% - 3rem) * ${sel / (n - 1)})`, background: "var(--sf)", boxShadow: "0 0 10px var(--sf)" }} />
+          {items.map((c, i) => (
+            <button
+              key={c.title}
+              type="button"
+              onClick={() => setSel(i)}
+              aria-label={`${i + 1}. ${c.title}`}
+              aria-pressed={sel === i}
+              className="relative z-10 grid h-11 w-11 place-items-center rounded-full border font-display text-base text-white transition-all duration-500"
+              style={{ borderColor: i <= sel ? "var(--sf)" : "rgba(255,255,255,0.25)", background: i === sel ? tint(0.55) : "#07100c", boxShadow: i === sel ? `0 0 26px ${tint(0.8)}` : "none", transform: i === sel ? "scale(1.15)" : "none" }}
+            >
+              {i + 1}
             </button>
-          </li>
-        ))}
-      </ol>
+          ))}
+        </div>
+      </div>
 
-      <div key={sel} className="sap-rise mx-auto mt-10 max-w-3xl rounded-3xl border p-7 text-center sm:p-9" style={{ borderColor: tint(0.5), background: `linear-gradient(180deg, ${tint(0.16)}, rgba(255,255,255,0.02))`, animationDuration: "0.5s" }}>
+      <div key={sel} className="sap-rise mx-auto mt-8 max-w-3xl rounded-3xl border p-6 text-center sm:mt-10 sm:p-9" style={{ borderColor: tint(0.5), background: `linear-gradient(180deg, ${tint(0.16)}, rgba(255,255,255,0.02))`, animationDuration: "0.5s" }}>
         <p className="text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--sf)" }}>Stop {sel + 1} &middot; {cur.tag}</p>
-        <h3 className="mt-3 font-display text-3xl text-white sm:text-4xl">{cur.title}</h3>
-        <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-white/75">{cur.body}</p>
+        <h3 className="mt-3 font-display text-2xl text-white sm:text-4xl">{cur.title}</h3>
+        <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">{cur.body}</p>
         <div className="flex justify-center"><Chips items={cur.details} /></div>
       </div>
     </div>

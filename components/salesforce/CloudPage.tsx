@@ -9,7 +9,7 @@ import { CloudMark, Faq, ScrollProgress, ScrollStatement, Spot, Timeline } from 
 import { Scenarios } from "./Scenarios";
 import { AgentTrace, DataFlow, RewardWallet } from "./showcases-b";
 import { JourneyMap, SalesBoard, ServiceConsole } from "./showcases-a";
-import { ForecastProof, GaugeProof, HudProof, MeterProof, OdometerProof, TierProof } from "./proofs";
+import { ForecastProof, GaugeProof, HudProof, MeterProof, OdometerProof, ProgramProof } from "./proofs";
 import { clouds, cloudHref, rgbOf, type CloudSlug, type SalesforceCloud } from "./clouds";
 
 const sections = [
@@ -50,7 +50,7 @@ const proofs: Record<CloudSlug, (c: SalesforceCloud) => React.ReactNode> = {
   "marketing-cloud": (c) => <MeterProof stats={c.stats} />,
   "data-360": (c) => <OdometerProof stats={c.stats} />,
   agentforce: (c) => <HudProof stats={c.stats} />,
-  "loyalty-management": (c) => <TierProof stats={c.stats} />,
+  "loyalty-management": (c) => <ProgramProof stats={c.stats} />,
 };
 
 /**
@@ -84,7 +84,7 @@ export function CloudPage({ cloud }: { cloud: SalesforceCloud }) {
 
       {/* the idea, lit word by word */}
       <section id="story" className="relative scroll-mt-24">
-        <div className="mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-36">
+        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-36">
           <Reveal>
             <Kicker>{cloud.name}</Kicker>
           </Reveal>
@@ -97,7 +97,7 @@ export function CloudPage({ cloud }: { cloud: SalesforceCloud }) {
       {/* the showcase: this cloud's capabilities, in this cloud's own form */}
       <section id="capabilities" className="relative scroll-mt-24 border-t border-white/10">
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-80" style={{ background: "radial-gradient(60% 100% at 50% 0%, rgba(var(--sf-rgb),0.14), transparent 70%)" }} />
-        <div className="relative mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
+        <div className="relative mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32">
           <Reveal>
             <Kicker>{cloud.showcaseKicker}</Kicker>
             <h2 className="mt-5 max-w-3xl text-balance font-display text-4xl text-white sm:text-6xl">{cloud.showcaseTitle}</h2>
@@ -109,7 +109,7 @@ export function CloudPage({ cloud }: { cloud: SalesforceCloud }) {
       {/* results, in this cloud's own form */}
       <section id="results" className="relative scroll-mt-24 overflow-hidden border-t border-white/10">
         <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-1/2 h-[30rem] w-[60rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[130px]" style={{ background: "rgba(var(--sf-rgb),0.12)" }} />
-        <div className="relative mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
+        <div className="relative mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32">
           <Reveal>
             <Kicker>In numbers</Kicker>
             <h2 className="mt-5 max-w-3xl text-balance font-display text-4xl text-white sm:text-6xl">{cloud.proofTitle}</h2>
@@ -120,7 +120,7 @@ export function CloudPage({ cloud }: { cloud: SalesforceCloud }) {
 
       {/* how it works */}
       <section id="how" className="relative scroll-mt-24 border-t border-white/10">
-        <div className="mx-auto grid max-w-7xl gap-14 px-6 py-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24 lg:px-8 lg:py-36">
+        <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 sm:gap-14 sm:px-6 sm:py-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24 lg:px-8 lg:py-36">
           <div>
             <div className="lg:sticky lg:top-32">
               <Reveal>
@@ -136,7 +136,7 @@ export function CloudPage({ cloud }: { cloud: SalesforceCloud }) {
 
       {/* scenarios */}
       <section id="scenarios" className="relative scroll-mt-24 overflow-hidden border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32">
           <Reveal>
             <Kicker>In practice</Kicker>
             <h2 className="mt-5 max-w-3xl text-balance font-display text-4xl text-white sm:text-6xl">{cloud.scenariosTitle}.</h2>
@@ -149,7 +149,7 @@ export function CloudPage({ cloud }: { cloud: SalesforceCloud }) {
 
       {/* questions */}
       <section id="faq" className="relative scroll-mt-24 border-t border-white/10">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24 lg:px-8 lg:py-32">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:gap-12 sm:px-6 sm:py-24 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24 lg:px-8 lg:py-32">
           <Reveal>
             <Kicker>Good questions</Kicker>
             <h2 className="mt-5 text-balance font-display text-4xl text-white sm:text-5xl">Before you ask.</h2>
@@ -176,15 +176,15 @@ export function CloudPage({ cloud }: { cloud: SalesforceCloud }) {
               </Link>
             </div>
           </Reveal>
-          <ul className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <ul className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5">
             {others.map((o, i) => (
               <li key={o.slug}>
                 <Reveal delay={i * 60} className="h-full">
                   <div style={{ "--sf": o.accent, "--sf-rgb": rgbOf(o.accent) } as CSSProperties} className="h-full">
                     <Link href={cloudHref(o.slug)} className="block h-full">
-                      <Spot className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.025] p-6 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1.5 hover:border-[rgba(var(--sf-rgb),0.6)]">
+                      <Spot className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.025] p-4 transition-all duration-500 sm:p-6 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1.5 hover:border-[rgba(var(--sf-rgb),0.6)]">
                         <CloudMark className="h-8 w-11 transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-110" />
-                        <span className="mt-5 block font-display text-2xl text-white">{o.name}</span>
+                        <span className="mt-4 block font-display text-lg text-white sm:mt-5 sm:text-2xl">{o.name}</span>
                         <span className="mt-2 block flex-1 text-sm leading-snug text-white/55">{o.blurb}</span>
                         <span className="mt-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em]" style={{ color: "var(--sf)" }}>
                           Explore
