@@ -189,9 +189,19 @@ export function Navbar() {
                           {c.descriptor && <span className="text-xs text-white/35">{c.descriptor}</span>}
                         </span>
                       )}
-                      {c.featured && (
+                      {(c.featured || c.tiles) && (
                         <div className="ml-4 border-l border-white/10 pl-3">
-                          {c.featured.map((item) => (
+                          {c.tiles?.map((t) => (
+                            <Link
+                              key={t.href}
+                              href={t.href}
+                              className="flex min-h-11 items-center gap-2.5 rounded-lg px-3 text-sm text-white/80 active:bg-white/10"
+                            >
+                              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full" style={{ background: t.accent }} />
+                              {t.label}
+                            </Link>
+                          ))}
+                          {c.featured?.map((item) => (
                             <Link
                               key={item.href}
                               href={item.href}
@@ -200,6 +210,19 @@ export function Navbar() {
                               {item.label}
                             </Link>
                           ))}
+                          {c.groups
+                            ?.flatMap((g) => g.items)
+                            .map((it) =>
+                              typeof it !== "string" && it.href ? (
+                                <Link
+                                  key={it.href}
+                                  href={it.href}
+                                  className="flex min-h-11 items-center rounded-lg px-3 text-sm text-white/75 active:bg-white/10"
+                                >
+                                  {it.label}
+                                </Link>
+                              ) : null,
+                            )}
                         </div>
                       )}
                     </div>

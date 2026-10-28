@@ -6,6 +6,7 @@ import { Reveal } from "@/components/Reveal";
 import { SpotlightLink } from "@/components/SpotlightLink";
 import { ServiceMark } from "@/components/ServiceMark";
 import { SapPathways } from "@/components/sap-paths/SapPathways";
+import { CloudOrbit } from "@/components/salesforce/CloudOrbit";
 import { services } from "@/lib/site-data";
 
 export function generateStaticParams() {
@@ -108,6 +109,7 @@ export default async function ServiceDetailPage({
 
       {/* The SAP page leads with its two programmes: this is what visitors choose between. */}
       {service.slug === "sap-solutions" && <SapPathways />}
+      {service.slug === "salesforce-solutions" && <CloudOrbit />}
 
       {/* Overview: one confident statement */}
       <section className="bg-black" aria-labelledby="overview-title">
