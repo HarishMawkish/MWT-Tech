@@ -20,13 +20,24 @@ const COORDS: Record<string, [number, number]> = {
   Switzerland: [46.8, 8.2],
 };
 
-// UAE and Oman are only ~2 degrees apart, so at this scale their markers would
-// sit on top of each other. Each is nudged a few map units away from the other
-// (a stylised separation, like fanning out a cluster of pins) so both stay
-// individually visible and pointable.
+// UAE sits exactly where it is. Oman's marker is only ~2 degrees from it, so it
+// is moved a few map units south, which is still well inside Oman (its
+// territory runs far south of the capital), so the two pins don't collide.
 const NUDGE: Record<string, [number, number]> = {
-  UAE: [-9, -9],
-  Oman: [9, 9],
+  Oman: [2, 11],
+};
+
+// Which side of its pin each permanent label sits on. The Gulf pins are
+// crowded, so they are spread around instead of all reading to the right.
+type Side = "right" | "left" | "top" | "topRight" | "bottom";
+const SIDE: Record<string, Side> = { KSA: "left", UAE: "topRight", Oman: "bottom" };
+
+const LABEL_POS: Record<Side, string> = {
+  right: "left-5 top-0 -translate-y-1/2",
+  left: "right-5 top-0 -translate-y-1/2",
+  top: "bottom-5 left-0 -translate-x-1/2",
+  topRight: "bottom-4 left-3",
+  bottom: "top-5 left-0 -translate-x-1/2",
 };
 
 // A marker is "under" the pointer when it is within this many screen pixels.
@@ -168,6 +179,7 @@ export function RegionsMap({ regions }: { regions: Region[] }) {
               const isActive = i === active;
               const isHover = i === hover;
               const isHub = i === hubIndex;
+              const pos = LABEL_POS[SIDE[r.region] ?? "right"];
               return (
                 <span
                   key={r.region}
@@ -193,13 +205,20 @@ export function RegionsMap({ regions }: { regions: Region[] }) {
                         } ${isActive ? "h-3.5 w-3.5" : isHover ? "h-3 w-3" : "h-2.5 w-2.5"}`}
                       />
                     </span>
-                    {(isActive || isHover) && (
+                    {isActive || isHover ? (
                       <span
-                        className={`mw-result pointer-events-none absolute left-5 top-0 -translate-y-1/2 whitespace-nowrap rounded-full border px-3 py-1 font-display text-[11px] font-semibold uppercase tracking-[0.18em] backdrop-blur-md ${
+                        className={`mw-result pointer-events-none absolute z-10 whitespace-nowrap rounded-full border px-3 py-1 font-display text-[11px] font-semibold uppercase tracking-[0.18em] backdrop-blur-md ${pos} ${
                           isActive
                             ? "border-white/20 bg-black/80 text-white"
-                            : "z-10 border-white/10 bg-black/65 text-white/80"
+                            : "border-white/10 bg-black/65 text-white/80"
                         }`}
+                      >
+                        {r.region}
+                      </span>
+                    ) : (
+                      // Always-on name, so no one has to hover to know which pin is which.
+                      <span
+                        className={`pointer-events-none absolute hidden whitespace-nowrap font-display text-[9px] font-semibold uppercase tracking-[0.16em] text-white/55 sm:block ${pos}`}
                       >
                         {r.region}
                       </span>
