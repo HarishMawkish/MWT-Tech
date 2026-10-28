@@ -229,7 +229,7 @@ export default async function InsightDetailPage({
             </Link>
             <Link
               href="/contact"
-              className="rounded-full bg-mw-mint px-6 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-mw-void active:scale-[0.97]"
+              className="mw-sheen rounded-full bg-mw-mint px-6 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-mw-void active:scale-[0.97]"
             >
               Talk to us
             </Link>

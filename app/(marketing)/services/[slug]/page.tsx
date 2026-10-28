@@ -5,6 +5,9 @@ import { CtaBand, Eyebrow, Section } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
 import { SpotlightLink } from "@/components/SpotlightLink";
 import { ServiceMark } from "@/components/ServiceMark";
+import { ScrollWords } from "@/components/fx/ScrollWords";
+import { SplitHeading } from "@/components/fx/SplitHeading";
+import { TiltCard } from "@/components/fx/TiltCard";
 import { services } from "@/lib/site-data";
 
 export function generateStaticParams() {
@@ -78,11 +81,13 @@ export default async function ServiceDetailPage({
           <Reveal>
             <Eyebrow>{groupLabel}</Eyebrow>
           </Reveal>
-          <Reveal delay={80}>
-            <h1 className="mx-auto mt-7 max-w-4xl text-balance font-display text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-              {service.name}
-            </h1>
-          </Reveal>
+          <SplitHeading
+            as="h1"
+            on="load"
+            delay={0.1}
+            parts={[{ text: service.name }]}
+            className="mx-auto mt-7 max-w-4xl text-balance font-display text-4xl font-bold text-white sm:text-5xl lg:text-6xl"
+          />
           <Reveal delay={160}>
             <p className="mx-auto mt-6 max-w-2xl text-balance text-lg leading-relaxed text-white/70 sm:text-xl">
               {service.summary}
@@ -90,7 +95,7 @@ export default async function ServiceDetailPage({
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/contact"
-                className="rounded-full bg-mw-mint px-7 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-mw-void active:scale-[0.97]"
+                className="mw-sheen rounded-full bg-mw-mint px-7 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-mw-void active:scale-[0.97]"
               >
                 Schedule a Consultation
               </Link>
@@ -110,7 +115,7 @@ export default async function ServiceDetailPage({
         <Section className="!py-20 lg:!py-28">
           <Reveal className="mx-auto max-w-4xl">
             <div className="inline-flex items-center gap-3">
-              <span className="h-px w-10 bg-mw-mint" />
+              <span className="mw-tag-line h-px w-10 bg-mw-glow" />
               <span
                 id="overview-title"
                 className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow"
@@ -118,9 +123,12 @@ export default async function ServiceDetailPage({
                 Overview
               </span>
             </div>
-            <p className="mt-8 text-balance text-2xl font-medium leading-snug tracking-tight text-white/90 sm:text-[2rem] sm:leading-[1.3]">
+            <ScrollWords
+              as="p"
+              className="mt-8 text-balance text-2xl font-medium leading-snug tracking-tight text-white sm:text-[2rem] sm:leading-[1.3]"
+            >
               {service.description}
-            </p>
+            </ScrollWords>
           </Reveal>
         </Section>
       </section>
@@ -135,7 +143,7 @@ export default async function ServiceDetailPage({
         <Section className="relative !py-20 lg:!py-28">
           <Reveal>
             <div className="inline-flex items-center gap-3">
-              <span className="h-px w-10 bg-mw-mint" />
+              <span className="mw-tag-line h-px w-10 bg-mw-glow" />
               <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow">
                 Outcomes to expect
               </span>
@@ -148,9 +156,11 @@ export default async function ServiceDetailPage({
           <ol className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-3">
             {service.outcomes.map((o, i) => (
               <Reveal key={o} delay={i * 100} className="h-full">
-                <li className="flex h-full min-h-[15rem] flex-col rounded-[2rem] border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.015] p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.07)]">
-                  <span className="font-display text-5xl font-bold text-mw-glow">0{i + 1}</span>
-                  <p className="mt-auto pt-10 text-lg font-medium leading-snug text-white">{o}</p>
+                <li className="h-full">
+                  <TiltCard className="flex h-full min-h-[15rem] flex-col rounded-[2rem] p-8">
+                    <span className="font-display text-5xl font-bold text-mw-glow">0{i + 1}</span>
+                    <p className="mt-auto pt-10 text-lg font-medium leading-snug text-white">{o}</p>
+                  </TiltCard>
                 </li>
               </Reveal>
             ))}

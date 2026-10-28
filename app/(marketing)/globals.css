@@ -820,19 +820,15 @@ header::before {
 }
 
 /* Logo tiles: pure white so logos exported on a white background merge into
-   the tile instead of showing a box; muted until hovered. */
+   the tile instead of showing a box. Logos stay in full brand colour. */
 .mw-logo-tile {
   background-color: #ffffff;
 }
 .mw-logo-tile img {
-  filter: grayscale(1);
-  opacity: 0.72;
-  transition: filter 0.5s ease, opacity 0.5s ease, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 @media (hover: hover) and (pointer: fine) {
   .mw-logo-tile:hover img {
-    filter: none;
-    opacity: 1;
     transform: scale(1.06);
   }
 }
@@ -865,4 +861,71 @@ header::before {
     opacity: 1;
     transform: none;
   }
+}
+
+/* ---- Problem section: scattered items snap into one connected line ---- */
+.mw-chaos-row {
+  --chaos: 0;
+  transition: border-color 0.5s ease, background-color 0.5s ease;
+}
+/* The dashed outline marks an item that isn't connected to anything yet. */
+.mw-chaos-row::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px dashed rgba(255, 255, 255, 0.35);
+  opacity: var(--chaos);
+  pointer-events: none;
+}
+.mw-chaos-row.is-linked {
+  border-color: rgba(127, 217, 180, 0.28);
+  background-color: #061a12;
+}
+.mw-chaos-row.is-linked .mw-chaos-node {
+  background-color: #7fd9b4;
+  border-color: #7fd9b4;
+  box-shadow: 0 0 14px rgba(127, 217, 180, 0.8);
+}
+.mw-chaos-row.is-linked .mw-chaos-node svg {
+  opacity: 1;
+}
+.mw-chaos-node {
+  transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.mw-chaos-node svg {
+  transition: opacity 0.3s ease;
+}
+
+/* Fluted-glass panel: vertical ribs lit from one corner. Decorative. */
+.mw-fluted {
+  background:
+    repeating-linear-gradient(90deg, rgba(127, 217, 180, 0) 0 26px, rgba(127, 217, 180, 0.09) 26px 28px),
+    radial-gradient(90% 90% at 100% 100%, rgba(28, 107, 81, 0.75) 0%, rgba(28, 107, 81, 0.12) 55%, rgba(0, 0, 0, 0) 80%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+  border: 1px solid rgba(127, 217, 180, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Scroll-focus list (Industries page): the row near mid-screen is lit. */
+.mw-focus-list .mw-focus-bar {
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.mw-focus-list[data-ready] [data-focus-row] .mw-focus-text {
+  color: rgba(255, 255, 255, 0.32);
+  transition: color 0.5s ease, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.mw-focus-list[data-ready] [data-focus-row] .mw-focus-num {
+  opacity: 0.35;
+  transition: opacity 0.5s ease;
+}
+.mw-focus-list[data-ready] [data-focus-row].is-focus .mw-focus-text {
+  color: #ffffff;
+  transform: translateX(6px);
+}
+.mw-focus-list[data-ready] [data-focus-row].is-focus .mw-focus-num {
+  opacity: 1;
+}
+.mw-focus-list [data-focus-row].is-focus .mw-focus-bar {
+  transform: scaleY(0.62);
 }

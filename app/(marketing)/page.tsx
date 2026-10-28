@@ -7,7 +7,8 @@ import { StatCounter } from "@/components/home/StatCounter";
 import { FlowScene } from "@/components/home/FlowSceneLoader";
 import { Timeline } from "@/components/home/Timeline";
 import { ServiceMosaic } from "@/components/home/ServiceMosaic";
-import { IndustryMosaic } from "@/components/home/IndustryMosaic";
+import { IndustryIndex } from "@/components/home/IndustryIndex";
+import { ProblemOrder } from "@/components/home/ProblemOrder";
 import { serviceIconBySlug, IconGrid } from "@/components/home/icons";
 import { Reveal } from "@/components/Reveal";
 import { BigMarquee } from "@/components/fx/BigMarquee";
@@ -219,10 +220,30 @@ export default function Home() {
           </Section>
         </section>
 
-        {/* Pain points / industries */}
-        <section className="relative z-10 flex min-h-[60vh] items-center overflow-hidden">
+        {/* The problem: scattered, unconnected items line up as you scroll */}
+        <section className="relative z-10">
+          <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-12 px-6 py-24 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 lg:px-8 lg:py-32">
+            <div>
+              <div className="lg:sticky lg:top-32">
+                <Reveal>
+                  <SectionTag>The Problem We Solve</SectionTag>
+                </Reveal>
+                <ScrollWords
+                  as="h2"
+                  className="mt-4 font-display text-3xl font-extrabold leading-tight text-white sm:text-4xl lg:text-5xl"
+                >
+                  Growth exposes what disconnected systems were hiding.
+                </ScrollWords>
+              </div>
+            </div>
+            <ProblemOrder items={painPoints} />
+          </div>
+        </section>
+
+        {/* Industries: a large index with a live preview panel */}
+        <section className="relative z-10 overflow-hidden border-t border-white/10">
           {/* Anchor image — bleeds to the bottom-right screen edge, sits
-              behind the grid content, subtle blend into the black backdrop.
+              behind the content, subtle blend into the black backdrop.
               Desktop only; keeps mobile stacking clean. */}
           <div
             aria-hidden="true"
@@ -237,48 +258,17 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-tl from-transparent via-black/60 to-black" />
           </div>
 
-          <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-[minmax(0,1fr)] gap-12 px-6 py-24 lg:grid-cols-[42%_58%] lg:gap-16 lg:px-8 lg:py-32">
+          <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
             <Reveal>
-              <SectionTag>The Problem We Solve</SectionTag>
-              <ScrollWords
-                as="h2"
-                className="mt-4 font-display text-3xl font-extrabold leading-tight text-white sm:text-4xl lg:text-5xl"
-              >
-                Growth exposes what disconnected systems were hiding.
-              </ScrollWords>
-              <ul className="mt-6 space-y-3.5">
-                {painPoints.map((p) => (
-                  <li
-                    key={p}
-                    className="flex items-start gap-3 text-base leading-relaxed text-gray-300 transition-colors hover:text-white"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      className="mt-0.5 h-4 w-4 shrink-0 text-mw-glow"
-                    >
-                      <path
-                        d="M4 10.5L8 14.5L16 6"
-                        stroke="currentColor"
-                        strokeWidth="1.8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    {p}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-            <Reveal delay={120} className="mx-auto w-full max-w-lg lg:mx-0">
               <SectionTag>Industries We Focus On</SectionTag>
-              <div className="mt-6">
-                <IndustryMosaic />
-              </div>
+            </Reveal>
+            <div className="mt-10">
+              <IndustryIndex />
+            </div>
+            <Reveal className="mt-10">
               <Link
                 href="/industries"
-                className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/90 transition-colors hover:text-white"
+                className="group inline-flex items-center gap-2 text-sm font-semibold text-white/90 transition-colors hover:text-white"
               >
                 Explore industries
                 <span

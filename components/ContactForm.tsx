@@ -76,7 +76,7 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
             type="text"
             autoComplete="name"
             required
-            className="w-full min-h-11 rounded-lg border border-mw-line bg-transparent px-4 py-2.5 text-base text-mw-ink outline-none transition-colors placeholder:text-mw-ink/40 focus:border-mw-secondary focus-visible:ring-2 focus-visible:ring-mw-secondary/40 focus-visible:outline-none sm:text-sm"
+            className="w-full min-h-11 rounded-lg border border-white/15 bg-white/[0.03] px-4 py-2.5 text-base text-mw-ink outline-none transition-colors placeholder:text-mw-ink/40 focus:border-mw-glow focus:bg-white/[0.05] focus-visible:ring-2 focus-visible:ring-mw-glow/30 focus-visible:outline-none sm:text-sm"
           />
         </div>
         <div>
@@ -89,7 +89,7 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
             type="email"
             autoComplete="email"
             required
-            className="w-full min-h-11 rounded-lg border border-mw-line bg-transparent px-4 py-2.5 text-base text-mw-ink outline-none transition-colors placeholder:text-mw-ink/40 focus:border-mw-secondary focus-visible:ring-2 focus-visible:ring-mw-secondary/40 focus-visible:outline-none sm:text-sm"
+            className="w-full min-h-11 rounded-lg border border-white/15 bg-white/[0.03] px-4 py-2.5 text-base text-mw-ink outline-none transition-colors placeholder:text-mw-ink/40 focus:border-mw-glow focus:bg-white/[0.05] focus-visible:ring-2 focus-visible:ring-mw-glow/30 focus-visible:outline-none sm:text-sm"
           />
         </div>
       </div>
@@ -104,7 +104,7 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
             name="company"
             type="text"
             autoComplete="organization"
-            className="w-full min-h-11 rounded-lg border border-mw-line bg-transparent px-4 py-2.5 text-base text-mw-ink outline-none transition-colors placeholder:text-mw-ink/40 focus:border-mw-secondary focus-visible:ring-2 focus-visible:ring-mw-secondary/40 focus-visible:outline-none sm:text-sm"
+            className="w-full min-h-11 rounded-lg border border-white/15 bg-white/[0.03] px-4 py-2.5 text-base text-mw-ink outline-none transition-colors placeholder:text-mw-ink/40 focus:border-mw-glow focus:bg-white/[0.05] focus-visible:ring-2 focus-visible:ring-mw-glow/30 focus-visible:outline-none sm:text-sm"
           />
         </div>
         <div>
@@ -115,7 +115,7 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
             id="intent"
             name="intent"
             defaultValue={defaultIntent || "consultation"}
-            className="w-full min-h-11 rounded-lg border border-mw-line bg-transparent px-4 py-2.5 text-base text-mw-ink outline-none transition-colors placeholder:text-mw-ink/40 focus:border-mw-secondary focus-visible:ring-2 focus-visible:ring-mw-secondary/40 focus-visible:outline-none sm:text-sm"
+            className="w-full min-h-11 rounded-lg border border-white/15 bg-white/[0.03] px-4 py-2.5 text-base text-mw-ink outline-none transition-colors placeholder:text-mw-ink/40 focus:border-mw-glow focus:bg-white/[0.05] focus-visible:ring-2 focus-visible:ring-mw-glow/30 focus-visible:outline-none sm:text-sm"
           >
             {intents.map((i) => (
               <option key={i.value} value={i.value} className="bg-white text-neutral-900">
@@ -135,7 +135,7 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
           name="message"
           required
           rows={5}
-          className="w-full min-h-11 rounded-lg border border-mw-line bg-transparent px-4 py-2.5 text-base text-mw-ink outline-none transition-colors placeholder:text-mw-ink/40 focus:border-mw-secondary focus-visible:ring-2 focus-visible:ring-mw-secondary/40 focus-visible:outline-none sm:text-sm"
+          className="w-full min-h-11 rounded-lg border border-white/15 bg-white/[0.03] px-4 py-2.5 text-base text-mw-ink outline-none transition-colors placeholder:text-mw-ink/40 focus:border-mw-glow focus:bg-white/[0.05] focus-visible:ring-2 focus-visible:ring-mw-glow/30 focus-visible:outline-none sm:text-sm"
         />
       </div>
 
@@ -148,7 +148,7 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full min-h-11 rounded-full bg-mw-mint px-6 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-mw-void active:scale-[0.98] disabled:opacity-60 sm:w-auto"
+        className="w-full min-h-11 mw-sheen rounded-full bg-mw-mint px-6 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-mw-void active:scale-[0.98] disabled:opacity-60 sm:w-auto"
       >
         {status === "submitting" ? "Sending…" : "Send Message"}
       </button>

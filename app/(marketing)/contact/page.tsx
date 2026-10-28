@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/ContactForm";
+import { SpotlightCard } from "@/components/SpotlightLink";
 import { Eyebrow, PageHero, Section } from "@/components/ui";
 import { partners, regions } from "@/lib/site-data";
 
@@ -25,9 +26,9 @@ export default async function ContactPage({
       />
 
       <Section className="grid grid-cols-1 gap-14 lg:grid-cols-[1.2fr_1fr]">
-        <div className="rounded-2xl border border-mw-line p-8">
+        <SpotlightCard className="rounded-3xl p-8 sm:p-10">
           <ContactForm defaultIntent={intent} />
-        </div>
+        </SpotlightCard>
 
         <div className="space-y-8">
           <div>
@@ -36,7 +37,7 @@ export default async function ContactPage({
               href="https://maps.app.goo.gl/1tY6TsvdXmYuFvXs8"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 block text-mw-ink/70 underline decoration-mw-line underline-offset-2 transition hover:text-mw-secondary"
+              className="mt-3 block text-mw-ink/70 underline decoration-mw-line underline-offset-2 transition hover:text-mw-glow"
             >
               2nd Floor, Oceanica Tower, 490 Galle Rd, Colombo 00300, Sri Lanka
             </a>
@@ -50,7 +51,7 @@ export default async function ContactPage({
             <iframe
               title="Mawkish Technologies — Oceanica Tower, Colombo, Sri Lanka"
               src="https://www.openstreetmap.org/export/embed.html?bbox=79.8419%2C6.8938%2C79.8619%2C6.9138&layer=mapnik&marker=6.9037886%2C79.8519282"
-              className="h-64 w-full"
+              className="h-64 w-full [filter:invert(1)_hue-rotate(180deg)_saturate(0.45)_brightness(0.82)_contrast(0.95)]"
               loading="lazy"
             />
           </div>
@@ -60,7 +61,7 @@ export default async function ContactPage({
             <div className="mt-3 flex flex-wrap gap-3">
               {partners.map((p) => (
                 <span key={p.name} className="rounded-full border border-mw-line px-4 py-1.5 text-sm text-mw-ink/70">
-                  <a href={p.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-mw-primary hover:text-mw-secondary hover:underline">
+                  <a href={p.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-mw-glow hover:text-mw-glow hover:underline">
                     {p.name}
                   </a>{" "}
                   &middot; {p.relationship}

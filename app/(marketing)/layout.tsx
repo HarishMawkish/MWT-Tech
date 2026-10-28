@@ -8,7 +8,6 @@ import { PageWatermark } from "@/components/PageWatermark";
 import { SiteLoader } from "@/components/SiteLoader";
 import { SmoothScroll } from "@/components/fx/SmoothScroll";
 import { ScrollProgress } from "@/components/fx/ScrollProgress";
-import { CustomCursor } from "@/components/fx/CustomCursor";
 
 // Montserrat — main/heading text. Clean geometric letterforms.
 const montserrat = Montserrat({
@@ -73,7 +72,6 @@ export default function RootLayout({
         <SiteLoader />
         <SmoothScroll />
         <ScrollProgress />
-        <CustomCursor />
         <div aria-hidden="true" className="mw-scanline" />
         <PageWatermark />
         <div className="relative z-10 flex min-h-full flex-1 flex-col">

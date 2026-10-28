@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { CtaBand, Section } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
+import { ImageReveal } from "@/components/fx/ImageReveal";
+import { SplitHeading } from "@/components/fx/SplitHeading";
+import { TiltCard } from "@/components/fx/TiltCard";
 import { regions } from "@/lib/site-data";
 
 export const metadata: Metadata = {
@@ -125,11 +128,13 @@ export default function AboutPage() {
               About Mawkish
             </span>
           </Reveal>
-          <Reveal delay={80}>
-            <h1 className="mt-5 font-display text-4xl font-bold text-white lg:text-5xl">
-              Business outcomes first. Technology second.
-            </h1>
-          </Reveal>
+          <SplitHeading
+            as="h1"
+            on="load"
+            delay={0.1}
+            parts={[{ text: "Business outcomes first. Technology second." }]}
+            className="mt-5 font-display text-4xl font-bold text-white lg:text-5xl"
+          />
           <Reveal delay={160}>
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-gray-300">
               We bridge business strategy and technology — delivering high-impact
@@ -160,7 +165,7 @@ export default function AboutPage() {
               const Icon = card.icon;
               return (
                 <Reveal key={card.title} delay={i * 90} className="h-full">
-                <div className="h-full rounded-3xl border border-white/10 bg-white/[0.02] p-8 transition duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-mw-mint/30 hover:bg-white/[0.04]">
+                <TiltCard className="h-full rounded-3xl p-8">
                   <div className="grid h-12 w-12 place-items-center rounded-2xl border border-mw-mint/25 bg-mw-mint/5 text-mw-glow">
                     <Icon />
                   </div>
@@ -182,7 +187,7 @@ export default function AboutPage() {
                       ))}
                     </div>
                   )}
-                </div>
+                </TiltCard>
                 </Reveal>
               );
             })}
@@ -193,21 +198,27 @@ export default function AboutPage() {
       {/* SECTION 3: Culture / environment showcase — full-width image band */}
       <section className="bg-black">
         <Section className="!py-0 lg:!py-0">
-          <div className="relative h-[535px] overflow-hidden rounded-3xl border border-white/10">
+          <ImageReveal
+            className="h-[535px] overflow-hidden rounded-3xl border border-white/10"
+            overlay={
+              <>
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                <div className="absolute bottom-6 left-6 max-w-xs rounded-2xl border border-white/15 border-t-white/30 bg-black/35 p-5 backdrop-blur-xl backdrop-saturate-150">
+                  <p className="text-sm font-medium leading-relaxed text-white">
+                    Friendly, collaborative, and innovation-driven culture.
+                  </p>
+                </div>
+              </>
+            }
+          >
             <Image
               src="/images/culture.JPG"
               alt="Mawkish team and workspace"
               fill
               sizes="(min-width: 1280px) 1200px, 100vw"
-              className="object-cover scale-100"
+              className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-            <div className="absolute bottom-6 left-6 max-w-xs rounded-2xl border border-white/15 border-t-white/30 bg-black/35 p-5 backdrop-blur-xl backdrop-saturate-150">
-              <p className="text-sm font-medium leading-relaxed text-white">
-                Friendly, collaborative, and innovation-driven culture.
-              </p>
-            </div>
-          </div>
+          </ImageReveal>
         </Section>
       </section>
 
@@ -226,7 +237,10 @@ export default function AboutPage() {
           {/* Chairman */}
           <Reveal>
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center">
-            <div className="relative h-[420px] overflow-hidden rounded-3xl border border-white/10">
+            <ImageReveal
+              className="h-[420px] overflow-hidden rounded-3xl border border-white/10"
+              overlay={<div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 to-transparent" />}
+            >
               <Image
                 src="/images/brand/malick2.jpeg"
                 alt="Hatim Malick - Founder & Director"
@@ -235,8 +249,7 @@ export default function AboutPage() {
                 className="object-cover"
                 style={{ objectPosition: "75% 30%" }}
               />
-              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 to-transparent" />
-            </div>
+            </ImageReveal>
             <div className="flex min-h-[420px] flex-col justify-center rounded-3xl border border-white/10 bg-white/[0.02] p-10">
               <h3 className="font-display text-2xl font-bold normal-case tracking-tight text-white">
                 Hatim Malick
@@ -271,7 +284,10 @@ export default function AboutPage() {
                 across SAP, Salesforce, and Odoo.
               </p>
             </div>
-            <div className="relative order-1 h-[420px] overflow-hidden rounded-3xl border border-white/10 lg:order-2">
+            <ImageReveal
+              className="order-1 h-[420px] overflow-hidden rounded-3xl border border-white/10 lg:order-2"
+              overlay={<div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 to-transparent" />}
+            >
               <Image
                 src="/images/brand/michael.JPG"
                 alt="Michael Gunawardena - Director & CEO"
@@ -279,15 +295,17 @@ export default function AboutPage() {
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
-              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 to-transparent" />
-            </div>
+            </ImageReveal>
           </div>
           </Reveal>
 
           {/* Nafaz */}
           <Reveal>
           <div className="mt-12 grid grid-cols-1 gap-10 border-t border-white/5 pt-12 lg:grid-cols-2 lg:items-center">
-            <div className="relative h-[420px] overflow-hidden rounded-3xl border border-white/10">
+            <ImageReveal
+              className="h-[420px] overflow-hidden rounded-3xl border border-white/10"
+              overlay={<div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 to-transparent" />}
+            >
               {/* Blurred copy fills the frame so the full portrait can sit
                   uncropped on top while the box keeps the same shape as the others. */}
               <Image
@@ -305,8 +323,7 @@ export default function AboutPage() {
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-contain"
               />
-              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 to-transparent" />
-            </div>
+            </ImageReveal>
             <div className="flex min-h-[420px] flex-col justify-center rounded-3xl border border-white/10 bg-white/[0.02] p-10">
               <h3 className="font-display text-2xl font-bold normal-case tracking-tight text-white">
                 Nafaz Jalaldeen
