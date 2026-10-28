@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CtaBand, PageHero, Section } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
 import { FocusList } from "@/components/fx/FocusList";
-import { HorizontalSectors } from "@/components/fx/HorizontalSectors";
+import { SectorGrid } from "@/components/SectorGrid";
 import { painPoints } from "@/lib/site-data";
 
 export const metadata: Metadata = {
@@ -52,7 +52,7 @@ export default function IndustriesPage() {
           </Reveal>
 
           <div className="mt-14">
-            <HorizontalSectors />
+            <SectorGrid />
           </div>
         </Section>
       </section>
