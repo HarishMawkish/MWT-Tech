@@ -1,10 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { useMemo, useRef, useState, type CSSProperties } from "react";
 import { Reveal } from "@/components/Reveal";
 import { WORLD_MAP } from "@/lib/world-map";
-import { WORLD_MAP_FINE } from "@/lib/world-map-fine";
-import { BORDERS_PATH, LAND_PATH } from "@/lib/world-outline";
 import type { Region } from "@/lib/site-data";
 
 const W = 1000;
@@ -22,26 +20,23 @@ const COORDS: Record<string, [number, number]> = {
   Switzerland: [46.8, 8.2],
 };
 
-// How far the camera pushes in on each market. The Gulf neighbours need the
-// most: UAE and Oman are only ~2 degrees apart, so they only separate cleanly
-// once the map is magnified roughly eightfold.
-const ZOOM: Record<string, number> = {
-  "Sri Lanka": 4.5,
-  India: 3.2,
-  KSA: 4.5,
-  UAE: 8,
-  Oman: 8,
-  USA: 2.4,
-  Switzerland: 5,
+// UAE and Oman are only ~2 degrees apart, so at this scale their markers would
+// sit on top of each other. Each is nudged a few map units away from the other
+// (a stylised separation, like fanning out a cluster of pins) so both stay
+// individually visible and pointable.
+const NUDGE: Record<string, [number, number]> = {
+  UAE: [-9, -9],
+  Oman: [9, 9],
 };
 
 // A marker is "under" the pointer when it is within this many screen pixels.
-const HIT_RADIUS = 26;
+const HIT_RADIUS = 22;
 
-function project([lat, lon]: [number, number]) {
+function project(region: string, [lat, lon]: [number, number]) {
+  const [dx, dy] = NUDGE[region] ?? [0, 0];
   return {
-    x: ((lon + 180) / 360) * W,
-    y: ((WORLD_MAP.latMax - lat) / (WORLD_MAP.latMax - WORLD_MAP.latMin)) * H,
+    x: ((lon + 180) / 360) * W + dx,
+    y: ((WORLD_MAP.latMax - lat) / (WORLD_MAP.latMax - WORLD_MAP.latMin)) * H + dy,
   };
 }
 
@@ -53,66 +48,36 @@ function arc(a: { x: number; y: number }, b: { x: number; y: number }) {
   return `M${a.x.toFixed(1)} ${a.y.toFixed(1)} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${b.x.toFixed(1)} ${b.y.toFixed(1)}`;
 }
 
-/** One path of zero-length round-capped strokes = one dot per land cell. */
-function dotPath(grid: { cols: number; data: readonly string[] }) {
-  const cell = W / grid.cols;
-  let d = "";
-  grid.data.forEach((row, r) => {
-    for (let c = 0; c < row.length; c++) {
-      if (row[c] === "1") d += `M${((c + 0.5) * cell).toFixed(1)} ${((r + 0.5) * cell).toFixed(1)}h0`;
-    }
-  });
-  return d;
-}
-
 /**
- * Regional footprint as a dot-matrix world map with a camera. Colombo is the
- * hub and a route runs from it to each market. Choosing a market (from the
- * list or by clicking its marker) glides the camera in on it, so neighbours
- * that overlap at world scale (UAE / Oman) spread apart and become easy to
- * pick. Hovering the map highlights the *nearest* marker to the pointer, not
- * whichever happens to be on top. Every market's status, presence and focus
- * is also listed beside the map, so nothing depends on the map alone.
+ * Regional footprint as a dot-matrix world map. Colombo is the hub and a route
+ * runs from it to each market; the selected one lights up with a bead
+ * travelling along it. Hovering the map highlights the marker *nearest* the
+ * pointer (not whichever happens to be on top) and clicking it selects it.
+ * Every market's status, presence and focus is also listed beside the map, so
+ * nothing depends on the map alone.
  */
 export function RegionsMap({ regions }: { regions: Region[] }) {
   const [active, setActive] = useState(0);
-  const [world, setWorld] = useState(true); // true = whole-world camera
   const [hover, setHover] = useState<number | null>(null);
-  const mapRef = useRef<HTMLDivElement>(null);
   const markerRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const intentTimer = useRef<number | undefined>(undefined);
 
-  const coarse = useMemo(() => dotPath(WORLD_MAP), []);
-  const fine = useMemo(() => dotPath(WORLD_MAP_FINE), []);
+  const dots = useMemo(() => {
+    const cell = W / WORLD_MAP.cols;
+    let d = "";
+    WORLD_MAP.data.forEach((row, r) => {
+      for (let c = 0; c < row.length; c++) {
+        if (row[c] === "1") d += `M${((c + 0.5) * cell).toFixed(1)} ${((r + 0.5) * cell).toFixed(1)}h0`;
+      }
+    });
+    return d;
+  }, []);
 
   const hubIndex = Math.max(
     0,
     regions.findIndex((r) => r.presence === "Headquarters"),
   );
-  const points = regions.map((r) => (COORDS[r.region] ? project(COORDS[r.region]) : null));
+  const points = regions.map((r) => (COORDS[r.region] ? project(r.region, COORDS[r.region]) : null));
   const hub = points[hubIndex];
-
-  // ---- camera ------------------------------------------------------------
-  const k = world ? 1 : (ZOOM[regions[active]?.region] ?? 3);
-  const focus = points[active] ?? { x: W / 2, y: H / 2 };
-  const clampT = (v: number) => Math.min(0, Math.max(1 - k, v));
-  const tx = clampT(0.5 - (focus.x / W) * k) * 100;
-  const ty = clampT(0.5 - (focus.y / H) * k) * 100;
-  const zoomed = k > 1;
-
-  const select = (i: number) => {
-    window.clearTimeout(intentTimer.current);
-    setActive(i);
-    setWorld(false);
-  };
-
-  // Hovering a list row selects it, but only after a short pause, so dragging
-  // the pointer down the list doesn't whip the camera around.
-  const selectSoon = (i: number) => {
-    window.clearTimeout(intentTimer.current);
-    intentTimer.current = window.setTimeout(() => select(i), 160);
-  };
-  useEffect(() => () => window.clearTimeout(intentTimer.current), []);
 
   /** Index of the marker nearest the pointer, if one is close enough. */
   const nearest = (clientX: number, clientY: number) => {
@@ -130,13 +95,6 @@ export function RegionsMap({ regions }: { regions: Region[] }) {
     return best >= 0 ? best : null;
   };
 
-  const stageStyle: CSSProperties = {
-    transform: `translate(${tx}%, ${ty}%) scale(${k})`,
-    transformOrigin: "0 0",
-  };
-  const camera =
-    "transition-transform duration-[1100ms] ease-[cubic-bezier(0.65,0,0.35,1)] motion-reduce:transition-none";
-
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.55fr_1fr] lg:gap-8">
       {/* ---- the map ---- */}
@@ -147,10 +105,8 @@ export function RegionsMap({ regions }: { regions: Region[] }) {
             className="pointer-events-none absolute -left-20 top-1/3 h-72 w-72 rounded-full bg-mw-mint/20 blur-3xl"
           />
 
-          {/* The viewport: the stage inside it is what the camera moves. */}
           <div
-            ref={mapRef}
-            className={`relative overflow-hidden rounded-2xl ${hover !== null ? "cursor-pointer" : ""}`}
+            className={`relative ${hover !== null ? "cursor-pointer" : ""}`}
             style={{ aspectRatio: `${W} / ${H}` }}
             onPointerMove={(e) => {
               if (e.pointerType !== "mouse") return;
@@ -160,158 +116,98 @@ export function RegionsMap({ regions }: { regions: Region[] }) {
             onPointerLeave={() => setHover(null)}
             onClick={(e) => {
               const n = nearest(e.clientX, e.clientY);
-              if (n !== null) select(n);
+              if (n !== null) setActive(n);
             }}
           >
-            <div className={`absolute inset-0 ${camera}`} style={stageStyle}>
-              {/* Land. The coarse grid reads best from far away; the finer one
-                  takes over once the camera is in close. */}
-              <div className="mw-map-dots absolute inset-0">
-                <svg
-                  viewBox={`0 0 ${W} ${H}`}
-                  className={`absolute inset-0 h-full w-full transition-opacity duration-700 ${zoomed ? "opacity-0" : "opacity-100"}`}
-                  aria-hidden="true"
-                >
-                  <path d={coarse} stroke="rgba(127,217,180,0.3)" strokeWidth="3.6" strokeLinecap="round" fill="none" />
-                </svg>
-                <svg
-                  viewBox={`0 0 ${W} ${H}`}
-                  className={`absolute inset-0 h-full w-full transition-opacity duration-700 ${zoomed ? "opacity-40" : "opacity-0"}`}
-                  aria-hidden="true"
-                >
-                  <path d={fine} stroke="rgba(127,217,180,0.34)" strokeWidth="2.1" strokeLinecap="round" fill="none" />
-                </svg>
-              </div>
-
-              {/* Coastline and country borders, only once zoomed in: they let you
-                  see where one country ends and the next begins (UAE / Oman). */}
-              <svg
-                viewBox={`0 0 ${W} ${H}`}
-                className={`absolute inset-0 h-full w-full transition-opacity duration-700 ${zoomed ? "opacity-100" : "opacity-0"}`}
-                aria-hidden="true"
-              >
-                <path
-                  d={LAND_PATH}
-                  fill="rgba(127,217,180,0.09)"
-                  stroke="rgba(127,217,180,0.75)"
-                  strokeLinejoin="round"
-                  style={{ strokeWidth: 0.9 / k }}
-                />
-                <path
-                  d={BORDERS_PATH}
-                  fill="none"
-                  stroke="rgba(255,255,255,0.28)"
-                  strokeLinejoin="round"
-                  style={{ strokeWidth: 0.7 / k, strokeDasharray: `${3 / k} ${2.5 / k}` }}
-                />
+            {/* Land: one path of zero-length round-capped strokes = one dot each. */}
+            <div className="mw-map-dots absolute inset-0">
+              <svg viewBox={`0 0 ${W} ${H}`} className="h-full w-full" aria-hidden="true">
+                <path d={dots} stroke="rgba(127,217,180,0.3)" strokeWidth="3.6" strokeLinecap="round" fill="none" />
               </svg>
-
-              {/* Routes from the hub. Widths are divided by the zoom so lines
-                  keep the same on-screen thickness whatever the camera does. */}
-              <svg viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
-                {hub &&
-                  points.map((p, i) =>
-                    p && i !== hubIndex ? (
-                      <path
-                        key={regions[i].region}
-                        d={arc(hub, p)}
-                        fill="none"
-                        stroke={i === active ? "none" : "rgba(255,255,255,0.14)"}
-                        style={{ strokeWidth: 1.2 / k, strokeDasharray: `${2 / k} ${6 / k}` }}
-                      />
-                    ) : null,
-                  )}
-                {hub && points[active] && active !== hubIndex && (
-                  <g key={active}>
-                    <path
-                      d={arc(hub, points[active]!)}
-                      pathLength={1}
-                      fill="none"
-                      stroke="#7fd9b4"
-                      strokeLinecap="round"
-                      className="mw-arc-draw"
-                      style={{ strokeWidth: 2 / k, filter: "drop-shadow(0 0 5px rgba(127,217,180,0.9))" }}
-                    />
-                    <circle r={4 / k} fill="#ffffff" className="mw-arc-bead" style={{ filter: "drop-shadow(0 0 6px #7fd9b4)" }}>
-                      <animateMotion dur="2.2s" repeatCount="indefinite" path={arc(hub, points[active]!)} />
-                    </circle>
-                  </g>
-                )}
-              </svg>
-
-              {/* Markers: decorative duplicates of the list (aria-hidden). They
-                  are counter-scaled so they stay the same size on screen. */}
-              {regions.map((r, i) => {
-                const p = points[i];
-                if (!p) return null;
-                const isActive = i === active;
-                const isHover = i === hover;
-                const isHub = i === hubIndex;
-                return (
-                  <span
-                    key={r.region}
-                    aria-hidden="true"
-                    className="pointer-events-none absolute"
-                    style={{ left: `${(p.x / W) * 100}%`, top: `${(p.y / H) * 100}%` }}
-                  >
-                    <span className={`absolute left-0 top-0 block ${camera}`} style={{ transform: `scale(${1 / k})` }}>
-                      <span
-                        ref={(el) => {
-                          markerRefs.current[i] = el;
-                        }}
-                        style={{ "--i": i } as CSSProperties}
-                        className="mw-chip absolute left-0 top-0 block -translate-x-1/2 -translate-y-1/2"
-                      >
-                        <span className="relative grid h-7 w-7 place-items-center">
-                          {(isActive || isHub) && (
-                            <span className="mw-marker-ping absolute h-3 w-3 rounded-full bg-mw-glow/60" />
-                          )}
-                          {isHover && !isActive && (
-                            <span className="absolute h-6 w-6 rounded-full border border-white/50" />
-                          )}
-                          <span
-                            className={`relative block rounded-full transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
-                              r.activeMarket
-                                ? "bg-mw-glow shadow-[0_0_12px_rgba(127,217,180,0.9)]"
-                                : "border border-white/60 bg-black"
-                            } ${isActive ? "h-3.5 w-3.5" : isHover ? "h-3 w-3" : "h-2.5 w-2.5"}`}
-                          />
-                        </span>
-                        {(isActive || isHover) && (
-                          <span
-                            className={`mw-result pointer-events-none absolute left-5 top-0 -translate-y-1/2 whitespace-nowrap rounded-full border px-3 py-1 font-display text-[11px] font-semibold uppercase tracking-[0.18em] backdrop-blur-md ${
-                              isActive
-                                ? "border-white/20 bg-black/80 text-white"
-                                : "z-10 border-white/10 bg-black/65 text-white/80"
-                            }`}
-                          >
-                            {r.region}
-                          </span>
-                        )}
-                      </span>
-                    </span>
-                  </span>
-                );
-              })}
             </div>
 
-            {/* Back out to the whole world. Only offered once zoomed in. */}
-            <button
-              type="button"
-              aria-label="Show the whole world map"
-              onClick={(e) => {
-                e.stopPropagation();
-                setWorld(true);
-              }}
-              className={`absolute right-2 top-2 grid h-9 w-9 place-items-center rounded-full border border-white/20 bg-black/60 text-white/80 backdrop-blur-md transition-all duration-500 hover:border-mw-glow hover:text-mw-glow ${
-                zoomed ? "scale-100 opacity-100" : "pointer-events-none scale-75 opacity-0"
-              }`}
-            >
-              <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true">
-                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
-                <path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" stroke="currentColor" strokeWidth="1.6" />
-              </svg>
-            </button>
+            {/* Routes from the hub. */}
+            <svg viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
+              {hub &&
+                points.map((p, i) =>
+                  p && i !== hubIndex ? (
+                    <path
+                      key={regions[i].region}
+                      d={arc(hub, p)}
+                      fill="none"
+                      stroke={i === active ? "none" : "rgba(255,255,255,0.14)"}
+                      strokeWidth="1.2"
+                      strokeDasharray="2 6"
+                    />
+                  ) : null,
+                )}
+              {hub && points[active] && active !== hubIndex && (
+                <g key={active}>
+                  <path
+                    d={arc(hub, points[active]!)}
+                    pathLength={1}
+                    fill="none"
+                    stroke="#7fd9b4"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    className="mw-arc-draw"
+                    style={{ filter: "drop-shadow(0 0 5px rgba(127,217,180,0.9))" }}
+                  />
+                  <circle r="4" fill="#ffffff" className="mw-arc-bead" style={{ filter: "drop-shadow(0 0 6px #7fd9b4)" }}>
+                    <animateMotion dur="2.2s" repeatCount="indefinite" path={arc(hub, points[active]!)} />
+                  </circle>
+                </g>
+              )}
+            </svg>
+
+            {/* Markers: decorative duplicates of the list, so hidden from
+                assistive tech. The container above does the hit-testing. */}
+            {regions.map((r, i) => {
+              const p = points[i];
+              if (!p) return null;
+              const isActive = i === active;
+              const isHover = i === hover;
+              const isHub = i === hubIndex;
+              return (
+                <span
+                  key={r.region}
+                  aria-hidden="true"
+                  className="pointer-events-none absolute"
+                  style={{ left: `${(p.x / W) * 100}%`, top: `${(p.y / H) * 100}%` }}
+                >
+                  <span
+                    ref={(el) => {
+                      markerRefs.current[i] = el;
+                    }}
+                    style={{ "--i": i } as CSSProperties}
+                    className="mw-chip absolute left-0 top-0 block -translate-x-1/2 -translate-y-1/2"
+                  >
+                    <span className="relative grid h-7 w-7 place-items-center">
+                      {(isActive || isHub) && <span className="mw-marker-ping absolute h-3 w-3 rounded-full bg-mw-glow/60" />}
+                      {isHover && !isActive && <span className="absolute h-6 w-6 rounded-full border border-white/50" />}
+                      <span
+                        className={`relative block rounded-full transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+                          r.activeMarket
+                            ? "bg-mw-glow shadow-[0_0_12px_rgba(127,217,180,0.9)]"
+                            : "border border-white/60 bg-black"
+                        } ${isActive ? "h-3.5 w-3.5" : isHover ? "h-3 w-3" : "h-2.5 w-2.5"}`}
+                      />
+                    </span>
+                    {(isActive || isHover) && (
+                      <span
+                        className={`mw-result pointer-events-none absolute left-5 top-0 -translate-y-1/2 whitespace-nowrap rounded-full border px-3 py-1 font-display text-[11px] font-semibold uppercase tracking-[0.18em] backdrop-blur-md ${
+                          isActive
+                            ? "border-white/20 bg-black/80 text-white"
+                            : "z-10 border-white/10 bg-black/65 text-white/80"
+                        }`}
+                      >
+                        {r.region}
+                      </span>
+                    )}
+                  </span>
+                </span>
+              );
+            })}
           </div>
 
           {/* Legend: the same two words the list uses. */}
@@ -338,10 +234,9 @@ export function RegionsMap({ regions }: { regions: Region[] }) {
                 <button
                   type="button"
                   aria-pressed={isActive}
-                  onClick={() => select(i)}
-                  onPointerEnter={(e) => e.pointerType === "mouse" && selectSoon(i)}
-                  onPointerLeave={() => window.clearTimeout(intentTimer.current)}
-                  onFocus={() => select(i)}
+                  onClick={() => setActive(i)}
+                  onPointerEnter={(e) => e.pointerType === "mouse" && setActive(i)}
+                  onFocus={() => setActive(i)}
                   className={`group relative w-full overflow-hidden rounded-2xl border px-5 py-4 text-left transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
                     isActive
                       ? "border-mw-glow/40 bg-mw-glow/[0.07] shadow-[0_18px_40px_-24px_rgba(127,217,180,0.6)]"
