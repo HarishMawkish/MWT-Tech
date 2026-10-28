@@ -30,7 +30,7 @@ export function SolutionsStrip() {
           {loop.map((s, i) => (
             <div
               key={`${s.name}-${i}`}
-              className="flex h-20 w-44 shrink-0 items-center justify-center rounded-xl bg-white px-6 py-4 shadow-sm"
+              className="mw-logo-tile flex h-20 w-44 shrink-0 items-center justify-center rounded-xl px-6 py-4 shadow-sm"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={s.logo} alt={s.name} className="h-full w-full object-contain" />
@@ -43,7 +43,7 @@ export function SolutionsStrip() {
         {solutions.map((s) => (
           <div
             key={s.name}
-            className="flex h-20 items-center justify-center rounded-2xl bg-white/95 px-5 py-3 shadow-sm transition duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-white"
+            className="mw-logo-tile flex h-20 items-center justify-center rounded-2xl px-5 py-3 shadow-sm transition duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:shadow-[0_18px_40px_-18px_rgba(127,217,180,0.55)]"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={s.logo} alt={s.name} className="h-full w-full object-contain" />

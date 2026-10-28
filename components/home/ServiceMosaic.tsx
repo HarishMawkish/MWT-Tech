@@ -16,7 +16,7 @@ export function ServiceMosaic() {
               aria-hidden="true"
               className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-mw-mint/10 blur-2xl opacity-0"
             />
-            <div className="grid h-11 w-11 place-items-center rounded-xl border border-mw-mint/25 bg-mw-mint/5 text-mw-mint">
+            <div className="grid h-11 w-11 place-items-center rounded-xl border border-mw-mint/25 bg-mw-mint/5 text-mw-glow">
               <Icon />
             </div>
             <h3 className="mt-5 font-display text-2xl text-white">{s.name}</h3>

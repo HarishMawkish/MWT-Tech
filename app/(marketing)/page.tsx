@@ -10,6 +10,10 @@ import { ServiceMosaic } from "@/components/home/ServiceMosaic";
 import { IndustryMosaic } from "@/components/home/IndustryMosaic";
 import { serviceIconBySlug, IconGrid } from "@/components/home/icons";
 import { Reveal } from "@/components/Reveal";
+import { BigMarquee } from "@/components/fx/BigMarquee";
+import { Magnetic } from "@/components/fx/Magnetic";
+import { ScrollWords } from "@/components/fx/ScrollWords";
+import { TiltCard } from "@/components/fx/TiltCard";
 import { CtaBand, Section } from "@/components/ui";
 import { NewsAndEvents } from "@/components/home/NewsAndEvents";
 import { painPoints, partners, services, stats } from "@/lib/site-data";
@@ -31,8 +35,8 @@ const growServices = growSlugs
 function SectionTag({ children }: { children: string }) {
   return (
     <div className="inline-flex items-center gap-3">
-      <span className="h-px w-10 bg-mw-mint" />
-      <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
+      <span className="mw-tag-line h-px w-10 bg-mw-glow" />
+      <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow">
         {children}
       </span>
     </div>
@@ -68,13 +72,15 @@ export default function Home() {
               Founded on a simple belief: technology projects should create
               measurable business outcomes, not just deploy software.
             </p>
-            <Link
-              href="/about"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-mw-mint px-6 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-mw-void active:scale-[0.97]"
-            >
-              More about our story
-              <span aria-hidden="true">&rarr;</span>
-            </Link>
+            <Magnetic className="mt-6">
+              <Link
+                href="/about"
+                className="mw-sheen inline-flex items-center gap-2 rounded-full bg-mw-mint px-6 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-mw-void active:scale-[0.97]"
+              >
+                More about our story
+                <span aria-hidden="true">&rarr;</span>
+              </Link>
+            </Magnetic>
           </Reveal>
           <Reveal
             delay={150}
@@ -83,7 +89,7 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
               {stats.map((s) => (
                 <div key={s.label} className="text-center lg:text-left">
-                  <div className="font-display text-4xl text-mw-mint sm:text-5xl">
+                  <div className="font-display text-4xl text-mw-glow sm:text-5xl">
                     <StatCounter value={Number(s.value)} />
                   </div>
                   <div className="mt-2 text-xs font-medium text-white/70 sm:text-sm">
@@ -113,7 +119,7 @@ export default function Home() {
                 <SectionTag>Platforms We Grow With</SectionTag>
                 <h2 className="mt-4 font-display text-4xl font-extrabold tracking-tight text-white lg:text-6xl">
                   Make You Grow,{" "}
-                  <span className="italic text-mw-mint">Together</span>.
+                  <span className="italic text-mw-glow">Together</span>.
                 </h2>
                 <p className="mt-4 max-w-md text-sm leading-relaxed text-white/65 sm:text-base">
                   Mawkish delivers certified, multi-platform enterprise
@@ -145,9 +151,9 @@ export default function Home() {
               const Icon = serviceIconBySlug[s.slug] ?? IconGrid;
               return (
                 <Reveal key={s.slug} delay={i * 100}>
-                  <div className="group rounded-3xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-500 hover:border-mw-mint/30 hover:shadow-2xl hover:shadow-mw-mint/10">
+                  <TiltCard className="group rounded-3xl p-8 hover:border-mw-mint/30 hover:shadow-2xl hover:shadow-mw-mint/10">
                     <div className="flex items-center gap-4">
-                      <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-mw-mint/25 bg-mw-mint/5 text-mw-mint">
+                      <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-mw-mint/25 bg-mw-mint/5 text-mw-glow">
                         <Icon className="h-5 w-5" />
                       </div>
                       <h3 className="font-display text-xl text-white sm:text-2xl">
@@ -174,18 +180,20 @@ export default function Home() {
                       Explore {s.name}
                       <span
                         aria-hidden="true"
-                        className="inline-block text-mw-mint transition-transform duration-300 group-hover:translate-x-1.5"
+                        className="inline-block text-mw-glow transition-transform duration-300 group-hover:translate-x-1.5"
                       >
                         &rarr;
                       </span>
                     </Link>
-                  </div>
+                  </TiltCard>
                 </Reveal>
               );
             })}
           </div>
         </div>
       </section>
+
+      <BigMarquee words={["SAP", "Salesforce", "Odoo", "AI"]} />
 
       <div className="mw-flow">
         <FlowScene />
@@ -232,9 +240,12 @@ export default function Home() {
           <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-[minmax(0,1fr)] gap-12 px-6 py-24 lg:grid-cols-[42%_58%] lg:gap-16 lg:px-8 lg:py-32">
             <Reveal>
               <SectionTag>The Problem We Solve</SectionTag>
-              <h2 className="mt-4 font-display text-3xl font-extrabold leading-tight text-white sm:text-4xl lg:text-5xl">
+              <ScrollWords
+                as="h2"
+                className="mt-4 font-display text-3xl font-extrabold leading-tight text-white sm:text-4xl lg:text-5xl"
+              >
                 Growth exposes what disconnected systems were hiding.
-              </h2>
+              </ScrollWords>
               <ul className="mt-6 space-y-3.5">
                 {painPoints.map((p) => (
                   <li
@@ -245,7 +256,7 @@ export default function Home() {
                       aria-hidden="true"
                       viewBox="0 0 20 20"
                       fill="none"
-                      className="mt-0.5 h-4 w-4 shrink-0 text-mw-mint"
+                      className="mt-0.5 h-4 w-4 shrink-0 text-mw-glow"
                     >
                       <path
                         d="M4 10.5L8 14.5L16 6"
@@ -272,7 +283,7 @@ export default function Home() {
                 Explore industries
                 <span
                   aria-hidden="true"
-                  className="inline-block text-mw-mint transition-transform duration-300 group-hover:translate-x-1"
+                  className="inline-block text-mw-glow transition-transform duration-300 group-hover:translate-x-1"
                 >
                   &rarr;
                 </span>

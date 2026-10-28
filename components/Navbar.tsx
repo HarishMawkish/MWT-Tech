@@ -10,6 +10,73 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+  const pillRef = useRef<HTMLSpanElement>(null);
+  const openRef = useRef(false);
+
+  useEffect(() => {
+    openRef.current = open;
+  }, [open]);
+
+  // Tuck the bar away while reading down the page and bring it straight back
+  // on any upward scroll or when the pointer heads for the top edge. It stays
+  // put while the menu is open or something inside it has keyboard focus.
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    let last = window.scrollY;
+    let frame = 0;
+
+    const setHidden = (hidden: boolean) => {
+      if (hidden) header.dataset.hidden = "true";
+      else delete header.dataset.hidden;
+    };
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const y = window.scrollY;
+        const dy = y - last;
+        if (Math.abs(dy) < 5) return;
+        last = y;
+        if (y < 120 || dy < 0 || openRef.current || header.contains(document.activeElement)) setHidden(false);
+        else setHidden(true);
+      });
+    };
+    const onPointer = (e: PointerEvent) => {
+      if (e.clientY < 64 && e.pointerType !== "touch") setHidden(false);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("pointermove", onPointer, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("pointermove", onPointer);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  // One highlight pill glides between nav items instead of each item fading
+  // on its own, so the bar reads as a single piece of hardware.
+  const movePill = (target: Element | null) => {
+    const nav = navRef.current;
+    const pill = pillRef.current;
+    if (!nav || !pill) return;
+    if (!target) {
+      pill.style.opacity = "0";
+      return;
+    }
+    const n = nav.getBoundingClientRect();
+    const r = target.getBoundingClientRect();
+    const firstShow = pill.style.opacity !== "1";
+    // Appear in place on first hover; only glide once it is already visible.
+    if (firstShow) pill.style.transitionProperty = "opacity";
+    pill.style.width = `${r.width}px`;
+    pill.style.height = `${r.height}px`;
+    pill.style.transform = `translate(${r.left - n.left}px, ${r.top - n.top}px)`;
+    pill.style.opacity = "1";
+    if (firstShow) requestAnimationFrame(() => (pill.style.transitionProperty = ""));
+  };
 
   // Close the mobile menu whenever the route changes.
   useEffect(() => {
@@ -38,17 +105,39 @@ export function Navbar() {
         {/* Floating translucent pill: content scrolls underneath it. */}
         <div className="hidden items-center lg:flex">
           <div className="flex items-center rounded-2xl border border-white/15 bg-black/45 p-1.5 shadow-sm backdrop-blur-xl backdrop-saturate-150">
-            <nav aria-label="Primary" className="flex items-center gap-1 px-3">
+            <nav
+              ref={navRef}
+              aria-label="Primary"
+              className="relative flex items-center gap-1 px-3"
+              onPointerOver={(e) => {
+                const link = (e.target as Element).closest("[data-nav-link]");
+                if (link) movePill(link);
+              }}
+              onPointerLeave={() => movePill(null)}
+              onFocus={(e) => {
+                const link = (e.target as Element).closest("[data-nav-link]");
+                if (link) movePill(link);
+              }}
+              onBlur={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget as Node | null)) movePill(null);
+              }}
+            >
+              <span
+                ref={pillRef}
+                aria-hidden="true"
+                className="pointer-events-none absolute left-0 top-0 rounded-lg bg-white/10 opacity-0 transition-[transform,width,height,opacity] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]"
+              />
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
                   <div key={link.href} className="group relative">
                     <Link
                       href={link.href}
+                      data-nav-link
                       aria-current={active ? "page" : undefined}
                       aria-haspopup={link.children ? "true" : undefined}
-                      className={`flex min-h-11 items-center gap-1 rounded-lg px-3 text-xs font-semibold uppercase tracking-wider transition-colors active:scale-[0.97] ${
-                        active ? "text-mw-mint" : "text-white/80 hover:text-white"
+                      className={`relative flex min-h-11 items-center gap-1 rounded-lg px-3 text-xs font-semibold uppercase tracking-wider transition-colors active:scale-[0.97] ${
+                        active ? "text-mw-glow" : "text-white/80 hover:text-white"
                       }`}
                     >
                       {link.label}
@@ -87,7 +176,7 @@ export function Navbar() {
 
             <Link
               href={siteConfig.primaryCta.href}
-              className="rounded-xl bg-mw-mint px-5 py-3 text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-white hover:text-mw-void active:scale-[0.97]"
+              className="mw-sheen rounded-xl bg-mw-mint px-5 py-3 text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-white hover:text-mw-void active:scale-[0.97]"
             >
               {siteConfig.primaryCta.label}
             </Link>
@@ -140,7 +229,7 @@ export function Navbar() {
                 href={link.href}
                 aria-current={isActive(link.href) ? "page" : undefined}
                 className={`flex min-h-11 items-center rounded-lg px-3 text-xs font-semibold uppercase tracking-wider active:bg-white/10 ${
-                  isActive(link.href) ? "text-mw-mint" : "text-white/85"
+                  isActive(link.href) ? "text-mw-glow" : "text-white/85"
                 }`}
               >
                 {link.label}

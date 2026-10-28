@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LogoMark } from "./Logo";
+import { FooterWordmark } from "./fx/FooterWordmark";
 import { navLinks, services, industries } from "@/lib/site-data";
 
 const socials = [
@@ -30,7 +31,7 @@ export function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-full border border-white/15 px-3 py-1.5 text-xs font-medium transition hover:border-mw-mint hover:text-mw-mint"
+                  className="rounded-full border border-white/15 px-3 py-1.5 text-xs font-medium transition hover:border-mw-mint hover:text-mw-glow"
                 >
                   {s.label}
                 </a>
@@ -43,13 +44,13 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5 text-sm">
               {navLinks.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="transition hover:text-mw-mint">
+                  <Link href={l.href} className="transition hover:text-mw-glow">
                     {l.label}
                   </Link>
                 </li>
               ))}
               <li>
-                <Link href="/contact" className="transition hover:text-mw-mint">
+                <Link href="/contact" className="transition hover:text-mw-glow">
                   Contact
                 </Link>
               </li>
@@ -61,7 +62,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5 text-sm">
               {industries.slice(0, 5).map((i) => (
                 <li key={i.slug}>
-                  <Link href="/industries" className="transition hover:text-mw-mint">
+                  <Link href="/industries" className="transition hover:text-mw-glow">
                     {i.name}
                   </Link>
                 </li>
@@ -69,6 +70,8 @@ export function Footer() {
             </ul>
           </div>
         </div>
+
+        <FooterWordmark />
 
         <div className="mt-14 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between">
           <p>&copy; {new Date().getFullYear()} Mawkish Technologies. All rights reserved.</p>

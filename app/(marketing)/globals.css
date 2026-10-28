@@ -20,6 +20,10 @@
   --color-mw-paper: #f7f9f8;
   --color-mw-line: #dfe7e3;
   --color-mw-void: #020604;
+  /* Bright brand green for text and glows on black. --color-mw-mint is the
+     deep brand green (right for button fills, ~3:1 as small text on black);
+     this is the same hue lifted until small labels pass contrast. */
+  --color-mw-glow: #7fd9b4;
 
   /* Watermark tint + strength — overridden per-theme below. */
   --mw-watermark-color: var(--color-mw-primary);
@@ -54,6 +58,7 @@
   --color-mw-paper: var(--color-mw-paper);
   --color-mw-line: var(--color-mw-line);
   --color-mw-void: var(--color-mw-void);
+  --color-mw-glow: var(--color-mw-glow);
 }
 
 body {
@@ -238,6 +243,18 @@ html {
   /* Last-resort guard: a stray wide element must never create sideways
      scroll on a phone. `clip` (unlike hidden) keeps position: sticky working. */
   overflow-x: clip;
+}
+
+/* Lenis (inertial scrolling) takes over from the browser's own smoothing. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
 /* Glassmorphism */
@@ -429,7 +446,12 @@ html {
    Without this, the loader's opacity fade-out briefly blends with the
    navbar's light pill underneath it, reading as a washed-out gray blob. */
 header {
-  transition: opacity 0.6s ease;
+  transition: opacity 0.6s ease, transform 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Tucked away while reading down the page (toggled by Navbar). */
+header[data-hidden="true"] {
+  transform: translateY(-100%);
 }
 
 /* Scroll-edge effect: content fades out under the floating header instead
@@ -720,5 +742,127 @@ header::before {
 @media (prefers-reduced-motion: reduce) {
   .mw-viewer-photo {
     animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Motion layer (UI-Experiment): outlined type, footer wordmark, timeline
+   states, tilt cards, button sheen, section-tag rule that draws itself.
+   --------------------------------------------------------------------- */
+
+/* Hollow lettering for the oversized marquee. */
+.mw-outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(127, 217, 180, 0.7);
+}
+
+/* Footer wordmark: faint outline at rest, a pool of light under the pointer. */
+.mw-footer-wordmark {
+  --mx: 50%;
+  --my: 60%;
+  color: transparent;
+  background-image:
+    radial-gradient(340px circle at var(--mx) var(--my), rgba(127, 217, 180, 0.95), rgba(127, 217, 180, 0) 70%),
+    linear-gradient(180deg, rgba(127, 217, 180, 0.16) 0%, rgba(127, 217, 180, 0.03) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+}
+
+/* Methodology rail: steps are dim until the rail's head reaches them. */
+.mw-timeline[data-ready] .mw-step [data-body] {
+  opacity: 0.38;
+  transform: translateY(6px);
+  transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.mw-timeline[data-ready] .mw-step.is-active [data-body] {
+  opacity: 1;
+  transform: none;
+}
+.mw-step [data-node] {
+  transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease, transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.mw-timeline[data-ready] .mw-step.is-active [data-node] {
+  background-color: #1c6b51;
+  border-color: #7fd9b4;
+  color: #ffffff;
+  transform: scale(1.1);
+  box-shadow: 0 0 0 6px rgba(127, 217, 180, 0.12), 0 0 28px rgba(127, 217, 180, 0.55);
+}
+
+/* Tilt cards: GSAP drives transform, so the CSS transform transition steps aside. */
+.mw-spot.mw-tilt-card {
+  transition: box-shadow 0.6s ease, border-color 0.6s ease;
+  will-change: transform;
+}
+
+/* Primary buttons: a light sweep crosses the surface on hover. */
+.mw-sheen {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.mw-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 32%, rgba(255, 255, 255, 0.4) 50%, transparent 68%);
+  transform: translateX(-130%);
+  transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .mw-sheen:hover::after {
+    transform: translateX(130%);
+  }
+}
+
+/* Logo tiles: pure white so logos exported on a white background merge into
+   the tile instead of showing a box; muted until hovered. */
+.mw-logo-tile {
+  background-color: #ffffff;
+}
+.mw-logo-tile img {
+  filter: grayscale(1);
+  opacity: 0.72;
+  transition: filter 0.5s ease, opacity 0.5s ease, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .mw-logo-tile:hover img {
+    filter: none;
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+/* The short rule before a section label draws itself as the section reveals. */
+.mw-tag-line {
+  transform-origin: left center;
+  transition: transform 0.9s cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
+}
+.mw-reveal:not(.mw-in) .mw-tag-line {
+  transform: scaleX(0);
+}
+
+/* Hero scroll cue: a thin line with a travelling bead. No words needed. */
+@keyframes mw-cue {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(260%); }
+}
+.mw-cue-bead {
+  animation: mw-cue 1.9s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mw-cue-bead,
+  .mw-sheen::after {
+    animation: none;
+    transition: none;
+  }
+  .mw-timeline[data-ready] .mw-step [data-body] {
+    opacity: 1;
+    transform: none;
   }
 }

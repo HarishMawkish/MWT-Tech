@@ -54,7 +54,7 @@ export default function IndustriesPage() {
             <div className="max-w-2xl">
               <div className="inline-flex items-center gap-3">
                 <span className="h-px w-10 bg-mw-mint" />
-                <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
+                <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow">
                   Sectors we serve
                 </span>
               </div>
@@ -104,7 +104,7 @@ export default function IndustriesPage() {
               <div className="lg:sticky lg:top-32">
                 <div className="inline-flex items-center gap-3">
                   <span className="h-px w-10 bg-mw-mint" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
+                  <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow">
                     Common across every sector
                   </span>
                 </div>
@@ -118,7 +118,7 @@ export default function IndustriesPage() {
               {painPoints.map((p, i) => (
                 <Reveal key={p} delay={i * 50}>
                   <li className="group flex items-baseline gap-6 py-6 sm:gap-8">
-                    <span className="w-8 shrink-0 font-display text-sm font-semibold tracking-widest text-mw-mint">
+                    <span className="w-8 shrink-0 font-display text-sm font-semibold tracking-widest text-mw-glow">
                       0{i + 1}
                     </span>
                     <span className="text-lg font-medium leading-snug text-white/80 transition-colors duration-300 group-hover:text-white sm:text-xl">

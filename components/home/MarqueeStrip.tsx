@@ -12,7 +12,7 @@ export function MarqueeStrip() {
           {loop.map((client, i) => (
             <div
               key={`${client.name}-${i}`}
-              className="flex h-20 w-44 shrink-0 items-center justify-center rounded-2xl bg-white/95 px-6 py-4 shadow-sm sm:h-20 sm:w-48"
+              className="mw-logo-tile flex h-20 w-44 shrink-0 items-center justify-center rounded-2xl px-6 py-4 shadow-sm sm:h-20 sm:w-48"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

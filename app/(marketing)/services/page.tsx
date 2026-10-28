@@ -28,7 +28,7 @@ function SectionHead({ tag, title, id }: { tag: string; title: string; id: strin
     <div className="max-w-2xl">
       <div className="inline-flex items-center gap-3">
         <span className="h-px w-10 bg-mw-mint" />
-        <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">{tag}</span>
+        <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow">{tag}</span>
       </div>
       <h2 id={id} className="mt-5 text-balance font-display text-3xl text-white sm:text-5xl">
         {title}

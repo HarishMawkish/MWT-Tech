@@ -251,7 +251,7 @@ export default async function InsightDetailPage({
                     href={`/insights/${p.slug}`}
                     className="group flex h-full flex-col rounded-[2rem] p-8"
                   >
-                    <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
+                    <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow">
                       {p.category}
                     </span>
                     <h3 className="mt-4 text-balance font-display text-2xl leading-snug text-white">

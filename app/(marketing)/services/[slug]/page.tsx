@@ -113,7 +113,7 @@ export default async function ServiceDetailPage({
               <span className="h-px w-10 bg-mw-mint" />
               <span
                 id="overview-title"
-                className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint"
+                className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow"
               >
                 Overview
               </span>
@@ -136,7 +136,7 @@ export default async function ServiceDetailPage({
           <Reveal>
             <div className="inline-flex items-center gap-3">
               <span className="h-px w-10 bg-mw-mint" />
-              <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
+              <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow">
                 Outcomes to expect
               </span>
             </div>
@@ -149,7 +149,7 @@ export default async function ServiceDetailPage({
             {service.outcomes.map((o, i) => (
               <Reveal key={o} delay={i * 100} className="h-full">
                 <li className="flex h-full min-h-[15rem] flex-col rounded-[2rem] border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.015] p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.07)]">
-                  <span className="font-display text-5xl font-bold text-mw-mint">0{i + 1}</span>
+                  <span className="font-display text-5xl font-bold text-mw-glow">0{i + 1}</span>
                   <p className="mt-auto pt-10 text-lg font-medium leading-snug text-white">{o}</p>
                 </li>
               </Reveal>

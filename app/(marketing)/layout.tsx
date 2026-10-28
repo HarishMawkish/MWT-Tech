@@ -6,6 +6,9 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageWatermark } from "@/components/PageWatermark";
 import { SiteLoader } from "@/components/SiteLoader";
+import { SmoothScroll } from "@/components/fx/SmoothScroll";
+import { ScrollProgress } from "@/components/fx/ScrollProgress";
+import { CustomCursor } from "@/components/fx/CustomCursor";
 
 // Montserrat — main/heading text. Clean geometric letterforms.
 const montserrat = Montserrat({
@@ -68,6 +71,9 @@ export default function RootLayout({
             rendered underneath it the whole time, so the fade genuinely
             reveals it rather than the navbar popping in afterwards. */}
         <SiteLoader />
+        <SmoothScroll />
+        <ScrollProgress />
+        <CustomCursor />
         <div aria-hidden="true" className="mw-scanline" />
         <PageWatermark />
         <div className="relative z-10 flex min-h-full flex-1 flex-col">

@@ -38,7 +38,7 @@ export function BentoGrow() {
               <h3 className="font-display text-base leading-snug text-white sm:text-lg lg:text-xl">
                 {s.name}
               </h3>
-              <span className="mt-1 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-mw-mint opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100">
+              <span className="mt-1 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-mw-glow opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100">
                 Learn more &rarr;
               </span>
             </div>

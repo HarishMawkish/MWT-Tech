@@ -76,7 +76,7 @@ export default async function InsightsPage() {
                     className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full"
                     style={{ background: "radial-gradient(closest-side, rgba(28,107,81,0.35), transparent)" }}
                   />
-                  <span className="relative text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
+                  <span className="relative text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow">
                     {featured.category}
                   </span>
                   <h3 className="relative mt-5 max-w-xl text-balance font-display text-3xl text-white sm:text-4xl lg:text-[2.6rem]">
@@ -102,7 +102,7 @@ export default async function InsightsPage() {
                   href={`/insights/${post.slug}`}
                   className="group flex h-full flex-col rounded-[2rem] p-7"
                 >
-                  <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
+                  <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow">
                     {post.category}
                   </span>
                   <h3 className="mt-4 text-balance font-display text-xl leading-snug text-white">

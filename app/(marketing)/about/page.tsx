@@ -121,7 +121,7 @@ export default function AboutPage() {
         </div>
         <div className="flex flex-col justify-center border-l border-white/10 bg-[#080d0c] px-8 py-20 lg:px-16">
           <Reveal>
-            <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
+            <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow">
               About Mawkish
             </span>
           </Reveal>
@@ -143,7 +143,7 @@ export default function AboutPage() {
       <section className="bg-black">
         <Section className="!py-12 lg:!py-16">
           <div className="max-w-2xl">
-            <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
+            <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow">
               Who we are
             </span>
             <h2 className="mt-5 font-display text-4xl font-bold tracking-tight text-white lg:text-5xl">
@@ -161,7 +161,7 @@ export default function AboutPage() {
               return (
                 <Reveal key={card.title} delay={i * 90} className="h-full">
                 <div className="h-full rounded-3xl border border-white/10 bg-white/[0.02] p-8 transition duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-mw-mint/30 hover:bg-white/[0.04]">
-                  <div className="grid h-12 w-12 place-items-center rounded-2xl border border-mw-mint/25 bg-mw-mint/5 text-mw-mint">
+                  <div className="grid h-12 w-12 place-items-center rounded-2xl border border-mw-mint/25 bg-mw-mint/5 text-mw-glow">
                     <Icon />
                   </div>
                   <h3 className="mt-6 font-display text-xl font-bold tracking-tight text-white">
@@ -175,7 +175,7 @@ export default function AboutPage() {
                       {card.badges.map((b) => (
                         <span
                           key={b}
-                          className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-mw-mint"
+                          className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-mw-glow"
                         >
                           {b}
                         </span>
@@ -215,7 +215,7 @@ export default function AboutPage() {
       <section className="bg-black">
         <Section className="!py-12 lg:!py-16 space-y-16">
           <div className="max-w-2xl">
-            <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
+            <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow">
               The people
             </span>
             <h2 className="mt-5 font-display text-4xl font-bold tracking-tight text-white lg:text-5xl">
@@ -241,7 +241,7 @@ export default function AboutPage() {
               <h3 className="font-display text-2xl font-bold normal-case tracking-tight text-white">
                 Hatim Malick
               </h3>
-              <div className="mt-1 text-sm font-medium text-mw-mint">
+              <div className="mt-1 text-sm font-medium text-mw-glow">
                 Founder &amp; Director
               </div>
               <p className="mt-5 text-base leading-relaxed text-gray-300">
@@ -261,7 +261,7 @@ export default function AboutPage() {
               <h3 className="font-display text-2xl font-bold normal-case tracking-tight text-white">
                 Michael Gunawardena
               </h3>
-              <div className="mt-1 text-sm font-medium text-mw-mint">
+              <div className="mt-1 text-sm font-medium text-mw-glow">
                 Director &amp; CEO
               </div>
               <p className="mt-5 text-base leading-relaxed text-gray-300">
@@ -311,7 +311,7 @@ export default function AboutPage() {
               <h3 className="font-display text-2xl font-bold normal-case tracking-tight text-white">
                 Nafaz Jalaldeen
               </h3>
-              <div className="mt-1 text-sm font-medium text-mw-mint">
+              <div className="mt-1 text-sm font-medium text-mw-glow">
                 Director &amp; CRO
               </div>
               <p className="mt-5 text-base leading-relaxed text-gray-300">
@@ -333,7 +333,7 @@ export default function AboutPage() {
       <section className="mw-dark-section border-t border-white/10">
         <Section className="!py-12 lg:!py-16">
           <div className="max-w-2xl">
-            <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-mint">
+            <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow">
               Regional Footprint
             </span>
             <h2 className="mt-5 font-display text-4xl font-bold tracking-tight text-white lg:text-5xl">
@@ -370,7 +370,7 @@ export default function AboutPage() {
                       <span
                         className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${
                           r.activeMarket
-                            ? "bg-mw-mint/10 text-mw-mint"
+                            ? "bg-mw-mint/10 text-mw-glow"
                             : "bg-white/5 text-white/50"
                         }`}
                       >

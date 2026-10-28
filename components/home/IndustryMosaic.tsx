@@ -78,11 +78,11 @@ export function IndustryMosaic() {
               />
               <div
                 data-industry-icon
-                className="grid h-14 w-14 place-items-center rounded-2xl border border-mw-mint/20 bg-mw-mint/5 text-mw-mint transition-transform duration-200 ease-out"
+                className="grid h-14 w-14 place-items-center rounded-2xl border border-mw-mint/20 bg-mw-mint/5 text-mw-glow transition-transform duration-200 ease-out"
               >
                 <Icon className="h-7 w-7" />
               </div>
-              <span className="font-display text-lg leading-snug text-white/90 group-hover:text-mw-mint">
+              <span className="font-display text-lg leading-snug text-white/90 group-hover:text-mw-glow">
                 {ind.name}
               </span>
             </Link>

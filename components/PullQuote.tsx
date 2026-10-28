@@ -12,7 +12,7 @@ export function PullQuote() {
         </div>
       </div>
       <div>
-        <svg width="34" height="24" viewBox="0 0 34 24" fill="none" className="text-mw-mint/40">
+        <svg width="34" height="24" viewBox="0 0 34 24" fill="none" className="text-mw-glow/40">
           <path
             d="M0 24V13.8C0 9.13 1.13 5.53 3.4 3C5.67 0.47 8.53 -0.6 12 0.33L13.6 4.6C11.47 4.6 9.73 5.27 8.4 6.6C7.07 7.93 6.33 9.53 6.2 11.4H12V24H0ZM19.6 24V13.8C19.6 9.13 20.73 5.53 23 3C25.27 0.47 28.13 -0.6 31.6 0.33L33.2 4.6C31.07 4.6 29.33 5.27 28 6.6C26.67 7.93 25.93 9.53 25.8 11.4H31.6V24H19.6Z"
             fill="currentColor"

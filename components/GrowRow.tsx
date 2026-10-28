@@ -32,7 +32,7 @@ export function GrowRow() {
           </div>
           <div className="flex flex-1 flex-col justify-between p-6">
             <h3 className="font-display text-base font-bold text-white">{s.name}</h3>
-            <span className="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-mw-mint opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100">
+            <span className="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-mw-glow opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100">
               Learn more &rarr;
             </span>
           </div>
