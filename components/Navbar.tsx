@@ -4,16 +4,34 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Logo } from "./Logo";
+import { ServicesMenu } from "./ServicesMenu";
 import { navLinks, siteConfig } from "@/lib/site-data";
+import { servicesMenu } from "@/lib/services-menu";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const [megaOpen, setMegaOpen] = useState(false);
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
+  const megaTimer = useRef<number | undefined>(undefined);
 
-  // Close the mobile menu whenever the route changes.
+  // The services panel opens as soon as the pointer reaches the link, and closes
+  // after a short grace period, so crossing the gap between the link and the
+  // panel doesn't shut it.
+  const openMega = () => {
+    window.clearTimeout(megaTimer.current);
+    setMegaOpen(true);
+  };
+  const closeMega = (delay = 180) => {
+    window.clearTimeout(megaTimer.current);
+    megaTimer.current = window.setTimeout(() => setMegaOpen(false), delay);
+  };
+  useEffect(() => () => window.clearTimeout(megaTimer.current), []);
+
+  // Close the menus whenever the route changes.
   useEffect(() => {
     setOpen(false);
+    setMegaOpen(false);
   }, [pathname]);
 
   // Escape closes the mobile menu and any focused dropdown.
@@ -21,6 +39,7 @@ export function Navbar() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
       setOpen(false);
+      setMegaOpen(false);
       const active = document.activeElement as HTMLElement | null;
       if (active && headerRef.current?.contains(active)) active.blur();
     };
@@ -42,11 +61,26 @@ export function Navbar() {
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
-                  <div key={link.href} className="group relative">
+                  <div
+                    key={link.href}
+                    className="group relative"
+                    onPointerEnter={link.children ? openMega : undefined}
+                    onPointerLeave={link.children ? () => closeMega() : undefined}
+                    onFocus={link.children ? openMega : undefined}
+                    onBlur={
+                      link.children
+                        ? (e) => {
+                            // Keep it open while focus moves into the panel.
+                            if (!headerRef.current?.contains(e.relatedTarget as Node | null)) closeMega(0);
+                          }
+                        : undefined
+                    }
+                  >
                     <Link
                       href={link.href}
                       aria-current={active ? "page" : undefined}
                       aria-haspopup={link.children ? "true" : undefined}
+                      aria-expanded={link.children ? megaOpen : undefined}
                       className={`flex min-h-11 items-center gap-1 rounded-lg px-3 text-xs font-semibold uppercase tracking-wider transition-colors active:scale-[0.97] ${
                         active ? "text-mw-mint" : "text-white/80 hover:text-white"
                       }`}
@@ -54,7 +88,7 @@ export function Navbar() {
                       {link.label}
                       {link.children && (
                         <svg
-                          className="h-3 w-3 transition-transform duration-300 group-focus-within:rotate-180 group-hover:rotate-180"
+                          className={`h-3 w-3 transition-transform duration-300 ${megaOpen ? "rotate-180" : ""}`}
                           viewBox="0 0 12 12"
                           fill="none"
                           aria-hidden="true"
@@ -64,22 +98,6 @@ export function Navbar() {
                       )}
                     </Link>
 
-                    {link.children && (
-                      <div className="invisible absolute left-0 top-full origin-top-left pt-3 opacity-0 transition duration-200 ease-out group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
-                        <div className="w-56 rounded-xl border border-white/10 bg-[#0d221a] p-2 shadow-xl">
-                          {link.children.map((child) => (
-                            <Link
-                              key={child.href}
-                              href={child.href}
-                              aria-current={pathname === child.href ? "page" : undefined}
-                              className="block rounded-lg px-3 py-2.5 text-sm text-white/75 transition-colors hover:bg-white/10 hover:text-white"
-                            >
-                              {child.label}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
                   </div>
                 );
               })}
@@ -111,6 +129,8 @@ export function Navbar() {
           </svg>
         </button>
       </div>
+
+      <ServicesMenu open={megaOpen} onEnter={openMega} onLeave={() => closeMega()} pathname={pathname} />
 
       {/* Scrim: tap outside to dismiss, and it separates the menu from the
           page behind it. */}
@@ -147,14 +167,42 @@ export function Navbar() {
               </Link>
               {link.children && (
                 <div className="ml-3 border-l border-white/15 pl-3">
-                  {link.children.map((child) => (
-                    <Link
-                      key={child.href}
-                      href={child.href}
-                      className="flex min-h-11 items-center rounded-lg px-3 text-sm text-white/65 active:bg-white/10"
-                    >
-                      {child.label}
-                    </Link>
+                  <Link
+                    href="/services"
+                    className="flex min-h-11 items-center rounded-lg px-3 text-sm text-white/65 active:bg-white/10"
+                  >
+                    All Services
+                  </Link>
+                  {servicesMenu.map((c) => (
+                    <div key={c.id}>
+                      {c.href ? (
+                        <Link
+                          href={c.href}
+                          className="flex min-h-11 items-center rounded-lg px-3 text-sm text-white/80 active:bg-white/10"
+                        >
+                          {c.label}
+                        </Link>
+                      ) : (
+                        // No page behind it yet: listed, not linked.
+                        <span className="flex min-h-11 flex-col justify-center rounded-lg px-3 text-sm text-white/55">
+                          {c.label}
+                          {c.descriptor && <span className="text-xs text-white/35">{c.descriptor}</span>}
+                        </span>
+                      )}
+                      {c.featured && (
+                        <div className="ml-4 border-l border-white/10 pl-3">
+                          {c.featured.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              className="flex min-h-11 items-center rounded-lg px-3 text-sm text-[#7fd9b4] active:bg-white/10"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   ))}
                 </div>
               )}

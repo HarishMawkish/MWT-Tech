@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { layers } from "./data";
+import type { StackLayer } from "./types";
 
 // Height of each slab above the one below it, and how far the chosen slab lifts.
 const GAP = 58;
@@ -13,7 +13,7 @@ const LIFT = 36;
  * changes. With no input it steps through the layers by itself, pausing as
  * soon as you point at it, and never autoplays under reduced motion.
  */
-export function LayerStack() {
+export function LayerStack({ layers, label = "Layers" }: { layers: StackLayer[]; label?: string }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -48,7 +48,7 @@ export function LayerStack() {
     >
       {/* ---- selector + explanation ---- */}
       <div>
-        <ul className="space-y-2" role="tablist" aria-label="SAP Business AI layers">
+        <ul className="space-y-2" role="tablist" aria-label={label}>
           {layers.map((l, i) => {
             const on = i === active;
             return (

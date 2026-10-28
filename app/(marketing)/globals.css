@@ -781,3 +781,157 @@ header::before {
     animation: none;
   }
 }
+
+/* ---- GROW / RISE visuals ---- */
+@keyframes sap-switch-on {
+  0%, 6% {
+    color: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.25);
+    background-color: rgba(0, 0, 0, 0.55);
+    box-shadow: none;
+  }
+  14%, 30% {
+    color: #ffffff;
+    border-color: rgba(127, 217, 180, 0.9);
+    background-color: rgba(14, 58, 43, 0.9);
+    box-shadow: 0 0 30px rgba(127, 217, 180, 0.5);
+  }
+  40%, 100% {
+    color: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.25);
+    background-color: rgba(0, 0, 0, 0.55);
+    box-shadow: none;
+  }
+}
+.sap-switch-on {
+  color: rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.25);
+  background-color: rgba(0, 0, 0, 0.55);
+  animation: sap-switch-on 4.8s ease-in-out infinite;
+}
+@keyframes sap-assist {
+  0%, 36%, 100% {
+    fill: rgba(255, 255, 255, 0.16);
+    stroke: rgba(127, 217, 180, 0.4);
+    filter: none;
+  }
+  10%, 24% {
+    fill: #7fd9b4;
+    stroke: #ffffff;
+    filter: drop-shadow(0 0 8px rgba(127, 217, 180, 0.9));
+  }
+}
+.sap-assist {
+  fill: rgba(255, 255, 255, 0.16);
+  stroke: rgba(127, 217, 180, 0.4);
+  stroke-width: 1.2;
+  animation: sap-assist 3.85s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sap-switch-on,
+  .sap-assist {
+    animation: none;
+  }
+  .sap-switch-on {
+    color: rgba(255, 255, 255, 0.7);
+    border-color: rgba(127, 217, 180, 0.5);
+  }
+}
+
+/* ---- GROW / RISE page patterns ---- */
+@keyframes sap-line {
+  0% { stroke-dashoffset: 1; opacity: 1; }
+  38%, 90% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0.25; }
+}
+.sap-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sap-line 7s ease-out infinite;
+}
+@keyframes sap-fill {
+  0% { transform: scaleX(0.15); }
+  45%, 100% { transform: scaleX(1); }
+}
+.sap-fill {
+  transform: scaleX(0.15);
+  animation: sap-fill 7s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+}
+@keyframes sap-bar {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+.sap-bar {
+  transform-origin: bottom;
+  animation: sap-bar 5.5s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+}
+@keyframes sap-tab {
+  0%, 4% { background-color: transparent; color: rgba(255, 255, 255, 0.4); }
+  10%, 30% { background-color: rgba(127, 217, 180, 0.16); color: #7fd9b4; }
+  38%, 100% { background-color: transparent; color: rgba(255, 255, 255, 0.4); }
+}
+.sap-tab {
+  color: rgba(255, 255, 255, 0.4);
+  animation: sap-tab 7.2s ease-in-out infinite;
+}
+@keyframes sap-row-in {
+  from { opacity: 0; transform: translateX(-14px); }
+  to { opacity: 1; transform: none; }
+}
+.sap-row-in {
+  animation: sap-row-in 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+/* metro line: a light travels the line; each stop glows as it passes */
+@keyframes sap-metro-x {
+  from { background-position: -30% 0; }
+  to { background-position: 130% 0; }
+}
+.sap-metro {
+  background-image: linear-gradient(90deg, transparent, #7fd9b4 50%, transparent);
+  background-size: 24% 100%;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 0 6px rgba(127, 217, 180, 0.9));
+  animation: sap-metro-x 7s linear infinite;
+}
+@keyframes sap-stop {
+  0%, 36%, 100% {
+    border-color: rgba(255, 255, 255, 0.22);
+    color: rgba(255, 255, 255, 0.5);
+    box-shadow: none;
+  }
+  8%, 22% {
+    border-color: #7fd9b4;
+    color: #7fd9b4;
+    box-shadow: 0 0 20px rgba(127, 217, 180, 0.6);
+  }
+}
+.sap-stop {
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.5);
+  animation: sap-stop 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sap-line,
+  .sap-fill,
+  .sap-bar,
+  .sap-tab,
+  .sap-row-in,
+  .sap-metro,
+  .sap-stop {
+    animation: none;
+  }
+  .sap-line {
+    stroke-dashoffset: 0;
+  }
+  .sap-fill {
+    transform: none;
+  }
+  .sap-bar {
+    transform: none;
+  }
+  .sap-metro {
+    display: none;
+  }
+}

@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { sections } from "./data";
+import type { PageSection } from "./types";
 
 /**
  * In-page navigation that stays under the site header and lights up the
  * section you are reading. A long page needs a map; this is the quiet kind: a
  * thin bar of anchors with a sliding underline rather than a second menu.
  */
-export function SectionNav() {
+export function SectionNav({ sections }: { sections: PageSection[] }) {
   const [active, setActive] = useState<string>(sections[0].id);
   const listRef = useRef<HTMLUListElement>(null);
   const [bar, setBar] = useState({ left: 0, width: 0 });

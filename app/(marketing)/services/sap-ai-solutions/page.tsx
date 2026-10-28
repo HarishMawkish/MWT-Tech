@@ -11,7 +11,17 @@ import { ProofStats } from "@/components/sap-ai/ProofStats";
 import { SectionNav } from "@/components/sap-ai/SectionNav";
 import { StartSteps } from "@/components/sap-ai/StartSteps";
 import { UseCaseExplorer } from "@/components/sap-ai/UseCaseExplorer";
-import { customerStories, photos, pillars, principles } from "@/components/sap-ai/data";
+import {
+  customerStories,
+  layers,
+  photos,
+  pillars,
+  principles,
+  proofStats,
+  sections,
+  startSteps,
+  useCases,
+} from "@/components/sap-ai/data";
 
 // This route is deliberately its own page, not an entry rendered by the shared
 // /services/[slug] template: a static segment takes precedence over the
@@ -129,7 +139,7 @@ export default function SapBusinessAiPage() {
         </div>
       </section>
 
-      <SectionNav />
+      <SectionNav sections={sections} />
 
       {/* -------------------------------------------------------- overview */}
       <section id="overview" aria-labelledby="overview-title" className="scroll-mt-40 bg-black">
@@ -224,7 +234,7 @@ export default function SapBusinessAiPage() {
             </Head>
           </Reveal>
           <div className="mt-14">
-            <LayerStack />
+            <LayerStack layers={layers} label="SAP Business AI layers" />
           </div>
         </Section>
       </section>
@@ -263,7 +273,7 @@ export default function SapBusinessAiPage() {
             </Head>
           </Reveal>
           <div className="mt-14">
-            <UseCaseExplorer />
+            <UseCaseExplorer items={useCases} idPrefix="uc" label="Use cases by function" />
           </div>
         </Section>
       </section>
@@ -276,7 +286,7 @@ export default function SapBusinessAiPage() {
           </Reveal>
 
           <div className="mt-14">
-            <ProofStats />
+            <ProofStats stats={proofStats} />
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-[0.9fr_1.1fr]">
@@ -452,7 +462,7 @@ export default function SapBusinessAiPage() {
               </div>
             </div>
 
-            <StartSteps />
+            <StartSteps steps={startSteps} />
           </div>
         </Section>
       </section>
