@@ -18,6 +18,10 @@ export const navLinks = [
     children: [
       { label: "All Services", href: "/services" },
       { label: "SAP Solutions", href: "/services/sap-solutions" },
+      {
+        label: "SAP Business AI Solutions",
+        href: "/services/sap-ai-solutions",
+      },
       { label: "Salesforce Solutions", href: "/services/salesforce-solutions" },
       { label: "Odoo Implementation", href: "/services/odoo-implementation" },
     ],
@@ -125,6 +129,22 @@ export const services: Service[] = [
       "A platform built to scale with the organization",
     ],
   },
+
+  {
+    slug: "sap-ai-solutions",
+    name: "SAP Business AI Solutions",
+    category: "core",
+    summary:
+      "Enterprise-grade operational excellence for organizations that need scale and control.",
+    description:
+      "SAP provides the operational backbone for organizations managing complex processes across finance, supply chain, manufacturing, and operations. We help clients plan, implement, and optimize SAP so that the platform reflects how the business actually runs — not the other way around.",
+    outcomes: [
+      "Unified financial and operational reporting",
+      "Standardized processes across business units",
+      "A platform built to scale with the organization",
+    ],
+  },
+
   {
     slug: "salesforce-solutions",
     name: "Salesforce Solutions",
