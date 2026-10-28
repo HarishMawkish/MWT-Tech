@@ -1037,3 +1037,45 @@ header::before {
     stroke-dashoffset: 0;
   }
 }
+
+/* ---- Regional map ---- */
+/* Land dots sweep in from the left when the map reveals. */
+.mw-map-dots {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 2s cubic-bezier(0.65, 0, 0.35, 1) 0.2s;
+}
+.mw-reveal:not(.mw-in) .mw-map-dots {
+  clip-path: inset(0 100% 0 0);
+}
+/* The selected route draws itself from the hub. */
+@keyframes mw-arc-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+.mw-arc-draw {
+  stroke-dasharray: 1;
+  animation: mw-arc-draw 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+/* Radar ping on the selected market and the hub. */
+@keyframes mw-marker-ping {
+  0% { transform: scale(0.6); opacity: 0.85; }
+  100% { transform: scale(3); opacity: 0; }
+}
+.mw-marker-ping {
+  animation: mw-marker-ping 2.2s ease-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mw-arc-draw,
+  .mw-marker-ping {
+    animation: none;
+  }
+  .mw-arc-draw {
+    stroke-dasharray: none;
+  }
+  .mw-arc-bead {
+    display: none;
+  }
+  .mw-map-dots {
+    transition: none;
+  }
+}
