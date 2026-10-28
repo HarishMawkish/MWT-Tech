@@ -5,6 +5,7 @@ import { navLinks, services, industries } from "@/lib/site-data";
 const socials = [
   { label: "LinkedIn", href: "https://www.linkedin.com" },
   { label: "X", href: "https://x.com" },
+  { label: "Instagram", href: "https://www.instagram.com/mawkish.technologies/" },
   { label: "Facebook", href: "https://facebook.com" },
 ];
 
@@ -22,7 +23,7 @@ export function Footer() {
               A business transformation partner helping organizations create measurable outcomes through SAP,
               Salesforce, Odoo, and enterprise technology.
             </p>
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex flex-wrap gap-3">
               {socials.map((s) => (
                 <a
                   key={s.label}
