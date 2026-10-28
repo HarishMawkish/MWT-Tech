@@ -73,7 +73,7 @@ export default async function InsightsPage() {
                   {/* A single soft light in the corner gives the lead piece weight. */}
                   <div
                     aria-hidden="true"
-                    className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full"
+                    className="mw-drift pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full"
                     style={{ background: "radial-gradient(closest-side, rgba(28,107,81,0.35), transparent)" }}
                   />
                   <span className="relative text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow">

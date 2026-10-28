@@ -1,3 +1,5 @@
+import { StaggerIn } from "@/components/fx/StaggerIn";
+
 const solutions = [
   { name: "SAP", logo: "/images/solutions/sap_.png" },
   { name: "Salesforce", logo: "https://zql0rfjwszzixew9.public.blob.vercel-storage.com/solutions/Salesforce%20Logo.jpeg" },
@@ -39,17 +41,18 @@ export function SolutionsStrip() {
         </div>
       </div>
 
-      <div className="relative z-10 mx-auto hidden max-w-5xl grid-cols-3 gap-3 px-6 sm:grid lg:grid-cols-5">
+      <StaggerIn className="relative z-10 mx-auto hidden max-w-5xl grid-cols-3 gap-3 px-6 sm:grid lg:grid-cols-5">
         {solutions.map((s) => (
           <div
             key={s.name}
+            data-stagger
             className="mw-logo-tile flex h-20 items-center justify-center rounded-2xl px-5 py-3 shadow-sm transition duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:shadow-[0_18px_40px_-18px_rgba(127,217,180,0.55)]"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={s.logo} alt={s.name} className="h-full w-full object-contain" />
           </div>
         ))}
-      </div>
+      </StaggerIn>
     </div>
   );
 }

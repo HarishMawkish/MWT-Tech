@@ -26,7 +26,7 @@ export async function NewsAndEvents() {
     <Section>
       <Reveal>
         <div className="inline-flex items-center gap-3">
-          <span className="h-px w-10 bg-mw-mint" />
+          <span className="mw-tag-line h-px w-10 bg-mw-glow" />
           <span className="text-xs font-semibold uppercase tracking-[0.22em] text-mw-glow">
             Latest
           </span>

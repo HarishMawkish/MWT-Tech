@@ -11,7 +11,9 @@ import { IndustryIndex } from "@/components/home/IndustryIndex";
 import { ProblemOrder } from "@/components/home/ProblemOrder";
 import { serviceIconBySlug, IconGrid } from "@/components/home/icons";
 import { Reveal } from "@/components/Reveal";
+import type { CSSProperties } from "react";
 import { BigMarquee } from "@/components/fx/BigMarquee";
+import { ImageReveal } from "@/components/fx/ImageReveal";
 import { Magnetic } from "@/components/fx/Magnetic";
 import { ScrollWords } from "@/components/fx/ScrollWords";
 import { TiltCard } from "@/components/fx/TiltCard";
@@ -54,12 +56,14 @@ export default function Home() {
       {/* Story + stats — full-bleed photo on the left, green CSS glow on the right */}
       <section className="mw-glow-section relative grid grid-cols-1 min-h-screen overflow-hidden lg:grid-cols-2">
         <div className="relative order-1 h-72 sm:h-96 lg:order-1 lg:h-auto lg:min-h-screen">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/demo/image2.jpeg"
-            alt=""
-            className="absolute inset-0 h-full w-full object-cover"
-          />
+          <ImageReveal clip={false} className="absolute inset-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/demo/image2.jpeg"
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          </ImageReveal>
           {/* Fade the image into the black background on the edge that meets the text column */}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-black" />
         </div>
@@ -134,7 +138,7 @@ export default function Home() {
               >
                 {/* Source file is ~12 MB — next/image resizes/compresses it
                     so the browser isn't decoding a huge JPEG mid-scroll. */}
-                <div className="relative h-72 w-full sm:h-80 lg:h-96">
+                <ImageReveal className="h-72 w-full sm:h-80 lg:h-96">
                   <Image
                     src="/images/untitled-03846.JPG"
                     alt=""
@@ -142,7 +146,7 @@ export default function Home() {
                     sizes="(min-width: 1024px) 45vw, 100vw"
                     className="object-cover"
                   />
-                </div>
+                </ImageReveal>
               </Reveal>
             </div>
           </div>
@@ -165,10 +169,11 @@ export default function Home() {
                       {s.description}
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {s.outcomes.slice(0, 4).map((o) => (
+                      {s.outcomes.slice(0, 4).map((o, oi) => (
                         <span
                           key={o}
-                          className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-gray-300"
+                          style={{ "--i": oi } as CSSProperties}
+                          className="mw-chip rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-gray-300"
                         >
                           {o}
                         </span>

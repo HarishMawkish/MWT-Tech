@@ -51,6 +51,13 @@ export default async function ServiceDetailPage({
               "radial-gradient(60% 100% at 50% 0%, rgba(28,107,81,0.34) 0%, rgba(28,107,81,0.08) 48%, rgba(0,0,0,0) 78%)",
           }}
         />
+        <div aria-hidden="true" className="mw-grid-fade pointer-events-none absolute inset-x-0 top-0 h-[32rem]" />
+        <div aria-hidden="true" className="mw-aurora left-[8%] top-[-6rem] h-72 w-72 bg-mw-mint/25" />
+        <div
+          aria-hidden="true"
+          className="mw-aurora right-[6%] top-[2rem] h-64 w-64 bg-mw-glow/10"
+          style={{ animationDelay: "-9s" }}
+        />
         {/* Breadcrumb row: sits on the same left edge as the logo and page
             grid, so "back" lives where people look for it. */}
         <nav

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/ContactForm";
+import type { CSSProperties } from "react";
+import { Reveal } from "@/components/Reveal";
 import { SpotlightCard } from "@/components/SpotlightLink";
+import { ImageReveal } from "@/components/fx/ImageReveal";
 import { Eyebrow, PageHero, Section } from "@/components/ui";
 import { partners, regions } from "@/lib/site-data";
 
@@ -31,13 +34,13 @@ export default async function ContactPage({
         </SpotlightCard>
 
         <div className="space-y-8">
-          <div>
+          <Reveal delay={80}>
             <Eyebrow>Headquarters</Eyebrow>
             <a
               href="https://maps.app.goo.gl/1tY6TsvdXmYuFvXs8"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 block text-mw-ink/70 underline decoration-mw-line underline-offset-2 transition hover:text-mw-glow"
+              className="mw-ulink mt-3 block text-mw-ink/70 transition hover:text-mw-glow"
             >
               2nd Floor, Oceanica Tower, 490 Galle Rd, Colombo 00300, Sri Lanka
             </a>
@@ -45,43 +48,53 @@ export default async function ContactPage({
               Serving clients across Sri Lanka, India, the UAE, and expanding into KSA, Oman, Switzerland &amp;
               the USA.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="overflow-hidden rounded-2xl border border-mw-line">
-            <iframe
-              title="Mawkish Technologies — Oceanica Tower, Colombo, Sri Lanka"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=79.8419%2C6.8938%2C79.8619%2C6.9138&layer=mapnik&marker=6.9037886%2C79.8519282"
-              className="h-64 w-full [filter:invert(1)_hue-rotate(180deg)_saturate(0.45)_brightness(0.82)_contrast(0.95)]"
-              loading="lazy"
-            />
-          </div>
+          <Reveal delay={160}>
+            <ImageReveal className="h-64 rounded-2xl border border-mw-line">
+              <iframe
+                title="Mawkish Technologies — Oceanica Tower, Colombo, Sri Lanka"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=79.8419%2C6.8938%2C79.8619%2C6.9138&layer=mapnik&marker=6.9037886%2C79.8519282"
+                className="h-full w-full [filter:invert(1)_hue-rotate(180deg)_saturate(0.45)_brightness(0.82)_contrast(0.95)]"
+                loading="lazy"
+              />
+            </ImageReveal>
+          </Reveal>
 
-          <div>
+          <Reveal delay={120}>
             <Eyebrow>Strategic Partners</Eyebrow>
             <div className="mt-3 flex flex-wrap gap-3">
-              {partners.map((p) => (
-                <span key={p.name} className="rounded-full border border-mw-line px-4 py-1.5 text-sm text-mw-ink/70">
-                  <a href={p.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-mw-glow hover:text-mw-glow hover:underline">
+              {partners.map((p, pi) => (
+                <span
+                  key={p.name}
+                  style={{ "--i": pi } as CSSProperties}
+                  className="mw-chip rounded-full border border-mw-line px-4 py-1.5 text-sm text-mw-ink/70"
+                >
+                  <a href={p.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-mw-glow hover:underline">
                     {p.name}
                   </a>{" "}
                   &middot; {p.relationship}
                 </span>
               ))}
             </div>
-          </div>
+          </Reveal>
 
-          <div>
+          <Reveal delay={120}>
             <Eyebrow>Active Markets</Eyebrow>
             <div className="mt-3 flex flex-wrap gap-2">
               {regions
                 .filter((r) => r.activeMarket)
-                .map((r) => (
-                  <span key={r.region} className="rounded-full bg-mw-paper px-3 py-1 text-xs font-medium text-mw-ink/70">
+                .map((r, ri) => (
+                  <span
+                    key={r.region}
+                    style={{ "--i": ri } as CSSProperties}
+                    className="mw-chip rounded-full bg-mw-paper px-3 py-1 text-xs font-medium text-mw-ink/70"
+                  >
                     {r.region}
                   </span>
                 ))}
             </div>
-          </div>
+          </Reveal>
         </div>
       </Section>
     </>

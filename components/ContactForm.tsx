@@ -47,7 +47,11 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
 
   if (status === "success") {
     return (
-      <div role="status" className="rounded-2xl border border-mw-secondary/30 bg-mw-secondary/5 p-8 text-center">
+      <div role="status" className="rounded-2xl border border-mw-glow/30 bg-mw-glow/5 p-8 text-center">
+        <svg viewBox="0 0 52 52" fill="none" aria-hidden="true" className="mx-auto mb-4 h-14 w-14 text-mw-glow">
+          <circle className="mw-draw-ring" cx="26" cy="26" r="24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          <path className="mw-draw-tick" d="M15 27l8 8 14-16" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
         <h3 className="font-display text-xl font-bold text-white">Thank you.</h3>
         <p className="mt-2 text-sm text-mw-ink/70">
           We&rsquo;ve received your message and will be in touch shortly.
@@ -55,7 +59,7 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-5 min-h-11 rounded-full border border-mw-secondary/40 px-5 text-sm font-semibold text-mw-secondary transition hover:bg-mw-secondary/10"
+          className="mt-5 min-h-11 rounded-full border border-mw-glow/40 px-5 text-sm font-semibold text-mw-glow transition hover:bg-mw-glow/10"
         >
           Send another message
         </button>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LogoMark } from "./Logo";
 import { FooterWordmark } from "./fx/FooterWordmark";
+import { Magnetic } from "./fx/Magnetic";
 import { navLinks, services, industries } from "@/lib/site-data";
 
 const socials = [
@@ -26,15 +27,16 @@ export function Footer() {
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               {socials.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-full border border-white/15 px-3 py-1.5 text-xs font-medium transition hover:border-mw-mint hover:text-mw-glow"
-                >
-                  {s.label}
-                </a>
+                <Magnetic key={s.label} strength={0.35}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block rounded-full border border-white/15 px-3 py-1.5 text-xs font-medium transition hover:border-mw-glow hover:bg-mw-glow/10 hover:text-mw-glow"
+                  >
+                    {s.label}
+                  </a>
+                </Magnetic>
               ))}
             </div>
           </div>
@@ -44,13 +46,13 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5 text-sm">
               {navLinks.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="transition hover:text-mw-glow">
+                  <Link href={l.href} className="mw-ulink transition hover:text-mw-glow">
                     {l.label}
                   </Link>
                 </li>
               ))}
               <li>
-                <Link href="/contact" className="transition hover:text-mw-glow">
+                <Link href="/contact" className="mw-ulink transition hover:text-mw-glow">
                   Contact
                 </Link>
               </li>
@@ -62,7 +64,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5 text-sm">
               {industries.slice(0, 5).map((i) => (
                 <li key={i.slug}>
-                  <Link href="/industries" className="transition hover:text-mw-glow">
+                  <Link href="/industries" className="mw-ulink transition hover:text-mw-glow">
                     {i.name}
                   </Link>
                 </li>

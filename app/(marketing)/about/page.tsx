@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import { CtaBand, Section } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
 import { ImageReveal } from "@/components/fx/ImageReveal";
@@ -177,10 +178,11 @@ export default function AboutPage() {
                   </p>
                   {card.badges && (
                     <div className="mt-5 flex flex-wrap gap-2">
-                      {card.badges.map((b) => (
+                      {card.badges.map((b, bi) => (
                         <span
                           key={b}
-                          className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-mw-glow"
+                          style={{ "--i": bi } as CSSProperties}
+                          className="mw-chip rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-mw-glow"
                         >
                           {b}
                         </span>
@@ -358,7 +360,8 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div className="mt-12 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
+          <Reveal className="mt-12">
+          <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
             <table className="w-full text-left">
               <caption className="sr-only">Mawkish regional footprint by market, status, presence and focus</caption>
               <thead>
@@ -370,10 +373,11 @@ export default function AboutPage() {
                 </tr>
               </thead>
               <tbody>
-                {regions.map((r) => (
+                {regions.map((r, ri) => (
                   <tr
                     key={r.region}
-                    className="border-b border-white/5 transition-colors last:border-0 hover:bg-white/[0.03]"
+                    style={{ "--i": ri } as CSSProperties}
+                    className="mw-row border-b border-white/5 last:border-0 hover:bg-white/[0.03]"
                   >
                     <th scope="row" className="px-6 py-4 text-left text-sm font-semibold text-white">
                       {r.region}
@@ -391,11 +395,16 @@ export default function AboutPage() {
                             : "bg-white/5 text-white/50"
                         }`}
                       >
-                        <span
-                          className={`h-1.5 w-1.5 rounded-full ${
-                            r.activeMarket ? "bg-mw-mint" : "bg-white/30"
-                          }`}
-                        />
+                        <span className="relative flex h-1.5 w-1.5">
+                          {r.activeMarket && (
+                            <span className="absolute inline-flex h-full w-full rounded-full bg-mw-glow opacity-60 motion-safe:animate-ping" />
+                          )}
+                          <span
+                            className={`relative h-1.5 w-1.5 rounded-full ${
+                              r.activeMarket ? "bg-mw-glow" : "bg-white/30"
+                            }`}
+                          />
+                        </span>
                         {r.activeMarket ? "Active" : "Expansion"}
                       </span>
                     </td>
@@ -411,6 +420,7 @@ export default function AboutPage() {
               </tbody>
             </table>
           </div>
+          </Reveal>
         </Section>
       </section>
 

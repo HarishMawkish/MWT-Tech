@@ -33,7 +33,13 @@ export function Section({
 export function CtaBand() {
   return (
     <section className="mw-dark-section mw-glow-grid relative overflow-hidden border-t border-white/10">
-      <div className="mx-auto max-w-4xl px-6 py-20 text-center lg:px-8">
+      <div aria-hidden="true" className="mw-aurora -left-24 bottom-[-6rem] h-80 w-80 bg-mw-mint/25" />
+      <div
+        aria-hidden="true"
+        className="mw-aurora -right-16 top-[-5rem] h-72 w-72 bg-mw-glow/10"
+        style={{ animationDelay: "-8s" }}
+      />
+      <div className="relative mx-auto max-w-4xl px-6 py-20 text-center lg:px-8">
         <SplitHeading
           parts={[{ text: "Let’s talk about the outcome you’re trying to reach." }]}
           className="font-display text-4xl text-white sm:text-5xl"
@@ -84,6 +90,13 @@ export function PageHero({
           background:
             "radial-gradient(60% 100% at 50% 0%, rgba(28,107,81,0.32) 0%, rgba(28,107,81,0.08) 45%, rgba(0,0,0,0) 75%)",
         }}
+      />
+      <div aria-hidden="true" className="mw-grid-fade pointer-events-none absolute inset-x-0 top-0 h-[32rem]" />
+      <div aria-hidden="true" className="mw-aurora left-[8%] top-[-6rem] h-72 w-72 bg-mw-mint/25" />
+      <div
+        aria-hidden="true"
+        className="mw-aurora right-[6%] top-[2rem] h-64 w-64 bg-mw-glow/10"
+        style={{ animationDelay: "-9s" }}
       />
       <div className="relative mx-auto max-w-4xl px-6 pb-24 pt-20 text-center lg:px-8 lg:pb-32 lg:pt-28">
         <Eyebrow>{eyebrow}</Eyebrow>
