@@ -781,3 +781,327 @@ header::before {
     animation: none;
   }
 }
+
+/* ---- GROW / RISE visuals ---- */
+@keyframes sap-switch-on {
+  0%, 6% {
+    color: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.25);
+    background-color: rgba(0, 0, 0, 0.55);
+    box-shadow: none;
+  }
+  14%, 30% {
+    color: #ffffff;
+    border-color: rgba(127, 217, 180, 0.9);
+    background-color: rgba(14, 58, 43, 0.9);
+    box-shadow: 0 0 30px rgba(127, 217, 180, 0.5);
+  }
+  40%, 100% {
+    color: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.25);
+    background-color: rgba(0, 0, 0, 0.55);
+    box-shadow: none;
+  }
+}
+.sap-switch-on {
+  color: rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.25);
+  background-color: rgba(0, 0, 0, 0.55);
+  animation: sap-switch-on 4.8s ease-in-out infinite;
+}
+@keyframes sap-assist {
+  0%, 36%, 100% {
+    fill: rgba(255, 255, 255, 0.16);
+    stroke: rgba(127, 217, 180, 0.4);
+    filter: none;
+  }
+  10%, 24% {
+    fill: #7fd9b4;
+    stroke: #ffffff;
+    filter: drop-shadow(0 0 8px rgba(127, 217, 180, 0.9));
+  }
+}
+.sap-assist {
+  fill: rgba(255, 255, 255, 0.16);
+  stroke: rgba(127, 217, 180, 0.4);
+  stroke-width: 1.2;
+  animation: sap-assist 3.85s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sap-switch-on,
+  .sap-assist {
+    animation: none;
+  }
+  .sap-switch-on {
+    color: rgba(255, 255, 255, 0.7);
+    border-color: rgba(127, 217, 180, 0.5);
+  }
+}
+
+/* ---- GROW / RISE page patterns ---- */
+@keyframes sap-line {
+  0% { stroke-dashoffset: 1; opacity: 1; }
+  38%, 90% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0.25; }
+}
+.sap-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sap-line 7s ease-out infinite;
+}
+@keyframes sap-fill {
+  0% { transform: scaleX(0.15); }
+  45%, 100% { transform: scaleX(1); }
+}
+.sap-fill {
+  transform: scaleX(0.15);
+  animation: sap-fill 7s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+}
+@keyframes sap-bar {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+.sap-bar {
+  transform-origin: bottom;
+  animation: sap-bar 5.5s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+}
+@keyframes sap-tab {
+  0%, 4% { background-color: transparent; color: rgba(255, 255, 255, 0.4); }
+  10%, 30% { background-color: rgba(127, 217, 180, 0.16); color: #7fd9b4; }
+  38%, 100% { background-color: transparent; color: rgba(255, 255, 255, 0.4); }
+}
+.sap-tab {
+  color: rgba(255, 255, 255, 0.4);
+  animation: sap-tab 7.2s ease-in-out infinite;
+}
+@keyframes sap-row-in {
+  from { opacity: 0; transform: translateX(-14px); }
+  to { opacity: 1; transform: none; }
+}
+.sap-row-in {
+  animation: sap-row-in 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+/* metro line: a light travels the line; each stop glows as it passes */
+@keyframes sap-metro-x {
+  from { background-position: -30% 0; }
+  to { background-position: 130% 0; }
+}
+.sap-metro {
+  background-image: linear-gradient(90deg, transparent, #7fd9b4 50%, transparent);
+  background-size: 24% 100%;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 0 6px rgba(127, 217, 180, 0.9));
+  animation: sap-metro-x 7s linear infinite;
+}
+@keyframes sap-stop {
+  0%, 36%, 100% {
+    border-color: rgba(255, 255, 255, 0.22);
+    color: rgba(255, 255, 255, 0.5);
+    box-shadow: none;
+  }
+  8%, 22% {
+    border-color: #7fd9b4;
+    color: #7fd9b4;
+    box-shadow: 0 0 20px rgba(127, 217, 180, 0.6);
+  }
+}
+.sap-stop {
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.5);
+  animation: sap-stop 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sap-line,
+  .sap-fill,
+  .sap-bar,
+  .sap-tab,
+  .sap-row-in,
+  .sap-metro,
+  .sap-stop {
+    animation: none;
+  }
+  .sap-line {
+    stroke-dashoffset: 0;
+  }
+  .sap-fill {
+    transform: none;
+  }
+  .sap-bar {
+    transform: none;
+  }
+  .sap-metro {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Salesforce section. Each cloud page sets --sf (its accent) and --sf-rgb
+   ("r,g,b") on its root, and everything below tints itself from those two.
+   ------------------------------------------------------------------ */
+@keyframes sf-hero-word {
+  from { transform: translateY(112%) rotate(3deg); opacity: 0; }
+  to { transform: translateY(0) rotate(0); opacity: 1; }
+}
+@keyframes sf-marquee { to { transform: translateX(-50%); } }
+@keyframes sf-aurora-a {
+  0%, 100% { transform: translate3d(-6%, -4%, 0) scale(1); }
+  50% { transform: translate3d(8%, 6%, 0) scale(1.18); }
+}
+@keyframes sf-aurora-b {
+  0%, 100% { transform: translate3d(6%, 6%, 0) scale(1.1); }
+  50% { transform: translate3d(-8%, -6%, 0) scale(0.92); }
+}
+@keyframes sf-ping {
+  0% { transform: scale(0.55); opacity: 0.65; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+@keyframes sf-flow { to { stroke-dashoffset: -24; } }
+@keyframes sf-draw {
+  0% { stroke-dashoffset: 1; }
+  55%, 85% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -1; }
+}
+@keyframes sf-cycle {
+  0%, 4% { opacity: 0; transform: translateY(8px) scale(0.97); }
+  9%, 82% { opacity: 1; transform: translateY(0) scale(1); }
+  92%, 100% { opacity: 0; transform: translateY(-4px) scale(0.99); }
+}
+@keyframes sf-bounce-dot {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-4px); opacity: 1; }
+}
+@keyframes sf-bar-loop {
+  0%, 100% { transform: scaleY(0.2); }
+  35%, 70% { transform: scaleY(1); }
+}
+@keyframes sf-deal {
+  0%, 8% { transform: translateX(0); }
+  26%, 34% { transform: translateX(calc(100% + 0.6rem)); }
+  52%, 60% { transform: translateX(calc(200% + 1.2rem)); }
+  78%, 92% { transform: translateX(calc(300% + 1.8rem)); }
+  100% { transform: translateX(0); opacity: 0; }
+}
+@keyframes sf-ring-fill {
+  0%, 100% { stroke-dashoffset: 264; }
+  50%, 80% { stroke-dashoffset: 66; }
+}
+@keyframes sf-shine {
+  from { transform: translateX(-120%) skewX(-18deg); }
+  to { transform: translateX(260%) skewX(-18deg); }
+}
+@keyframes sf-twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50% { opacity: 0.9; transform: scale(1.2); }
+}
+@keyframes sf-tick-in {
+  0%, 6% { opacity: 0.25; }
+  14%, 100% { opacity: 1; }
+}
+@keyframes sf-orbit-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(var(--sf-rgb), 0.45); }
+  50% { box-shadow: 0 0 0 14px rgba(var(--sf-rgb), 0); }
+}
+@keyframes sf-line-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+.sf-hero-word { display: inline-block; animation: sf-hero-word 1.15s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.sf-marquee { animation: sf-marquee 38s linear infinite; }
+.sf-aurora-a { animation: sf-aurora-a 18s ease-in-out infinite; }
+.sf-aurora-b { animation: sf-aurora-b 22s ease-in-out infinite; }
+.sf-ping { animation: sf-ping 2.6s cubic-bezier(0.23, 1, 0.32, 1) infinite; }
+.sf-flow { stroke-dasharray: 5 7; animation: sf-flow 1.2s linear infinite; }
+.sf-draw { stroke-dasharray: 1; animation: sf-draw 7s ease-in-out infinite; }
+.sf-cycle { animation: sf-cycle 10s ease-in-out infinite both; }
+.sf-dot { animation: sf-bounce-dot 1.2s ease-in-out infinite; }
+.sf-bar { transform-origin: bottom; animation: sf-bar-loop 6s ease-in-out infinite; }
+.sf-deal { animation: sf-deal 9s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+.sf-ring-fill { stroke-dasharray: 264; animation: sf-ring-fill 7s ease-in-out infinite; }
+.sf-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+  animation: sf-shine 5.5s ease-in-out infinite;
+  pointer-events: none;
+}
+.sf-twinkle { animation: sf-twinkle 4s ease-in-out infinite; }
+.sf-tick { animation: sf-tick-in 10s ease-in-out infinite both; }
+.sf-orbit-pulse { animation: sf-orbit-pulse 2.4s ease-out infinite; }
+.sf-line-grow { transform-origin: top; animation: sf-line-grow 1.2s cubic-bezier(0.23, 1, 0.32, 1) both; }
+
+/* Frosted card the visuals and stat tiles sit on. */
+.sf-glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 30px 80px -40px rgba(var(--sf-rgb), 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12), inset 0 -40px 60px -50px rgba(var(--sf-rgb), 0.25);
+  backdrop-filter: blur(14px);
+}
+
+/* A glow that follows the pointer across a card (--x / --y are set from script). */
+.sf-spot { position: relative; overflow: hidden; isolation: isolate; }
+.sf-spot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(420px circle at var(--x, 50%) var(--y, 0%), rgba(var(--sf-rgb), 0.2), transparent 46%);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.sf-spot:hover::before { opacity: 1; }
+
+.sf-grid-bg {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(70% 60% at 50% 30%, #000 20%, transparent 78%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sf-hero-word, .sf-marquee, .sf-aurora-a, .sf-aurora-b, .sf-ping, .sf-flow, .sf-draw, .sf-cycle,
+  .sf-dot, .sf-bar, .sf-deal, .sf-ring-fill, .sf-shine::after, .sf-twinkle, .sf-tick, .sf-orbit-pulse, .sf-line-grow {
+    animation: none !important;
+  }
+  .sf-cycle, .sf-tick, .sf-hero-word { opacity: 1 !important; transform: none !important; }
+  .sf-bar { transform: scaleY(0.7); }
+  .sf-draw { stroke-dashoffset: 0; }
+}
+
+/* Orbit on the Salesforce overview: rings turn, the chips on them stay upright. */
+.sf-spin { animation: sap-spin var(--d, 60s) linear infinite; }
+.sf-spin-rev { animation: sap-spin-rev var(--d, 60s) linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .sf-spin, .sf-spin-rev { animation: none !important; }
+}
+
+/* Loyalty figures: a switch that flips between audiences, and punches landing on a card. */
+@keyframes sf-toggle {
+  0%, 38% { transform: translateX(0); }
+  50%, 88% { transform: translateX(100%); }
+  100% { transform: translateX(0); }
+}
+@keyframes sf-stamp {
+  0%, 6% { transform: scale(0) rotate(-30deg); opacity: 0; }
+  14% { transform: scale(1.35) rotate(6deg); opacity: 1; }
+  22%, 86% { transform: scale(1) rotate(0); opacity: 1; }
+  96%, 100% { transform: scale(0.6); opacity: 0; }
+}
+@keyframes sf-venn { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+.sf-toggle { animation: sf-toggle 7s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+.sf-stamp { animation: sf-stamp 8s ease-in-out infinite both; }
+.sf-venn { transform-origin: 110px 98px; animation: sf-venn 9s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .sf-toggle, .sf-stamp, .sf-venn { animation: none !important; }
+  .sf-stamp { opacity: 1 !important; transform: none !important; }
+}
+
+/* Phones: frosted blur is costly on many cards at once, so the glass goes solid-ish. */
+@media (max-width: 640px) {
+  .sf-glass {
+    backdrop-filter: none;
+    background: linear-gradient(180deg, rgba(20, 26, 24, 0.92), rgba(10, 14, 13, 0.92));
+  }
+}

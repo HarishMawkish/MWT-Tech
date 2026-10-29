@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRef, useState } from "react";
-import { useCases } from "./data";
+import type { ExplorerItem } from "./types";
 
 /**
  * Use cases by function. A list on the left, the chosen function on the right
@@ -10,10 +10,19 @@ import { useCases } from "./data";
  * move between tabs, as on any proper tab list. Content re-enters on each
  * change so the switch registers without a heavy transition.
  */
-export function UseCaseExplorer() {
+export function UseCaseExplorer({
+  items: useCases,
+  idPrefix = "uc",
+  label = "Options",
+}: {
+  items: ExplorerItem[];
+  idPrefix?: string;
+  label?: string;
+}) {
   const [active, setActive] = useState(0);
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
   const current = useCases[active];
+  const hasPhotos = useCases.some((u) => u.photo);
 
   const onKey = (e: React.KeyboardEvent, i: number) => {
     const last = useCases.length - 1;
@@ -33,7 +42,7 @@ export function UseCaseExplorer() {
       {/* tabs: a vertical list on desktop, a scrolling row of pills on phones */}
       <div
         role="tablist"
-        aria-label="Use cases by function"
+        aria-label={label}
         aria-orientation="vertical"
         className="-mx-6 flex gap-2 overflow-x-auto px-6 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden"
       >
@@ -47,9 +56,9 @@ export function UseCaseExplorer() {
               }}
               type="button"
               role="tab"
-              id={`uc-tab-${u.id}`}
+              id={`${idPrefix}-tab-${u.id}`}
               aria-selected={on}
-              aria-controls="uc-panel"
+              aria-controls={`${idPrefix}-panel`}
               tabIndex={on ? 0 : -1}
               onClick={() => setActive(i)}
               onPointerEnter={(e) => e.pointerType === "mouse" && setActive(i)}
@@ -87,29 +96,33 @@ export function UseCaseExplorer() {
 
       {/* panel: a photo of the function at the top, then the detail */}
       <div
-        id="uc-panel"
+        id={`${idPrefix}-panel`}
         role="tabpanel"
-        aria-labelledby={`uc-tab-${current.id}`}
+        aria-labelledby={`${idPrefix}-tab-${current.id}`}
         className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#04100b]"
       >
         {/* every photo is mounted and cross-faded, so switching never waits on a download */}
-        <div className="relative h-44 sm:h-60">
-          {useCases.map((u, i) => (
-            <Image
-              key={u.id}
-              src={u.photo.src}
-              alt={i === active ? u.photo.alt : ""}
-              aria-hidden={i !== active}
-              fill
-              sizes="(min-width: 1024px) 55vw, 100vw"
-              className={`object-cover transition-opacity duration-700 ease-out ${i === active ? "opacity-100" : "opacity-0"}`}
-            />
-          ))}
-          <div className="absolute inset-0 bg-[#1c6b51]/25 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#04100b] via-[#04100b]/35 to-black/10" />
-        </div>
+        {hasPhotos && (
+          <div className="relative h-44 sm:h-60">
+            {useCases.map((u, i) =>
+              u.photo ? (
+                <Image
+                  key={u.id}
+                  src={u.photo.src}
+                  alt={i === active ? u.photo.alt : ""}
+                  aria-hidden={i !== active}
+                  fill
+                  sizes="(min-width: 1024px) 55vw, 100vw"
+                  className={`object-cover transition-opacity duration-700 ease-out ${i === active ? "opacity-100" : "opacity-0"}`}
+                />
+              ) : null,
+            )}
+            <div className="absolute inset-0 bg-[#1c6b51]/25 mix-blend-multiply" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#04100b] via-[#04100b]/35 to-black/10" />
+          </div>
+        )}
 
-        <div className="relative -mt-12 p-8 pt-0 sm:p-10 sm:pt-0">
+        <div className={`relative p-8 sm:p-10 ${hasPhotos ? "-mt-12 pt-0 sm:pt-0" : ""}`}>
           <div
             aria-hidden="true"
             className="pointer-events-none absolute -right-20 top-0 h-72 w-72 rounded-full bg-[#1c6b51]/30 blur-3xl"
@@ -124,34 +137,36 @@ export function UseCaseExplorer() {
           <div key={current.id} className="sap-rise relative">
             <h3 className="font-display text-2xl text-white sm:text-3xl">{current.label}</h3>
 
-            {current.agent && (
+            {current.badge && (
               <div className="mt-5 inline-flex items-center gap-3 rounded-full border border-[#7fd9b4]/30 bg-[#7fd9b4]/[0.07] py-1.5 pl-2 pr-4">
                 <span className="grid h-6 w-6 place-items-center rounded-full bg-[#7fd9b4] text-[#02140d]">
                   <svg viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5" aria-hidden="true">
                     <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                   </svg>
                 </span>
-                <span className="text-xs font-semibold uppercase tracking-[0.14em] text-white/85">{current.agent}</span>
+                <span className="text-xs font-semibold uppercase tracking-[0.14em] text-white/85">{current.badge}</span>
               </div>
             )}
 
             <p className="mt-5 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">{current.headline}</p>
 
-            <div className="mt-8 border-t border-white/10 pt-6">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/40">Also in this area</p>
-              <ul className="mt-4 space-y-3">
-                {current.also.map((a, i) => (
-                  <li
-                    key={a}
-                    className="sap-rise flex items-start gap-3 text-sm leading-relaxed text-white/70"
-                    style={{ animationDelay: `${120 + i * 90}ms` }}
-                  >
-                    <span aria-hidden="true" className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#7fd9b4]" />
-                    {a}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {current.also.length > 0 && (
+              <div className="mt-8 border-t border-white/10 pt-6">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/40">{current.alsoLabel ?? "Also in this area"}</p>
+                <ul className="mt-4 space-y-3">
+                  {current.also.map((a, i) => (
+                    <li
+                      key={a}
+                      className="sap-rise flex items-start gap-3 text-sm leading-relaxed text-white/70"
+                      style={{ animationDelay: `${120 + i * 90}ms` }}
+                    >
+                      <span aria-hidden="true" className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#7fd9b4]" />
+                      {a}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>

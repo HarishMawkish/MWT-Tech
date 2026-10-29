@@ -5,7 +5,11 @@
 // and AI-agent use-case pages), read on 28 October 2026. Figures are SAP's, describing SAP's
 // products and named customers' results; they are not claims about Mawkish.
 
-export const sections = [
+import type { ExplorerItem, PageSection, Photo, ProofStat, StackLayer } from "./types";
+
+export type { Photo };
+
+export const sections: PageSection[] = [
   { id: "overview", label: "Overview" },
   { id: "architecture", label: "How it fits together" },
   { id: "how-it-works", label: "How work gets done" },
@@ -13,17 +17,9 @@ export const sections = [
   { id: "results", label: "Results" },
   { id: "trust", label: "Trust" },
   { id: "getting-started", label: "Getting started" },
-] as const;
+];
 
-export type Layer = {
-  id: string;
-  name: string;
-  tag: string;
-  blurb: string;
-  points: string[];
-};
-
-export const layers: Layer[] = [
+export const layers: StackLayer[] = [
   {
     id: "work",
     name: "Joule Work",
@@ -100,23 +96,14 @@ export const disputeLog = [
   "Advises the finance team on handling the credit memo",
 ] as const;
 
-export type Photo = { src: string; alt: string };
-
-export type UseCase = {
-  id: string;
-  label: string;
-  photo: Photo;
-  agent?: string;
-  headline: string;
-  also: string[];
-};
+export type UseCase = ExplorerItem;
 
 export const useCases: UseCase[] = [
   {
     id: "finance",
     photo: { src: "/images/sap-ai/uc-finance.jpg", alt: "A calculator, printed charts and a laptop on a finance desk" },
     label: "Finance & accounting",
-    agent: "Dispute Resolution Agent",
+    badge: "Dispute Resolution Agent",
     headline:
       "Analyses invoice and contract details, flags discrepancies up front instead of after the fact, and advises finance teams on how to handle the resulting credit memo.",
     also: [
@@ -129,7 +116,7 @@ export const useCases: UseCase[] = [
     id: "supply",
     photo: { src: "/images/sap-ai/uc-supply.jpg", alt: "Two warehouse colleagues checking stock on a tablet in a storeroom" },
     label: "Supply chain & procurement",
-    agent: "Sourcing Agent",
+    badge: "Sourcing Agent",
     headline:
       "Identifies sourcing opportunities, evaluates suppliers and starts RFPs on its own, shortening procurement cycles and improving cost efficiency.",
     also: [
@@ -142,7 +129,7 @@ export const useCases: UseCase[] = [
     id: "hr",
     photo: { src: "/images/sap-ai/uc-hr.jpg", alt: "A smiling interviewer across a desk in a glass-walled office" },
     label: "Human resources",
-    agent: "Performance and Goals Agent",
+    badge: "Performance and Goals Agent",
     headline:
       "Automates data collection so managers have current insight on every employee, then drafts talking points for 1:1s and helps align goals with business objectives.",
     also: [
@@ -155,7 +142,7 @@ export const useCases: UseCase[] = [
     id: "manufacturing",
     photo: { src: "/images/sap-ai/uc-manufacturing.jpg", alt: "A worker operating machinery on a factory floor" },
     label: "Manufacturing",
-    agent: "Shop Floor Supervisor Agent",
+    badge: "Shop Floor Supervisor Agent",
     headline:
       "Spots likely disruptions and recommends schedule adjustments, showing the severity of each issue and the dependencies behind it.",
     also: [
@@ -167,7 +154,7 @@ export const useCases: UseCase[] = [
     id: "commerce",
     photo: { src: "/images/sap-ai/uc-commerce.jpg", alt: "A woman checking a parcel with her phone beside a laptop and stacked boxes" },
     label: "Marketing & commerce",
-    agent: "Catalog Optimization Agent",
+    badge: "Catalog Optimization Agent",
     headline:
       "Keeps prices and product entries current and restructures content as search intent shifts, to improve search ranking.",
     also: [
@@ -180,7 +167,7 @@ export const useCases: UseCase[] = [
     id: "support",
     photo: { src: "/images/sap-ai/uc-support.jpg", alt: "A smiling customer support agent wearing a headset in a busy contact centre" },
     label: "Customer support",
-    agent: "Q&A Agent",
+    badge: "Q&A Agent",
     headline:
       "Assesses the intent behind a customer's question and answers from approved knowledge, while a Shopping Agent helps new customers with product details, options and orders.",
     also: [
@@ -203,7 +190,7 @@ export const useCases: UseCase[] = [
   },
 ];
 
-export const proofStats = [
+export const proofStats: ProofStat[] = [
   {
     prefix: "Up to",
     value: 75,
@@ -225,7 +212,7 @@ export const proofStats = [
     label: "developer productivity gain at Bosch Digital",
     source: "SAP customer story: SAP AI Core, ABAP Cloud and Joule for Developers",
   },
-] as const;
+];
 
 export const customerStories = [
   {

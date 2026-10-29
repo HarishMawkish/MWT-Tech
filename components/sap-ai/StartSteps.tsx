@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { startSteps } from "./data";
+import type { Step } from "./types";
 
 /**
  * The five steps SAP recommends for starting with AI agents, as a rail that
@@ -9,7 +9,7 @@ import { startSteps } from "./data";
  * screen and stays lit, so the page shows how far through the process you are.
  * Without JS (or with reduced motion) every step is simply shown.
  */
-export function StartSteps() {
+export function StartSteps({ steps: startSteps }: { steps: readonly Step[] }) {
   const listRef = useRef<HTMLOListElement>(null);
   const [lit, setLit] = useState<number>(startSteps.length); // all lit until JS takes over
   const [fill, setFill] = useState(1);

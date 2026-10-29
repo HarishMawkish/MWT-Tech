@@ -5,7 +5,12 @@ import { CtaBand, Eyebrow, Section } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
 import { SpotlightLink } from "@/components/SpotlightLink";
 import { ServiceMark } from "@/components/ServiceMark";
+import { SapPathways } from "@/components/sap-paths/SapPathways";
+import { CloudOrbit } from "@/components/salesforce/CloudOrbit";
 import { services } from "@/lib/site-data";
+import { JsonLd } from "@/components/JsonLd";
+import { sapHubLd } from "@/lib/sap-pages";
+import { brand, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -19,7 +24,22 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = services.find((s) => s.slug === slug);
   if (!service) return {};
-  return { title: service.name, description: service.summary };
+  const url = `/services/${slug}`;
+  return {
+    title: service.name,
+    description: service.summary,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "website",
+      url,
+      siteName: brand.name,
+      locale: "en_US",
+      title: `${service.name} | ${brand.name}`,
+      description: service.summary,
+      images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: brand.name }],
+    },
+    twitter: { card: "summary_large_image", title: `${service.name} | ${brand.name}`, description: service.summary, images: [DEFAULT_OG_IMAGE] },
+  };
 }
 
 export default async function ServiceDetailPage({
@@ -38,6 +58,7 @@ export default async function ServiceDetailPage({
 
   return (
     <>
+      {service.slug === "sap-solutions" && <JsonLd data={sapHubLd()} />}
       {/* Hero */}
       <section className="mw-dark-section relative overflow-hidden">
         <div
@@ -79,7 +100,7 @@ export default async function ServiceDetailPage({
             <Eyebrow>{groupLabel}</Eyebrow>
           </Reveal>
           <Reveal delay={80}>
-            <h1 className="mx-auto mt-7 max-w-4xl text-balance font-display text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+            <h1 className="mx-auto mt-7 max-w-4xl text-balance break-words font-display text-[clamp(1.5rem,7.2vw,2.25rem)] font-bold text-white sm:text-5xl lg:text-6xl">
               {service.name}
             </h1>
           </Reveal>
@@ -104,6 +125,10 @@ export default async function ServiceDetailPage({
           </Reveal>
         </div>
       </section>
+
+      {/* The SAP page leads with its two programmes: this is what visitors choose between. */}
+      {service.slug === "sap-solutions" && <SapPathways />}
+      {service.slug === "salesforce-solutions" && <CloudOrbit />}
 
       {/* Overview: one confident statement */}
       <section className="bg-black" aria-labelledby="overview-title">
