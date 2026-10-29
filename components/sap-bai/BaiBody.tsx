@@ -88,7 +88,7 @@ export function BaiBody() {
         <div className="use"><span className="n">Your own AI</span><ul>
           <li><b>Custom predictions</b> on your own data, such as payment risk.</li>
           <li><b>Your documents</b> read with SAP Document AI.</li>
-          <li><b>Your own agents</b> built in Joule Studio. <Link href="/services/joule-and-ai-agents">See Joule &amp; AI Agents →</Link></li>
+          <li><b>Your own agents</b> built in Joule Studio. <Link href="/services/sap-solutions/joule-and-ai-agents">See Joule &amp; AI Agents →</Link></li>
         </ul></div>
       </div>
       <p className="note">Availability depends on your SAP release, country and licence. We check what's live for your system before we promise anything.</p>

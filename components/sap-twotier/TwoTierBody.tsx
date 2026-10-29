@@ -228,13 +228,13 @@ export function TwoTierBody() {
           <span className="k">Global group, Sri Lankan subsidiary</span>
           <h3>Your headquarters is abroad. Your Colombo company joins in.</h3>
           <p>Headquarters runs SAP in Europe, India or Asia. The Sri Lankan company runs SAP Cloud ERP with our Sri Lanka layer for VAT, SSCL, withholding tax and RAMIS, and stays connected to the group's processes and close.</p>
-          <p><Link href="/services/rollouts-and-localisation">Read about Sri Lanka localisation →</Link></p>
+          <p><Link href="/services/sap-solutions/rollouts-and-localisation">Read about Sri Lanka localisation →</Link></p>
         </div>
         <div className="dir">
           <span className="k">Sri Lankan group, regional subsidiaries</span>
           <h3>Your headquarters is in Colombo. Your group is growing abroad.</h3>
           <p>Headquarters runs SAP S/4HANA. New companies in India, the Gulf, the Maldives or Bangladesh run SAP Cloud ERP, using SAP's own local versions where they exist and a local layer where they don't.</p>
-          <p><Link href="/services/rollouts-and-localisation">Read about global rollouts →</Link></p>
+          <p><Link href="/services/sap-solutions/rollouts-and-localisation">Read about global rollouts →</Link></p>
         </div>
       </div>
     </div>

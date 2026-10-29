@@ -46,7 +46,7 @@ function RiseGlyph() {
 
 const paths = [
   {
-    href: "/services/grow-with-sap",
+    href: "/services/sap-solutions/grow-with-sap",
     tag: "For companies new to SAP",
     name: "GROW with SAP",
     mark: "/images/solutions/grow.jpg",
@@ -60,7 +60,7 @@ const paths = [
     glyph: <GrowGlyph />,
   },
   {
-    href: "/services/rise-with-sap",
+    href: "/services/sap-solutions/rise-with-sap",
     tag: "For existing SAP customers",
     name: "RISE with SAP",
     mark: "/images/solutions/rise.jpg",

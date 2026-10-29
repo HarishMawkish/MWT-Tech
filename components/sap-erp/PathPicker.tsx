@@ -7,7 +7,7 @@ const paths = {
   new: {
     label: "I'm new to SAP",
     id: "grow" as const,
-    href: "/services/grow-with-sap",
+    href: "/services/sap-solutions/grow-with-sap",
     name: "GROW with SAP",
     who: "Designed for companies new to SAP",
     points: [
@@ -19,7 +19,7 @@ const paths = {
   existing: {
     label: "I already run SAP",
     id: "rise" as const,
-    href: "/services/rise-with-sap",
+    href: "/services/sap-solutions/rise-with-sap",
     name: "RISE with SAP",
     who: "Aimed at existing SAP customers",
     points: [

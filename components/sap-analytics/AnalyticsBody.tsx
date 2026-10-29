@@ -146,8 +146,8 @@ export function AnalyticsBody() {
             <tr><td data-label="You need">Day-to-day lists and checks: open orders, overdue invoices, stock</td><td data-label="Use">Reports and apps built into SAP Cloud ERP</td></tr>
             <tr><td data-label="You need">Management dashboards and board packs</td><td data-label="Use">SAP Analytics Cloud on live SAP data</td></tr>
             <tr><td data-label="You need">Budgets, forecasts and what-if scenarios</td><td data-label="Use">SAP Analytics Cloud planning</td></tr>
-            <tr><td data-label="You need">Data from several systems or companies together</td><td data-label="Use">SAP Analytics Cloud with <Link href="/services/sap-business-data-cloud" style={{ color: "var(--green-hi)", fontWeight: "700", textDecoration: "none" }}>Business Data Cloud →</Link></td></tr>
-            <tr><td data-label="You need">Group consolidation and statutory reporting</td><td data-label="Use"><Link href="/services/group-reporting-and-consolidation" style={{ color: "var(--green-hi)", fontWeight: "700", textDecoration: "none" }}>Group Reporting →</Link> in SAP Cloud ERP</td></tr>
+            <tr><td data-label="You need">Data from several systems or companies together</td><td data-label="Use">SAP Analytics Cloud with <Link href="/services/sap-solutions/sap-business-data-cloud" style={{ color: "var(--green-hi)", fontWeight: "700", textDecoration: "none" }}>Business Data Cloud →</Link></td></tr>
+            <tr><td data-label="You need">Group consolidation and statutory reporting</td><td data-label="Use"><Link href="/services/sap-solutions/group-reporting-and-consolidation" style={{ color: "var(--green-hi)", fontWeight: "700", textDecoration: "none" }}>Group Reporting →</Link> in SAP Cloud ERP</td></tr>
           </tbody>
         </table>
       </div>

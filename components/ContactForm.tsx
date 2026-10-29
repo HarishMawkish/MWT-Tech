@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 const intents = [
   { value: "consultation", label: "Schedule a Consultation" },
@@ -38,6 +39,7 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
         throw new Error(body.error || "Something went wrong. Please try again.");
       }
       setStatus("success");
+      trackEvent("generate_lead", { form: "contact" });
       form.reset();
     } catch (err) {
       setStatus("error");

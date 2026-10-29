@@ -204,7 +204,7 @@ export function RiseBody() {
           </tbody>
         </table>
       </div>
-      <p className="note">Many groups use both: RISE at head office and GROW in subsidiaries, connected as one two-tier ERP. <Link href="/services/grow-with-sap" style={{ color: "var(--green-hi)", fontWeight: "700" }}>Read about GROW with SAP →</Link></p>
+      <p className="note">Many groups use both: RISE at head office and GROW in subsidiaries, connected as one two-tier ERP. <Link href="/services/sap-solutions/grow-with-sap" style={{ color: "var(--green-hi)", fontWeight: "700" }}>Read about GROW with SAP →</Link></p>
     </div>
   </section>
 

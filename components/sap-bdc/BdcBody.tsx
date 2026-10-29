@@ -93,7 +93,7 @@ export function BdcBody() {
       <div className="comps">
         <div className="comp"><span className="a">Data products</span><h3>Business-ready data</h3><p>Sales orders, journal entries, suppliers and more, delivered by SAP with their meaning intact.</p></div>
         <div className="comp"><span className="a">Datasphere</span><h3>Combine and model</h3><p>Join SAP and non-SAP data into one model your whole company trusts.</p></div>
-        <div className="comp"><span className="a">Analytics Cloud</span><h3>Report and plan</h3><p>Dashboards, budgets and forecasts on the same data. <Link href="/services/sap-analytics-cloud" style={{ color: "var(--green-hi)", fontWeight: "700", textDecoration: "none" }}>See SAP Analytics Cloud →</Link></p></div>
+        <div className="comp"><span className="a">Analytics Cloud</span><h3>Report and plan</h3><p>Dashboards, budgets and forecasts on the same data. <Link href="/services/sap-solutions/sap-analytics-cloud" style={{ color: "var(--green-hi)", fontWeight: "700", textDecoration: "none" }}>See SAP Analytics Cloud →</Link></p></div>
         <div className="comp"><span className="a">AI and data science</span><h3>Predict and automate</h3><p>Data scientists and SAP's AI work on the same governed data.</p></div>
       </div>
     </div>

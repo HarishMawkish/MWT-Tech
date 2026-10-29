@@ -6,6 +6,9 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageWatermark } from "@/components/PageWatermark";
 import { SiteLoader } from "@/components/SiteLoader";
+import { JsonLd } from "@/components/JsonLd";
+import { Analytics } from "@/components/analytics/Analytics";
+import { DEFAULT_OG_IMAGE, organizationLd, robotsDefault, siteUrl, websiteLd } from "@/lib/seo";
 
 // Montserrat — main/heading text. Clean geometric letterforms.
 const montserrat = Montserrat({
@@ -28,6 +31,13 @@ const jetbrainsMono = localFont({
 });
 
 export const metadata: Metadata = {
+  // Relative addresses in every page's metadata (canonical, share images) are resolved against this.
+  metadataBase: new URL(siteUrl),
+  applicationName: "Mawkish Technologies",
+  authors: [{ name: "Mawkish Technologies", url: siteUrl }],
+  creator: "Mawkish Technologies",
+  robots: robotsDefault,
+  formatDetection: { telephone: false, email: false, address: false },
   title: {
     default: "Mawkish Technologies | Business Transformation Partner",
     template: "%s | Mawkish Technologies",
@@ -48,6 +58,16 @@ export const metadata: Metadata = {
       "Technology that creates real business outcomes — SAP, Salesforce, Odoo, and enterprise transformation.",
     siteName: "Mawkish Technologies",
     type: "website",
+    locale: "en_US",
+    url: "/",
+    images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: "Mawkish Technologies: technology that creates real business outcomes" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: [DEFAULT_OG_IMAGE],
+    title: "Mawkish Technologies | Business Transformation Partner",
+    description:
+      "Technology that creates real business outcomes — SAP, Salesforce, Odoo, and enterprise transformation.",
   },
 };
 
@@ -63,6 +83,8 @@ export default function RootLayout({
       style={{ colorScheme: "dark" }}
     >
       <body className="min-h-full flex flex-col">
+        <JsonLd data={[organizationLd, websiteLd]} />
+        <Analytics />
         {/* Splash sits above absolutely everything, including the navbar,
             and fades out once the page is ready — the navbar is already
             rendered underneath it the whole time, so the fade genuinely
