@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Manrope } from "next/font/google";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { MenuGlyph, type GlyphName } from "./MenuGlyph";
 import { servicesMenu, type MenuCategory, type MenuTile } from "@/lib/services-menu";
@@ -9,6 +10,10 @@ import { servicesMenu, type MenuCategory, type MenuTile } from "@/lib/services-m
 // with the page dimmed and blurred behind it, a glow that follows the pointer, a
 // lens that glides between the rail items, and content that rises in. The deep
 // brand green is used only as an accent.
+// The SAP panel is set in Manrope, as in the supplied SAP menu design.
+const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-menu", display: "swap" });
+const MENU_FONT = "font-[family-name:var(--font-menu)]";
+
 const INK = "text-[#071912]";
 const MUTED = "text-[#4d6157]";
 const EASE = "ease-[cubic-bezier(0.23,1,0.32,1)]";
@@ -45,15 +50,15 @@ function Item({
     </>
   );
   const cls =
-    `group flex items-start gap-2 ${dense ? "py-[3px]" : "py-[7px]"} text-[13.5px] font-medium leading-snug transition-colors duration-200 hover:text-[#071912]`;
+    `group flex items-start gap-2 py-[7px] ${dense ? `group-data-[tight=true]/menu:py-[5px] text-[14px] leading-[1.3]` : "text-[13.5px] leading-snug"} font-medium transition-colors duration-200 ${dense ? "hover:text-[#1f7a5a]" : "hover:text-[#071912]"}`;
   return (
     <li className="sap-rise" style={{ animationDelay: `${delay}ms`, animationDuration: "0.45s" }}>
       {href ? (
-        <Link href={href} className={`${cls} text-[#1f3a2d]`}>
+        <Link href={href} className={`${cls} ${dense ? "text-[#12201a]" : "text-[#1f3a2d]"}`}>
           {body}
         </Link>
       ) : (
-        <div className={`${cls} cursor-default text-[#33463c]`}>{body}</div>
+        <div className={`${cls} cursor-default ${dense ? "text-[#12201a]" : "text-[#33463c]"}`}>{body}</div>
       )}
     </li>
   );
@@ -62,7 +67,7 @@ function Item({
 /** Small caps label over a hairline: the heading every group sits under. */
 function Heading({ children }: { children: string }) {
   return (
-    <h3 className="mb-1 border-b border-[#d9e3de] pb-1.5 text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#6f8278]">
+    <h3 className="mb-2.5 border-b border-[#cfd9d4] pb-2.5 group-data-[tight=true]/menu:mb-2 group-data-[tight=true]/menu:pb-2 text-[12px] font-bold uppercase tracking-[0.2em] text-[#5b6b64]">
       {children}
     </h3>
   );
@@ -72,7 +77,7 @@ function AllServicesLink({ className = "" }: { className?: string }) {
   return (
     <Link
       href="/services"
-      className={`group inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1c6b51] transition-colors hover:text-[#071912] ${className}`}
+      className={`group inline-flex items-center gap-2 text-[13px] font-extrabold uppercase tracking-[0.2em] text-[#1f7a5a] transition-colors hover:text-[#12201a] ${className}`}
     >
       All services
       <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
@@ -82,10 +87,17 @@ function AllServicesLink({ className = "" }: { className?: string }) {
   );
 }
 
+/** The small caps line over the programme cards in the SAP panel. */
+function Eyebrow({ children }: { children: string }) {
+  return (
+    <p className="m-0 mb-4 border-b border-[#cfd9d4] pb-3 group-data-[tight=true]/menu:mb-3 group-data-[tight=true]/menu:pb-2.5 text-[12px] font-bold uppercase tracking-[0.2em] text-[#5b6b64]">{children}</p>
+  );
+}
+
 /** The row at the top of every panel: what you are looking at, and the way out to everything. */
 function HeaderRow({ title, link = true }: { title: string; link?: boolean }) {
   return (
-    <div className="mb-2.5 flex items-center justify-between border-b border-[#d9e3de] pb-2">
+    <div className="mb-3.5 flex items-center justify-between border-b border-[#d9e3de] pb-2.5">
       <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#6f8278]">{title}</span>
       {link && <AllServicesLink />}
     </div>
@@ -98,15 +110,15 @@ function CtaCard({ cta, delay }: { cta: NonNullable<MenuCategory["cta"]>; delay:
     <div className="sap-rise" style={{ animationDelay: `${delay}ms`, animationDuration: "0.5s" }}>
       <Link
         href={cta.href}
-        className={`group relative flex h-full flex-col overflow-hidden rounded-2xl bg-[#10201a] p-4 text-left transition-all duration-300 ${EASE} hover:-translate-y-0.5 hover:shadow-[0_24px_40px_-22px_rgba(7,25,18,0.9)]`}
+        className={`group relative flex h-full flex-col justify-between gap-3.5 overflow-hidden rounded-[14px] bg-[#12201a] p-5 text-left transition-shadow duration-300 hover:shadow-[0_24px_40px_-22px_rgba(7,25,18,0.9)]`}
       >
         <span
           aria-hidden="true"
           className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#7fd9b4]/10 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
         />
-        <span className="relative block text-[14px] font-semibold leading-snug text-white">{cta.title}</span>
-        <span className="relative mt-2 block text-[11.5px] leading-[1.45] text-white/60">{cta.body}</span>
-        <span className="relative mt-auto inline-flex items-center gap-2 pt-3 text-[10.5px] font-bold uppercase tracking-[0.16em] text-[#7fd9b4]">
+        <span className="relative block text-[16px] font-bold leading-[1.35] text-[#e9f1ed]">{cta.title}</span>
+        <span className="relative block text-[13px] leading-[1.5] text-[#a9bab2]">{cta.body}</span>
+        <span className="relative inline-flex items-center gap-2 text-[12px] font-extrabold uppercase tracking-[0.16em] text-[#7fd6b0]">
           {cta.label}
           <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
             &rarr;
@@ -132,24 +144,19 @@ function FeaturedCard({
       <Link
         href={f.href}
         aria-current={current ? "page" : undefined}
-        className={`group relative flex items-center gap-3 overflow-hidden rounded-xl border border-[#cfe0d7] bg-white/90 p-2 transition-all duration-300 ${EASE} hover:-translate-y-0.5 hover:border-[#1c6b51] hover:shadow-[0_16px_30px_-18px_rgba(28,107,81,0.75)]`}
+        className="group relative flex items-center gap-4 rounded-[14px] border border-[#cfd9d4] bg-white px-[18px] py-[11px] group-data-[tight=true]/menu:py-2 text-[#12201a] transition-colors duration-200 hover:border-[#1f7a5a]"
       >
-        {/* a sheen that crosses the card on hover */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 transition-all duration-[900ms] ease-out group-hover:left-[110%] group-hover:opacity-100"
-        />
         {f.mark ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={f.mark} alt="" className="relative h-9 w-9 shrink-0 rounded-lg border border-[#e0e8e4] bg-white object-contain p-0.5" />
+          <img src={f.mark} alt="" className="h-[52px] w-[52px] shrink-0 rounded-[10px] border border-[#e0e8e4] bg-[#ebf8ff] object-cover" />
         ) : null}
-        <span className="relative min-w-0 flex-1">
-          <span className={`block font-display text-[14px] font-extrabold uppercase leading-tight tracking-wide ${INK}`}>{f.label}</span>
-          <span className="block text-[11.5px] font-medium text-[#4d6157]">{f.sub}</span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-[18px] font-extrabold uppercase leading-[1.25] tracking-[0.03em]">{f.label}</span>
+          <span className="block text-[13.5px] leading-[1.3] text-[#5b6b64]">{f.sub}</span>
         </span>
         <span
           aria-hidden="true"
-          className="relative grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#1c6b51]/10 text-xs text-[#1c6b51] transition-all duration-300 group-hover:translate-x-0.5 group-hover:bg-[#1c6b51] group-hover:text-white"
+          className="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-full bg-[#eef2f0] text-[#1f7a5a] transition-colors duration-200 group-hover:bg-[#1f7a5a] group-hover:text-white"
         >
           &rarr;
         </span>
@@ -283,14 +290,14 @@ function Panel({ cat, pathname }: { cat: MenuCategory; pathname: string }) {
   if (cat.featured) {
     const groups = cat.groups ?? [];
     return (
-      <>
-        <HeaderRow title={cat.featuredTitle ?? "Featured"} link={!cat.cta} />
-        <ul className="mb-3 grid grid-cols-2 gap-3">
+      <div className={MENU_FONT}>
+        {cat.cta ? <Eyebrow>{cat.featuredTitle ?? "Featured"}</Eyebrow> : <HeaderRow title={cat.featuredTitle ?? "Featured"} />}
+        <ul className="mb-7 group-data-[tight=true]/menu:mb-[18px] grid grid-cols-2 gap-4">
           {cat.featured.map((f, i) => (
             <FeaturedCard key={f.href} f={f} delay={i * 80} current={pathname === f.href} />
           ))}
         </ul>
-        <div className="grid grid-cols-3 gap-x-8 gap-y-2.5">
+        <div className="grid grid-cols-3 gap-7 group-data-[tight=true]/menu:gap-y-[18px]">
           {groups.map((g, gi) => (
             <section key={g.title}>
               <Heading>{g.title}</Heading>
@@ -304,14 +311,12 @@ function Panel({ cat, pathname }: { cat: MenuCategory; pathname: string }) {
                   );
                 })}
               </ul>
-              {/* with a call to action in the grid, "All services" lives at the foot of the
-                  first column of the second row, where the shorter column leaves room */}
-              {cat.cta && gi === 3 && <AllServicesLink className="mt-3.5" />}
             </section>
           ))}
           {cat.cta && <CtaCard cta={cat.cta} delay={140 + groups.length * 50} />}
         </div>
-      </>
+        {cat.cta && <AllServicesLink className="mt-[22px] group-data-[tight=true]/menu:mt-3.5" />}
+      </div>
     );
   }
 
@@ -457,15 +462,17 @@ export function ServicesMenu({
     if (el) setLens({ top: el.offsetTop, height: el.offsetHeight });
   }, [active]);
 
-  // If the window is too short to show the whole panel, the panel shrinks a little to fit
-  // rather than scrolling. Its natural height does not depend on the transform, so this
-  // can be measured at any time.
+  // If the window is too short to show the whole panel, the vertical spacing gives a little
+  // first, and then the panel shrinks to fit rather than scrolling. Its natural height does
+  // not depend on the transform, so this can be measured at any time.
   const measureFit = useCallback(() => {
     const el = panel.current;
     if (!el) return;
     const top = (el.closest("header")?.getBoundingClientRect().bottom ?? 104) + 8;
-    const room = window.innerHeight - top - 16;
-    setFit(Math.min(1, Math.max(0.72, room / el.offsetHeight)));
+    const room = window.innerHeight - top - 10;
+    el.dataset.tight = "false";
+    if (el.offsetHeight > room) el.dataset.tight = "true";
+    setFit(Math.min(1, Math.max(0.7, room / el.offsetHeight)));
   }, []);
 
   useLayoutEffect(measure, [measure, open]);
@@ -508,22 +515,31 @@ export function ServicesMenu({
         }`}
       />
 
+      {/* The wrapper and its padding never catch the pointer. Only the panel itself and the
+          bridge above it do, so the menu closes the moment the pointer leaves them. (The
+          wrapper is full width and as tall as the unscaled panel, which used to leave dead
+          zones beside and below the panel that kept it open.) */}
       <div
-        onPointerEnter={onEnter}
-        onPointerLeave={onLeave}
-        className={`absolute inset-x-0 top-full hidden origin-top transition-[opacity,transform,visibility] duration-[360ms] [will-change:opacity,transform] ${EASE} lg:block ${
-          open ? "visible translate-y-0 scale-100 opacity-100" : "invisible pointer-events-none -translate-y-3 scale-[0.985] opacity-0"
+        className={`pointer-events-none absolute inset-x-0 top-full hidden origin-top transition-[opacity,transform,visibility] duration-[360ms] [will-change:opacity,transform] ${EASE} lg:block ${
+          open ? "visible translate-y-0 scale-100 opacity-100" : "invisible -translate-y-3 scale-[0.985] opacity-0"
         }`}
       >
         {/* Invisible bridge over the gap beneath the nav, so the pointer can travel from
             "Our Services" down to the panel without the menu closing on the way. */}
-        <span aria-hidden="true" className="absolute inset-x-0 -top-7 h-7" />
+        <span
+          aria-hidden="true"
+          onPointerEnter={onEnter}
+          onPointerLeave={onLeave}
+          className={`absolute inset-x-0 -top-7 h-9 ${open ? "pointer-events-auto" : ""}`}
+        />
         <div className="mx-auto flex max-w-7xl justify-center px-6 pt-2 lg:px-8">
           <div
             ref={panel}
+            onPointerEnter={onEnter}
+            onPointerLeave={onLeave}
             onPointerMove={onMove}
             style={{ transform: fit < 1 ? `scale(${fit})` : undefined, transformOrigin: "top center" }}
-            className="relative grid w-full max-w-[72rem] grid-cols-[17.25rem_1fr] overflow-hidden rounded-[1.75rem] border border-white/70 bg-[linear-gradient(180deg,#fbfdfc,#f1f6f3)] shadow-[0_1px_0_rgba(255,255,255,0.9)_inset,0_50px_90px_-30px_rgba(0,0,0,0.65)]"
+            className={`${manrope.variable} group/menu ${open ? "pointer-events-auto" : ""} relative grid w-full max-w-[80rem] grid-cols-[290px_1fr] overflow-hidden rounded-[26px] bg-[#eef2f0] shadow-[0_30px_80px_rgba(0,0,0,0.5)]`}
           >
             {/* a hairline of light along the top edge, and a glow that follows the pointer */}
             <span aria-hidden="true" className="pointer-events-none absolute inset-x-12 top-0 h-px bg-gradient-to-r from-transparent via-[#1c6b51]/60 to-transparent" />
@@ -535,13 +551,13 @@ export function ServicesMenu({
             />
 
             {/* ---- category rail ---- */}
-            <ul className="relative z-10 space-y-0.5 border-r border-[#dde6e1] bg-[#e8eeea]/70 p-2.5" role="tablist" aria-label="Services">
+            <ul className="relative z-10 space-y-0.5 bg-[#e4eae7] p-4" role="tablist" aria-label="Services">
               <span
                 aria-hidden="true"
-                className={`pointer-events-none absolute left-2.5 right-2.5 top-0 overflow-hidden rounded-2xl bg-white shadow-[0_10px_26px_-12px_rgba(7,25,18,0.45),0_0_0_1px_rgba(7,25,18,0.04)] transition-[transform,height,opacity] duration-[550ms] ${EASE}`}
+                className={`pointer-events-none absolute left-4 right-4 top-0 overflow-hidden rounded-xl bg-white shadow-[0_4px_14px_rgba(0,0,0,0.06)] transition-[transform,height,opacity] duration-[550ms] ${EASE}`}
                 style={{ transform: `translateY(${lens.top}px)`, height: lens.height, opacity: lens.height ? 1 : 0 }}
               >
-                <span className="absolute inset-y-3 left-0 w-[3px] rounded-full bg-[#1c6b51]" />
+                <span className="absolute inset-y-0 left-0 w-[3px] bg-[#1f7a5a]" />
               </span>
 
               {servicesMenu.map((c, i) => {
@@ -550,9 +566,9 @@ export function ServicesMenu({
                   <>
                     <RailMark cat={c} on={on} />
                     <span className="min-w-0 flex-1">
-                      <span className={`block font-display text-[13px] font-bold uppercase leading-tight tracking-[0.06em] transition-colors duration-300 ${on ? "text-[#071912]" : "text-[#3e5248]"}`}>{c.label}</span>
+                      <span className={`block ${MENU_FONT} text-[13.5px] font-extrabold uppercase leading-tight tracking-[0.06em] transition-colors duration-300 ${on ? "text-[#071912]" : "text-[#3e5248]"}`}>{c.label}</span>
                       {c.descriptor && (
-                        <span className={`mt-0.5 block text-[10.5px] font-medium normal-case tracking-normal ${on ? "text-[#4d6157]" : "text-[#6f8278]"}`}>{c.descriptor}</span>
+                        <span className={`mt-0.5 block ${MENU_FONT} text-[11.5px] font-medium normal-case tracking-normal text-[#5b6b64]`}>{c.descriptor}</span>
                       )}
                     </span>
                     <svg
@@ -565,7 +581,7 @@ export function ServicesMenu({
                     </svg>
                   </>
                 );
-                const cls = "relative z-10 flex min-h-[2.85rem] w-full items-center gap-2.5 rounded-2xl px-2.5 text-left";
+                const cls = "relative z-10 flex min-h-[2.85rem] w-full items-center gap-2.5 rounded-xl px-3 text-left";
                 return (
                   <li
                     key={c.id}
@@ -605,13 +621,20 @@ export function ServicesMenu({
             </ul>
 
             {/* ---- the selected category ---- */}
-            <div className="relative z-10 min-h-[22rem] overflow-hidden p-3.5 [contain:layout_paint]">
+            <div className="relative z-10 min-h-[22rem] min-w-0 overflow-hidden px-7 pb-6 pt-7 group-data-[tight=true]/menu:pb-4 group-data-[tight=true]/menu:pt-5 [contain:layout_paint]">
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#1c6b51]/[0.07] blur-3xl"
               />
-              <div key={cat.id} className="sap-rise relative" style={{ animationDuration: "0.45s" }}>
-                <Panel cat={cat} pathname={pathname} />
+              {/* Every category sits in the same cell as an invisible copy of SAP's content, so the
+                  panel is always as tall as SAP's, whichever category is showing. */}
+              <div className="grid">
+                <div aria-hidden="true" inert className="invisible pointer-events-none col-start-1 row-start-1 select-none">
+                  <Panel cat={servicesMenu[0]} pathname={pathname} />
+                </div>
+                <div key={cat.id} className="sap-rise relative col-start-1 row-start-1" style={{ animationDuration: "0.45s" }}>
+                  <Panel cat={cat} pathname={pathname} />
+                </div>
               </div>
             </div>
           </div>

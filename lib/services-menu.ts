@@ -71,13 +71,13 @@ export const servicesMenu: MenuCategory[] = [
         label: "GROW with SAP",
         sub: "S/4HANA Public Cloud",
         href: "/services/grow-with-sap",
-        mark: "/images/solutions/grow.jpg",
+        mark: "/images/solutions/grow-with-sap.jpg",
       },
       {
         label: "RISE with SAP",
         sub: "S/4HANA Private Cloud",
         href: "/services/rise-with-sap",
-        mark: "/images/solutions/rise.jpg",
+        mark: "/images/solutions/rise-with-sap.jpg",
       },
     ],
     descriptor: "Cloud ERP, AI & data",
@@ -85,27 +85,47 @@ export const servicesMenu: MenuCategory[] = [
       {
         title: "Advise & plan",
         items: [
-          "Cloud ERP Readiness Assessment",
-          "Fit-to-Standard Workshops",
-          "Licensing & Commercial Advisory",
-          "Two-Tier ERP for Subsidiaries",
+          { label: "Cloud ERP Readiness Assessment", href: "/services/cloud-erp-readiness-assessment" },
+          { label: "Fit-to-Standard Workshops", href: "/services/fit-to-standard-workshops" },
+          { label: "Licensing & Commercial Advisory", href: "/services/licensing-and-commercial-advisory" },
+          { label: "Two-Tier ERP for Subsidiaries", href: "/services/two-tier-erp-for-subsidiaries" },
         ],
       },
       {
         title: "Implement & migrate",
-        items: ["Cloud ERP Implementation", "Move from ECC & On-Premise", "Data Migration", "Rollouts & Localisation"],
+        items: [
+          { label: "Cloud ERP Implementation", href: "/services/cloud-erp-implementation" },
+          { label: "Move from ECC & On-Premise", href: "/services/move-from-ecc-on-premise" },
+          "Data Migration",
+          { label: "Rollouts & Localisation", href: "/services/rollouts-and-localisation" },
+        ],
       },
       {
         title: "Extend & integrate",
-        items: ["SAP BTP Extensions & Apps", "Process Automation with SAP Build", "SAP & Non-SAP Integration"],
+        items: [
+          { label: "SAP BTP Extensions & Apps", href: "/services/sap-btp-extensions-and-apps" },
+          { label: "Process Automation with SAP Build", href: "/services/process-automation-with-sap-build" },
+          { label: "SAP & Non-SAP Integration", href: "/services/sap-and-non-sap-integration" },
+        ],
       },
       {
         title: "Run & optimise",
-        items: ["Application Management Support", "Release & Upgrade Management", "Test Automation", "Security, Roles & Authorisations"],
+        items: [
+          { label: "Application Management Support", href: "/services/application-management-support" },
+          { label: "Release & Upgrade Management", href: "/services/release-and-upgrade-management" },
+          { label: "Test Automation", href: "/services/test-automation" },
+          { label: "Security, Roles & Authorisations", href: "/services/security-roles-and-authorisations" },
+        ],
       },
       {
         title: "AI & data",
-        items: ["SAP Business AI", "Joule & AI Agents", "SAP Business Data Cloud", "SAP Analytics Cloud", "Group Reporting & Consolidation"],
+        items: [
+          { label: "SAP Business AI", href: "/services/sap-business-ai" },
+          { label: "Joule & AI Agents", href: "/services/joule-and-ai-agents" },
+          { label: "SAP Business Data Cloud", href: "/services/sap-business-data-cloud" },
+          { label: "SAP Analytics Cloud", href: "/services/sap-analytics-cloud" },
+          { label: "Group Reporting & Consolidation", href: "/services/group-reporting-and-consolidation" },
+        ],
       },
     ],
     cta: {
