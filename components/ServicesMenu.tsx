@@ -253,7 +253,94 @@ function CloudTile({ t, delay, current }: { t: MenuTile; delay: number; current:
   );
 }
 
+/** One of the main products: a tall card with a thick bar in its colour, a large number and a bold name. */
+function MainCard({ m, n, delay, current }: { m: NonNullable<MenuCategory["main"]>[number]; n: number; delay: number; current: boolean }) {
+  return (
+    <li className="sap-rise" style={{ animationDelay: `${delay}ms`, animationDuration: "0.5s" }}>
+      <Link
+        href={m.href}
+        aria-current={current ? "page" : undefined}
+        style={{ "--a": m.accent } as CSSProperties}
+        className={`group relative flex h-full min-h-[11.4rem] flex-col justify-between overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--a)_30%,#d3dfd9)] bg-white px-4 pb-4 pt-5 transition-all duration-300 ${EASE} hover:-translate-y-1 hover:border-[var(--a)] hover:shadow-[0_22px_36px_-22px_color-mix(in_srgb,var(--a)_70%,#000)] active:scale-[0.98]`}
+      >
+        <span aria-hidden="true" className="absolute inset-x-0 top-0 h-[6px] bg-[var(--a)]" />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          style={{ background: "linear-gradient(160deg, color-mix(in srgb, var(--a) 14%, transparent), transparent 70%)" }}
+        />
+        <span className="relative flex items-start justify-between">
+          <span className="font-display text-[42px] font-extrabold leading-none tracking-[-0.03em] text-[var(--a)]">{String(n).padStart(2, "0")}</span>
+          <span
+            aria-hidden="true"
+            className="grid h-8 w-8 place-items-center rounded-full border border-[#cfdad4] text-[13px] text-[#4d6157] transition-all duration-300 group-hover:border-[var(--a)] group-hover:bg-[var(--a)] group-hover:text-white"
+          >
+            &rarr;
+          </span>
+        </span>
+        <span className="relative mt-4 block">
+          <span className={`block font-display text-[22px] font-extrabold leading-[1.1] tracking-[-0.01em] ${INK}`}>{m.label}</span>
+          <span className="mt-2 block text-[13px] leading-[1.35] text-[#58695f]">{m.sub}</span>
+        </span>
+      </Link>
+    </li>
+  );
+}
+
 function Panel({ cat, pathname }: { cat: MenuCategory; pathname: string }) {
+  // ---- Salesforce: the main products as large coloured cards, the rest in one quiet line ----
+  if (cat.main) {
+    return (
+      <div className={MENU_FONT}>
+        <div className="mb-4 flex items-end justify-between gap-4 border-b-2 border-[#12201a] pb-3 group-data-[tight=true]/menu:mb-3 group-data-[tight=true]/menu:pb-2.5">
+          <p className={`m-0 font-display text-[21px] font-extrabold uppercase leading-none tracking-[0.02em] ${INK}`}>{cat.mainTitle}</p>
+          {cat.href && (
+            <Link
+              href={cat.href}
+              className="group inline-flex shrink-0 items-center gap-2 text-[12px] font-extrabold uppercase tracking-[0.16em] text-[#1f7a5a] transition-colors hover:text-[#12201a]"
+            >
+              Overview
+              <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
+                &rarr;
+              </span>
+            </Link>
+          )}
+        </div>
+        <ul className="grid grid-cols-3 gap-3">
+          {cat.main.map((m, i) => (
+            <MainCard key={m.href} m={m} n={i + 1} delay={i * 60} current={pathname === m.href} />
+          ))}
+          {cat.cta && (
+            <li className="sap-rise" style={{ animationDelay: `${cat.main.length * 60}ms`, animationDuration: "0.5s" }}>
+              <CtaCard cta={cat.cta} delay={0} />
+            </li>
+          )}
+        </ul>
+        {cat.also && (
+          <div className="mt-5 flex flex-wrap items-baseline gap-x-1 gap-y-1 border-t border-[#cfd9d4] pt-3.5 group-data-[tight=true]/menu:mt-3.5">
+            <span className="mr-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#6f8278]">{cat.alsoTitle}</span>
+            {cat.also.map((l, i) => (
+              <span key={l.label} className="inline-flex items-baseline">
+                {l.href ? (
+                  <Link href={l.href} className="rounded-md px-1.5 py-0.5 text-[13px] font-medium text-[#3e5248] transition-colors hover:bg-[#e3eee8] hover:text-[#071912]">
+                    {l.label}
+                  </Link>
+                ) : (
+                  <span className="px-1.5 text-[13px] text-[#3e5248]">{l.label}</span>
+                )}
+                {i < cat.also!.length - 1 && (
+                  <span aria-hidden="true" className="text-[#b5c4bc]">
+                    &middot;
+                  </span>
+                )}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
   // ---- Salesforce: every cloud given the same weight ----
   if (cat.tiles) {
     return (

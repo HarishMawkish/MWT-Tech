@@ -684,3 +684,85 @@ section.light .screen, .sf .tabpane .screen { box-shadow: 0 30px 70px rgba(10,30
 .sf .decide ul { margin-top: 14px; display: grid; gap: 10px; }
 .sf .decide li { position: relative; padding-left: 22px; color: var(--muted); }
 .sf .decide li::before { content: ""; position: absolute; left: 0; top: .72em; width: 10px; height: 2px; background: var(--green-hi); }
+
+/* =================== the five as a gallery of panels =================== */
+.sf .pn-lab { margin-top: 36px; display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--muted); }
+.sf .pn-lab b { color: var(--fg); font-family: var(--display); font-weight: 800; }
+.sf .pn-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 28%, transparent); flex: none; }
+
+/*
+ * Smoothness, in order of importance: only the open panel's flex-grow animates (nothing else changes size); each panel is
+ * contained so its layout and paint never reach its neighbours; the glow and the spotlight are fixed-size layers that
+ * only fade and translate, so they stay on the compositor and never repaint while a panel is growing; and which panel
+ * is open is decided in script with a short intent delay, so the panel under the pointer cannot change mid-animation.
+ */
+.sf .pn-row { list-style: none; margin: 22px 0 0; padding: 0; display: flex; gap: 10px; height: 460px; }
+.sf .pn { position: relative; flex: 0.5 1 0; min-width: 0; border-radius: 22px; overflow: hidden; contain: layout paint style; transition: flex-grow .5s var(--ease-out); }
+.sf .pn.open { flex-grow: 3.3; }
+.sf .pn-row.idle .pn { flex-grow: 1; }
+
+.sf .pn-in {
+  position: absolute; inset: 0; display: block; color: #eef3f0; text-decoration: none; isolation: isolate;
+  background: linear-gradient(185deg, #0e1713 0%, #070c0a 100%);
+  border: 1px solid rgba(255, 255, 255, .09); border-radius: 22px;
+  transition: border-color .3s ease;
+}
+.sf .pn.open:not(.here) .pn-in { border-color: color-mix(in srgb, var(--a) 70%, transparent); }
+.sf .pn.here .pn-in { border-color: color-mix(in srgb, var(--c) 75%, transparent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 18%, transparent); }
+
+/* the glow: a fixed-size layer, so it is painted once and only fades */
+.sf .pn-glow { position: absolute; left: 0; bottom: 0; width: 760px; height: 460px; z-index: -2; background: radial-gradient(90% 75% at 0% 100%, color-mix(in srgb, var(--a) 46%, transparent), transparent 62%); opacity: .3; transition: opacity .45s ease; will-change: opacity; }
+.sf .pn.open .pn-glow { opacity: 1; }
+
+/* the spotlight: a fixed-size circle that is moved with transform, which the compositor does without repainting */
+.sf .pn-spot { position: absolute; left: 0; top: 0; width: 480px; height: 480px; z-index: -1; margin: -240px 0 0 -240px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 255, 255, .1), transparent 62%); transform: translate3d(var(--mx, 50%), var(--my, 30%), 0); opacity: 0; transition: opacity .3s ease; will-change: transform, opacity; pointer-events: none; }
+.sf .pn.open .pn-spot { opacity: 1; }
+
+.sf .pn-line { position: absolute; left: 0; right: 0; top: 0; height: 3px; background: linear-gradient(90deg, var(--a), color-mix(in srgb, var(--a) 20%, transparent)); transform: scaleX(.14); transform-origin: left; transition: transform .5s var(--ease-out); will-change: transform; }
+.sf .pn.open .pn-line { transform: none; }
+
+/* folded: a number, and the name set on its side */
+.sf .pn-shut { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 26px 0 28px; transition: opacity .18s ease; }
+.sf .pn-shut b { font-family: var(--display); font-weight: 800; font-size: 22px; letter-spacing: -.02em; color: var(--a); }
+.sf .pn-shut span { writing-mode: vertical-rl; transform: rotate(180deg); font-family: var(--display); font-weight: 700; font-size: 19px; letter-spacing: .02em; color: #dfe9e3; white-space: nowrap; }
+.sf .pn.open .pn-shut { opacity: 0; }
+
+/* open: fixed width, so the text never reflows while the panel grows; it fades in as the panel is nearly there */
+.sf .pn-open { position: absolute; left: 0; top: 0; bottom: 0; width: 520px; max-width: 100%; display: flex; flex-direction: column; padding: 30px 34px; opacity: 0; transform: translate3d(0, 8px, 0); pointer-events: none; transition: opacity .15s ease, transform .15s ease; will-change: opacity, transform; }
+.sf .pn.open .pn-open { opacity: 1; transform: none; pointer-events: auto; transition: opacity .3s ease .16s, transform .45s var(--ease-out) .12s; }
+.sf .pn-top { display: flex; align-items: baseline; gap: 16px; }
+.sf .pn-n { font-family: var(--display); font-weight: 800; font-size: 54px; line-height: 1; letter-spacing: -.04em; color: var(--a); }
+.sf .pn-stage { font-size: 12px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #aebfb6; }
+.sf .pn-name { margin-top: 20px; font-family: var(--display); font-weight: 800; font-size: clamp(30px, 3.2vw, 44px); line-height: 1.04; letter-spacing: -.025em; color: #fff; }
+.sf .pn-tag { margin-top: 10px; font-size: 17px; font-weight: 600; color: #cfdcd5; max-width: 34ch; }
+.sf .pn-sum { margin-top: 14px; font-size: 14.5px; line-height: 1.6; color: #98aaa1; max-width: 46ch; }
+.sf .pn-pts { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 22px; max-width: 420px; }
+.sf .pn-pts span { padding: 8px 0; border-top: 1px solid rgba(255, 255, 255, .1); font-size: 13px; font-weight: 600; color: #d9e5de; }
+.sf .pn-go { margin-top: auto; display: inline-flex; align-items: center; gap: 10px; align-self: flex-start; font-size: 13px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #fff; padding: 12px 18px; border-radius: 999px; background: color-mix(in srgb, var(--a) 70%, #0b130f); transition: transform .2s var(--ease-out), background-color .2s ease; }
+.sf .pn-go i { font-style: normal; display: inline-block; transition: transform .25s var(--ease-out); }
+.sf .pn.here .pn-go { background: rgba(255, 255, 255, .08); color: #cfe3da; font-weight: 700; letter-spacing: .08em; text-transform: none; font-size: 13.5px; }
+.sf .pn-pin { position: absolute; top: 30px; right: 30px; font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #fff; background: var(--c); padding: 6px 12px; border-radius: 999px; }
+.sf .pn-in:focus-visible { outline: 2px solid var(--green-hi); outline-offset: -3px; }
+.sf a.pn-in:active .pn-go { transform: scale(.97); }
+@media (hover: hover) and (pointer: fine) { .sf a.pn-in:hover .pn-go i { transform: translateX(5px); } }
+
+/* narrow screens, and anywhere hover does not exist: stack the panels and show each one fully */
+@media (max-width: 960px), (hover: none) {
+  .sf .pn-row { flex-direction: column; height: auto; }
+  .sf .pn, .sf .pn.open, .sf .pn-row.idle .pn { flex: none; transition: none; contain: none; }
+  .sf .pn-in { position: relative; inset: auto; display: block; }
+  .sf .pn-shut { display: none; }
+  .sf .pn-open, .sf .pn.open .pn-open { position: relative; width: auto; opacity: 1; transform: none; pointer-events: auto; padding: 26px 22px 24px; transition: none; }
+  .sf .pn-glow { width: 100%; opacity: .8; }
+  .sf .pn-spot { display: none; }
+  .sf .pn-line { transform: none; }
+  .sf .pn-go { margin-top: 20px; }
+  .sf .pn-n { font-size: 42px; }
+  .sf .pn-pin { top: 22px; right: 18px; }
+  .sf .pn:not(.here) .pn-in { border-color: rgba(255, 255, 255, .09); }
+}
+@media (max-width: 520px) { .sf .pn-pts { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) {
+  .sf .pn, .sf .pn-line, .sf .pn-glow { transition: none; }
+  .sf .pn-open, .sf .pn.open .pn-open { transform: none; transition: opacity .2s ease; }
+}

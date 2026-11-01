@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
-import { mainProducts, productPath, products, supportProducts, SF_HERE, SF_HUB, type ProductSlug } from "./data";
+import { FivePanels } from "./FivePanels";
+import { mainProducts, productPath, supportProducts, SF_HERE, SF_HUB, type ProductSlug } from "./data";
 
 /** Stagger index for a revealed element. */
 export const d = (n: number) => ({ "--d": n }) as CSSProperties;
@@ -333,84 +334,32 @@ export function SupportDirectory({ current }: { current?: ProductSlug }) {
   );
 }
 
-/**
- * Where this page sits among the five, as a stepper. Follows two well-tested patterns: Carbon's progress indicator
- * (completed steps ticked, the current step solid, upcoming steps outlined, the line coloured up to the current step)
- * and GOV.UK's step-by-step navigation (the current item says so in words, not only in colour).
- * On a supporting product's page there is no place on the line, so the rail says so and sends you back to the five.
- */
-export function ReadingRail({ current }: { current: ProductSlug }) {
-  const k = mainProducts.findIndex((p) => p.slug === current);
-  if (k < 0) {
-    const p = products.find((x) => x.slug === current);
-    return (
-      <div className="reading support" data-r>
-        <p className="rd-lab">
-          <span className="rd-live" aria-hidden="true" />
-          You are currently viewing <b>{p?.name}</b>
-          <span className="rd-count">Supporting product</span>
-        </p>
-        <p className="rd-back">
-          It works with the five main Salesforce products below. <Link href={SF_HUB}>See all five →</Link>
-        </p>
-      </div>
-    );
-  }
-  const p = mainProducts[k];
-  return (
-    <div className="reading" data-r style={{ "--c": SF_HERE, "--pct": k / (mainProducts.length - 1) } as CSSProperties}>
-      <p className="rd-lab">
-        <span className="rd-live" aria-hidden="true" />
-        You are currently viewing <b>{p.name}</b>
-        <span className="rd-count">
-          Product {k + 1} of {mainProducts.length}
-        </span>
-      </p>
-      <ol className="rd-steps" aria-label="The five main Salesforce products">
-        <span className="rd-track" aria-hidden="true">
-          <i />
-        </span>
-        {mainProducts.map((q, i) => {
-          const state = i < k ? "past" : i === k ? "now" : "next";
-          const body = (
-            <>
-              {i === k && <span className="rd-pin">You are here</span>}
-              <span className="rd-node" aria-hidden="true">
-                {i < k ? "✓" : i === k ? "" : String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="rd-name">{q.short}</span>
-              <span className="rd-stage">{q.stage}</span>
-            </>
-          );
-          return (
-            <li key={q.slug} className={state} aria-current={i === k ? "page" : undefined} style={{ "--k": i } as CSSProperties}>
-              {i === k ? (
-                <span className="rd-step">{body}</span>
-              ) : (
-                <Link href={productPath(q.slug)} className="rd-step">
-                  {body}
-                </Link>
-              )}
-            </li>
-          );
-        })}
-      </ol>
-    </div>
-  );
-}
-
 /** The rest of the platform, at the foot of each product page. */
 export function Related({ current, light = true }: { current: ProductSlug; light?: boolean }) {
+  const here = mainProducts.find((p) => p.slug === current);
   return (
     <section className={light ? "light" : undefined}>
       <div className="in">
         <Head
           eyebrow="Across Salesforce"
-          title="Five main products, one platform."
-          lede="Sales, data, marketing, loyalty and service share the same platform and the same customer data. The other products here support them."
+          title={here ? `You are on ${here.name}. Where next?` : "Go to one of the five main products."}
+          lede="Each of the five has its own page, and you can visit them in any order. Choose one to go there."
         />
-        <ReadingRail current={current} />
-        <ProductIndex current={current} compact />
+        <p className="pn-lab" data-r style={{ "--c": SF_HERE } as CSSProperties}>
+          <span className="pn-dot" aria-hidden="true" />
+          {here ? (
+            <>
+              You are currently viewing <b>{here.name}</b>
+            </>
+          ) : (
+            <>
+              You are currently viewing <b>{supportProducts.find((x) => x.slug === current)?.name}</b>, a supporting product
+            </>
+          )}
+        </p>
+        <div data-r>
+          <FivePanels current={current} />
+        </div>
         <SupportDirectory current={current} />
         <p className="rel-hub" data-r>
           <Link href={SF_HUB}>

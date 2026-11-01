@@ -19,6 +19,9 @@ export type MenuLogo = { src: string; alt: string };
 /** One equal-weight tile in a grid of products (Salesforce's clouds). */
 export type MenuTile = { label: string; sub: string; href: string; accent: string };
 
+/** One of a category's main products: shown large, numbered, in its own colour. */
+export type MenuMain = { label: string; sub: string; href: string; accent: string };
+
 /** One line in a group. With an `href` it is a link, without one it is display-only. */
 export type MenuLink = { label: string; href?: string; accent?: string };
 
@@ -49,6 +52,12 @@ export type MenuCategory = {
   groups?: MenuGroup[];
   /** Sits in the last cell of the groups grid. */
   cta?: MenuCta;
+  /** The main products, drawn as large coloured cards ahead of everything else (Salesforce). */
+  main?: MenuMain[];
+  mainTitle?: string;
+  /** The supporting products, set as one quiet line under the main ones. */
+  also?: MenuLink[];
+  alsoTitle?: string;
   /** Plain supporting points, for categories with a page. */
   bullets?: string[];
   logos?: MenuLogo[];
@@ -136,69 +145,35 @@ export const servicesMenu: MenuCategory[] = [
     },
   },
   {
-    // Laid out like SAP: two featured cards, titled groups and a call to action. The first group is the five main
-    // products, each in its own colour, so they are what the eye lands on; the groups after it are the supporting
-    // products and deep links into the pages.
+    // The five main products are drawn large, numbered and in their own colours, so they are what the eye lands on
+    // when the menu opens. The supporting products sit in one small line underneath.
     id: "salesforce",
     mark: "/images/solutions/salesforce.svg",
     label: "Salesforce Solutions",
     href: "/services/salesforce",
     blurb: summaryOf("salesforce-solutions"),
-    featuredTitle: "The Salesforce platform",
-    featured: [
-      {
-        label: "Five products, one platform",
-        sub: "Sales, data, marketing, loyalty, service",
-        href: "/services/salesforce",
-        mark: "/images/solutions/salesforce-hub.svg",
-      },
-      {
-        label: "Where to start",
-        sub: "Find the gap that bites most",
-        href: "/services/salesforce#start",
-        mark: "/images/solutions/salesforce-start.svg",
-      },
+    mainTitle: "The five main Salesforce products",
+    main: [
+      { label: "Sales Cloud", sub: "Pipeline, forecasts and agents for sellers", href: "/services/salesforce/sales-cloud", accent: "#2f86d2" },
+      { label: "Data 360", sub: "One customer profile, shared with agents", href: "/services/salesforce/data-360", accent: "#1fa5b8" },
+      { label: "Marketing Cloud", sub: "Journeys, campaigns and campaign agents", href: "/services/salesforce/marketing-cloud", accent: "#e0763a" },
+      { label: "Loyalty Management", sub: "Programmes, offers and referrals", href: "/services/salesforce/loyalty-management", accent: "#c2478a" },
+      { label: "Service Cloud", sub: "Cases, knowledge and AI agents", href: "/services/salesforce/service-cloud", accent: "#3a9d6e" },
     ],
-    groups: [
-      {
-        title: "The five main products",
-        items: [
-          { label: "Sales Cloud", href: "/services/salesforce/sales-cloud", accent: "#2f86d2" },
-          { label: "Data 360", href: "/services/salesforce/data-360", accent: "#1fa5b8" },
-          { label: "Marketing Cloud", href: "/services/salesforce/marketing-cloud", accent: "#e0763a" },
-          { label: "Loyalty Management", href: "/services/salesforce/loyalty-management", accent: "#c2478a" },
-          { label: "Service Cloud", href: "/services/salesforce/service-cloud", accent: "#3a9d6e" },
-        ],
-      },
-      {
-        title: "Sell and serve more",
-        items: [
-          { label: "Revenue Cloud", href: "/services/salesforce/revenue-cloud" },
-          { label: "Commerce Cloud", href: "/services/salesforce/commerce-cloud" },
-          { label: "Field Service", href: "/services/salesforce/field-service" },
-        ],
-      },
-      {
-        title: "Agents and analytics",
-        items: [
-          { label: "Agentforce", href: "/services/salesforce/agentforce" },
-          { label: "Trust and guardrails", href: "/services/salesforce/agentforce#trust" },
-          { label: "Tableau", href: "/services/salesforce/tableau" },
-        ],
-      },
-      {
-        title: "Connect and collaborate",
-        items: [
-          { label: "MuleSoft", href: "/services/salesforce/mulesoft" },
-          { label: "MuleSoft and SAP", href: "/services/salesforce/mulesoft#explore" },
-          { label: "Slack", href: "/services/salesforce/slack" },
-        ],
-      },
+    alsoTitle: "Also on the platform",
+    also: [
+      { label: "Agentforce", href: "/services/salesforce/agentforce" },
+      { label: "Revenue Cloud", href: "/services/salesforce/revenue-cloud" },
+      { label: "Field Service", href: "/services/salesforce/field-service" },
+      { label: "Commerce Cloud", href: "/services/salesforce/commerce-cloud" },
+      { label: "Slack", href: "/services/salesforce/slack" },
+      { label: "Tableau", href: "/services/salesforce/tableau" },
+      { label: "MuleSoft", href: "/services/salesforce/mulesoft" },
     ],
     cta: {
-      title: "Not sure which Salesforce product comes first?",
-      body: "Tell us what you want it to do. We will help you work out which of the five to look at first.",
-      label: "Find your starting point",
+      title: "Not sure which comes first?",
+      body: "Pick the problem that bites most and we will show which of the five to start with.",
+      label: "Where to start",
       href: "/services/salesforce#start",
     },
   },
