@@ -155,11 +155,77 @@ export const servicesMenu: MenuCategory[] = [
     bullets: outcomesOf("odoo-implementation"),
   },
   {
+    // Laid out like SAP: two featured cards, five titled groups and a call to action. The dotted rows are the six
+    // products (in each product's colour); the rows under them jump to the matching section of that product's page.
     id: "swyftflo",
     mark: "/images/solutions/swyftflo.png",
     label: "Swyftflo",
-    descriptor: "Supply Chain Solution",
-    logos: [{ src: "/images/solutions/swyftflo.png", alt: "Swyftflo" }],
+    href: "/services/swyftflo",
+    descriptor: "AI-native supply chain suite",
+    featuredTitle: "Swyftflo supply chain suite",
+    featured: [
+      {
+        label: "Swyftflo Suite",
+        sub: "Six products, one digital thread",
+        href: "/services/swyftflo",
+        mark: "/images/solutions/swyftflo-suite.svg",
+      },
+      {
+        label: "Where to start",
+        sub: "Find the gap that costs you most",
+        href: "/services/swyftflo#start",
+        mark: "/images/solutions/swyftflo-start.svg",
+      },
+    ],
+    groups: [
+      {
+        title: "Source & procure",
+        items: [
+          { label: "Source to Pay", href: "/services/swyftflo/source-to-pay", accent: "#3b4cca" },
+          { label: "Sourcing Events & Tenders", href: "/services/swyftflo/source-to-pay#events" },
+          { label: "Bid Evaluation & Negotiation", href: "/services/swyftflo/source-to-pay#explore" },
+        ],
+      },
+      {
+        title: "Execute & track",
+        items: [
+          { label: "Supply Chain Control Tower", href: "/services/swyftflo/control-tower", accent: "#2563eb" },
+          { label: "Shipment Journey & Live Tracking", href: "/services/swyftflo/control-tower#journey" },
+          { label: "Role-Based Partner Views", href: "/services/swyftflo/control-tower#roles" },
+        ],
+      },
+      {
+        title: "Move & deliver",
+        items: [
+          { label: "Transportation Management", href: "/services/swyftflo/tms", accent: "#3b6ff5" },
+          { label: "For Shippers, 3PLs & Carriers", href: "/services/swyftflo/tms#audience" },
+          { label: "Load, Route & Driver App", href: "/services/swyftflo/tms#explore" },
+        ],
+      },
+      {
+        title: "Verify & pay",
+        items: [
+          { label: "Invoice Hub", href: "/services/swyftflo/invoice-hub", accent: "#2aa8e0" },
+          { label: "6-Way AI Invoice Audit", href: "/services/swyftflo/invoice-hub#audit" },
+          { label: "Approvals & Tolerances", href: "/services/swyftflo/invoice-hub#explore" },
+        ],
+      },
+      {
+        title: "Analyse & prove",
+        items: [
+          { label: "Spend Intelligence", href: "/services/swyftflo/spend-intelligence", accent: "#7c5cff" },
+          { label: "The Spend Agent", href: "/services/swyftflo/spend-intelligence#levels" },
+          { label: "Authentik Product Passports", href: "/services/swyftflo/authentik", accent: "#16b8d6" },
+          { label: "Stakeholder Passport Views", href: "/services/swyftflo/authentik#views" },
+        ],
+      },
+    ],
+    cta: {
+      title: "Not sure which product to start with?",
+      body: "Tell us how a purchase, a shipment and an invoice move today. We'll show you which gap to close first.",
+      label: "Find your starting point",
+      href: "/services/swyftflo#start",
+    },
   },
   {
     id: "mihcm",

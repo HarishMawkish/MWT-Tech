@@ -434,16 +434,21 @@ header {
 
 /* Scroll-edge effect: content fades out under the floating header instead
    of colliding with the logo. The blur is masked so it dissolves with no
-   hard edge or divider line. */
+   hard edge or divider line.
+   The backdrop is blurred AND dimmed (brightness) before the dark tint goes
+   on. A tint alone only darkens what is behind it by a fixed fraction, so
+   light page sections came through as a grey wash while dark ones read as
+   black. Dimming the backdrop first makes the header look the same over any
+   content, light or dark. */
 header::before {
   content: "";
   position: absolute;
   inset: 0 0 -28px 0;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.94) 0%, rgba(0, 0, 0, 0.82) 60%, rgba(0, 0, 0, 0) 100%);
-  -webkit-backdrop-filter: blur(18px);
-  backdrop-filter: blur(18px);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.72) 60%, rgba(0, 0, 0, 0) 100%);
+  -webkit-backdrop-filter: blur(18px) brightness(0.4);
+  backdrop-filter: blur(18px) brightness(0.4);
   -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
 }

@@ -1,2 +1,6 @@
 .next/
 node_modules
+
+# secrets (Sanity write token etc.)
+.env*
+!.env.example

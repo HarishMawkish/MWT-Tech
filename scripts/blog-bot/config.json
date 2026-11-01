@@ -1,0 +1,11 @@
+{
+  "lookbackDays": 3,
+  "maxDraftsPerRun": 3,
+  "minScore": 7,
+  "maxArticleChars": 12000,
+  "sources": [
+    { "name": "Salesforce News & Insights", "vendor": "Salesforce", "feed": "https://www.salesforce.com/news/feed/" },
+    { "name": "SAP News Center", "vendor": "SAP", "feed": "https://news.sap.com/feed/" }
+  ],
+  "notes": "Only add OFFICIAL vendor feeds here. Feed URLs are best guesses: run `node scripts/blog-bot/run.mjs --check-feeds` and fix any that fail."
+}

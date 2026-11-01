@@ -8,6 +8,7 @@ import { PageWatermark } from "@/components/PageWatermark";
 import { SiteLoader } from "@/components/SiteLoader";
 import { JsonLd } from "@/components/JsonLd";
 import { Analytics } from "@/components/analytics/Analytics";
+import { BackToTop } from "@/components/BackToTop";
 import { DEFAULT_OG_IMAGE, organizationLd, robotsDefault, siteUrl, websiteLd } from "@/lib/seo";
 
 // Montserrat — main/heading text. Clean geometric letterforms.
@@ -96,6 +97,7 @@ export default function RootLayout({
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
+          <BackToTop />
         </div>
       </body>
     </html>
