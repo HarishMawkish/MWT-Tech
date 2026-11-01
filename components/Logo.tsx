@@ -25,7 +25,7 @@ export function LogoMark({
 export function Logo({ tone = "light" }: { tone?: "light" | "dark" }) {
   return (
     <Link href="/" className="flex shrink-0 items-center gap-3" aria-label="Mawkish Technologies — home">
-      <LogoMark tone={tone} className="h-14 w-14 sm:h-16 sm:w-16" />
+      <LogoMark tone={tone} className="h-11 w-11 lg:h-12 lg:w-12" />
       <span className="font-display text-base leading-none tracking-wide text-white sm:text-lg">
       </span>
     </Link>

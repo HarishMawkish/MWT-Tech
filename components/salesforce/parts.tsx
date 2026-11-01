@@ -1,240 +1,423 @@
-"use client";
+import Link from "next/link";
+import type { CSSProperties, ReactNode } from "react";
+import { mainProducts, productPath, products, supportProducts, SF_HERE, SF_HUB, type ProductSlug } from "./data";
 
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+/** Stagger index for a revealed element. */
+export const d = (n: number) => ({ "--d": n }) as CSSProperties;
 
-/** The cloud mark: one outline, filled from the page's accent. */
-export function CloudMark({ className = "h-8 w-8", style }: { className?: string; style?: CSSProperties }) {
-  return (
-    <svg viewBox="0 0 48 32" className={className} style={style} fill="none" aria-hidden="true">
-      <path
-        d="M12.5 29h24a9.5 9.5 0 0 0 1.4-18.9A13 13 0 0 0 13 8.4 10.3 10.3 0 0 0 12.5 29Z"
-        fill="rgba(var(--sf-rgb),0.22)"
-        stroke="var(--sf)"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-/** A card that lights up wherever the pointer is on it. */
-export function Spot({ children, className = "", as: Tag = "div" }: { children: ReactNode; className?: string; as?: "div" | "li" | "article" }) {
-  const ref = useRef<HTMLElement>(null);
-  const onMove = (e: React.PointerEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    el.style.setProperty("--x", `${e.clientX - r.left}px`);
-    el.style.setProperty("--y", `${e.clientY - r.top}px`);
-  };
-  return (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    <Tag ref={ref as any} onPointerMove={onMove} className={`sf-spot ${className}`}>
+/** In-page anchors stay plain links; everything else goes through the router. */
+export function CtaLink({ href, className, children }: { href: string; className: string; children: ReactNode }) {
+  return href.startsWith("#") ? (
+    <a href={href} className={className}>
       {children}
-    </Tag>
+    </a>
+  ) : (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
   );
 }
 
-/** A thin line across the top of the window showing how far down the page you are. */
-export function ScrollProgress() {
-  const bar = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      const p = h > 0 ? Math.min(window.scrollY / h, 1) : 0;
-      if (bar.current) bar.current.style.transform = `scaleX(${p})`;
-    };
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      cancelAnimationFrame(frame);
-    };
-  }, []);
+/* ------------------------------------------------------------------ hero */
+
+/** The five main products as a tab line under the crumbs, the supporting ones after a rule. */
+export function ProductChips({ current }: { current?: ProductSlug }) {
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px]">
-      <div
-        ref={bar}
-        className="h-full origin-left"
-        style={{ transform: "scaleX(0)", background: "linear-gradient(90deg, rgba(var(--sf-rgb),0.2), var(--sf), #fff)", boxShadow: "0 0 14px var(--sf)" }}
-      />
+    <nav className="pchips" aria-label="Salesforce products">
+      <Link href={SF_HUB} className="suite" aria-current={current ? undefined : "page"}>
+        Overview
+      </Link>
+      {mainProducts.map((p) => (
+        <Link key={p.slug} href={productPath(p.slug)} aria-current={current === p.slug ? "page" : undefined}>
+          {p.short}
+        </Link>
+      ))}
+    </nav>
+  );
+}
+
+export function Hero({
+  current,
+  crumb,
+  eyebrow,
+  title,
+  lede,
+  primary,
+  secondary,
+  note,
+  visual,
+}: {
+  current?: ProductSlug;
+  crumb: string;
+  eyebrow: ReactNode;
+  title: ReactNode;
+  lede: ReactNode;
+  primary: { label: string; href: string };
+  secondary?: { label: string; href: string };
+  note?: ReactNode;
+  visual: ReactNode;
+}) {
+  return (
+    <section className="hero">
+      <div className="in">
+        <div className="crumbs">
+          <Link href="/services">Services</Link> / {current ? <Link href={SF_HUB}>Salesforce</Link> : "Salesforce"}
+          {current ? ` / ${crumb}` : ""}
+        </div>
+        <ProductChips current={current} />
+        <div className="hero-grid">
+          <div>
+            <span className="eyebrow" data-r style={d(0)}>
+              {eyebrow}
+            </span>
+            <h1 data-r style={d(1)}>
+              {title}
+            </h1>
+            <p className="lede" data-r style={d(2)}>
+              {lede}
+            </p>
+            <div className="ctas" data-r style={d(3)}>
+              <CtaLink href={primary.href} className="btn pri">
+                {primary.label} <span className="ar">→</span>
+              </CtaLink>
+              {secondary && (
+                <CtaLink href={secondary.href} className="btn sec">
+                  {secondary.label}
+                </CtaLink>
+              )}
+            </div>
+            {note && (
+              <p className="name-note" data-r style={d(4)}>
+                {note}
+              </p>
+            )}
+          </div>
+          <div data-r style={d(2)}>
+            {visual}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ section heading */
+
+export function Head({ eyebrow, title, lede }: { eyebrow: string; title: ReactNode; lede?: ReactNode }) {
+  return (
+    <>
+      <span className="eyebrow" data-r>
+        {eyebrow}
+      </span>
+      <h2 data-r style={d(1)}>
+        {title}
+      </h2>
+      {lede && (
+        <p className="lede" data-r style={d(2)}>
+          {lede}
+        </p>
+      )}
+    </>
+  );
+}
+
+/* ------------------------------------------------------------------ blocks */
+
+/** Ruled definition rows: a short heading, then what it does. No icons, no boxes. */
+export function Defs({ items }: { items: { title: string; body: string }[] }) {
+  return (
+    <dl className="defs">
+      {items.map((x, i) => (
+        <div className="def" key={x.title} data-r style={d(Math.min(i, 5))}>
+          <dt>
+            <span className="def-n">{String(i + 1).padStart(2, "0")}</span>
+            {x.title}
+          </dt>
+          <dd>{x.body}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+/** Two-column ruled rows (who / does, name / how). */
+export function Pairs({ rows, a, b }: { rows: { l: string; r: string }[]; a: string; b: string }) {
+  return (
+    <div className="pairs" role="table" aria-label={`${a} and ${b}`}>
+      <div className="pairs-h" role="row">
+        <span role="columnheader">{a}</span>
+        <span role="columnheader">{b}</span>
+      </div>
+      {rows.map((x, i) => (
+        <div className="pairs-r" role="row" key={x.l} data-r style={d(Math.min(i, 5))}>
+          <b role="rowheader">{x.l}</b>
+          <span role="cell">{x.r}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function Faq({ items }: { items: { q: string; a: string }[] }) {
+  return (
+    <div className="faq">
+      {items.map((f, i) => (
+        <details key={f.q} data-r style={d(Math.min(i, 4))}>
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  );
+}
+
+export function CtaBand({
+  eyebrow = "Talk to us",
+  title,
+  lede,
+  label = "Start a conversation",
+  href = "/contact",
+  list,
+}: {
+  eyebrow?: string;
+  title: string;
+  lede: string;
+  label?: string;
+  href?: string;
+  list: string[];
+}) {
+  return (
+    <section id="book">
+      <div className="in">
+        <div className="cta-band" data-r>
+          <div>
+            <span className="eyebrow">{eyebrow}</span>
+            <h2>{title}</h2>
+            <p className="lede">{lede}</p>
+            <div style={{ marginTop: 28 }}>
+              <Link href={href} className="btn pri">
+                {label} <span className="ar">→</span>
+              </Link>
+            </div>
+          </div>
+          <ul>
+            {list.map((x) => (
+              <li key={x}>{x}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * A short process as numbered steps on one line that draws in when it arrives on screen. Five columns on wide
+ * screens; on narrow ones the line turns vertical and the steps stack, so nothing ever needs a sideways scroll.
+ */
+export function FlowSteps({ steps, label }: { steps: { t: string; s: string }[]; label: string }) {
+  return (
+    <ol className="flow-steps" aria-label={label} data-r style={{ "--n": steps.length } as CSSProperties}>
+      <span className="fs-line" aria-hidden="true">
+        <i />
+      </span>
+      {steps.map((x, i) => (
+        <li key={x.t} className={i === steps.length - 1 ? "end" : undefined} style={{ "--i": i } as CSSProperties}>
+          <span className="fs-dot">{String(i + 1).padStart(2, "0")}</span>
+          <b>{x.t}</b>
+          <span>{x.s}</span>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+/** A run of names set as text, separated by thin rules. */
+export function WordList({ label, items }: { label?: string; items: string[] }) {
+  return (
+    <div className="wlist" data-r>
+      {label && <p className="wl-lab">{label}</p>}
+      <p className="wl-run">
+        {items.map((x, i) => (
+          <span key={x}>
+            {x}
+            {i < items.length - 1 && <i aria-hidden="true" />}
+          </span>
+        ))}
+      </p>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ the product index */
+
+/**
+ * The five main products as an editorial index: one ruled row each, large, numbered. With `here`, the page's own
+ * product is marked "You are here" instead of linking to itself. The supporting products are a quiet list below it.
+ */
+export function ProductIndex({ current, compact = false }: { current?: ProductSlug; compact?: boolean }) {
+  return (
+    <ol className={`pindex${compact ? " compact" : ""}`}>
+      {mainProducts.map((p, k) => {
+        const isHere = current === p.slug;
+        const inner = (
+          <>
+            <span className="pi-n">0{k + 1}</span>
+            <span className="pi-stage">{p.stage}</span>
+            <span className="pi-main">
+              {isHere && <span className="pi-viewing">You are currently viewing</span>}
+              <span className="pi-name">{p.name}</span>
+              {!compact && <span className="pi-tag">{p.tagline}</span>}
+            </span>
+            {compact ? (
+              <span className="pi-desc">{p.tagline}</span>
+            ) : (
+              <span className="pi-desc">
+                {p.summary}
+                <span className="pi-pts">{p.points.join("  ·  ")}</span>
+              </span>
+            )}
+            {isHere ? (
+              <span className="pi-here">
+                <i aria-hidden="true" />
+                You are here
+              </span>
+            ) : (
+              <span className="pi-go" aria-hidden="true">
+                →
+              </span>
+            )}
+          </>
+        );
+        return (
+          <li key={p.slug} data-r style={d(Math.min(k, 4))}>
+            {isHere ? (
+              <div className="pi-row is-here" aria-current="page" style={{ "--c": SF_HERE } as CSSProperties}>
+                {inner}
+              </div>
+            ) : (
+              <Link href={productPath(p.slug)} className="pi-row" style={{ "--c": p.color } as CSSProperties}>
+                {inner}
+              </Link>
+            )}
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+/** The supporting products, as a quiet text directory: smaller than the main five on purpose. */
+export function SupportDirectory({ current }: { current?: ProductSlug }) {
+  return (
+    <div className="supdir" data-r>
+      <p className="sd-lab">Also on the Salesforce platform</p>
+      <ul>
+        {supportProducts.map((p) => (
+          <li key={p.slug}>
+            {current === p.slug ? (
+              <span className="sd-here" aria-current="page">
+                {p.name}
+                <small>You are here</small>
+              </span>
+            ) : (
+              <Link href={productPath(p.slug)}>
+                <b>{p.name}</b>
+                <span>{p.tagline}</span>
+              </Link>
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
 /**
- * A statement that lights up word by word as it crosses the screen, so reading it
- * and scrolling become the same gesture.
+ * Where this page sits among the five, as a stepper. Follows two well-tested patterns: Carbon's progress indicator
+ * (completed steps ticked, the current step solid, upcoming steps outlined, the line coloured up to the current step)
+ * and GOV.UK's step-by-step navigation (the current item says so in words, not only in colour).
+ * On a supporting product's page there is no place on the line, so the rail says so and sends you back to the five.
  */
-export function ScrollStatement({ text }: { text: string }) {
-  const wrap = useRef<HTMLParagraphElement>(null);
-  const words = text.split(" ");
-
-  useEffect(() => {
-    const el = wrap.current;
-    if (!el) return;
-    const spans = Array.from(el.querySelectorAll<HTMLElement>("[data-w]"));
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      spans.forEach((s) => (s.style.opacity = "1"));
-      return;
-    }
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const r = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      // 0 when the block's top reaches 85% down the screen, 1 when its bottom reaches 45%.
-      const p = Math.min(Math.max((vh * 0.85 - r.top) / (r.height + vh * 0.4), 0), 1);
-      const lit = p * spans.length * 1.12;
-      spans.forEach((s, i) => {
-        const o = Math.min(Math.max(lit - i, 0), 1);
-        s.style.opacity = String(0.16 + o * 0.84);
-        s.style.filter = o < 1 ? `blur(${(1 - o) * 1.6}px)` : "none";
-      });
-    };
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      cancelAnimationFrame(frame);
-    };
-  }, []);
-
+export function ReadingRail({ current }: { current: ProductSlug }) {
+  const k = mainProducts.findIndex((p) => p.slug === current);
+  if (k < 0) {
+    const p = products.find((x) => x.slug === current);
+    return (
+      <div className="reading support" data-r>
+        <p className="rd-lab">
+          <span className="rd-live" aria-hidden="true" />
+          You are currently viewing <b>{p?.name}</b>
+          <span className="rd-count">Supporting product</span>
+        </p>
+        <p className="rd-back">
+          It works with the five main Salesforce products below. <Link href={SF_HUB}>See all five →</Link>
+        </p>
+      </div>
+    );
+  }
+  const p = mainProducts[k];
   return (
-    <p ref={wrap} className="text-balance font-display text-[1.65rem] leading-[1.28] text-white sm:text-4xl lg:text-[3.1rem] lg:leading-[1.2]">
-      {words.map((w, i) => (
-        <span key={i} data-w className="inline-block pr-[0.28em] transition-[filter] duration-200" style={{ opacity: 0.16 }}>
-          {w}
+    <div className="reading" data-r style={{ "--c": SF_HERE, "--pct": k / (mainProducts.length - 1) } as CSSProperties}>
+      <p className="rd-lab">
+        <span className="rd-live" aria-hidden="true" />
+        You are currently viewing <b>{p.name}</b>
+        <span className="rd-count">
+          Product {k + 1} of {mainProducts.length}
         </span>
-      ))}
-    </p>
+      </p>
+      <ol className="rd-steps" aria-label="The five main Salesforce products">
+        <span className="rd-track" aria-hidden="true">
+          <i />
+        </span>
+        {mainProducts.map((q, i) => {
+          const state = i < k ? "past" : i === k ? "now" : "next";
+          const body = (
+            <>
+              {i === k && <span className="rd-pin">You are here</span>}
+              <span className="rd-node" aria-hidden="true">
+                {i < k ? "✓" : i === k ? "" : String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="rd-name">{q.short}</span>
+              <span className="rd-stage">{q.stage}</span>
+            </>
+          );
+          return (
+            <li key={q.slug} className={state} aria-current={i === k ? "page" : undefined} style={{ "--k": i } as CSSProperties}>
+              {i === k ? (
+                <span className="rd-step">{body}</span>
+              ) : (
+                <Link href={productPath(q.slug)} className="rd-step">
+                  {body}
+                </Link>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    </div>
   );
 }
 
-/** FAQ accordion, one open at a time, height animated without measuring. */
-export function Faq({ items }: { items: { q: string; a: string }[] }) {
-  const [open, setOpen] = useState(0);
+/** The rest of the platform, at the foot of each product page. */
+export function Related({ current, light = true }: { current: ProductSlug; light?: boolean }) {
   return (
-    <ul className="divide-y divide-white/10 border-y border-white/10">
-      {items.map((f, i) => {
-        const on = open === i;
-        return (
-          <li key={f.q}>
-            <button
-              type="button"
-              onClick={() => setOpen(on ? -1 : i)}
-              aria-expanded={on}
-              className="group flex w-full items-center justify-between gap-6 py-6 text-left"
-            >
-              <span className={`font-display text-xl transition-colors duration-300 sm:text-2xl ${on ? "text-white" : "text-white/70 group-hover:text-white"}`}>{f.q}</span>
-              <span
-                aria-hidden="true"
-                className="relative grid h-9 w-9 shrink-0 place-items-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]"
-                style={{
-                  borderColor: on ? "var(--sf)" : "rgba(255,255,255,0.2)",
-                  background: on ? "rgba(var(--sf-rgb),0.2)" : "transparent",
-                  transform: on ? "rotate(45deg)" : "none",
-                }}
-              >
-                <span className="absolute h-px w-3.5 bg-white" />
-                <span className="absolute h-3.5 w-px bg-white" />
-              </span>
-            </button>
-            <div className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${on ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
-              <div className="overflow-hidden">
-                <p className={`max-w-3xl pb-7 text-base leading-relaxed text-white/65 transition-all duration-500 ${on ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0"}`}>{f.a}</p>
-              </div>
-            </div>
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
-
-/** A vertical timeline whose line fills, and whose stops light, as you scroll through it. */
-export function Timeline({ steps }: { steps: { title: string; body: string }[] }) {
-  const ref = useRef<HTMLOListElement>(null);
-  const [p, setP] = useState(0);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const r = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      setP(Math.min(Math.max((vh * 0.62 - r.top) / r.height, 0), 1));
-    };
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      cancelAnimationFrame(frame);
-    };
-  }, []);
-
-  const n = steps.length;
-  const at = (i: number) => (i + 0.35) / n;
-
-  return (
-    <ol ref={ref} className="relative pl-14 sm:pl-20">
-      {steps.map((s, i) => {
-        const lit = p >= at(i);
-        // How far the line has travelled from this number down to the next one.
-        const reach = i < n - 1 ? Math.min(Math.max((p - at(i)) / (at(i + 1) - at(i)), 0), 1) : 0;
-        return (
-          <li key={s.title} className={`relative ${i < n - 1 ? "pb-14 sm:pb-16" : ""}`}>
-            {/* The connector to the next number. It is drawn as part of this step, from the exact
-                centre of this circle to the exact centre of the next, so the two can never drift apart. */}
-            {i < n - 1 && (
-              <span aria-hidden="true" className="pointer-events-none absolute -left-14 top-5 flex h-full w-10 justify-center sm:-left-20 sm:top-7 sm:w-14">
-                <span className="relative block h-full w-0.5 overflow-hidden rounded-full bg-white/[0.12]">
-                  <span
-                    className="absolute inset-0 origin-top"
-                    style={{ transform: `scaleY(${reach})`, background: "linear-gradient(180deg, var(--sf), rgba(var(--sf-rgb),0.55))", boxShadow: "0 0 10px var(--sf)" }}
-                  />
-                </span>
-              </span>
-            )}
-            <span
-              className="absolute -left-14 top-0 z-10 grid h-10 w-10 place-items-center rounded-full border font-display text-sm transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] sm:-left-20 sm:h-14 sm:w-14 sm:text-lg"
-              style={{
-                borderColor: lit ? "var(--sf)" : "rgba(255,255,255,0.18)",
-                // an opaque base under the tint, so the line never shows through the circle
-                background: lit ? "linear-gradient(rgba(var(--sf-rgb),0.3), rgba(var(--sf-rgb),0.3)), #050a08" : "#050a08",
-                color: lit ? "#fff" : "rgba(255,255,255,0.45)",
-                boxShadow: lit ? "0 0 32px rgba(var(--sf-rgb),0.55)" : "none",
-                transform: lit ? "scale(1)" : "scale(0.88)",
-              }}
-            >
-              {i + 1}
-            </span>
-            <div className={`transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${lit ? "translate-x-0 opacity-100" : "translate-x-3 opacity-40"}`}>
-              <h3 className="font-display text-2xl text-white sm:text-4xl">{s.title}</h3>
-              <p className="mt-3 max-w-xl text-base leading-relaxed text-white/65 sm:text-lg">{s.body}</p>
-            </div>
-          </li>
-        );
-      })}
-    </ol>
+    <section className={light ? "light" : undefined}>
+      <div className="in">
+        <Head
+          eyebrow="Across Salesforce"
+          title="Five main products, one platform."
+          lede="Sales, data, marketing, loyalty and service share the same platform and the same customer data. The other products here support them."
+        />
+        <ReadingRail current={current} />
+        <ProductIndex current={current} compact />
+        <SupportDirectory current={current} />
+        <p className="rel-hub" data-r>
+          <Link href={SF_HUB}>
+            How the products fit together <span aria-hidden="true">→</span>
+          </Link>
+        </p>
+      </div>
+    </section>
   );
 }

@@ -1,6 +1,6 @@
 /* Generated from the supplied SAP Business Data Cloud page. Every selector is scoped under .bd. */
 .bd {
-  --hdr: 5.6rem;
+  --hdr: 72px;
   --display: var(--font-pjs), "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
   --body: var(--font-manrope), "Manrope", "Segoe UI", system-ui, sans-serif;
 }
@@ -246,8 +246,8 @@
 .bd #watch .vgrid { grid-template-columns: repeat(2, minmax(0,1fr)); }
 .bd .two .facts .fact b { font-size: 23px; white-space: nowrap; }
 /* in-page menu */
-.bd .b-sub { position: sticky; top: calc(var(--hdr, 72px) - 28px); z-index: 4; background: var(--bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-.bd .b-sub .b-subin { max-width: 1200px; margin: 0 auto; padding: 28px 20px 0; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.bd .b-sub { position: sticky; top: var(--hdr, 72px); z-index: 4; background: rgba(5,8,7,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.bd .b-sub .b-subin { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
 .bd .b-sub .b-subin::-webkit-scrollbar { display: none; }
 .bd .b-sub a { flex: none; color: var(--muted); text-decoration: none; font-size: 13.5px; font-weight: 600; padding: 15px 12px 13px; border-bottom: 2px solid transparent; white-space: nowrap; transition: color .2s, border-color .2s; }
 .bd .b-sub a:hover { color: var(--fg); }

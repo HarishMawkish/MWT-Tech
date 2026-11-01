@@ -159,7 +159,7 @@ export function BlogExplorer({
   return (
     <div>
       {/* Glass toolbar that stays under the nav while the grid scrolls. */}
-      <div className="sticky top-[4.5rem] z-30 -mx-6 border-y border-white/10 bg-[#050a08]/80 px-6 py-4 backdrop-blur-xl lg:-mx-8 lg:px-8">
+      <div className="sticky top-16 z-30 lg:top-[72px] -mx-6 border-y border-white/10 bg-[#050a08]/80 px-6 py-4 backdrop-blur-xl lg:-mx-8 lg:px-8">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
           <label className="relative block lg:w-80 lg:shrink-0">
             <span className="sr-only">Search articles</span>
