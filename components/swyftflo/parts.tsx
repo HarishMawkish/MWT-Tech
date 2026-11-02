@@ -8,9 +8,10 @@ export const d = (n: number) => ({ "--d": n }) as CSSProperties;
 
 /* ------------------------------------------------------------------ hero */
 
-/** Module logos, taken from each product's own brochure. Control Tower has none in Swyftflo's material, so it keeps the drawn tile. */
+/** Module logos, from Swyftflo's brochures and swyftflo.ai. The drawn tile is only a fallback for a product without one. */
 const LOGOS: Partial<Record<ProductSlug, string>> = {
   "source-to-pay": "/images/swyftflo/source-to-pay.png",
+  "control-tower": "/images/swyftflo/control-tower.png",
   "invoice-hub": "/images/swyftflo/invoice-hub.png",
   "spend-intelligence": "/images/swyftflo/spend-intelligence.png",
   authentik: "/images/swyftflo/authentik.png",
