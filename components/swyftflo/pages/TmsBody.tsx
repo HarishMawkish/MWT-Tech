@@ -4,7 +4,7 @@ import { Explorer } from "../Explorer";
 import { Glyph, type GlyphName } from "../icons";
 import { AiChat, AppFrame, Pill, Tile } from "../screens";
 import { Switcher } from "../Switcher";
-import { AlongsideErp, Caps, CtaBand, d, Faq, Head, Hero, NativeAi, Related, WordList } from "../parts";
+import { AlongsideErp, Caps, CtaBand, d, Faq, Head, Hero, NativeAi, Related, WordList, PhotoStrip } from "../parts";
 import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /* ---------------------------------------------------------------- screens */
@@ -657,6 +657,15 @@ export function TmsBody() {
           </div>
         </div>
       </section>
+
+      <PhotoStrip
+        items={[
+          { file: "tms-port", alt: "A truck carrying cargo at a container port", cap: "Port and first mile" },
+          { file: "tms-truck", alt: "A freight truck on the road", cap: "Road freight, planned and tracked" },
+          { file: "tms-container", alt: "A shipping container with its locking bars at a port", cap: "Container pickup and drop-off" },
+          { file: "tms-driver", alt: "A driver with a tablet beside a truck", cap: "Drivers, with a job in hand" },
+        ]}
+      />
 
       <section className="light" id="explore">
         <div className="in">

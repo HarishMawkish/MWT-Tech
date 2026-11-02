@@ -3,7 +3,7 @@ import { swyftfloFaqs } from "@/lib/swyftflo-pages";
 import { Explorer } from "../Explorer";
 import { AiChat, AppFrame, Pill, Tile, Typing } from "../screens";
 import { Switcher } from "../Switcher";
-import { AlongsideErp, Agents, Caps, CtaBand, d, Facts, Faq, Head, Hero, Includes, Layers, NativeAi, Related } from "../parts";
+import { AlongsideErp, Agents, Caps, CtaBand, d, Facts, Faq, Head, Hero, Includes, Layers, NativeAi, Related, PhotoStrip } from "../parts";
 import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /* ---------------------------------------------------------------- screens */
@@ -508,6 +508,13 @@ export function S2PBody() {
           />
         </div>
       </section>
+
+      <PhotoStrip
+        items={[
+          { file: "s2p-office", alt: "A buyer at a desk raising a purchase request on screen", cap: "A request raised in one place" },
+          { file: "s2p-team", alt: "A person at a laptop managing suppliers, with statuses such as pending and approved on screen", cap: "Suppliers onboarded and approved in one record" },
+        ]}
+      />
 
       <section id="explore">
         <div className="in">
