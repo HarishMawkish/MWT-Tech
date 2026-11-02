@@ -1,13 +1,32 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
 import { ContactForm } from "@/components/ContactForm";
-import { Eyebrow, PageHero, Section } from "@/components/ui";
-import { partners, regions } from "@/lib/site-data";
+import "@/components/contact/contact.css";
+
+const jakarta = Plus_Jakarta_Sans({ variable: "--font-pjs", subsets: ["latin"], weight: ["500", "600", "700", "800"] });
+const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
     "Schedule a consultation, request a demo, or request a proposal from the Mawkish Technologies team.",
 };
+
+const RFP_EMAIL = "info@mawkishtechnologies.com";
+
+const rfps = [
+  {
+    title: "AI tenders",
+    body: "Issuing a government tender for artificial intelligence? Send us the RFP, or your request to take part.",
+    subject: "AI tender: RFP / EOI participation request",
+  },
+  {
+    title: "ERP and digitalisation tenders",
+    body: "Calling for government ERP or digitalisation proposals? Email us the RFP or EOI participation request.",
+    subject: "ERP and digitalisation tender: RFP / EOI participation request",
+  },
+];
 
 export default async function ContactPage({
   searchParams,
@@ -17,72 +36,60 @@ export default async function ContactPage({
   const { intent } = await searchParams;
 
   return (
-    <>
-      <PageHero
-        eyebrow="Get in Touch"
-        title="Let's design your path to a measurable outcome."
-        description="Tell us about the challenge you're facing. A member of our team will follow up to schedule a consultation."
-      />
-
-      <Section className="grid grid-cols-1 gap-14 lg:grid-cols-[1.2fr_1fr]">
-        <div className="rounded-2xl border border-mw-line p-8">
-          <ContactForm defaultIntent={intent} />
+    <div className={`ct ${jakarta.variable} ${manrope.variable}`}>
+      <section className="hero">
+        <div className="in">
+          <div className="crumbs">
+            <Link href="/">Home</Link> / Contact
+          </div>
+          <span className="eyebrow">Get in touch</span>
+          <h1>
+            Let&apos;s design your path to a <em>measurable outcome.</em>
+          </h1>
+          <p className="lede">
+            Tell us about the challenge you&apos;re facing. A member of our team will follow up to schedule a
+            consultation.
+          </p>
         </div>
+      </section>
 
-        <div className="space-y-8">
-          <div>
-            <Eyebrow>Headquarters</Eyebrow>
-            <a
-              href="https://maps.app.goo.gl/1tY6TsvdXmYuFvXs8"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 block text-mw-ink/70 underline decoration-mw-line underline-offset-2 transition hover:text-mw-secondary"
-            >
-              2nd Floor, Oceanica Tower, 490 Galle Rd, Colombo 00300, Sri Lanka
-            </a>
-            <p className="mt-1 text-sm text-mw-ink/50">
-              Serving clients across Sri Lanka, India, the UAE, and expanding into KSA, Oman, Switzerland &amp;
-              the USA.
-            </p>
+      <section className="light">
+        <div className="in t-grid">
+          <div className="t-card">
+            <h2>Send us a message</h2>
+            <p>Share a few details and we&apos;ll come back to you shortly.</p>
+            <ContactForm defaultIntent={intent} />
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-mw-line">
-            <iframe
-              title="Mawkish Technologies — Oceanica Tower, Colombo, Sri Lanka"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=79.8419%2C6.8938%2C79.8619%2C6.9138&layer=mapnik&marker=6.9037886%2C79.8519282"
-              className="h-64 w-full"
-              loading="lazy"
-            />
-          </div>
+          <div className="t-side">
+            <div className="t-hq">
+              <span className="eyebrow">Headquarters</span>
+              <div className="t-co">Mawkish Technologies Pvt Ltd</div>
+              <a href="https://maps.app.goo.gl/1tY6TsvdXmYuFvXs8" target="_blank" rel="noopener noreferrer">
+                2nd Floor, Oceanica Tower, 490 Galle Rd, Colombo 00300, Sri Lanka
+              </a>
+            </div>
 
-          <div>
-            <Eyebrow>Strategic Partners</Eyebrow>
-            <div className="mt-3 flex flex-wrap gap-3">
-              {partners.map((p) => (
-                <span key={p.name} className="rounded-full border border-mw-line px-4 py-1.5 text-sm text-mw-ink/70">
-                  <a href={p.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-mw-primary hover:text-mw-secondary hover:underline">
-                    {p.name}
-                  </a>{" "}
-                  &middot; {p.relationship}
-                </span>
+            <div className="t-map">
+              <iframe
+                title="Mawkish Technologies — Oceanica Tower, Colombo, Sri Lanka"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=79.8419%2C6.8938%2C79.8619%2C6.9138&layer=mapnik&marker=6.9037886%2C79.8519282"
+                loading="lazy"
+              />
+            </div>
+
+            <div className="t-rfp">
+              {rfps.map((r) => (
+                <article key={r.title}>
+                  <h3>{r.title}</h3>
+                  <p>{r.body}</p>
+                  <a href={`mailto:${RFP_EMAIL}?subject=${encodeURIComponent(r.subject)}`}>{RFP_EMAIL} →</a>
+                </article>
               ))}
             </div>
           </div>
-
-          <div>
-            <Eyebrow>Active Markets</Eyebrow>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {regions
-                .filter((r) => r.activeMarket)
-                .map((r) => (
-                  <span key={r.region} className="rounded-full bg-mw-paper px-3 py-1 text-xs font-medium text-mw-ink/70">
-                    {r.region}
-                  </span>
-                ))}
-            </div>
-          </div>
         </div>
-      </Section>
-    </>
+      </section>
+    </div>
   );
 }

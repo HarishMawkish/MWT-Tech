@@ -11,10 +11,11 @@ export const siteConfig = {
 };
 
 export const navLinks = [
-  { label: "About Us", href: "/about" },
-  { label: "Copyright Protection", href: "/copyright" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Copyright", href: "/copyright" },
   {
-    label: "Our Services",
+    label: "Services",
     href: "/services",
     children: [
       { label: "All Services", href: "/services" },
@@ -28,7 +29,8 @@ export const navLinks = [
     ],
   },
   { label: "Industries", href: "/industries" },
-  { label: "Insights & Perspectives", href: "/insights" },
+  { label: "Clients", href: "/clients" },
+  { label: "News & Insights", href: "/insights" },
 ];
 
 export const stats = [

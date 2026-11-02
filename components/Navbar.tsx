@@ -107,7 +107,7 @@ export function Navbar() {
             href={siteConfig.primaryCta.href}
             className="inline-flex h-10 items-center rounded-lg bg-mw-mint px-4 text-[13.5px] font-semibold text-white transition-[transform,filter] duration-150 hover:brightness-125 active:scale-[0.97]"
           >
-            {siteConfig.primaryCta.label}
+            Contact
           </Link>
         </div>
 
