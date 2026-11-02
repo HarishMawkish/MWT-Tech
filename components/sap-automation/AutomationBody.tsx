@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the Process Automation with SAP Build page, converted from the supplied HTML. */
 export function AutomationBody() {
@@ -329,6 +330,8 @@ export function AutomationBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section className="light">
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

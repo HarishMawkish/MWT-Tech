@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the Rollouts & Localisation page, converted from the supplied HTML. */
 export function RolloutBody() {
@@ -376,6 +377,8 @@ export function RolloutBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section className="light">
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the Cloud ERP Readiness Assessment page, converted from the supplied HTML. */
 export function ReadinessBody() {
@@ -252,6 +253,8 @@ export function ReadinessBody() {
       </div>
     </div>
   </section>
+
+  <CopyrightNotice inline />
 
   <section>
     <div className="in">

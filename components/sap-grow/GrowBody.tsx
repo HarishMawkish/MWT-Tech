@@ -2,6 +2,7 @@ import Link from "next/link";
 import { FitCheck } from "./FitCheck";
 import { ModuleExplorer } from "./ModuleExplorer";
 import { VideoLibrary } from "./VideoLibrary";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The static sections of the GROW with SAP page, converted from the supplied HTML. The interactive parts are components. */
 export function GrowBody() {
@@ -274,6 +275,8 @@ export function GrowBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section className="light">
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the SAP Analytics Cloud page, converted from the supplied HTML. */
 export function AnalyticsBody() {
@@ -187,6 +188,8 @@ export function AnalyticsBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section className="light">
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

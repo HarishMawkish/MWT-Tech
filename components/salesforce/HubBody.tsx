@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
+import { Fragment, type ReactNode } from "react";
 import { CtaBand, Defs, d, Faq, FlowSteps, Head, Hero, Pairs, ProductIndex, SupportDirectory, WordList } from "./parts";
 import { Screen } from "./screens";
 import { StartPicker } from "./StartPicker";
@@ -160,7 +161,9 @@ export function HubBody() {
   ));
 
   add((light) => (
-    <section className={light ? "light" : undefined} id="faq" key="faq">
+    <Fragment key="faq-band">
+      <CopyrightNotice inline />
+      <section className={light ? "light" : undefined} id="faq" key="faq">
       <div className="in">
         <Head eyebrow="Questions" title="Straight answers." />
         <Faq items={hubFaq} />
@@ -176,6 +179,7 @@ export function HubBody() {
         </div>
       </div>
     </section>
+    </Fragment>
   ));
 
   return (

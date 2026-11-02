@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the Licensing & Commercial Advisory page, converted from the supplied HTML. */
 export function LicensingBody() {
@@ -207,6 +208,8 @@ export function LicensingBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section className="light">
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

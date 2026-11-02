@@ -5,6 +5,7 @@ import { Glyph } from "../icons";
 import { AiChat, AppFrame, Pill, Tile } from "../screens";
 import { Switcher } from "../Switcher";
 import { Agents, AlongsideErp, Caps, CtaBand, d, Faq, Head, Hero, Layers, NativeAi, Related, WordList } from "../parts";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /* ---------------------------------------------------------------- screens */
 
@@ -585,6 +586,8 @@ export function ControlTowerBody() {
           />
         </div>
       </section>
+
+      <CopyrightNotice inline />
 
       <section className="light">
         <div className="in">

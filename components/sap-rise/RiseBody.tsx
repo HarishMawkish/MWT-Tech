@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the RISE with SAP page, converted from the supplied HTML. */
 export function RiseBody() {
@@ -244,6 +245,8 @@ export function RiseBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section>
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

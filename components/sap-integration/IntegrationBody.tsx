@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the SAP & Non-SAP Integration page, converted from the supplied HTML. */
 export function IntegrationBody() {
@@ -252,6 +253,8 @@ export function IntegrationBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section className="light">
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

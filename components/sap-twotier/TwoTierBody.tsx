@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the Two-Tier ERP for Subsidiaries page, converted from the supplied HTML. */
 export function TwoTierBody() {
@@ -274,6 +275,8 @@ export function TwoTierBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section>
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

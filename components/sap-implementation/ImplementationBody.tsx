@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the Cloud ERP Implementation page, converted from the supplied HTML. */
 export function ImplementationBody() {
@@ -264,6 +265,8 @@ export function ImplementationBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section className="light">
     <div className="in">
       <span className="eyebrow">Questions we hear</span>
