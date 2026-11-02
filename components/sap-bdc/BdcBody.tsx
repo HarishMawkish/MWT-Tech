@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the SAP Business Data Cloud page, converted from the supplied HTML. */
 export function BdcBody() {
@@ -509,6 +510,8 @@ export function BdcBody() {
     </div>
   </section>
 
+
+  <CopyrightNotice inline />
 
   <section className="light" id="faq">
     <div className="in">

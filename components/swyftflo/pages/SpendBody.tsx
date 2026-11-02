@@ -5,6 +5,7 @@ import { Glyph } from "../icons";
 import { AppFrame, Bars, Pill, Tile } from "../screens";
 import { SevenLevels } from "../SevenLevels";
 import { Caps, CtaBand, d, Faq, Head, Hero, Includes, NativeAi, Related, WordList } from "../parts";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /* ---------------------------------------------------------------- screens */
 
@@ -507,6 +508,8 @@ export function SpendBody() {
           </p>
         </div>
       </section>
+
+      <CopyrightNotice inline />
 
       <section>
         <div className="in">

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the SAP Business AI page, converted from the supplied HTML. */
 export function BaiBody() {
@@ -219,6 +220,8 @@ export function BaiBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section className="light">
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

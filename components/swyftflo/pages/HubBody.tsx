@@ -4,6 +4,7 @@ import { products } from "../data";
 import { AlongsideErp, Caps, CtaBand, d, Facts, Faq, Head, Hero, Integrations, Layers, Phases, ProductIndex } from "../parts";
 import { StartPicker } from "../StartPicker";
 import { ThreadExplorer } from "../ThreadExplorer";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** Hero illustration: your enterprise, your trading network, and the thread between them. */
 function BrokenThread() {
@@ -360,6 +361,8 @@ export function HubBody() {
           />
         </div>
       </section>
+
+      <CopyrightNotice inline />
 
       {/* ---- FAQ ---- */}
       <section>

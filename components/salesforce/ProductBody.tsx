@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
+import { Fragment, type ReactNode } from "react";
 import { Explorer } from "./Explorer";
 import { CtaBand, Defs, d, Faq, FlowSteps, Head, Hero, Pairs, Related } from "./parts";
 import { Screen } from "./screens";
@@ -133,7 +134,9 @@ export function ProductBody({ c }: { c: ProductContent }) {
   }
 
   add("faq", (light) => (
-    <section className={light ? "light" : undefined} id="faq" key="faq">
+    <Fragment key="faq-band">
+      <CopyrightNotice inline />
+      <section className={light ? "light" : undefined} id="faq" key="faq">
       <div className="in">
         <Head eyebrow="Questions" title="Straight answers." />
         <Faq items={c.faq} />
@@ -151,6 +154,7 @@ export function ProductBody({ c }: { c: ProductContent }) {
         </div>
       </div>
     </section>
+    </Fragment>
   ));
 
   // The hero is dark, so the first band is light and they alternate. The related section takes the opposite tone

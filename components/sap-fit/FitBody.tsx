@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the Fit-to-Standard Workshops page, converted from the supplied HTML. */
 export function FitBody() {
@@ -205,6 +206,8 @@ export function FitBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section>
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

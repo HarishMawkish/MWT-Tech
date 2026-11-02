@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the Test Automation page, converted from the supplied HTML. */
 export function TestingBody() {
@@ -227,6 +228,8 @@ export function TestingBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section className="light">
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

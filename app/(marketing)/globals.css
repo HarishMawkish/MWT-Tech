@@ -1110,3 +1110,13 @@ header::before {
     background: linear-gradient(180deg, rgba(20, 26, 24, 0.92), rgba(10, 14, 13, 0.92));
   }
 }
+
+/* The copyright notice sits above the FAQ on pages that have one; the end-of-page copy is then redundant. */
+body:has([data-cr-inline]) [data-cr-end] { display: none; }
+
+/* Copyright card spacing: a pale section already ends in its own big bottom padding (and the next
+   one starts with one), so the card pulls into that space instead of adding to it. */
+section.light + .cr-notice { margin-top: -88px; }
+.cr-notice:has(+ section.light) { padding-bottom: 0; }
+.cr-notice + section.light { margin-top: -48px; }
+.cr-notice + section.light > * { position: relative; }

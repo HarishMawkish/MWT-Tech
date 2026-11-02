@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the Move from ECC & On-Premise page, converted from the supplied HTML. */
 export function MoveBody() {
@@ -321,6 +322,8 @@ export function MoveBody() {
 
 
   
+  <CopyrightNotice inline />
+
   <section>
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

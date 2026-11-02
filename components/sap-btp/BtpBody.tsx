@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the SAP BTP Extensions & Apps page, converted from the supplied HTML. */
 export function BtpBody() {
@@ -221,6 +222,8 @@ export function BtpBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section className="light">
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

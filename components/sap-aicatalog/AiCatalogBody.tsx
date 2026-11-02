@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the AI Catalog page, converted from the supplied HTML. */
 export function AiCatalogBody() {
@@ -54,6 +55,8 @@ export function AiCatalogBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section className="light">
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

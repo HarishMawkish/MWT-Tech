@@ -5,6 +5,7 @@ import { Glyph, type GlyphName } from "../icons";
 import { AppFrame, Pill } from "../screens";
 import { Switcher } from "../Switcher";
 import { Caps, CtaBand, d, Faq, Head, Hero, Related } from "../parts";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /* ---------------------------------------------------------------- screens */
 
@@ -474,6 +475,8 @@ export function AuthentikBody() {
           </div>
         </div>
       </section>
+
+      <CopyrightNotice inline />
 
       <section>
         <div className="in">

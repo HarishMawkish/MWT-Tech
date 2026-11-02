@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the Application Management Support page, converted from the supplied HTML. */
 export function SupportBody() {
@@ -268,6 +269,8 @@ export function SupportBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section className="light">
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

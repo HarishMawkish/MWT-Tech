@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the Data Migration page, converted from the supplied HTML. */
 export function DataMigBody() {
@@ -249,6 +250,8 @@ export function DataMigBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section>
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

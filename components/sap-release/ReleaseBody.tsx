@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the Release & Upgrade Management page, converted from the supplied HTML. */
 export function ReleaseBody() {
@@ -262,6 +263,8 @@ export function ReleaseBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section className="light">
     <div className="in">
       <span className="eyebrow">Questions we hear</span>

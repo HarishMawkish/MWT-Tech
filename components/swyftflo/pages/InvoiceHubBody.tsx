@@ -4,6 +4,7 @@ import { Explorer } from "../Explorer";
 import { Glyph } from "../icons";
 import { AppFrame, Pill, Tile } from "../screens";
 import { AlongsideErp, Caps, CtaBand, d, Faq, Head, Hero, FlowSteps, NativeAi, Related } from "../parts";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /* ---------------------------------------------------------------- screens */
 
@@ -548,6 +549,8 @@ export function InvoiceHubBody() {
           </p>
         </div>
       </section>
+
+      <CopyrightNotice inline />
 
       <section className="light">
         <div className="in">

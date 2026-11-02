@@ -4,6 +4,7 @@ import { Explorer } from "../Explorer";
 import { AiChat, AppFrame, Pill, Tile, Typing } from "../screens";
 import { Switcher } from "../Switcher";
 import { AlongsideErp, Agents, Caps, CtaBand, d, Facts, Faq, Head, Hero, Includes, Layers, NativeAi, Related } from "../parts";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /* ---------------------------------------------------------------- screens */
 
@@ -820,6 +821,8 @@ export function S2PBody() {
           />
         </div>
       </section>
+
+      <CopyrightNotice inline />
 
       <section>
         <div className="in">

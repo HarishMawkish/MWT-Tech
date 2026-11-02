@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /** The sections of the Group Reporting & Consolidation page, converted from the supplied HTML. */
 export function GroupRepBody() {
@@ -182,6 +183,8 @@ export function GroupRepBody() {
   </section>
 
   
+  <CopyrightNotice inline />
+
   <section className="light">
     <div className="in">
       <span className="eyebrow">Questions we hear</span>
