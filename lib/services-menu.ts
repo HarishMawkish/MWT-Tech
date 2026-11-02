@@ -20,7 +20,7 @@ export type MenuLogo = { src: string; alt: string };
 export type MenuTile = { label: string; sub: string; href: string; accent: string };
 
 /** One of a category's main products: shown large, numbered, in its own colour. */
-export type MenuMain = { label: string; sub: string; href: string; accent: string };
+export type MenuMain = { label: string; sub: string; href: string; accent: string; /** An app icon (a file in /images/odoo/apps), shown in place of the number. */ icon?: string };
 
 /** One line in a group. With an `href` it is a link, without one it is display-only. */
 export type MenuLink = { label: string; href?: string; accent?: string };
@@ -55,6 +55,8 @@ export type MenuCategory = {
   /** The main products, drawn as large coloured cards ahead of everything else (Salesforce). */
   main?: MenuMain[];
   mainTitle?: string;
+  /** Columns for the main cards. Three by default; Odoo has eight families, so it uses four. */
+  mainCols?: 3 | 4;
   /** The supporting products, set as one quiet line under the main ones. */
   also?: MenuLink[];
   alsoTitle?: string;
@@ -64,7 +66,6 @@ export type MenuCategory = {
 };
 
 const summaryOf = (slug: string) => services.find((s) => s.slug === slug)?.summary ?? "";
-const outcomesOf = (slug: string) => services.find((s) => s.slug === slug)?.outcomes ?? [];
 
 export const servicesMenu: MenuCategory[] = [
   {
@@ -181,9 +182,32 @@ export const servicesMenu: MenuCategory[] = [
     id: "odoo",
     mark: "/images/solutions/odoo.svg",
     label: "Odoo Solutions",
-    href: "/services/odoo-implementation",
+    href: "/services/odoo",
     blurb: summaryOf("odoo-implementation"),
-    bullets: outcomesOf("odoo-implementation"),
+    mainTitle: "The eight families of Odoo apps",
+    mainCols: 4,
+    main: [
+      { label: "Finance", sub: "Accounting, invoicing, expenses and sign", href: "/services/odoo/finance", accent: "#b26aa0", icon: "accounting" },
+      { label: "Sales", sub: "CRM, quotations, subscriptions and POS", href: "/services/odoo/sales", accent: "#f86126", icon: "sales" },
+      { label: "Websites", sub: "Website, shop, events and courses", href: "/services/odoo/websites", accent: "#2ebcfa", icon: "website" },
+      { label: "Supply Chain", sub: "Inventory, production and purchasing", href: "/services/odoo/supply-chain", accent: "#fbb945", icon: "inventory" },
+      { label: "Human Resources", sub: "Hiring, leave, payroll and appraisals", href: "/services/odoo/human-resources", accent: "#1ad3bb", icon: "employees" },
+      { label: "Marketing", sub: "Email, SMS, WhatsApp and automation", href: "/services/odoo/marketing", accent: "#fc868b", icon: "email-marketing" },
+      { label: "Service Delivery", sub: "Projects, helpdesk and field service", href: "/services/odoo/services", accent: "#7a8cf0", icon: "project" },
+      { label: "Productivity", sub: "Discuss, documents, knowledge and IoT", href: "/services/odoo/productivity", accent: "#9aa9c7", icon: "discuss" },
+    ],
+    alsoTitle: "Also across Odoo",
+    also: [
+      { label: "Odoo AI", href: "/services/odoo/ai" },
+      { label: "Odoo Studio", href: "/services/odoo/studio" },
+      { label: "Editions and hosting", href: "/services/odoo/editions-and-hosting" },
+    ],
+    cta: {
+      title: "Not sure which comes first?",
+      body: "Pick the problem that costs you most and we will show which family to start with.",
+      label: "Where to start",
+      href: "/services/odoo#start",
+    },
   },
   {
     // Laid out like SAP: two featured cards, five titled groups and a call to action. The dotted rows are the six

@@ -25,7 +25,7 @@ export const navLinks = [
         href: "/services/sap-ai-solutions",
       },
       { label: "Salesforce Solutions", href: "/services/salesforce" },
-      { label: "Odoo Implementation", href: "/services/odoo-implementation" },
+      { label: "Odoo Solutions", href: "/services/odoo" },
     ],
   },
   { label: "Industries", href: "/industries" },
@@ -164,15 +164,15 @@ export const services: Service[] = [
   },
   {
     slug: "odoo-implementation",
-    name: "Odoo Implementation",
+    name: "Odoo Solutions",
     category: "core",
-    summary: "An integrated, flexible platform built for growing businesses.",
+    summary: "Eight families of business apps on one database.",
     description:
-      "For organizations that need enterprise capability without enterprise complexity, Odoo offers an integrated suite that grows with the business. We implement Odoo to replace disconnected spreadsheets and point solutions with one connected system.",
+      "Odoo is a suite of business apps that share one database. Finance, sales, websites, supply chain, HR, marketing, service delivery and productivity are separate apps you add as you need them, and they all read and write the same records.",
     outcomes: [
-      "Consolidated operations on a single platform",
-      "Lower total cost of ownership than legacy ERP",
-      "A foundation that scales as the business grows",
+      "Accounting, sales, inventory, manufacturing, websites, HR, marketing and service apps",
+      "Studio, AI, and a choice of editions and hosting",
+      "Explained from Odoo's own published material",
     ],
   },
   {

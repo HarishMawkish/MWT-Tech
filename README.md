@@ -66,3 +66,11 @@ Case studies are gated: a visitor registers once (name, company, company email, 
 - **Why it is real**: the case-study bodies live in `lib/case-access/case-details.ts` and are served by `/api/case-studies/[id]` only to a browser holding a valid cookie. They are not in the page's JavaScript.
 - **Kept away from crawlers**: `/api/` (including the case-study endpoints) is disallowed in `app/robots.ts` for every crawler and, explicitly, for the AI crawlers listed in `lib/case-access/crawlers.ts`. Those endpoints also send `X-Robots-Tag: noindex, nofollow, noarchive, noai`, refuse known crawler user-agents (so a bot cannot register either), and rate-limit bursts. robots.txt is only a request; the cookie lock is what actually stops a crawler. Case studies are never added to the sitemap.
 - **Email**: the welcome email and the sales summary (to `nafaz@mawkishtechnologies.com`) are written in `emails.ts`, but sending is not configured yet. Plug a transport into `sendMail()` in `mailer.ts`; nothing else needs to change.
+
+## Odoo pages
+
+`/services/odoo` is the Odoo hub, with eight family pages (Finance, Sales, Websites, Supply Chain, Human Resources, Marketing, Service Delivery, Productivity) and three supporting pages (Odoo AI, Studio, editions and hosting). Each app in a family is a tab, and `/services/odoo/<page>#<app>` opens it.
+
+- **Content** is in `components/odoo/content/` (one typed file per page) and `components/odoo/data.ts` (the 51 apps and the families). Metadata and structured data are in `lib/odoo-pages.ts`; add a page there, in the content index and in the data file.
+- **Icons** are Odoo's own, from its brand-assets page, in `public/images/odoo/`. Do not redraw them, and do not use Odoo's partner badges.
+- **Sources**: every statement is from Odoo's own pages and documentation; the record, source ledger, verification and open points are in `docs/odoo-product-knowledge.md`. Odoo's documentation lags its release notes, so check both when editing.
