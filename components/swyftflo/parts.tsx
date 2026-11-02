@@ -1,11 +1,28 @@
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
+import { ProductIcon } from "./icons";
 import { productPath, products, SW_HUB, type ProductSlug } from "./data";
 
 /** Stagger index for a revealed element. */
 export const d = (n: number) => ({ "--d": n }) as CSSProperties;
 
 /* ------------------------------------------------------------------ hero */
+
+/** Module logos, taken from each product's own brochure. Control Tower has none in Swyftflo's material, so it keeps the drawn tile. */
+const LOGOS: Partial<Record<ProductSlug, string>> = {
+  "source-to-pay": "/images/swyftflo/source-to-pay.png",
+  "invoice-hub": "/images/swyftflo/invoice-hub.png",
+  "spend-intelligence": "/images/swyftflo/spend-intelligence.png",
+  authentik: "/images/swyftflo/authentik.png",
+  tms: "/images/swyftflo/tms.png",
+};
+
+export function ProductMark({ slug, size = "md" }: { slug: ProductSlug; size?: "sm" | "md" | "lg" }) {
+  const src = LOGOS[slug];
+  if (!src) return <ProductIcon slug={slug} size={size === "lg" ? "lg" : size === "sm" ? "sm" : undefined} className={`pmark ${size}`} />;
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={src} alt="" width={256} height={256} className={`plogo ${size}`} loading="lazy" decoding="async" />;
+}
 
 export function ProductChips({ current }: { current?: ProductSlug }) {
   return (
@@ -15,6 +32,7 @@ export function ProductChips({ current }: { current?: ProductSlug }) {
       </Link>
       {products.map((p) => (
         <Link key={p.slug} href={productPath(p.slug)} aria-current={current === p.slug ? "page" : undefined}>
+          <ProductMark slug={p.slug} size="sm" />
           {p.short}
         </Link>
       ))}
@@ -53,6 +71,11 @@ export function Hero({
         <ProductChips current={current} />
         <div className="hero-grid">
           <div>
+            {current && (
+              <div className="hero-mark" data-r style={d(0)}>
+                <ProductMark slug={current} size="lg" />
+              </div>
+            )}
             <span className="eyebrow" data-r style={d(0)}>
               {eyebrow}
             </span>
@@ -341,7 +364,10 @@ export function ProductIndex({ current, compact = false, here = false }: { curre
             <span className="pi-stage">{p.stage}</span>
             <span className="pi-main">
               {isHere && <span className="pi-viewing">You are currently viewing</span>}
-              <span className="pi-name">{p.name}</span>
+              <span className="pi-name">
+                <ProductMark slug={p.slug} size="md" />
+                {p.name}
+              </span>
               {!compact && <span className="pi-tag">{p.tagline}</span>}
             </span>
             {compact ? (

@@ -902,3 +902,17 @@ section.light .sw .native, .sw section.light .native { background: none; }
   .sw .pindex .pi-row.is-here .pi-stage { display: none; }
   .sw .pi-viewing { letter-spacing: .12em; }
 }
+
+/* Module logos */
+.sw .plogo, .sw .pico.pmark { flex: none; display: inline-block; vertical-align: middle; }
+.sw .plogo { object-fit: cover; border-radius: 22%; box-shadow: 0 1px 2px rgba(0,0,0,.25); }
+.sw .plogo.sm, .sw .pico.pmark.sm { width: 20px; height: 20px; border-radius: 6px; }
+.sw .plogo.md, .sw .pico.pmark.md { width: 40px; height: 40px; border-radius: 10px; }
+.sw .plogo.lg, .sw .pico.pmark.lg { width: 64px; height: 64px; border-radius: 15px; }
+.sw .plogo.lg { box-shadow: 0 12px 28px -12px rgba(0,0,0,.6); }
+.sw .hero-mark { margin-bottom: 22px; }
+.sw .pi-name { display: flex; align-items: center; gap: 14px; }
+.sw .pindex.compact .pi-name .plogo.md, .sw .pindex.compact .pi-name .pico.pmark.md { width: 32px; height: 32px; border-radius: 8px; }
+.sw .pchips a { gap: 8px; }
+.sw .pchips a .plogo.sm { width: 18px; height: 18px; border-radius: 5px; }
+@media (max-width: 720px) { .sw .plogo.lg, .sw .pico.pmark.lg { width: 52px; height: 52px; } .sw .pi-name .plogo.md, .sw .pi-name .pico.pmark.md { width: 34px; height: 34px; } }
