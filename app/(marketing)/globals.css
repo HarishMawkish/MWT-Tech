@@ -1118,5 +1118,6 @@ body:has([data-cr-inline]) [data-cr-end] { display: none; }
    one starts with one), so the card pulls into that space instead of adding to it. */
 section.light + .cr-notice { margin-top: -88px; }
 .cr-notice:has(+ section.light) { padding-bottom: 0; }
+.cr-notice { z-index: 1; }
 .cr-notice + section.light { margin-top: -48px; }
 .cr-notice + section.light > * { position: relative; }
