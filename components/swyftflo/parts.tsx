@@ -585,7 +585,6 @@ export function Related({ current, title = "The same thread, extended." }: { cur
           title={title}
           lede="Each product works on its own, connected to your ERP. Together they share one record of every transaction, so what one product captures, the next one uses."
         />
-        <ReadingRail current={current} />
         <ProductIndex current={current} compact here />
         <p className="rel-hub" data-r>
           <Link href={SW_HUB}>
