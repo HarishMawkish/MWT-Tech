@@ -25,6 +25,35 @@ export function ProductMark({ slug, size = "md" }: { slug: ProductSlug; size?: "
   return <img src={src} alt="" width={256} height={256} className={`plogo ${size}`} loading="lazy" decoding="async" />;
 }
 
+/** A row of photographs taken from the product brochures, with a short line under each. */
+export function PhotoStrip({
+  items,
+  light = false,
+  label,
+}: {
+  items: { file: string; alt: string; cap: string }[];
+  light?: boolean;
+  label?: string;
+}) {
+  return (
+    <section className={`photos${light ? " light" : ""}`} aria-label={label}>
+      <div className="in">
+        <ul className={`pstrip n${items.length}`}>
+          {items.map((it, i) => (
+            <li key={it.file} data-r style={d(Math.min(i, 4))}>
+              <figure>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`/images/swyftflo/photos/${it.file}.jpg`} alt={it.alt} loading="lazy" decoding="async" />
+                <figcaption>{it.cap}</figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
 export function ProductChips({ current }: { current?: ProductSlug }) {
   return (
     <nav className="pchips" aria-label="Swyftflo products">

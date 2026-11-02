@@ -4,7 +4,7 @@ import { Explorer } from "../Explorer";
 import { Glyph, type GlyphName } from "../icons";
 import { AppFrame, Pill } from "../screens";
 import { Switcher } from "../Switcher";
-import { Caps, CtaBand, d, Faq, Head, Hero, Related } from "../parts";
+import { Caps, CtaBand, d, Faq, Head, Hero, Related, PhotoStrip } from "../parts";
 import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /* ---------------------------------------------------------------- screens */
@@ -324,6 +324,15 @@ export function AuthentikBody() {
           />
         </div>
       </section>
+
+      <PhotoStrip
+        items={[
+          { file: "au-bottle", alt: "A hand holding a wine bottle with a question mark on the label", cap: "Can you prove where it came from?" },
+          { file: "au-hands", alt: "Hands holding up identical bottles", cap: "Every unit, its own history" },
+          { file: "au-wines", alt: "A row of wine bottles from different producers", cap: "Wine and spirits" },
+          { file: "au-tea", alt: "A pouch of packaged tea", cap: "Packaged food and drink" },
+        ]}
+      />
 
       <section className="light" id="views">
         <div className="in">

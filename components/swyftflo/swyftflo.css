@@ -916,3 +916,17 @@ section.light .sw .native, .sw section.light .native { background: none; }
 .sw .pchips a { gap: 8px; }
 .sw .pchips a .plogo.sm { width: 18px; height: 18px; border-radius: 5px; }
 @media (max-width: 720px) { .sw .plogo.lg, .sw .pico.pmark.lg { width: 52px; height: 52px; } .sw .pi-name .plogo.md, .sw .pi-name .pico.pmark.md { width: 34px; height: 34px; } }
+
+/* Photo strips */
+.sw .photos { padding-block: 56px 72px; }
+.sw .photos.light { padding-block: 72px; }
+.sw .pstrip { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
+.sw .pstrip.n2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.sw .pstrip.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.sw .pstrip.n4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.sw .pstrip figure { margin: 0; }
+.sw .pstrip img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 16px; background: var(--line); }
+.sw .pstrip.n2 img { aspect-ratio: 4 / 3; }
+.sw .pstrip figcaption { margin-top: 12px; font-size: 14px; line-height: 1.45; color: var(--muted); }
+@media (max-width: 900px) { .sw .pstrip.n3, .sw .pstrip.n4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .sw .pstrip.n2, .sw .pstrip.n3, .sw .pstrip.n4 { grid-template-columns: 1fr; } .sw .pstrip img, .sw .pstrip.n2 img { aspect-ratio: 4 / 3; } .sw .photos.light { padding-block: 48px; } }

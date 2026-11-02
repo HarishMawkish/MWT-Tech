@@ -4,7 +4,7 @@ import { Explorer } from "../Explorer";
 import { Glyph } from "../icons";
 import { AiChat, AppFrame, Pill, Tile } from "../screens";
 import { Switcher } from "../Switcher";
-import { Agents, AlongsideErp, Caps, CtaBand, d, Faq, Head, Hero, Layers, NativeAi, Related, WordList } from "../parts";
+import { Agents, AlongsideErp, Caps, CtaBand, d, Faq, Head, Hero, Layers, NativeAi, Related, WordList, PhotoStrip } from "../parts";
 import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /* ---------------------------------------------------------------- screens */
@@ -414,6 +414,15 @@ export function ControlTowerBody() {
           </figure>
         </div>
       </section>
+
+      <PhotoStrip
+        items={[
+          { file: "ct-cargo-ship", alt: "A container ship seen from above, heading out to sea", cap: "Ocean transit, tracked leg by leg" },
+          { file: "ct-container-crane", alt: "A shipping container lifted by a crane above a busy port", cap: "Port and terminal handover" },
+          { file: "ct-air-land-sea", alt: "An aircraft, a truck and a ship seen from above side by side", cap: "Air, road and sea in the same view" },
+          { file: "ct-container-scan", alt: "A worker photographing the inside of a container with a phone", cap: "Confirmations that become evidence" },
+        ]}
+      />
 
       <section className="light" id="explore">
         <div className="in">
