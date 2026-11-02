@@ -662,7 +662,7 @@ export function TmsBody() {
         items={[
           { file: "tms-port", alt: "A truck carrying cargo at a container port", cap: "Port and first mile" },
           { file: "tms-truck", alt: "A freight truck on the road", cap: "Road freight, planned and tracked" },
-          { file: "tms-warehouse", alt: "A truck loaded with pallets at a warehouse dock", cap: "Warehouse and dock" },
+          { file: "tms-container", alt: "A shipping container with its locking bars at a port", cap: "Container pickup and drop-off" },
           { file: "tms-driver", alt: "A driver with a tablet beside a truck", cap: "Drivers, with a job in hand" },
         ]}
       />

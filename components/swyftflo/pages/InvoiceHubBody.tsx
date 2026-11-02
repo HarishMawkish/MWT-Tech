@@ -3,7 +3,7 @@ import { AuditEngine } from "../AuditEngine";
 import { Explorer } from "../Explorer";
 import { Glyph } from "../icons";
 import { AppFrame, Pill, Tile } from "../screens";
-import { AlongsideErp, Caps, CtaBand, d, Faq, Head, Hero, FlowSteps, NativeAi, Related, PhotoStrip } from "../parts";
+import { AlongsideErp, Caps, CtaBand, d, Faq, Head, Hero, FlowSteps, NativeAi, Related } from "../parts";
 import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /* ---------------------------------------------------------------- screens */
@@ -329,13 +329,6 @@ export function InvoiceHubBody() {
           </div>
         </div>
       </section>
-
-      <PhotoStrip
-        items={[
-          { file: "ih-reading-invoice", alt: "A woman reading through printed invoices", cap: "Invoices still checked by hand" },
-          { file: "ih-magnifier", alt: "A magnifying glass held over a pile of invoices", cap: "Every line, looked at closely" },
-        ]}
-      />
 
       <section id="audit">
         <div className="in">

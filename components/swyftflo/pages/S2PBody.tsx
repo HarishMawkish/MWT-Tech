@@ -512,7 +512,7 @@ export function S2PBody() {
       <PhotoStrip
         items={[
           { file: "s2p-office", alt: "A buyer at a desk raising a purchase request on screen", cap: "A request raised in one place" },
-          { file: "s2p-team", alt: "A procurement team gathered around a laptop", cap: "Buyers, requesters and approvers on one record" },
+          { file: "s2p-team", alt: "A person at a laptop managing suppliers, with statuses such as pending and approved on screen", cap: "Suppliers onboarded and approved in one record" },
         ]}
       />
 
