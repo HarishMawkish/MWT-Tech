@@ -141,3 +141,18 @@
 .cl .c-form { padding: 22px; }
 .cl .c-res div b { font-size: 30px; }
 .cl .c-logo { height: 116px; }}
+
+/* Registration gate: neutral placeholder shapes (no real case-study text sits behind the form), errors and retry. */
+.cl .c-sk { display: block; height: 12px; border-radius: 6px; margin: 12px 0; background: #e3ebe6; }
+.cl .c-box .c-sk:first-child { height: 11px; margin-top: 2px; }
+.cl .c-res-sk .c-sk { background: rgba(255,255,255,.22); height: 14px; }
+.cl .c-res-sk .c-sk:first-child { height: 30px; border-radius: 8px; margin-top: 0; }
+@media (prefers-reduced-motion: no-preference) {
+.cl .c-sk { background: linear-gradient(90deg, #e3ebe6 25%, #eef3f0 50%, #e3ebe6 75%); background-size: 200% 100%; animation: csk 1.6s ease-in-out infinite; }
+.cl .c-res-sk .c-sk { background: linear-gradient(90deg, rgba(255,255,255,.18) 25%, rgba(255,255,255,.3) 50%, rgba(255,255,255,.18) 75%); background-size: 200% 100%; }
+}
+@keyframes csk { to { background-position: -200% 0; } }
+.cl .c-err-form { margin: -4px 0 12px; font-size: 13px; }
+.cl .c-cons + .c-err { margin: -10px 0 12px; }
+.cl .c-retry { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-top: 28px; }
+.cl .c-retry .btn.sec { color: var(--ink); border-color: var(--line); background: transparent; cursor: pointer; font: inherit; font-weight: 700; }

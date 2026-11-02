@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
 import { ContactForm } from "@/components/ContactForm";
+import { contactServices } from "@/lib/contact-services";
 import "@/components/contact/contact.css";
 
 const jakarta = Plus_Jakarta_Sans({ variable: "--font-pjs", subsets: ["latin"], weight: ["500", "600", "700", "800"] });
@@ -58,7 +59,7 @@ export default async function ContactPage({
           <div className="t-card">
             <h2>Send us a message</h2>
             <p>Share a few details and we&apos;ll come back to you shortly.</p>
-            <ContactForm defaultIntent={intent} />
+            <ContactForm defaultIntent={intent} services={contactServices} />
           </div>
 
           <div className="t-side">

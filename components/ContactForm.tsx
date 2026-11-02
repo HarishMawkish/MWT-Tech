@@ -3,13 +3,17 @@
 import { useState, type FormEvent } from "react";
 import { trackEvent } from "@/lib/analytics";
 
-const intents = [
-  { value: "consultation", label: "Schedule a Consultation" },
-  { value: "demo", label: "Request a Demo" },
-  { value: "proposal", label: "Request a Proposal" },
-];
+/** What the visitor came to do. No longer a dropdown, but still sent: links such as /contact?intent=demo set it. */
+const INTENTS = ["consultation", "demo", "proposal"];
 
-export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
+export function ContactForm({
+  defaultIntent,
+  services,
+}: {
+  defaultIntent?: string;
+  services: string[];
+}) {
+  const intent = defaultIntent && INTENTS.includes(defaultIntent) ? defaultIntent : "consultation";
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -25,6 +29,7 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
       email: String(data.get("email") || ""),
       company: String(data.get("company") || ""),
       intent: String(data.get("intent") || ""),
+      service: String(data.get("service") || ""),
       message: String(data.get("message") || ""),
     };
 
@@ -66,7 +71,7 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
       <div className="t-row">
         <div className="t-f">
           <label htmlFor="name">
-            Full name
+            Name
           </label>
           <input
             id="name"
@@ -103,17 +108,15 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
           />
         </div>
         <div className="t-f">
-          <label htmlFor="intent">
-            I&rsquo;d like to&hellip;
+          <label htmlFor="service">
+            Service
           </label>
-          <select
-            id="intent"
-            name="intent"
-            defaultValue={defaultIntent || "consultation"}
-          >
-            {intents.map((i) => (
-              <option key={i.value} value={i.value}>
-                {i.label}
+          <input type="hidden" name="intent" value={intent} />
+          <select id="service" name="service" defaultValue="">
+            <option value="">Not sure yet</option>
+            {services.map((s) => (
+              <option key={s} value={s}>
+                {s}
               </option>
             ))}
           </select>

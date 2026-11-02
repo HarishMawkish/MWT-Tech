@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
+import { isKnownService } from "@/lib/contact-services";
 
 type ContactPayload = {
   name: string;
   email: string;
   company?: string;
   intent?: string;
+  service?: string;
   message: string;
 };
 
@@ -20,13 +22,18 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
   }
 
-  const { name, email, company, intent, message } = body;
+  const { name, email, company, intent, service, message } = body;
 
   if (!name?.trim() || !email?.trim() || !message?.trim()) {
     return NextResponse.json({ error: "Name, email, and message are required." }, { status: 400 });
   }
   if (!isValidEmail(email)) {
     return NextResponse.json({ error: "Please provide a valid email address." }, { status: 400 });
+  }
+
+  const chosenService = typeof service === "string" ? service.trim() : "";
+  if (chosenService && !isKnownService(chosenService)) {
+    return NextResponse.json({ error: "Please choose a service from the list." }, { status: 400 });
   }
 
   const backendUrl = process.env.BACKEND_URL;
@@ -42,7 +49,18 @@ export async function POST(request: Request) {
     const backendRes = await fetch(`${backendUrl}/api/contact`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, company, intent, message }),
+      // "intent" is sent exactly as before. The mail server may not know about "service" yet, so the chosen service
+      // is also written at the top of the message, which always reaches the email.
+      body: JSON.stringify({
+        name,
+        email,
+        company,
+        intent,
+        service: chosenService,
+        message: chosenService ? `Service: ${chosenService}
+
+${message}` : message,
+      }),
       cache: "no-store",
     });
 

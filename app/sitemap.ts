@@ -32,6 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/about", 0.6, "yearly"),
     entry("/contact", 0.7, "yearly"),
     entry("/copyright", 0.4, "yearly"),
+    // Only the public Clients list. Case studies are gated and have no URLs of their own: never list them here.
     entry("/clients", 0.6, "monthly"),
   ];
 }
