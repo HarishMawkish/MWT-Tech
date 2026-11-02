@@ -31,5 +31,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...insights.map((p) => entry(`/insights/${p.slug}`, 0.5, "monthly")),
     entry("/about", 0.6, "yearly"),
     entry("/contact", 0.7, "yearly"),
+    entry("/copyright", 0.4, "yearly"),
   ];
 }

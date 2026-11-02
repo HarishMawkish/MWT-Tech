@@ -12,6 +12,7 @@ export const siteConfig = {
 
 export const navLinks = [
   { label: "About Us", href: "/about" },
+  { label: "Copyright Protection", href: "/copyright" },
   {
     label: "Our Services",
     href: "/services",
