@@ -4,10 +4,12 @@ import { Montserrat, Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { CopyrightNotice } from "@/components/CopyrightNotice";
 import { PageWatermark } from "@/components/PageWatermark";
 import { SiteLoader } from "@/components/SiteLoader";
 import { JsonLd } from "@/components/JsonLd";
 import { Analytics } from "@/components/analytics/Analytics";
+import { BackToTop } from "@/components/BackToTop";
 import { DEFAULT_OG_IMAGE, organizationLd, robotsDefault, siteUrl, websiteLd } from "@/lib/seo";
 
 // Montserrat — main/heading text. Clean geometric letterforms.
@@ -95,7 +97,9 @@ export default function RootLayout({
         <div className="relative z-10 flex min-h-full flex-1 flex-col">
           <Navbar />
           <main className="flex-1">{children}</main>
+          <CopyrightNotice />
           <Footer />
+          <BackToTop />
         </div>
       </body>
     </html>

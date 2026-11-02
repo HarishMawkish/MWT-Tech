@@ -51,70 +51,69 @@ export function Navbar() {
 
   return (
     <header ref={headerRef} className="sticky top-0 z-50">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:h-[72px] lg:px-8">
         <Logo tone="light" />
 
-        {/* Floating translucent pill: content scrolls underneath it. */}
-        <div className="hidden items-center lg:flex">
-          <div className="flex items-center rounded-2xl border border-white/15 bg-black/45 p-1.5 shadow-sm backdrop-blur-xl backdrop-saturate-150">
-            <nav aria-label="Primary" className="flex items-center gap-1 px-3">
-              {navLinks.map((link) => {
-                const active = isActive(link.href);
-                return (
-                  <div
-                    key={link.href}
-                    className="group relative"
-                    onPointerEnter={link.children ? openMega : undefined}
-                    onPointerLeave={link.children ? () => closeMega() : undefined}
-                    onFocus={link.children ? openMega : undefined}
-                    onBlur={
-                      link.children
-                        ? (e) => {
-                            // Keep it open while focus moves into the panel.
-                            if (!headerRef.current?.contains(e.relatedTarget as Node | null)) closeMega(0);
-                          }
-                        : undefined
-                    }
+        {/* One bar, edge to edge: content scrolls underneath it (see header::before in globals.css). */}
+        <div className="hidden h-full items-center lg:flex">
+          <nav aria-label="Primary" className="flex h-full items-center">
+            {navLinks.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <div
+                  key={link.href}
+                  className="group relative h-full"
+                  onPointerEnter={link.children ? openMega : undefined}
+                  onPointerLeave={link.children ? () => closeMega() : undefined}
+                  onFocus={link.children ? openMega : undefined}
+                  onBlur={
+                    link.children
+                      ? (e) => {
+                          // Keep it open while focus moves into the panel.
+                          if (!headerRef.current?.contains(e.relatedTarget as Node | null)) closeMega(0);
+                        }
+                      : undefined
+                  }
+                >
+                  <Link
+                    href={link.href}
+                    aria-current={active ? "page" : undefined}
+                    aria-haspopup={link.children ? "true" : undefined}
+                    aria-expanded={link.children ? megaOpen : undefined}
+                    className={`relative flex h-full items-center gap-1.5 px-3.5 text-[14px] font-medium tracking-[0.005em] transition-colors duration-150 after:absolute after:inset-x-3.5 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-mw-mint after:transition-transform after:duration-200 after:ease-[cubic-bezier(0.23,1,0.32,1)] aria-[current=page]:after:scale-x-100 aria-expanded:after:scale-x-100 ${
+                      active || (link.children && megaOpen) ? "text-white" : "text-white/70 hover:text-white"
+                    }`}
                   >
-                    <Link
-                      href={link.href}
-                      aria-current={active ? "page" : undefined}
-                      aria-haspopup={link.children ? "true" : undefined}
-                      aria-expanded={link.children ? megaOpen : undefined}
-                      className={`flex min-h-11 items-center gap-1 rounded-lg px-3 text-xs font-semibold uppercase tracking-wider transition-colors active:scale-[0.97] ${
-                        active ? "text-mw-mint" : "text-white/80 hover:text-white"
-                      }`}
-                    >
-                      {link.label}
-                      {link.children && (
-                        <svg
-                          className={`h-3 w-3 transition-transform duration-300 ${megaOpen ? "rotate-180" : ""}`}
-                          viewBox="0 0 12 12"
-                          fill="none"
-                          aria-hidden="true"
-                        >
-                          <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                        </svg>
-                      )}
-                    </Link>
+                    {link.label}
+                    {link.children && (
+                      <svg
+                        className={`h-3 w-3 opacity-70 transition-transform duration-200 ${megaOpen ? "rotate-180" : ""}`}
+                        viewBox="0 0 12 12"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                      </svg>
+                    )}
+                  </Link>
+                </div>
+              );
+            })}
+          </nav>
 
-                  </div>
-                );
-              })}
-            </nav>
+          <span aria-hidden="true" className="mx-4 h-5 w-px bg-white/15" />
 
-            <Link
-              href={siteConfig.primaryCta.href}
-              className="rounded-xl bg-mw-mint px-5 py-3 text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-white hover:text-mw-void active:scale-[0.97]"
-            >
-              {siteConfig.primaryCta.label}
-            </Link>
-          </div>
+          <Link
+            href={siteConfig.primaryCta.href}
+            className="inline-flex h-10 items-center rounded-lg bg-mw-mint px-4 text-[13.5px] font-semibold text-white transition-[transform,filter] duration-150 hover:brightness-125 active:scale-[0.97]"
+          >
+            {siteConfig.primaryCta.label}
+          </Link>
         </div>
 
         {/* Mobile trigger */}
         <button
-          className="grid h-11 w-11 place-items-center rounded-xl border border-white/15 bg-black/45 text-white shadow-sm backdrop-blur-xl transition active:scale-95 lg:hidden"
+          className="grid h-10 w-10 place-items-center rounded-lg border border-white/15 bg-white/5 text-white transition-[transform,background-color] duration-150 active:scale-95 lg:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}

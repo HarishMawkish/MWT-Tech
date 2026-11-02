@@ -1,5 +1,6 @@
 import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
 import { BdcBody } from "./BdcBody";
+import { BdcMotion } from "./BdcMotion";
 import "./bdc.css";
 
 // The page's own two typefaces, loaded the Next way and handed to its stylesheet as variables.
@@ -15,6 +16,7 @@ export function BdcPage() {
     <div className={`bd ${jakarta.variable} ${manrope.variable}`}>
       <main id="top">
         <BdcBody />
+        <BdcMotion />
       </main>
       {/* The standalone page carried this line in its own footer; the site footer is left alone, so it sits here. */}
       <div className="legal">

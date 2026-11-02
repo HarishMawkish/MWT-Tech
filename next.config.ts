@@ -21,11 +21,15 @@ const nextConfig = {
       "sap-business-ai", "joule-and-ai-agents", "sap-business-data-cloud", "sap-analytics-cloud",
       "group-reporting-and-consolidation",
     ];
-    return moved.map((slug) => ({
-      source: `/services/${slug}`,
-      destination: `/services/sap-solutions/${slug}`,
-      permanent: true,
-    }));
+    return [
+      ...moved.map((slug) => ({
+        source: `/services/${slug}`,
+        destination: `/services/sap-solutions/${slug}`,
+        permanent: true,
+      })),
+      // The Salesforce overview used to be the generic service page. It now has its own hub.
+      { source: "/services/salesforce-solutions", destination: "/services/salesforce", permanent: true },
+    ];
   },
   images: {
     remotePatterns: [

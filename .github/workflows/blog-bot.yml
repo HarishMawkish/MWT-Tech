@@ -1,0 +1,46 @@
+name: Blog bot
+
+on:
+  schedule:
+    - cron: "30 2 * * *" # 08:00 Asia/Colombo, daily
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (print drafts, do not write to Sanity)"
+        type: boolean
+        default: true
+
+concurrency:
+  group: blog-bot
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install tools
+        run: |
+          npm install --no-save lexorank
+          npm install -g @anthropic-ai/claude-code
+      - name: Run blog bot
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SANITY_WRITE_TOKEN: ${{ secrets.SANITY_WRITE_TOKEN }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ vars.SANITY_DATASET }}
+          NEXT_PUBLIC_SANITY_API_VERSION: ${{ vars.SANITY_API_VERSION }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "true" ]; then
+            node scripts/blog-bot/run.mjs --dry-run
+          else
+            node scripts/blog-bot/run.mjs
+          fi

@@ -497,24 +497,36 @@ export const sapFaqs: Record<string, Faq[]> = {
   ],
   "sap-business-data-cloud": [
     {
-      "q": "Does Business Data Cloud replace SAP Analytics Cloud?",
-      "a": "No. SAP Analytics Cloud is part of Business Data Cloud. It's where people see dashboards and do planning. Business Data Cloud adds the data foundation underneath it."
+      "q": "Does Business Data Cloud replace SAP Analytics Cloud or Datasphere?",
+      "a": "No, it includes them. Business Data Cloud is the managed service that brings them together with data products, SAP Databricks and SAP HANA Cloud. If you already use Datasphere or Analytics Cloud, those tenants can join without a migration."
+    },
+    {
+      "q": "Do we need SAP Cloud Connector for SAP Cloud ERP Public Edition?",
+      "a": "No. Public Edition connects with a certificate exchange. Other SAP deployments, such as on-premise systems, need the Cloud Connector."
+    },
+    {
+      "q": "Is our data copied?",
+      "a": "SAP's data products are stored once in the Business Data Cloud data lake. From there they are shared, not copied, with Datasphere, SAP Databricks and partner platforms. You decide per model whether to take a local copy for performance."
+    },
+    {
+      "q": "Can we filter what gets activated?",
+      "a": "Not at activation. A data product is activated in full so every use case shares one data set. You restrict access afterwards in Datasphere, by space and with data access controls."
     },
     {
       "q": "Does it replace our SAP BW?",
-      "a": "Not overnight. Business Data Cloud can include SAP BW, so you can keep what works and move to data products at your own pace."
+      "a": "Not overnight. SAP BW can run alongside Business Data Cloud and connect to Datasphere, so you keep what works and move to data products at your own pace."
     },
     {
-      "q": "Can we use it with Microsoft, Databricks or Snowflake?",
-      "a": "Yes. SAP Databricks and SAP Snowflake are part of the offering, and SAP shares data with other platforms without copying it where possible. We check what fits your existing tools."
+      "q": "Which data products are available for SAP Cloud ERP Public Edition?",
+      "a": "SAP adds data products with each release, and availability differs by edition. We check the current catalogue for your edition before we plan anything."
     },
     {
-      "q": "Which data products are available for SAP Cloud ERP?",
-      "a": "SAP adds data products with each release, starting with finance, procurement and supply chain. We check the current list for your edition before we plan."
+      "q": "How is it licensed?",
+      "a": "By capacity: you buy capacity units and the services consume them. Intelligent applications are added on top. We estimate capacity from your data volumes and use cases, and check it against your SAP contract."
     },
     {
-      "q": "We've just gone live. Is it too early?",
-      "a": "Usually, yes. Get comfortable with SAP Cloud ERP's built-in reporting first. Plan Business Data Cloud when you need to combine systems, plan or use AI across your data."
+      "q": "We've just gone live on SAP Cloud ERP. Is it too early?",
+      "a": "Usually, yes. Get comfortable with the built-in reporting first. Plan Business Data Cloud when you need to combine systems, plan, or use AI across your data."
     }
   ],
   "sap-analytics-cloud": [

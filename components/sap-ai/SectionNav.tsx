@@ -51,7 +51,7 @@ export function SectionNav({ sections }: { sections: PageSection[] }) {
   return (
     <nav
       aria-label="On this page"
-      className="sticky top-[5.6rem] z-40 border-y border-white/10 bg-black/70 backdrop-blur-xl backdrop-saturate-150"
+      className="sticky top-16 z-40 lg:top-[72px] border-y border-white/10 bg-black/70 backdrop-blur-xl backdrop-saturate-150"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <ul

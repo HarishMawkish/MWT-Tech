@@ -1,0 +1,38 @@
+/* Back to top: one round control, bottom right, on every page. Hidden until the reader is a screen down. */
+.mw-totop {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right, 0px));
+  bottom: max(20px, env(safe-area-inset-bottom, 0px));
+  z-index: 40;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #eef3f0;
+  background: rgba(10, 17, 14, 0.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transform: translateY(12px) scale(0.94);
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.23, 1, 0.32, 1), transform 0.25s cubic-bezier(0.23, 1, 0.32, 1), background-color 0.2s ease;
+}
+.mw-totop.on { opacity: 1; transform: none; pointer-events: auto; }
+.mw-totop svg { display: block; width: 100%; height: 100%; transform: rotate(-90deg); }
+.mw-totop .tt-track { fill: none; stroke: rgba(255, 255, 255, 0.12); stroke-width: 2; }
+.mw-totop .tt-ring { fill: none; stroke: #34b386; stroke-width: 2; stroke-linecap: round; }
+.mw-totop .tt-arrow {
+  fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  transform: rotate(90deg); transform-origin: 24px 24px; transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.mw-totop:active { transform: scale(0.94); }
+.mw-totop:focus-visible { outline: 2px solid #34b386; outline-offset: 3px; }
+@media (hover: hover) and (pointer: fine) {
+  .mw-totop:hover { background: #1f7a5a; }
+  .mw-totop:hover .tt-arrow { transform: rotate(90deg) translateX(-2px); }
+}
+@media (max-width: 620px) { .mw-totop { width: 46px; height: 46px; } }
+@media (prefers-reduced-motion: reduce) { .mw-totop, .mw-totop.on { transform: none; transition: opacity 0.2s ease; } }

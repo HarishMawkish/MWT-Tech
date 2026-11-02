@@ -12,6 +12,7 @@ export const siteConfig = {
 
 export const navLinks = [
   { label: "About Us", href: "/about" },
+  { label: "Copyright Protection", href: "/copyright" },
   {
     label: "Our Services",
     href: "/services",
@@ -22,7 +23,7 @@ export const navLinks = [
         label: "SAP Business AI Solutions",
         href: "/services/sap-ai-solutions",
       },
-      { label: "Salesforce Solutions", href: "/services/salesforce-solutions" },
+      { label: "Salesforce Solutions", href: "/services/salesforce" },
       { label: "Odoo Implementation", href: "/services/odoo-implementation" },
     ],
   },
@@ -150,13 +151,13 @@ export const services: Service[] = [
     name: "Salesforce Solutions",
     category: "core",
     summary:
-      "Customer-centric growth and engagement built on the world's leading CRM platform.",
+      "Sales, data, marketing, loyalty and service on one platform.",
     description:
-      "Salesforce helps organizations put the customer at the center of every decision. We design and implement Salesforce solutions that improve visibility into the customer journey, align sales and service teams, and turn customer data into growth.",
+      "Salesforce is a set of products on one platform. Sales, data, marketing, loyalty and service are the five most teams start with, and the rest of the platform supports them.",
     outcomes: [
-      "A single view of the customer across teams",
-      "Improved sales pipeline visibility and forecasting",
-      "Faster, more consistent customer service",
+      "Sales Cloud, Data 360, Marketing Cloud, Loyalty Management and Service Cloud",
+      "Agents, integration, analytics and collaboration alongside them",
+      "Explained from Salesforce's own published material",
     ],
   },
   {

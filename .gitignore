@@ -1,2 +1,8 @@
 .next/
 node_modules
+
+# secrets (Sanity write token etc.)
+
+# local env files hold secrets (write token); only .env.production is committed
+.env.local
+.env*.local

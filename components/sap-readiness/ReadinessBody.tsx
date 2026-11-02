@@ -5,14 +5,14 @@ import type { CSSProperties } from "react";
 export function ReadinessBody() {
   return (
     <>
-<section className="hero">
+  <section className="hero">
     <div className="in">
       <div className="crumbs"><Link href="/services">Services</Link> / <Link href="/services/sap-solutions">SAP Solutions</Link> / Cloud ERP Readiness Assessment</div>
       <div className="hero-grid">
         <div>
           <span className="eyebrow">Cloud ERP Readiness Assessment</span>
           <h1>Know what SAP Cloud ERP means for you <em>before you commit.</em></h1>
-          <p className="lede">In two weeks we map how your business runs today against SAP's standard processes. You get a clear answer on fit, the right route (GROW or RISE), a sized licence, a realistic timeline and a budget range. It's everything your board needs to decide.</p>
+          <p className="lede">In two weeks we map how your business runs today against SAP's standard processes, using SAP's own Digital Discovery Assessment. You get a clear answer on fit, the right route (GROW or RISE), a sized licence, a realistic timeline and a budget range. It's everything your board needs to decide.</p>
           <div className="ctas">
             <a href="#book" className="btn pri">Book an assessment →</a>
             <a href="#get" className="btn sec">See what you get</a>
@@ -57,7 +57,6 @@ export function ReadinessBody() {
     </div>
   </section>
 
-  
   <section className="light">
     <div className="in">
       <span className="eyebrow">Who it's for</span>
@@ -72,7 +71,6 @@ export function ReadinessBody() {
     </div>
   </section>
 
-  
   <section id="get">
     <div className="in">
       <span className="eyebrow">What you get</span>
@@ -94,7 +92,7 @@ export function ReadinessBody() {
             <div className="verdict"><span className="on">GROW</span><span>RISE</span><span>Two-tier</span></div>
             <p style={{ fontSize: "11.5px", color: "#55655e", marginTop: "6px" }}>Standard processes fit, custom needs are light, and the business is ready for twice-yearly upgrades.</p>
           </div>
-          <div className="tx"><h3>GROW or RISE recommendation</h3><p>Which route fits, with the reasons spelled out. If neither fits yet, we say so and explain why.</p></div>
+          <div className="tx"><h3>GROW or RISE recommendation</h3><p>Which route fits, backed by SAP's Digital Discovery Assessment, with the reasons spelled out. If neither fits yet, we say so and explain why.</p></div>
         </div>
         <div className="del">
           <div className="pv" aria-hidden="true"><span className="t">Licence sizing</span>
@@ -135,13 +133,12 @@ export function ReadinessBody() {
     </div>
   </section>
 
-  
   <section className="light">
     <div className="in">
       <span className="eyebrow">How it works</span>
       <h2>Two weeks, ten working days.</h2>
       <p className="lede">We keep the time we need from your people to a minimum. Workshops are short and focused, and we do the analysis afterwards.</p>
-      <div className="gantt" role="img" aria-label="Ten-day plan: day 1 kick-off; days 2 to 6 department workshops; days 4 to 8 system, data and integration review; days 7 to 9 analysis and sizing; day 10 board readout.">
+      <div className="gantt" role="img" aria-label="Ten-day plan: day 1 kick-off; days 2 to 6 department workshops with live demos and SAP's Digital Discovery Assessment; days 4 to 8 system, data and integration review; days 7 to 9 analysis and sizing; day 10 board readout.">
         <div className="gantt-in">
           <span></span>
           <span className="d">D1</span><span className="d">D2</span><span className="d">D3</span><span className="d">D4</span><span className="d">D5</span><span className="d">D6</span><span className="d">D7</span><span className="d">D8</span><span className="d">D9</span><span className="d">D10</span>
@@ -149,7 +146,7 @@ export function ReadinessBody() {
           <span className="lab"><b>Kick-off</b><span>Goals, scope, people</span></span>
           <span className="gb dk" style={{ gridColumn: "2 / span 1" }}>Start</span><span style={{ gridColumn: "3 / span 9" }}></span>
 
-          <span className="lab"><b>Department workshops</b><span>Live demos of SAP standard</span></span>
+          <span className="lab"><b>Department workshops</b><span>Live demos and SAP's Digital Discovery</span></span>
           <span style={{ gridColumn: "2 / span 1" }}></span><span className="gb" style={{ gridColumn: "3 / span 5" }}>Finance · Sales · Procurement · Ops</span><span style={{ gridColumn: "8 / span 4" }}></span>
 
           <span className="lab"><b>Systems and data review</b><span>Current ERP, integrations, data</span></span>
@@ -165,7 +162,6 @@ export function ReadinessBody() {
     </div>
   </section>
 
-  
   <section>
     <div className="in two">
       <div>
@@ -183,22 +179,80 @@ export function ReadinessBody() {
     </div>
   </section>
 
-  
-  <section className="light">
+  <section className="light" id="dda">
     <div className="in">
       <span className="eyebrow">Built on SAP's own method</span>
-      <h2>Facts from SAP's tools, judgment from our consultants.</h2>
-      <p className="lede">The assessment follows the Discover phase of SAP Activate, SAP's implementation method. We use SAP's own assessment tools wherever possible, so our findings carry straight into your project.</p>
+      <h2>SAP's Digital Discovery Assessment, run together with you.</h2>
+      <p className="lede">At the heart of the assessment is SAP's Digital Discovery Assessment. It's the questionnaire SAP itself uses to scope SAP Cloud ERP and confirm which edition fits. We complete it with your team in the workshops, so the recommendation comes from SAP's own tool and not just from our opinion.</p>
+
+      <div className="dda" aria-label="How the Digital Discovery Assessment works: what you tell us, what the assessment does, and what you get">
+        <div className="dda-col">
+          <span className="tag2">You tell us</span>
+          <h3>How your business runs</h3>
+          <ul>
+            <li><b>Industry</b> and segment, so SAP suggests the processes companies like yours use</li>
+            <li><b>Countries and legal entities</b>, and in which order they go live</li>
+            <li><b>Processes</b> by department, from finance to manufacturing</li>
+            <li><b>Systems</b> that must connect, and why</li>
+            <li><b>Special requirements</b> that standard SAP may not cover</li>
+          </ul>
+        </div>
+        <div className="dda-arrow" aria-hidden="true">→</div>
+        <div className="dda-col dda-mid">
+          <div className="head">
+            <span className="tag2">The assessment</span>
+            <h3 style={{ marginBottom: "12px" }}>Quick check, then the detail</h3>
+            <div className="dda-steps"><span className="on">1 · Quick check</span><span className="on">2 · Detail</span><span>3 · Results</span></div>
+          </div>
+          <div className="screen" role="img" aria-label="Illustration of a Digital Discovery Assessment summary: 96 SAP processes in scope across 2 countries, Public Edition fit, with the share of processes selected by area: finance 92, sales 78, procurement 81, supply chain 64, manufacturing 55">
+            <div className="shell"><span className="sap">SAP</span><span className="t">Digital Discovery · Summary</span><span className="av">MK</span></div>
+            <div className="body-pad" style={{ padding: "12px" }}>
+              <div className="tiles">
+                <div className="tile" style={{ minHeight: "74px" }}><div><div className="h">Processes</div><div className="s">In scope</div></div><div className="k">96</div></div>
+                <div className="tile" style={{ minHeight: "74px" }}><div><div className="h">Countries</div><div className="s">Two waves</div></div><div className="k">2</div></div>
+                <div className="tile" style={{ minHeight: "74px" }}><div><div className="h">Edition</div><div className="s">Fit</div></div><div className="k pos" style={{ fontSize: "17px", fontWeight: "600" }}>Public</div></div>
+              </div>
+              <div className="card-f" style={{ marginTop: "8px", fontSize: "11px" }}>
+                <div className="h">Share of processes selected</div>
+                <div className="mini-row"><span>Finance</span><span className="tr"><i style={{ width: "92%" }}></i></span><b>92%</b></div>
+                <div className="mini-row"><span>Sales</span><span className="tr"><i style={{ width: "78%" }}></i></span><b>78%</b></div>
+                <div className="mini-row"><span>Procurement</span><span className="tr"><i style={{ width: "81%" }}></i></span><b>81%</b></div>
+                <div className="mini-row"><span>Supply chain</span><span className="tr"><i style={{ width: "64%" }}></i></span><b>64%</b></div>
+                <div className="mini-row"><span>Manufacturing</span><span className="tr"><i style={{ width: "55%" }}></i></span><b>55%</b></div>
+              </div>
+            </div>
+          </div>
+          <p className="cap2">Illustration of an assessment summary. Sample data.</p>
+        </div>
+        <div className="dda-arrow" aria-hidden="true">→</div>
+        <div className="dda-col">
+          <span className="tag2">You get</span>
+          <h3>Answers you can defend</h3>
+          <ul>
+            <li><b>Edition fit:</b> Public Edition (GROW) or Private Edition (RISE), with the reasons</li>
+            <li><b>Scope:</b> every SAP process you need, area by area</li>
+            <li><b>Localisation:</b> what SAP covers per country. Sri Lanka isn't an SAP-delivered country version, so we plan our Sri Lanka layer from day one</li>
+            <li><b>Licences:</b> which user types your scope calls for</li>
+            <li><b>Integrations and gaps</b>, listed and answered</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="dda-carry">
+        <span className="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: "var(--green-hi)" }}><path d="M3 11h13M12 6l5 5-5 5"/><path d="M19 4v14"/></svg></span>
+        <div><b>Nothing is thrown away.</b><p>The agreed scope carries straight into your project: it loads into SAP Cloud ALM, which runs the project, and into SAP Central Business Configuration, which sets up your system. Your implementation starts from the scope you signed off.</p></div>
+      </div>
+      <p className="dda-note"><b>An honest note on effort:</b> the assessment also gives SAP's rough estimate of configuration effort. We use it as a sanity check, never as a quote, because it leaves out testing, data migration, integrations and training. Our plan adds those, so the budget you take to the board is complete.</p>
+
       <div className="tools">
+        <div className="cap"><span className="tag2">All customers</span><h3>Digital Discovery Assessment</h3><p>SAP's scoping questionnaire, completed with your team. It confirms edition fit and sets the scope.</p></div>
         <div className="cap"><span className="tag2">All customers</span><h3>Fit-to-standard demos</h3><p>Your team sees each process running in a live SAP system, not on slides.</p></div>
-        <div className="cap"><span className="tag2">All customers</span><h3>SAP configuration questionnaires</h3><p>SAP's structured questions per department, which flag early whether GROW or RISE fits.</p></div>
         <div className="cap"><span className="tag2">On SAP ECC</span><h3>SAP Readiness Check</h3><p>A technical scan of your system covering custom code, simplification items and data volumes.</p></div>
         <div className="cap"><span className="tag2">All customers</span><h3>SAP licensing model</h3><p>User types assigned by role, using SAP's current user-type definitions.</p></div>
       </div>
     </div>
   </section>
 
-  
   <section>
     <div className="in">
       <span className="eyebrow">Questions we hear</span>
@@ -206,6 +260,7 @@ export function ReadinessBody() {
       <div className="faq">
         <details><summary>Isn't this just a sales exercise?</summary><p>No. It's a fixed-fee piece of work with a written result you own. If SAP Cloud ERP isn't the right fit, or the timing is wrong, the report says so. Our reputation depends on recommending only projects that succeed.</p></details>
         <details><summary>What does it cost?</summary><p>A fixed fee, agreed upfront, based on the number of departments and entities in scope. If you go ahead with Mawkish for the implementation, we credit the fee against the project.</p></details>
+        <details><summary>What is SAP's Digital Discovery Assessment?</summary><p>It's the structured questionnaire SAP uses to scope SAP Cloud ERP. It covers your industry, countries, processes, integrations and special requirements, and shows whether Public or Private Edition fits. We complete it with you during the workshops, and you receive the results as part of the report.</p></details>
         <details><summary>We're on SAP ECC. Is this different for us?</summary><p>Yes. We add SAP's technical Readiness Check on your system. It shows how much custom code you really use, which changes affect you, and whether a conversion or a fresh start makes more sense.</p></details>
         <details><summary>Can you assess several companies in our group?</summary><p>Yes. For groups, we look at how head office and the subsidiaries fit together. That often leads to a two-tier recommendation: RISE at the centre and GROW in the subsidiaries. The timeline grows with the number of entities.</p></details>
         <details><summary>What happens after the readout?</summary><p>You keep everything. Many customers take the report to their board, then use the roadmap and licence sizing to request formal proposals. The fit map becomes the starting point for the project's workshops, so none of the work is wasted.</p></details>
@@ -213,7 +268,6 @@ export function ReadinessBody() {
     </div>
   </section>
 
-  
   <section id="book" className="light">
     <div className="in">
       <div className="cta-band" style={{ color: "#eef3f0", "--fg": "#eef3f0", "--muted": "#a9bab2", "--green-hi": "#34b386" } as CSSProperties}>
@@ -221,7 +275,7 @@ export function ReadinessBody() {
           <span className="eyebrow">Start here</span>
           <h2>Two weeks from now, you could have your answer.</h2>
           <p className="lede">Tell us about your business, and we'll propose a scope and fee for your assessment within two working days.</p>
-          <div style={{ marginTop: "28px" }}><Link href="/contact" className="btn pri">Book your assessment →</Link></div>
+          <div style={{ marginTop: "28px" }}><a href="#" className="btn pri">Book your assessment →</a></div>
         </div>
         <ul>
           <li>Process fit map by department</li>

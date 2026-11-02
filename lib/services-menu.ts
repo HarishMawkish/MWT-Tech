@@ -1,5 +1,4 @@
 import { services } from "@/lib/site-data";
-import { clouds, cloudHref } from "@/components/salesforce/clouds";
 
 // Content for the "Our Services" mega-menu. Categories sit in the left rail; the
 // selected one fills the large panel on the right. SAP Solutions is the first
@@ -19,6 +18,9 @@ export type MenuLogo = { src: string; alt: string };
 
 /** One equal-weight tile in a grid of products (Salesforce's clouds). */
 export type MenuTile = { label: string; sub: string; href: string; accent: string };
+
+/** One of a category's main products: shown large, numbered, in its own colour. */
+export type MenuMain = { label: string; sub: string; href: string; accent: string };
 
 /** One line in a group. With an `href` it is a link, without one it is display-only. */
 export type MenuLink = { label: string; href?: string; accent?: string };
@@ -50,6 +52,12 @@ export type MenuCategory = {
   groups?: MenuGroup[];
   /** Sits in the last cell of the groups grid. */
   cta?: MenuCta;
+  /** The main products, drawn as large coloured cards ahead of everything else (Salesforce). */
+  main?: MenuMain[];
+  mainTitle?: string;
+  /** The supporting products, set as one quiet line under the main ones. */
+  also?: MenuLink[];
+  alsoTitle?: string;
   /** Plain supporting points, for categories with a page. */
   bullets?: string[];
   logos?: MenuLogo[];
@@ -137,14 +145,37 @@ export const servicesMenu: MenuCategory[] = [
     },
   },
   {
+    // The five main products are drawn large, numbered and in their own colours, so they are what the eye lands on
+    // when the menu opens. The supporting products sit in one small line underneath.
     id: "salesforce",
     mark: "/images/solutions/salesforce.svg",
     label: "Salesforce Solutions",
-    href: "/services/salesforce-solutions",
+    href: "/services/salesforce",
     blurb: summaryOf("salesforce-solutions"),
-    bullets: outcomesOf("salesforce-solutions"),
-    tilesTitle: "Salesforce clouds",
-    tiles: clouds.map((c) => ({ label: c.name, sub: c.blurb, href: cloudHref(c.slug), accent: c.accent })),
+    mainTitle: "The five main Salesforce products",
+    main: [
+      { label: "Sales Cloud", sub: "Pipeline, forecasts and agents for sellers", href: "/services/salesforce/sales-cloud", accent: "#2f86d2" },
+      { label: "Data 360", sub: "One customer profile, shared with agents", href: "/services/salesforce/data-360", accent: "#1fa5b8" },
+      { label: "Marketing Cloud", sub: "Journeys, campaigns and campaign agents", href: "/services/salesforce/marketing-cloud", accent: "#e0763a" },
+      { label: "Loyalty Management", sub: "Programmes, offers and referrals", href: "/services/salesforce/loyalty-management", accent: "#c2478a" },
+      { label: "Service Cloud", sub: "Cases, knowledge and AI agents", href: "/services/salesforce/service-cloud", accent: "#3a9d6e" },
+    ],
+    alsoTitle: "Also on the platform",
+    also: [
+      { label: "Agentforce", href: "/services/salesforce/agentforce" },
+      { label: "Revenue Cloud", href: "/services/salesforce/revenue-cloud" },
+      { label: "Field Service", href: "/services/salesforce/field-service" },
+      { label: "Commerce Cloud", href: "/services/salesforce/commerce-cloud" },
+      { label: "Slack", href: "/services/salesforce/slack" },
+      { label: "Tableau", href: "/services/salesforce/tableau" },
+      { label: "MuleSoft", href: "/services/salesforce/mulesoft" },
+    ],
+    cta: {
+      title: "Not sure which comes first?",
+      body: "Pick the problem that bites most and we will show which of the five to start with.",
+      label: "Where to start",
+      href: "/services/salesforce#start",
+    },
   },
   {
     id: "odoo",
@@ -155,11 +186,77 @@ export const servicesMenu: MenuCategory[] = [
     bullets: outcomesOf("odoo-implementation"),
   },
   {
+    // Laid out like SAP: two featured cards, five titled groups and a call to action. The dotted rows are the six
+    // products (in each product's colour); the rows under them jump to the matching section of that product's page.
     id: "swyftflo",
     mark: "/images/solutions/swyftflo.png",
     label: "Swyftflo",
-    descriptor: "Supply Chain Solution",
-    logos: [{ src: "/images/solutions/swyftflo.png", alt: "Swyftflo" }],
+    href: "/services/swyftflo",
+    descriptor: "AI-native supply chain suite",
+    featuredTitle: "Swyftflo supply chain suite",
+    featured: [
+      {
+        label: "Swyftflo Suite",
+        sub: "Six products, one digital thread",
+        href: "/services/swyftflo",
+        mark: "/images/solutions/swyftflo-suite.svg",
+      },
+      {
+        label: "Where to start",
+        sub: "Find the gap that costs you most",
+        href: "/services/swyftflo#start",
+        mark: "/images/solutions/swyftflo-start.svg",
+      },
+    ],
+    groups: [
+      {
+        title: "Source & procure",
+        items: [
+          { label: "Source to Pay", href: "/services/swyftflo/source-to-pay", accent: "#3b4cca" },
+          { label: "Sourcing Events & Tenders", href: "/services/swyftflo/source-to-pay#events" },
+          { label: "Bid Evaluation & Negotiation", href: "/services/swyftflo/source-to-pay#explore" },
+        ],
+      },
+      {
+        title: "Execute & track",
+        items: [
+          { label: "Supply Chain Control Tower", href: "/services/swyftflo/control-tower", accent: "#2563eb" },
+          { label: "Shipment Journey & Live Tracking", href: "/services/swyftflo/control-tower#journey" },
+          { label: "Role-Based Partner Views", href: "/services/swyftflo/control-tower#roles" },
+        ],
+      },
+      {
+        title: "Move & deliver",
+        items: [
+          { label: "Transportation Management", href: "/services/swyftflo/tms", accent: "#3b6ff5" },
+          { label: "For Shippers, 3PLs & Carriers", href: "/services/swyftflo/tms#audience" },
+          { label: "Load, Route & Driver App", href: "/services/swyftflo/tms#explore" },
+        ],
+      },
+      {
+        title: "Verify & pay",
+        items: [
+          { label: "Invoice Hub", href: "/services/swyftflo/invoice-hub", accent: "#2aa8e0" },
+          { label: "6-Way AI Invoice Audit", href: "/services/swyftflo/invoice-hub#audit" },
+          { label: "Approvals & Tolerances", href: "/services/swyftflo/invoice-hub#explore" },
+        ],
+      },
+      {
+        title: "Analyse & prove",
+        items: [
+          { label: "Spend Intelligence", href: "/services/swyftflo/spend-intelligence", accent: "#7c5cff" },
+          { label: "The Spend Agent", href: "/services/swyftflo/spend-intelligence#levels" },
+          { label: "Authentik Product Passports", href: "/services/swyftflo/authentik", accent: "#16b8d6" },
+          { label: "Stakeholder Passport Views", href: "/services/swyftflo/authentik#views" },
+        ],
+      },
+    ],
+    cta: {
+      title: "Not sure which product to start with?",
+      body: "Tell us how a purchase, a shipment and an invoice move today. We'll show you which gap to close first.",
+      label: "Find your starting point",
+      href: "/services/swyftflo#start",
+    },
   },
   {
     id: "mihcm",

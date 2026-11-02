@@ -51,7 +51,7 @@ function Item({ item }: { item: string | MenuLink }) {
   );
 }
 
-const hasBody = (c: MenuCategory) => Boolean(c.featured?.length || c.groups?.length || c.tiles?.length);
+const hasBody = (c: MenuCategory) => Boolean(c.main?.length || c.featured?.length || c.groups?.length || c.tiles?.length);
 
 /** Everything a category holds, as one unfolded list. */
 function CategoryBody({ c }: { c: MenuCategory }) {
@@ -62,6 +62,40 @@ function CategoryBody({ c }: { c: MenuCategory }) {
           {`All ${c.label}`}
           <span aria-hidden="true" className="text-mw-mint">→</span>
         </Link>
+      )}
+
+      {c.main && c.main.length > 0 && (
+        <>
+          <Heading>{c.mainTitle ?? "Main products"}</Heading>
+          <div className="grid gap-2.5 pt-1">
+            {c.main.map((m, i) => (
+              <Link
+                key={m.href}
+                href={m.href}
+                style={{ borderLeftColor: m.accent }}
+                className="flex items-center gap-4 rounded-xl border border-l-[6px] border-white/10 bg-white/[0.06] px-4 py-4 active:bg-white/10"
+              >
+                <span className="font-display text-[28px] font-extrabold leading-none" style={{ color: m.accent }}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[18px] font-extrabold leading-tight text-white">{m.label}</span>
+                  <span className="mt-1 block text-[12.5px] leading-snug text-white/60">{m.sub}</span>
+                </span>
+                <span aria-hidden="true" className="text-mw-mint">→</span>
+              </Link>
+            ))}
+          </div>
+        </>
+      )}
+
+      {c.also && c.also.length > 0 && (
+        <>
+          <Heading>{c.alsoTitle ?? "Also"}</Heading>
+          {c.also.map((l) => (
+            <Item key={l.label} item={l} />
+          ))}
+        </>
       )}
 
       {c.featured && c.featured.length > 0 && (
