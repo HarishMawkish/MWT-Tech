@@ -308,8 +308,10 @@ html {
   to { transform: translateX(-50%); }
 }
 
+/* Slowed from 32s: at the old speed the News & Events strip scrolled past
+   faster than a card could comfortably be read. */
 .mw-marquee-track {
-  animation: mw-marquee 32s linear infinite;
+  animation: mw-marquee 64s linear infinite;
 }
 
 .mw-marquee-track:hover {
