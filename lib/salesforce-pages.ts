@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { contents } from "@/components/salesforce/content";
+import { cloudFaqs } from "@/components/salesforce/clouds/faqs";
 import { hubFaq } from "@/components/salesforce/hub-content";
 import { products, SF_HUB, type ProductSlug } from "@/components/salesforce/data";
 import { absoluteUrl, breadcrumbLd, brand, DEFAULT_OG_IMAGE, robotsDefault, siteUrl } from "@/lib/seo";
@@ -121,7 +122,14 @@ export const salesforcePages: SfPageMeta[] = [
 
 export type Faq = { q: string; a: string };
 
-export const salesforceFaqs = (slug: SfPageMeta["slug"]): Faq[] => (slug === "" ? hubFaq : contents[slug].faq);
+/**
+ * The questions a page shows are the questions its structured data carries. The five main clouds have their own
+ * written on their own pages; the hub and the supporting products use the shared content files.
+ */
+export const salesforceFaqs = (slug: SfPageMeta["slug"]): Faq[] => {
+  if (slug === "") return hubFaq;
+  return cloudFaqs[slug] ?? contents[slug].faq;
+};
 
 const bySlug = (slug: string) => salesforcePages.find((p) => p.slug === slug);
 export const sfPath = (slug: string) => (slug ? `${SF_HUB}/${slug}` : SF_HUB);

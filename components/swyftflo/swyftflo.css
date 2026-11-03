@@ -51,6 +51,26 @@
 .sw .lede b, .sw .lede strong { color: var(--fg); font-weight: 700; }
 .sw .two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
 .sw .two.mid { align-items: center; }
+/* An illustration has no heading to line up with, so when it is shorter than the prose beside it, centre it: the
+   leftover height is then balanced above and below instead of left as a hole at the bottom of the section. */
+.sw .two > figure, .sw .two > div:has(> figure:only-child),
+.sw .mx > figure, .sw .mx > div:has(> figure:only-child),
+.sw .levels > figure { align-self: center; }
+/* A tab pane is a block of copy beside a picture of the thing it describes. They are peers, so they sit
+   centred against each other rather than one hanging from the top with the gap under it. */
+.sw .mx.tabpane { align-items: center; }
+.sw .levels > div:has(> .screen) { align-self: center; }
+/* A column holding one self-contained panel — an aside, a table — is a single object beside the prose, so it
+   centres rather than hanging from the top with the gap left underneath it. */
+.sw .two > .tbl, .sw .two > div:has(> .caught:only-child), .sw .two > div:has(> .tbl:only-child) { align-self: center; }
+/* And where one side of the row is a single block of cards, let the block fill the column, so the two sides
+   finish on the same line instead of leaving a step. The extra height is shared evenly between its rows. */
+.sw .two > .includes, .sw .two > div:has(> .includes:last-child) { align-self: stretch; }
+.sw .two > div:has(> .includes:last-child) { display: flex; flex-direction: column; }
+.sw .two > div:has(> .includes:last-child) > .includes { flex: 1; }
+.sw .two > .includes, .sw .two > div:has(> .includes:last-child) > .includes { grid-auto-rows: minmax(0, 1fr); }
+/* The phone mock in a "what each audience sees" row is an illustration too. */
+.sw .views > .phone { align-self: center; }
 .sw .caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
 .sw a:focus-visible, .sw button:focus-visible, .sw summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
 
@@ -799,7 +819,7 @@ section.light .sw .native, .sw section.light .native { background: none; }
 .sw .chev span { flex: 1 1 auto; min-width: 0; }
 
 /* ---------- Authentik stakeholder views: top-aligned, tighter ---------- */
-.sw .views { grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr); gap: 48px; align-items: start; margin-top: 32px; }
+.sw .views { grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr); gap: 48px; align-items: center; margin-top: 32px; }
 .sw .views .lede { font-size: 18px; max-width: 46ch; }
 .sw .views .phone { max-width: 300px; margin: 0 auto; }
 .sw .views .phone .scr { min-height: 0; }

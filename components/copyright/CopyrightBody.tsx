@@ -10,7 +10,7 @@ export function CopyrightBody() {
       <span className="eyebrow">Copyright and content use</span>
       <h1>Our knowledge is <em>our work.</em> Please respect it.</h1>
       <p className="lede">Everything on this website, from our service guides and case studies to our diagrams, illustrations and code, was researched, written and designed by Mawkish Technologies. It is protected by copyright. We're happy for people and AI to learn from it. We're not happy for anyone to copy it and call it their own. This page sets out the rules.</p>
-      <div className="cp-meta"><span><b>Owner:</b> Mawkish Technologies (Private) Limited</span><span><b>Applies to:</b> mawkishtechnologies.com and its sub-pages</span><span><b>Last updated:</b> 1 November 2026</span></div>
+      <div className="cp-meta"><span><b>Owner:</b> Mawkish Technologies (Private) Limited</span><span><b>Applies to:</b> mawkishtechnologies.com and its sub-pages</span><span><b>Last updated:</b> 3 November 2026</span></div>
       <div className="cp-sum">
         <div className="y"><span className="k">✓</span><h3>You may</h3><p>Read, share and quote our pages with credit and a link. Search engines and AI models may index and learn from them.</p></div>
         <div className="n"><span className="k">✕</span><h3>You may not</h3><p>Reproduce substantial parts of our content, by hand or through AI, and publish it as your own.</p></div>
@@ -28,6 +28,7 @@ export function CopyrightBody() {
           <li><a href="#lk">Sri Lankan law</a></li>
           <li><a href="#intl">International protection</a></li>
           <li><a href="#what">What is protected</a></li>
+          <li><a href="#design">Design and experience</a></li>
           <li><a href="#ok">What you may do</a></li>
           <li><a href="#no">What you may not do</a></li>
           <li><a href="#ai">AI and automated access</a></li>
@@ -44,6 +45,7 @@ export function CopyrightBody() {
           <h2>Ownership</h2>
           <p>Unless stated otherwise, all content on this website is owned by <strong>Mawkish Technologies (Private) Limited</strong> ("Mawkish", "we", "us") or used by us under licence.</p>
           <p>Publishing content openly on the internet does not place it in the public domain. Being able to view, copy or download something does not give anyone the right to reuse it.</p>
+          <p>This includes the website's design, interface, user experience, menu structure, and the way its content is organised and presented, all of which belong to us. See <a href="#design">Design, interface and experience</a>.</p>
           <div className="cp-notice">© 2026 Mawkish Technologies (Private) Limited. All rights reserved.</div>
         </section>
 
@@ -82,7 +84,23 @@ export function CopyrightBody() {
             <li><strong>Interactive tools:</strong> assessments, catalogues, calculators, selectors and their logic.</li>
             <li><strong>Methods as we describe them:</strong> our delivery approaches, frameworks, checklists and templates as written and presented on this site.</li>
             <li><strong>Code and design:</strong> the website's source code, styling and overall look and feel.</li>
+            <li><strong>Design, interface and experience:</strong> the visual design, user interface, user experience, menu and navigation structure, and the way content is structured and presented. See <a href="#design">Design, interface and experience</a>.</li>
           </ul>
+        </section>
+
+        <section id="design">
+          <h2>Design, interface and experience</h2>
+          <p>The way this website looks, works and is organised is original work created by Mawkish Technologies, and it belongs to us. That protection is separate from the protection of the words on the page, and it covers the following.</p>
+          <div className="cp-intl">
+            <div><span className="t">Look and feel</span><h3>Visual design</h3><p>Our layouts, page compositions, colour palette, typography, spacing, iconography, illustrations, imagery and animation, and the way they combine into one recognisable style.</p></div>
+            <div><span className="t">User interface</span><h3>Interface design</h3><p>The design of our components: navigation, cards, sections, buttons, forms, tables, diagrams, interactive elements and their states, and how they are arranged on each page.</p></div>
+            <div><span className="t">User experience</span><h3>How it feels to use</h3><p>The flow from page to page, the order in which information is revealed, interaction and motion behaviour, and the overall journey we designed for visitors.</p></div>
+            <div><span className="t">Site structure</span><h3>Menu and navigation</h3><p>The structure, grouping, hierarchy, labelling and ordering of our menus, mega menus, footer and internal links, and the way our services and industries are organised.</p></div>
+            <div><span className="t">Content architecture</span><h3>Structure and presentation</h3><p>How we organise, sequence and present content: page templates, section order, the way a topic is broken down, compared and illustrated, and the selection and arrangement of material across the site.</p></div>
+            <div><span className="t">Code</span><h3>Source and styling</h3><p>The website's source code, stylesheets, scripts, templates and component library, in every form in which they are delivered.</p></div>
+          </div>
+          <p>All of this, taken individually and as a whole, is our copyright work and our property, and it is protected as an original compilation and design under the Intellectual Property Act, No. 36 of 2003, and under the international treaties described above. It also falls under the law against passing off and unfair competition, so copying the overall impression of the site can be unlawful even where no text or image is copied word for word.</p>
+          <p>Unless we have agreed otherwise in writing, we, and not any client, partner, contractor or visitor, own the design, interface, experience, structure and presentation of this website. Nobody may claim any right in them.</p>
         </section>
 
         <section id="ok">
@@ -107,6 +125,10 @@ export function CopyrightBody() {
             <li>Frame our pages, or embed them inside another site, so they appear to be someone else's.</li>
             <li>Remove or alter any copyright notice, attribution or watermark.</li>
             <li>Sell, license or otherwise commercialise any of our content.</li>
+            <li>Copy, clone or imitate the look, interface or user experience of this website, or of any page or section of it, in another website, app, template, theme or design file, whether by hand, by automated tools or with AI.</li>
+            <li>Reproduce or closely imitate the structure of our menus and navigation, or the way we organise and present our services, industries and content.</li>
+            <li>Use screenshots, screen recordings or exports of our pages, or of the website's code, stylesheets or design, as a basis for building another site or product, or to train a tool whose purpose is to reproduce our design.</li>
+            <li>Present a website, proposal or product that copies our design, structure or presentation as your own, or in a way that could make people think it comes from, or is connected with, Mawkish.</li>
           </ul>
           <div className="cp-two">
             <div className="ok"><h3>Fine</h3><ul><li>"Mawkish explains the move from ECC well. Read it here: [link]"</li><li>A two-line quote with credit and a link</li></ul></div>

@@ -1,0 +1,489 @@
+/* The Databricks pages. Built on the same rhythm and the same two typefaces as the SAP, Salesforce and Odoo pages, so
+   the families read as one site, but on its own palette: graphite rather than forest, with a lava accent. Every
+   selector is scoped under .db, so none of this reaches the rest of the site. Each page sets --a to its own colour;
+   --lava stays the family accent and is what the buttons and eyebrows use. */
+.db {
+  --bg: #06080a;
+  --bg-2: #0d1014;
+  --bg-3: #11151a;
+  --line: #1e242b;
+  --fg: #eceff2;
+  --muted: #949ea9;
+  --lava: #ff3621;
+  --lava-hi: #ff6a4d;
+  --paper: #f7f5f2;
+  --ink: #15181b;
+  --ink-soft: #5d666f;
+  /* the illustrated workspace chrome: dark rail, light canvas */
+  --app-rail: #1b1f24;
+  --app-bg: #f5f6f7;
+  --app-card: #ffffff;
+  --app-ink: #1b2126;
+  --app-muted: #6b747d;
+  --app-line: #e3e6e9;
+  --app-blue: #2272b4;
+  --ok: #0f8a4d;
+  --warn: #c0700d;
+  --bad: #c0262d;
+  --a: var(--lava);
+  /* the neutral fill and swatch used inside the hand-drawn diagrams. Redefined on pale sections below, because a
+     translucent white box is invisible on white. */
+  --dia-n: rgba(255, 255, 255, 0.05);
+  --dia-n-soft: rgba(255, 255, 255, 0.03);
+  --dia-n-mark: rgba(255, 255, 255, 0.34);
+  --display: var(--font-pjs), "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: var(--font-manrope), "Manrope", "Segoe UI", system-ui, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  color-scheme: dark;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: clip;
+}
+.db, .db * { box-sizing: border-box; }
+.db .in { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.db .in.narrow { max-width: 920px; }
+.db section { padding-block: 88px; border-top: 1px solid var(--line); position: relative; }
+.db h1, .db h2, .db h3, .db h4 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; text-transform: none; letter-spacing: -.01em; }
+.db h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; }
+.db h3 { font-size: 19px; font-weight: 700; letter-spacing: normal; }
+.db h4 { font-size: 15.5px; font-weight: 700; letter-spacing: normal; line-height: 1.35; }
+.db p { margin: 0; }
+.db ul, .db ol { margin: 0; padding: 0; list-style: none; }
+.db [id] { scroll-margin-top: 112px; }
+.db a { color: inherit; }
+.db .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--lava-hi); margin-bottom: 16px; display: block; }
+.db .eyebrow.own { color: var(--a); }
+.db .lede { color: var(--muted); font-size: 18px; max-width: 64ch; margin-top: 18px; }
+.db .lede.wide { max-width: 78ch; }
+.db .lede b, .db .lede strong { color: var(--fg); font-weight: 700; }
+.db .lede a { color: var(--lava-hi); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--lava-hi) 40%, transparent); }
+.db .lede a:hover { border-bottom-color: var(--lava-hi); }
+.db .body-t { color: var(--muted); font-size: 16px; max-width: 72ch; margin-top: 16px; }
+.db .body-t b, .db .body-t strong { color: var(--fg); font-weight: 700; }
+.db .two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.db .two.mid { align-items: center; }
+/* An illustration has no heading to line up with, so when it is shorter than the prose beside it, centre it: the
+   leftover height is then balanced above and below instead of left as a hole at the bottom of the section. */
+.db .two > figure, .db .two > div:has(> figure:only-child) { align-self: center; }
+/* And where one side of the row is a single block of cards, let the block fill the column, so the two sides
+   finish on the same line instead of leaving a step. The extra height is shared evenly between its rows. */
+.db .two > .includes, .db .two > div:has(> .includes:last-child), .db .two > div:has(> .caps:last-child) { align-self: stretch; }
+.db .two > div:has(> .includes:last-child), .db .two > div:has(> .caps:last-child) { display: flex; flex-direction: column; }
+.db .two > div:has(> .includes:last-child) > .includes, .db .two > div:has(> .caps:last-child) > .caps { flex: 1; }
+.db .two > .includes, .db .two > div:has(> .includes:last-child) > .includes, .db .two > div:has(> .caps:last-child) > .caps { grid-auto-rows: minmax(0, 1fr); }
+/* A single aside beside a column of prose is one object, like an illustration, so it centres rather than
+   hanging from the top with the gap below it. */
+.db .two > .callout, .db .two > div:has(> .callout:only-child) { align-self: center; }
+.db .two.wide-l { grid-template-columns: 1.15fr 1fr; }
+.db .two.wide-r { grid-template-columns: 1fr 1.15fr; }
+.db .caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+.db figure { margin: 0; min-width: 0; }
+.db a:focus-visible, .db button:focus-visible, .db summary:focus-visible { outline: 2px solid var(--lava-hi); outline-offset: 3px; }
+.db .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+/* inline code, wherever it appears in prose */
+.db p code, .db li code, .db h3 code, .db .defs .t code, .db .tbl td code { font-family: var(--mono); font-size: .88em; color: var(--a); background: color-mix(in srgb, var(--a) 10%, transparent); border-radius: 4px; padding: 1px 5px; }
+.db .code code { background: none; padding: 0; color: inherit; }
+
+/* ---------- buttons ---------- */
+.db .btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border: 1px solid transparent; transition: background-color .2s ease, border-color .2s ease, color .2s ease, transform .16s var(--ease-out); }
+.db .btn.pri { background: var(--lava); color: #fff; }
+.db .btn.pri:hover { background: #e62a16; }
+.db .btn.sec { border-color: #2d353e; color: var(--fg); }
+.db .btn.sec:hover { border-color: var(--lava-hi); }
+.db .btn:active { transform: scale(.97); }
+.db .btn .ar { display: inline-block; transition: transform .25s var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .db .btn:hover .ar { transform: translateX(3px); } }
+
+/* ---------- hero ---------- */
+.db .hero { border-top: 0; padding-block: 56px 88px; overflow: hidden; background: radial-gradient(900px 440px at 78% 8%, color-mix(in srgb, var(--a) 18%, transparent), transparent 70%); }
+.db .hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(255,255,255,.032) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.032) 1px, transparent 1px); background-size: 46px 46px; mask-image: radial-gradient(72% 62% at 76% 16%, #000, transparent 76%); -webkit-mask-image: radial-gradient(72% 62% at 76% 16%, #000, transparent 76%); }
+.db .hero > .in { position: relative; z-index: 1; }
+.db .crumbs { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
+.db .crumbs a { color: var(--muted); text-decoration: none; }
+.db .crumbs a:hover { color: var(--fg); }
+.db .hero-grid { display: grid; grid-template-columns: 1fr 1.08fr; gap: 56px; align-items: center; }
+.db .hero h1 { font-size: clamp(36px, 5vw, 60px); font-weight: 800; letter-spacing: -.025em; }
+.db .hero h1 em { font-style: normal; color: var(--a); }
+.db .hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.db .hero.centre { text-align: center; }
+.db .hero.centre h1 { max-width: 20ch; margin-inline: auto; }
+.db .hero.centre .lede { margin-inline: auto; text-align: left; }
+.db .hero.centre .ctas { justify-content: center; }
+.db .kicker { display: inline-flex; align-items: center; gap: 9px; font-size: 11.5px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--a); border: 1px solid color-mix(in srgb, var(--a) 36%, var(--line)); background: color-mix(in srgb, var(--a) 9%, transparent); border-radius: 999px; padding: 6px 13px; margin-bottom: 18px; }
+.db .kicker i { width: 6px; height: 6px; border-radius: 50%; background: var(--a); display: inline-block; }
+.db .name-note { margin-top: 28px; font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--a); padding-left: 14px; max-width: 58ch; }
+.db .name-note b { color: var(--fg); font-weight: 600; }
+
+/* ---------- the illustrated workspace ---------- */
+.db .screen { background: var(--app-bg); color: var(--app-ink); border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.07); font-size: 12px; line-height: 1.45; min-width: 0; }
+.db .screen.dark { background: #14181d; color: #dfe4e9; }
+.db .shell { background: var(--app-rail); border-bottom: 1px solid #262c33; display: flex; align-items: center; gap: 11px; padding: 9px 13px; color: #dfe4e9; }
+.db .shell .brand { display: inline-flex; align-items: center; gap: 6px; font-weight: 800; font-size: 11px; letter-spacing: .02em; color: #fff; }
+.db .shell .brand i { width: 13px; height: 13px; border-radius: 3px; background: linear-gradient(145deg, var(--lava), #ff8a3d); display: inline-block; }
+.db .shell .t { font-weight: 600; font-size: 11.5px; color: #cfd6dd; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.db .shell .search { flex: 1.2; background: #262c33; border-radius: 14px; height: 23px; display: flex; align-items: center; padding: 0 10px; color: #8a949e; font-size: 10.5px; }
+.db .shell .av { width: 23px; height: 23px; border-radius: 50%; background: color-mix(in srgb, var(--a) 26%, #262c33); color: #fff; font-weight: 700; font-size: 9.5px; display: grid; place-items: center; flex: none; }
+.db .shell .run { font-size: 9.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #fff; background: var(--lava); border-radius: 5px; padding: 3px 8px; flex: none; }
+.db .body-pad { padding: 14px; }
+.db .body-pad.tight { padding: 10px; }
+
+/* small building blocks inside a screen */
+.db .tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 9px; }
+.db .tiles.four { grid-template-columns: repeat(4, minmax(0,1fr)); }
+.db .tile { background: var(--app-card); border-radius: 9px; padding: 10px 11px; box-shadow: 0 0 0 1px var(--app-line); min-height: 84px; display: flex; flex-direction: column; justify-content: space-between; }
+.db .tile .h { font-weight: 600; color: var(--app-ink); font-size: 11px; }
+.db .tile .s { color: var(--app-muted); font-size: 10px; }
+.db .tile .k { font-size: 21px; font-weight: 400; color: var(--app-blue); font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.db .tile .k.pos { color: var(--ok); }
+.db .tile .k.neg { color: var(--bad); }
+.db .tile .k.own { color: var(--a); }
+.db .tile .k small { font-size: 10.5px; color: var(--app-muted); margin-left: 2px; }
+.db .card-f { background: var(--app-card); border-radius: 9px; box-shadow: 0 0 0 1px var(--app-line); padding: 11px; min-width: 0; }
+.db .card-f + .card-f { margin-top: 9px; }
+.db .card-f .h { font-weight: 700; font-size: 11px; color: var(--app-ink); margin-bottom: 7px; display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.db .card-f .h span.m { font-weight: 500; color: var(--app-muted); font-size: 10px; }
+.db .row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid #eef0f2; font-size: 10.8px; align-items: center; }
+.db .row:first-of-type { border-top: 0; }
+.db .row .l { color: var(--app-ink); min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.db .row .r { color: var(--app-muted); flex: none; font-variant-numeric: tabular-nums; }
+.db .mono { font-family: var(--mono); font-size: 10.5px; }
+.db .pill { font-size: 9px; font-weight: 700; border-radius: 9px; padding: 2px 7px; white-space: nowrap; flex: none; letter-spacing: .02em; }
+.db .pill.ok { background: #effaf3; color: var(--ok); box-shadow: inset 0 0 0 1px #c4e9d3; }
+.db .pill.wr { background: #fdf6ec; color: var(--warn); box-shadow: inset 0 0 0 1px #f3d9b2; }
+.db .pill.er { background: #fdf0f0; color: var(--bad); box-shadow: inset 0 0 0 1px #f2cccd; }
+.db .pill.in { background: #eef4fb; color: var(--app-blue); box-shadow: inset 0 0 0 1px #cbdff2; }
+.db .pill.own { background: color-mix(in srgb, var(--a) 11%, #fff); color: color-mix(in srgb, var(--a) 78%, #000); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--a) 28%, #fff); }
+.db .chips-s { display: flex; gap: 4px; flex-wrap: wrap; }
+.db .chips-s span { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: #eef4fb; color: var(--app-blue); }
+.db .chips-s span.own { background: color-mix(in srgb, var(--a) 12%, #fff); color: color-mix(in srgb, var(--a) 75%, #000); }
+.db .bars { display: flex; align-items: flex-end; gap: 4px; height: 44px; }
+.db .bars i { flex: 1; background: color-mix(in srgb, var(--a) 60%, #cfd6dd); border-radius: 2px 2px 0 0; display: block; }
+.db .bars i.on { background: var(--a); }
+
+/* a code or terminal panel inside a screen */
+.db .code { background: #14181d; color: #cdd5dd; border-radius: 9px; padding: 11px 12px; font-family: var(--mono); font-size: 10.6px; line-height: 1.65; overflow-x: auto; }
+.db .code .k { color: #ff8a73; }
+.db .code .s { color: #8fd3a5; }
+.db .code .c { color: #7d8893; font-style: italic; }
+.db .code .f { color: #8fc0f0; }
+.db .code .n { color: #e3c07b; }
+.db .code .hl { background: color-mix(in srgb, var(--a) 18%, transparent); display: inline-block; border-radius: 3px; padding: 0 3px; }
+.db .code b { color: #fff; font-weight: 700; }
+
+/* a chat exchange inside a screen */
+.db .chat { background: var(--app-card); border-radius: 9px; box-shadow: 0 0 0 1px var(--app-line); display: flex; flex-direction: column; min-width: 0; }
+.db .chat .ch { display: flex; align-items: center; gap: 7px; padding: 9px 11px; border-bottom: 1px solid #eef0f2; font-weight: 700; font-size: 11px; }
+.db .chat .ch i { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 210deg, var(--a), #ff9a3d, #7a5cf0, var(--a)); display: inline-block; flex: none; }
+.db .chat .ch .m { margin-left: auto; font-weight: 500; font-size: 9.5px; color: var(--app-muted); }
+.db .chat .msgs { padding: 10px 11px; display: flex; flex-direction: column; gap: 8px; }
+.db .bub { border-radius: 10px; padding: 7px 9px; font-size: 10.6px; max-width: 94%; line-height: 1.5; }
+.db .bub.u { align-self: flex-end; background: var(--app-rail); color: #fff; border-bottom-right-radius: 3px; }
+.db .bub.a { background: #f1f3f5; color: var(--app-ink); border-bottom-left-radius: 3px; }
+.db .bub.a b { color: color-mix(in srgb, var(--a) 80%, #000); }
+.db .bub .src { margin-top: 6px; padding-top: 5px; border-top: 1px dashed #d9dee3; display: flex; gap: 5px; flex-wrap: wrap; font-size: 8.8px; font-weight: 700; color: var(--app-muted); }
+.db .bub .src span { background: #fff; border: 1px solid #e1e5e9; border-radius: 4px; padding: 1px 5px; }
+
+/* ---------- card grids ---------- */
+.db .caps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.db .caps.two-up { grid-template-columns: repeat(2, minmax(0,1fr)); }
+/* Beside a column of prose, two cards abreast are too narrow to read; stacked, each gets the full column. */
+.db .caps.stack { grid-template-columns: 1fr; }
+.db .caps.four-up { grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; }
+.db .cap { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; transition: border-color .25s ease, transform .3s var(--ease-out); }
+.db .cap .n { font-family: var(--display); font-size: 11.5px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--a); }
+.db .cap p { color: var(--muted); font-size: 14.5px; }
+.db .cap ul { display: grid; gap: 6px; margin-top: 2px; }
+.db .cap li { color: var(--muted); font-size: 14px; padding-left: 18px; position: relative; }
+.db .cap li::before { content: ""; position: absolute; left: 0; top: .62em; width: 8px; height: 2px; background: var(--a); }
+.db .cap .foot { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--fg); }
+.db .cap .foot b { color: var(--a); font-weight: 700; }
+@media (hover: hover) and (pointer: fine) { .db .cap:hover { border-color: color-mix(in srgb, var(--a) 50%, var(--line)); transform: translateY(-3px); } }
+
+.db .includes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.db .includes > div { background: var(--bg-2); padding: 22px; }
+.db .includes h3 { font-size: 16px; margin-bottom: 6px; }
+.db .includes p { color: var(--muted); font-size: 14.5px; }
+.db .includes .t { font-size: 10.5px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--a); display: block; margin-bottom: 8px; }
+
+/* ---------- numbers ---------- */
+.db .facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.db .facts.three { grid-template-columns: repeat(3, minmax(0,1fr)); }
+/* Four figures in a half-width column are cramped; two abreast gives each one room to breathe. */
+.db .facts.two-up { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px 24px; }
+.db .fact { border-top: 2px solid var(--a); padding-top: 14px; }
+.db .fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.db .fact span { color: var(--muted); font-size: 13.5px; display: block; margin-top: 2px; }
+.db .fact .who { font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); display: block; margin-top: 8px; }
+.db .note { margin-top: 18px; color: var(--muted); font-size: 13.5px; max-width: 86ch; }
+.db .note b { color: var(--fg); font-weight: 700; }
+
+/* ---------- layered rows ---------- */
+.db .layers { display: flex; flex-direction: column; gap: 10px; margin-top: 36px; }
+.db .layer { display: grid; grid-template-columns: 168px 1fr; gap: 20px; padding: 18px 22px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.db .layer .who { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--a); padding-top: 3px; }
+.db .layer h3 { font-size: 16.5px; margin-bottom: 4px; }
+.db .layer p { color: var(--muted); font-size: 14.5px; }
+.db .layer.core { background: var(--paper); color: var(--ink); border-color: transparent; }
+.db .layer.core .who { color: color-mix(in srgb, var(--a) 85%, #000); }
+.db .layer.core p { color: var(--ink-soft); }
+
+/* ---------- a horizontal run of steps ---------- */
+.db .phases { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); margin-top: 44px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.db .phases.four { grid-template-columns: repeat(4, minmax(0,1fr)); }
+.db .phases.six { grid-template-columns: repeat(6, minmax(0,1fr)); }
+.db .ph { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.db .ph:last-child { border-right: 0; }
+.db .ph .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--a); text-transform: uppercase; }
+.db .ph h3 { font-size: 17px; }
+.db .ph p { color: var(--muted); font-size: 13.5px; }
+.db .ph .we { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 12.5px; color: var(--fg); }
+.db .ph .we b { color: var(--a); font-weight: 700; }
+
+/* ---------- tables ---------- */
+.db .tbl { margin-top: 40px; overflow-x: clip; border: 1px solid var(--line); border-radius: 14px; }
+.db .tbl table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+.db .tbl th, .db .tbl td { text-align: left; padding: 13px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.db .tbl th { font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); font-weight: 800; }
+.db .tbl td:first-child { font-weight: 700; }
+.db .tbl td { color: var(--muted); }
+.db .tbl td:first-child { color: var(--fg); }
+.db .tbl td code { font-family: var(--mono); font-size: 12.5px; color: var(--a); background: color-mix(in srgb, var(--a) 10%, transparent); border-radius: 4px; padding: 1px 5px; }
+.db .tbl tr:last-child td { border-bottom: 0; }
+.db .tbl .nw { white-space: nowrap; }
+
+/* ---------- questions ---------- */
+.db .faq { margin-top: 36px; display: flex; flex-direction: column; gap: 10px; max-width: 900px; }
+.db details { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+.db summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 16.5px; display: flex; justify-content: space-between; gap: 16px; font-family: var(--display); }
+.db summary::-webkit-details-marker { display: none; }
+.db summary::after { content: "+"; color: var(--a); font-size: 22px; line-height: 1; flex: none; }
+.db details[open] summary::after { content: "–"; }
+.db details p { color: var(--muted); padding-bottom: 18px; max-width: 72ch; }
+.db details p + p { padding-top: 10px; border-top: 1px dashed var(--line); }
+
+/* ---------- a pulled-out line ---------- */
+.db .quote { margin-top: 40px; border-left: 3px solid var(--a); padding: 4px 0 4px 26px; max-width: 70ch; }
+.db .quote p { font-family: var(--display); font-size: clamp(20px, 2.4vw, 27px); font-weight: 700; line-height: 1.32; letter-spacing: -.015em; }
+.db .quote .by { margin-top: 12px; font-size: 13px; color: var(--muted); letter-spacing: .02em; }
+
+/* ---------- an aside the reader should not miss ---------- */
+.db .callout { margin-top: 32px; border: 1px solid color-mix(in srgb, var(--a) 32%, var(--line)); background: color-mix(in srgb, var(--a) 6%, var(--bg-2)); border-radius: 16px; padding: 24px 26px; display: grid; grid-template-columns: 34px 1fr; gap: 18px; align-items: start; }
+.db .callout .m { width: 34px; height: 34px; border-radius: 10px; background: color-mix(in srgb, var(--a) 16%, transparent); color: var(--a); display: grid; place-items: center; font-weight: 800; font-family: var(--display); font-size: 17px; }
+.db .callout h3 { font-size: 17px; margin-bottom: 7px; }
+.db .callout p { color: var(--muted); font-size: 15px; max-width: 76ch; }
+.db .callout p + p { margin-top: 9px; }
+.db .callout a { color: var(--a); text-decoration: none; font-weight: 700; }
+.db .callout a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- product cards (the hub, and the cross-links at the end of every page) ---------- */
+.db .pgrid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin-top: 40px; }
+.db .pgrid.three { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.db .pcard { --c: var(--lava); position: relative; display: flex; flex-direction: column; gap: 9px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 22px 20px 20px; text-decoration: none; overflow: hidden; transition: border-color .25s ease, transform .3s var(--ease-out); }
+.db .pcard::before { content: ""; position: absolute; inset: 0 0 auto; height: 4px; background: var(--c); }
+.db .pcard .kind { font-size: 10.5px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; color: var(--c); }
+.db .pcard h3 { font-size: 20px; font-weight: 800; letter-spacing: -.015em; }
+.db .pcard p { color: var(--muted); font-size: 14px; }
+.db .pcard .go { margin-top: auto; padding-top: 12px; font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--fg); display: inline-flex; gap: 8px; align-items: center; }
+.db .pcard .go i { transition: transform .25s var(--ease-out); font-style: normal; }
+@media (hover: hover) and (pointer: fine) {
+  .db .pcard:hover { border-color: var(--c); transform: translateY(-4px); }
+  .db .pcard:hover .go { color: var(--c); }
+  .db .pcard:hover .go i { transform: translateX(4px); }
+}
+
+/* ---------- where to go next ---------- */
+.db .onward { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
+.db .onward a { --c: var(--lava); display: flex; flex-direction: column; gap: 6px; border: 1px solid var(--line); background: var(--bg-2); border-radius: 16px; padding: 22px 24px; text-decoration: none; transition: border-color .25s ease, transform .3s var(--ease-out); }
+.db .onward a .d { font-size: 10.5px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.db .onward a h3 { font-size: 20px; font-weight: 800; }
+.db .onward a p { color: var(--muted); font-size: 14px; }
+.db .onward a.rt { text-align: right; }
+@media (hover: hover) and (pointer: fine) { .db .onward a:hover { border-color: var(--c); transform: translateY(-3px); } }
+
+/* ---------- the closing band ---------- */
+.db .cta-band { position: relative; overflow: hidden; background: linear-gradient(118deg, color-mix(in srgb, var(--a) 26%, #0b0e12), #090c0f 62%); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.db .cta-band::after { content: ""; position: absolute; width: 440px; height: 440px; right: -130px; top: -170px; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--a) 24%, transparent), transparent); pointer-events: none; }
+.db .cta-band > * { position: relative; z-index: 1; }
+.db .cta-band ul { display: flex; flex-direction: column; gap: 10px; }
+.db .cta-band li { display: flex; gap: 10px; font-size: 15px; }
+.db .cta-band li::before { content: "✓"; color: var(--a); font-weight: 800; flex: none; }
+
+/* ---------- a stack of platform layers (the hub) ---------- */
+.db .stack { display: flex; flex-direction: column; gap: 8px; margin-top: 40px; }
+.db .srow { border: 1px solid var(--line); border-radius: 14px; background: var(--bg-2); padding: 16px 20px; display: grid; grid-template-columns: 150px 1fr auto; gap: 18px; align-items: center; }
+.db .srow .nm { font-family: var(--display); font-weight: 800; font-size: 16px; display: flex; align-items: center; gap: 9px; }
+.db .srow .nm i { width: 9px; height: 9px; border-radius: 3px; flex: none; }
+.db .srow p { color: var(--muted); font-size: 14px; }
+.db .srow .tag { font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+
+/* ---------- a two-column comparison ---------- */
+.db .vs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 36px; }
+/* Two comparison cards squeezed into half a row read badly; stacked, each one gets the full column width. */
+.db .vs.stack { grid-template-columns: 1fr; }
+.db .vs > div { border: 1px solid var(--line); background: var(--bg-2); border-radius: 16px; padding: 24px; }
+.db .vs .lab { font-size: 10.5px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.db .vs .good .lab { color: var(--a); }
+.db .vs h3 { font-size: 18px; margin: 9px 0 12px; }
+.db .vs ul { display: grid; gap: 9px; }
+.db .vs li { font-size: 14.5px; color: var(--muted); padding-left: 22px; position: relative; }
+.db .vs li::before { content: "–"; position: absolute; left: 0; color: var(--muted); font-weight: 700; }
+.db .vs .good li::before { content: "✓"; color: var(--a); }
+
+/* ---------- a connected run of steps, drawn ---------- */
+.db .flow { position: relative; margin-top: 44px; display: grid; gap: 0; grid-auto-flow: column; grid-auto-columns: 1fr; }
+.db .flow .fline { position: absolute; left: 7%; right: 7%; top: 21px; height: 2px; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--a) 60%, transparent) 12%, color-mix(in srgb, var(--a) 60%, transparent) 88%, transparent); }
+.db .flow .fline i { display: block; height: 100%; background: var(--a); transform-origin: left; }
+.db .flow > li { position: relative; padding: 0 14px; text-align: center; }
+.db .flow > li .d { width: 44px; height: 44px; margin: 0 auto 14px; border-radius: 50%; background: var(--bg); border: 2px solid var(--a); color: var(--a); display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 16px; position: relative; z-index: 1; }
+.db .flow > li h3 { font-size: 16px; margin-bottom: 5px; }
+.db .flow > li p { color: var(--muted); font-size: 13.5px; }
+
+/* ---------- a definition list, set tight ---------- */
+.db .defs { margin-top: 36px; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.db .defs > div { background: var(--bg-2); padding: 18px 22px; display: grid; grid-template-columns: 230px 1fr; gap: 22px; }
+.db .defs .t { font-family: var(--display); font-weight: 700; font-size: 15.5px; }
+.db .defs .t code { font-family: var(--mono); font-size: 13.5px; color: var(--a); font-weight: 600; }
+.db .defs p { color: var(--muted); font-size: 14.5px; }
+
+/* ---------- a tree, for a catalogue ---------- */
+.db .tree { font-size: 11px; }
+.db .tree li { padding: 4px 0 4px 0; display: flex; align-items: center; gap: 7px; color: var(--app-ink); }
+.db .tree .ind-1 { padding-left: 16px; }
+.db .tree .ind-2 { padding-left: 34px; }
+.db .tree .ind-3 { padding-left: 52px; }
+.db .tree i { width: 13px; height: 13px; border-radius: 3px; flex: none; display: inline-block; background: #d8dde2; }
+.db .tree i.cat { background: color-mix(in srgb, var(--a) 70%, #fff); }
+.db .tree i.sch { background: #b9c5d1; }
+.db .tree i.tbl { background: var(--app-blue); }
+.db .tree i.mdl { background: #9b5de5; }
+.db .tree i.vol { background: #ef8a2b; }
+.db .tree i.agt { background: #e4376a; }
+.db .tree .m { margin-left: auto; color: var(--app-muted); font-size: 9.5px; flex: none; }
+
+/* ---------- labelled diagram boxes ---------- */
+.db .dia { margin-top: 40px; border: 1px solid var(--line); border-radius: 18px; background: var(--bg-2); padding: 28px; }
+.db .dia .dh { font-size: 10.5px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+.db .dia svg { width: 100%; height: auto; display: block; }
+.db .dia .legend { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--muted); }
+.db .dia .legend span { display: inline-flex; align-items: center; gap: 7px; }
+.db .dia .legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+
+/* ---------- chips ---------- */
+.db .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+.db .chips span, .db .chips a { font-size: 13.5px; font-weight: 600; border: 1px solid var(--line); background: var(--bg-2); border-radius: 999px; padding: 8px 14px; color: var(--fg); text-decoration: none; }
+.db .chips a:hover { border-color: var(--a); }
+.db .chips .off { color: var(--muted); }
+
+/* ---------- a long ordered list that reads like a guide ---------- */
+.db .steps { margin-top: 36px; display: grid; gap: 14px; counter-reset: s; }
+.db .steps > li { display: grid; grid-template-columns: 38px 1fr; gap: 16px; align-items: start; }
+.db .steps > li::before { counter-increment: s; content: counter(s, decimal-leading-zero); font-family: var(--display); font-weight: 800; font-size: 14px; color: var(--a); width: 38px; height: 38px; border-radius: 10px; background: color-mix(in srgb, var(--a) 12%, transparent); display: grid; place-items: center; }
+.db .steps h3 { font-size: 16.5px; margin-bottom: 4px; }
+.db .steps p { color: var(--muted); font-size: 14.5px; max-width: 78ch; }
+
+/* ---------- pale sections ---------- */
+.db section.light { --bg-2: #ffffff; --bg-3: #f1efec; --line: #ddd8d2; --fg: #15181b; --muted: #5d666f; --paper: #ffffff; --dia-n: rgba(21,24,27,.055); --dia-n-soft: rgba(21,24,27,.035); --dia-n-mark: rgba(21,24,27,.4); background: var(--paper); color: var(--fg); border-top-color: transparent; }
+.db section.light { background: #f3f1ed; }
+.db section.light .cap, .db section.light details, .db section.light .pcard, .db section.light .onward a { box-shadow: 0 1px 2px rgba(21,24,27,.05); }
+.db section.light .btn.sec { border-color: #c9c3bb; }
+.db section.light .layer.core { background: var(--ink); color: #eceff2; }
+.db section.light .layer.core p { color: #a3adb7; }
+.db section.light .layer.core .who { color: color-mix(in srgb, var(--a) 70%, #fff); }
+.db section.light .flow > li .d { background: #fff; }
+.db section.light .screen { box-shadow: 0 30px 70px rgba(21,24,27,.16), 0 0 0 1px #e1ddd7; }
+.db section.light .code { color: #d6dde4; }
+.db section.light .eyebrow { color: color-mix(in srgb, var(--a) 82%, #000); }
+
+/* ---------- the trademark line at the end ---------- */
+.db .legal { padding-block: 30px 46px; color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--line); }
+.db .legal p { max-width: 94ch; }
+
+/* ---------- motion. Content is visible until the script runs, and nothing hides for anyone who has asked for
+   less motion: the hidden state only exists under prefers-reduced-motion: no-preference. ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .db.js [data-r] { opacity: 0; transform: translateY(16px); transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); transition-delay: calc(var(--d, 0) * 70ms); }
+  .db.js [data-r].seen { opacity: 1; transform: none; }
+  .db.js [data-r="fade"] { transform: none; }
+  .db.js .flow[data-r] .fline i { transform: scaleX(0); transition: transform 1.3s var(--ease-in-out) .25s; }
+  .db.js .flow[data-r].seen .fline i { transform: none; }
+  .db.js [data-r] .bars i { transform: scaleY(0); transform-origin: bottom; transition: transform .8s var(--ease-out); transition-delay: calc(260ms + var(--i, 0) * 55ms); }
+  .db.js [data-r].seen .bars i { transform: none; }
+  .db.js [data-r] .meter i { width: 0; transition: width 1.1s var(--ease-in-out) .3s; }
+}
+
+/* ---------- a measured bar ---------- */
+.db .meters { margin-top: 36px; display: grid; gap: 16px; }
+.db .meter-row { display: grid; grid-template-columns: 190px 1fr 90px; gap: 18px; align-items: center; }
+.db .meter-row .nm { font-size: 14.5px; font-weight: 600; }
+.db .meter { height: 10px; background: var(--bg-3); border-radius: 6px; overflow: hidden; border: 1px solid var(--line); }
+.db .meter i { display: block; height: 100%; background: var(--a); border-radius: 6px; }
+.db .meter-row .v { font-family: var(--display); font-weight: 800; font-size: 16px; text-align: right; font-variant-numeric: tabular-nums; }
+.db .meter-row.dim .meter i { background: #3a434d; }
+.db .meter-row.dim .nm, .db .meter-row.dim .v { color: var(--muted); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1080px) {
+  .db .pgrid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .db .caps.four-up { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .db .facts { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .db .phases, .db .phases.four, .db .phases.six { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .db .ph:nth-child(3n) { border-right: 0; }
+  .db .flow { grid-auto-flow: row; grid-auto-columns: auto; gap: 22px; }
+  .db .flow .fline { display: none; }
+  .db .flow > li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; text-align: left; padding: 0; align-items: start; }
+  .db .flow > li .d { margin: 0; }
+}
+@media (max-width: 980px) {
+  .db .hero-grid, .db .two, .db .two.wide-l, .db .two.wide-r, .db .cta-band, .db .vs, .db .onward { grid-template-columns: 1fr; }
+  .db .caps { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .db .srow { grid-template-columns: 1fr; gap: 8px; }
+  .db .srow .tag { order: -1; }
+  .db .layer { grid-template-columns: 1fr; gap: 6px; }
+  .db .defs > div { grid-template-columns: 1fr; gap: 6px; }
+  .db .onward a.rt { text-align: left; }
+  .db .hero.centre .lede { text-align: left; }
+  .db .meter-row { grid-template-columns: 1fr auto; }
+  .db .meter-row .meter { grid-column: 1 / -1; }
+}
+@media (max-width: 620px) {
+  .db section { padding-block: 62px; }
+  .db .caps, .db .caps.two-up, .db .caps.four-up, .db .pgrid, .db .pgrid.three, .db .includes, .db .facts, .db .facts.three { grid-template-columns: 1fr; }
+  .db .phases, .db .phases.four, .db .phases.six { grid-template-columns: 1fr; }
+  .db .ph { border-right: 0; border-bottom: 1px solid var(--line); }
+  .db .ph:last-child { border-bottom: 0; }
+  .db .cta-band { padding: 36px 24px; }
+  .db .tiles, .db .tiles.four { grid-template-columns: 1fr 1fr; }
+  .db .callout { grid-template-columns: 1fr; gap: 12px; }
+  .db .quote { padding-left: 18px; }
+  .db .steps > li { grid-template-columns: 30px 1fr; gap: 12px; }
+  .db .steps > li::before { width: 30px; height: 30px; font-size: 12px; }
+}
+
+/* Tables become cards on a phone, so nothing has to scroll sideways: same words, same order. */
+@media (max-width: 760px) {
+  .db .tbl { overflow: visible; border: 0; border-radius: 0; display: grid; gap: 14px; }
+  .db .tbl table, .db .tbl tbody, .db .tbl tr, .db .tbl td { display: block; width: 100%; min-width: 0; }
+  .db .tbl thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .db .tbl tr { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .db .tbl td { padding: 12px 16px; border-bottom: 1px solid var(--line); white-space: normal; }
+  .db .tbl td:first-child { background: var(--bg-2); font-size: 16px; }
+  .db .tbl td[data-label]::before { content: attr(data-label); display: block; margin-bottom: 4px; font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .db .tbl td:first-child::before { display: none; }
+  .db .tbl tr td:last-child { border-bottom: 0; }
+  .db .tbl .nw { white-space: normal; }
+}
+
+/* A diagram shrunk to phone width is unreadable, so below this it keeps a legible size and scrolls sideways on its
+   own instead. The text alternative in each diagram's <title> carries the same content for anyone who cannot or
+   would rather not do that. */
+@media (max-width: 900px) {
+  .db .dia { padding: 20px 0 20px 20px; }
+  .db .dia .dh, .db .dia .legend { padding-right: 20px; }
+  .db .dia .scroll { overflow-x: auto; padding-right: 20px; -webkit-overflow-scrolling: touch; }
+  .db .dia .scroll svg { min-width: 760px; }
+}

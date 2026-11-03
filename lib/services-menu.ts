@@ -358,8 +358,8 @@ export const servicesMenu: MenuCategory[] = [
     ],
     cta: {
       title: "Not sure which edition, or where to start?",
-      body: "Tell us your headcount, entities and countries. We'll show which edition fits and which part comes first.",
-      label: "Find your starting point",
+      body: "Tell us your headcount, entities and countries. We'll show which edition fits.",
+      label: "Pick your edition",
       href: "/services/mihcm#start",
     },
   },
@@ -370,7 +370,7 @@ export const servicesMenu: MenuCategory[] = [
     id: "anthropic",
     label: "Anthropic AI",
     href: "/services/anthropic",
-    descriptor: "Claude for your people and products",
+    descriptor: "Claude for work and products",
     featuredTitle: "Two ways to bring Claude in",
     featured: [
       { label: "Claude Enterprise", sub: "Claude for every employee, with IT controls", href: "/services/anthropic/claude-enterprise" },
@@ -423,17 +423,45 @@ export const servicesMenu: MenuCategory[] = [
     ],
     cta: {
       title: "Not sure where to start with Claude?",
-      body: "Tell us what you want AI to do. We'll help you choose Enterprise, the Platform or both, and set the guardrails.",
-      label: "Find your starting point",
+      body: "Tell us what you want AI to do. We'll help you choose Enterprise, the Platform or both.",
+      label: "Plan your start",
       href: "/services/anthropic#start",
     },
   },
   {
+    // Laid out like Odoo and Salesforce: Databricks presents its platform as a set of products of roughly equal
+    // weight, grouped by job, so each one is a card in its own colour. The supporting pages sit in the quiet line
+    // underneath. The order matches the order the pages read in.
     id: "databricks",
     mark: "/images/Databricks_Logo.png",
-    label: "DataBricks",
-    descriptor: "Enterprise Data Platform",
-    logos: [{ src: "/images/Databricks_Logo.png", alt: "Databricks" }],
+    label: "Databricks",
+    href: "/services/databricks",
+    descriptor: "Data & AI platform",
+    mainTitle: "The eight parts of the platform",
+    mainCols: 4,
+    main: [
+      { label: "Lakehouse", sub: "SQL and BI on open tables you own", href: "/services/databricks/lakehouse", accent: "#ff3621" },
+      { label: "Lakeflow", sub: "Ingestion, pipelines and orchestration", href: "/services/databricks/lakeflow", accent: "#ef8a2b" },
+      { label: "Unity Catalog", sub: "One catalogue for data and AI", href: "/services/databricks/unity-catalog", accent: "#3d7df6" },
+      { label: "Genie", sub: "Dashboards and questions in plain English", href: "/services/databricks/genie", accent: "#9b5de5" },
+      { label: "Agent Bricks", sub: "Build, evaluate and run agents", href: "/services/databricks/agent-bricks", accent: "#e4376a" },
+      { label: "Lakebase", sub: "Serverless Postgres that branches", href: "/services/databricks/lakebase", accent: "#13a0a0" },
+      { label: "Databricks Apps", sub: "Internal tools without a server", href: "/services/databricks/apps", accent: "#5a6ff0" },
+      { label: "OpenSharing", sub: "Share live data, don't copy it", href: "/services/databricks/sharing", accent: "#2ba86f" },
+    ],
+    alsoTitle: "Also in this section",
+    also: [
+      { label: "SAP Business Data Cloud", href: "/services/databricks/sap-business-data-cloud" },
+      { label: "Security & architecture", href: "/services/databricks/security-and-architecture" },
+      { label: "Migration", href: "/services/databricks/migration" },
+      { label: "Pricing & cost", href: "/services/databricks/pricing-and-cost" },
+    ],
+    cta: {
+      title: "Not sure which part you need?",
+      body: "Tell us the argument you keep having about numbers and we will show you where it belongs.",
+      label: "Where to start",
+      href: "/services/databricks#start",
+    },
   },
   {
     id: "hyperscalers",
