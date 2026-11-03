@@ -11,6 +11,8 @@ export type MenuFeatured = {
   href: string;
   /** A logo image. Without one, the card shows a cloud in `accent`. */
   mark?: string;
+  /** "contain" shows a wide logo whole on white, instead of cropping it to fill the square (MiHCM's product logos). */
+  markFit?: "contain";
   accent?: string;
 };
 
@@ -283,17 +285,148 @@ export const servicesMenu: MenuCategory[] = [
     },
   },
   {
+    // Laid out like SAP: MiHCM's two editions as the featured cards (with MiHCM's own logos), then the four parts of MiHCM
+    // Enterprise as titled groups. The dotted row in each group is the part's page; the rows under it open that module's tab.
     id: "mihcm",
-    mark: "/images/solutions/mihcm.svg",
-    label: "MIHCM",
-    descriptor: "HR & HCM Solution",
-    logos: [{ src: "/images/solutions/mihcm.svg", alt: "MiHCM" }],
+    mark: "/images/mihcm/logos/mihcm.svg",
+    label: "MiHCM",
+    href: "/services/mihcm",
+    descriptor: "HR & payroll, built in Asia",
+    featuredTitle: "The two MiHCM editions",
+    featured: [
+      {
+        label: "MiHCM Enterprise",
+        sub: "250 to 20,000+ people, 13-country payroll",
+        href: "/services/mihcm/enterprise",
+        mark: "/images/mihcm/logos/enterprise.svg",
+        markFit: "contain",
+      },
+      {
+        label: "MiHCM Lite",
+        sub: "Up to 250 people, HR and payroll",
+        href: "/services/mihcm/lite",
+        mark: "/images/mihcm/logos/lite.svg",
+        markFit: "contain",
+      },
+    ],
+    groups: [
+      {
+        title: "Workforce management",
+        items: [
+          { label: "Workforce Management", href: "/services/mihcm/workforce-management", accent: "#2f6fd6" },
+          { label: "MiHCM Core", href: "/services/mihcm/workforce-management#core" },
+          { label: "Payroll", href: "/services/mihcm/workforce-management#payroll" },
+          { label: "Time & Attendance", href: "/services/mihcm/workforce-management#time-attendance" },
+        ],
+      },
+      {
+        title: "Talent management",
+        items: [
+          { label: "Talent Management", href: "/services/mihcm/talent-management", accent: "#0aa5d8" },
+          { label: "Recruitment & Onboarding", href: "/services/mihcm/talent-management#recruitment" },
+          { label: "Performance & Succession", href: "/services/mihcm/talent-management#performance" },
+          { label: "Learning (LMS)", href: "/services/mihcm/talent-management#learning" },
+        ],
+      },
+      {
+        title: "Employee experience",
+        items: [
+          { label: "Employee Experience", href: "/services/mihcm/employee-experience", accent: "#f37721" },
+          { label: "MiA ONE", href: "/services/mihcm/employee-experience#mia-one" },
+          { label: "Self-Service & Mobile", href: "/services/mihcm/employee-experience#self-service" },
+          { label: "Shop-Floor Kiosk", href: "/services/mihcm/employee-experience#kiosk" },
+        ],
+      },
+      {
+        title: "Data & AI",
+        items: [
+          { label: "Data & AI", href: "/services/mihcm/data-and-ai", accent: "#8238bf" },
+          { label: "Syntra", href: "/services/mihcm/data-and-ai#syntra" },
+          { label: "MiHCM SmartAssist", href: "/services/mihcm/data-and-ai#smartassist" },
+          { label: "Reporting & Power BI", href: "/services/mihcm/data-and-ai#reporting" },
+        ],
+      },
+      {
+        title: "Payroll & compliance",
+        items: [
+          { label: "Sri Lankan Payroll, Explained", href: "/services/mihcm/workforce-management#lk-payroll" },
+          { label: "Payroll in 13 Countries", href: "/services/mihcm/enterprise#payroll" },
+          { label: "Security & Data Residency", href: "/services/mihcm/enterprise#trust" },
+          { label: "Lite or Enterprise?", href: "/services/mihcm/lite#compare" },
+        ],
+      },
+    ],
+    cta: {
+      title: "Not sure which edition, or where to start?",
+      body: "Tell us your headcount, entities and countries. We'll show which edition fits and which part comes first.",
+      label: "Find your starting point",
+      href: "/services/mihcm#start",
+    },
   },
   {
+    // Laid out like SAP: Anthropic's two ways to bring Claude in as the featured cards, then the products as titled groups.
+    // Anthropic's trademark guidelines allow its logos only in materials it has approved, so this entry carries no Anthropic
+    // artwork: the rail shows a monogram and the cards are text only.
     id: "anthropic",
     label: "Anthropic AI",
-    descriptor: "Claude Deployment",
-    logos: [{ src: "/images/solutions/anthropic.svg", alt: "Anthropic" }],
+    href: "/services/anthropic",
+    descriptor: "Claude for your people and products",
+    featuredTitle: "Two ways to bring Claude in",
+    featured: [
+      { label: "Claude Enterprise", sub: "Claude for every employee, with IT controls", href: "/services/anthropic/claude-enterprise" },
+      { label: "Claude Platform", sub: "Build Claude into products and agents", href: "/services/anthropic/claude-platform" },
+    ],
+    groups: [
+      {
+        title: "Claude at work",
+        items: [
+          { label: "Claude", href: "/services/anthropic/claude", accent: "#d9a03f" },
+          { label: "Tasks & Cowork", href: "/services/anthropic/claude#tasks" },
+          { label: "Connectors & Skills", href: "/services/anthropic/claude#connectors" },
+          { label: "Microsoft 365 & Slack", href: "/services/anthropic/claude#microsoft-365" },
+        ],
+      },
+      {
+        title: "For developers",
+        items: [
+          { label: "Claude Code", href: "/services/anthropic/claude-code", accent: "#7a6ff0" },
+          { label: "Issues to Pull Requests", href: "/services/anthropic/claude-code#issues-to-prs" },
+          { label: "Code Review", href: "/services/anthropic/claude-code#code-review" },
+          { label: "For Engineering Leaders", href: "/services/anthropic/claude-code#code-controls" },
+        ],
+      },
+      {
+        title: "Build & run agents",
+        items: [
+          { label: "Messages API & Tools", href: "/services/anthropic/claude-platform#messages-api" },
+          { label: "Claude Managed Agents", href: "/services/anthropic/claude-platform#managed-agents" },
+          { label: "Claude on Your Cloud", href: "/services/anthropic/claude-platform#clouds" },
+        ],
+      },
+      {
+        title: "Models",
+        items: [
+          { label: "Claude Models", href: "/services/anthropic/models", accent: "#8f9aa6" },
+          { label: "Which Model When", href: "/services/anthropic/models#family" },
+          { label: "Mythos & Fable", href: "/services/anthropic/models#mythos" },
+        ],
+      },
+      {
+        title: "Security & deployment",
+        items: [
+          { label: "Security & Deployment", href: "/services/anthropic/security-and-deployment", accent: "#3a9d6e" },
+          { label: "Data & Training", href: "/services/anthropic/security-and-deployment#data" },
+          { label: "Data Residency", href: "/services/anthropic/security-and-deployment#residency" },
+          { label: "Sri Lanka & India", href: "/services/anthropic/security-and-deployment#regions" },
+        ],
+      },
+    ],
+    cta: {
+      title: "Not sure where to start with Claude?",
+      body: "Tell us what you want AI to do. We'll help you choose Enterprise, the Platform or both, and set the guardrails.",
+      label: "Find your starting point",
+      href: "/services/anthropic#start",
+    },
   },
   {
     id: "databricks",
