@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Manrope } from "next/font/google";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { MenuGlyph, type GlyphName } from "./MenuGlyph";
-import { servicesMenu, type MenuCategory, type MenuTile } from "@/lib/services-menu";
+import { servicesMenu, type MenuCategory, type MenuFeatured, type MenuTile } from "@/lib/services-menu";
 
 // A frosted sheet of paper laid over the dark page: soft off-white, translucent,
 // with the page dimmed and blurred behind it, a glow that follows the pointer, a
@@ -135,7 +135,7 @@ function FeaturedCard({
   delay,
   current,
 }: {
-  f: { label: string; sub: string; href: string; mark?: string; accent?: string };
+  f: MenuFeatured;
   delay: number;
   current: boolean;
 }) {
@@ -148,7 +148,11 @@ function FeaturedCard({
       >
         {f.mark ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={f.mark} alt="" className="h-[52px] w-[52px] shrink-0 rounded-[10px] border border-[#e0e8e4] bg-[#ebf8ff] object-cover" />
+          <img
+            src={f.mark}
+            alt=""
+            className={`h-[52px] w-[52px] shrink-0 rounded-[10px] border border-[#e0e8e4] ${f.markFit === "contain" ? "bg-white object-contain p-1.5" : "bg-[#ebf8ff] object-cover"}`}
+          />
         ) : null}
         <span className="min-w-0 flex-1">
           <span className="block text-[18px] font-extrabold uppercase leading-[1.25] tracking-[0.03em]">{f.label}</span>
