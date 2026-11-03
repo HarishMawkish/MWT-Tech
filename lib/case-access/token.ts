@@ -11,14 +11,14 @@ export const ACCESS_MAX_AGE_SECONDS = 60 * 60 * 24 * 365;
 type Payload = { v: 1; d: string; iat: number };
 
 /** The signing key. Required in production; in development a fixed key is used so the feature works out of the box. */
-function secret(): string | null {
+export function signingKey(): string | null {
   const s = process.env.CASE_ACCESS_SECRET?.trim();
   if (s && s.length >= 32) return s;
   if (process.env.NODE_ENV !== "production") return "development-only-key-not-for-production-use";
   return null;
 }
 
-export const accessConfigured = () => secret() !== null;
+export const accessConfigured = () => signingKey() !== null;
 
 const b64 = (buf: Buffer | string) => Buffer.from(buf).toString("base64url");
 
@@ -27,7 +27,7 @@ function sign(body: string, key: string) {
 }
 
 export function createAccessToken(domain: string, now = Date.now()): string | null {
-  const key = secret();
+  const key = signingKey();
   if (!key) return null;
   const body = b64(JSON.stringify({ v: 1, d: domain.toLowerCase(), iat: Math.floor(now / 1000) } satisfies Payload));
   return `${body}.${b64(sign(body, key))}`;
@@ -35,7 +35,7 @@ export function createAccessToken(domain: string, now = Date.now()): string | nu
 
 /** The domain the visitor registered with, or null if the token is missing, forged, malformed or expired. */
 export function readAccessToken(token: string | undefined, now = Date.now()): { domain: string } | null {
-  const key = secret();
+  const key = signingKey();
   if (!token || !key) return null;
   const [body, sig, extra] = token.split(".");
   if (!body || !sig || extra !== undefined) return null;

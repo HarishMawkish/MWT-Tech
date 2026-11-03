@@ -29,8 +29,7 @@ export const navLinks = [
     ],
   },
   { label: "Industries", href: "/industries" },
-  // Clients tab hidden from header/footer for now; the /clients page still exists.
-  // { label: "Clients", href: "/clients" },
+  { label: "Clients", href: "/clients" },
   { label: "News & Insights", href: "/insights" },
 ];
 

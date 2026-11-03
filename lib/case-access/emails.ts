@@ -7,6 +7,7 @@ import { absoluteUrl, brand } from "@/lib/seo";
 // nothing promised that the site does not already say.
 
 export const NOTIFY_TO = "nafaz@mawkishtechnologies.com";
+export const NOTIFY_CC = "info@mawkishtechnologies.com";
 export const REPLY_TO = "info@mawkishtechnologies.com";
 const ADDRESS = "2nd Floor, Oceanica Tower, 490 Galle Rd, Colombo 00300, Sri Lanka";
 
@@ -135,6 +136,7 @@ export function buildLeadNotification(r: Registration): Message {
     ["Company", oneLine(r.company)],
     ["Work email", r.email],
     ["Email domain", r.domain],
+    ["Email verified", "Yes: they entered the one-time code we sent to this address"],
     ["Domain check", r.mx.length ? `Passed. Mail servers: ${r.mx.slice(0, 3).join(", ")}` : "Passed"],
     ["Case study open", opened ? `${opened.n}: ${opened.t}` : "None (registered from the Clients list)"],
     ["Consent given", `Yes: "${CONSENT_TEXT}"`],
@@ -155,7 +157,7 @@ export function buildLeadNotification(r: Registration): Message {
     "",
     "Reply to this email to reach them directly.",
     "",
-    "Checks passed before access was given: valid address, not a personal or temporary mailbox, not on the competitor blocklist, and the domain has working mail servers. The address itself has not been confirmed by a link or code, so the inbox is unverified until they reply.",
+    "Checks passed before access was given: valid address, not a personal or temporary mailbox, not on the competitor blocklist, and the domain has working mail servers. The person then entered a one-time code we emailed to that address, so they can read that inbox.",
   ].join("\n");
 
   const tr = rows
@@ -171,7 +173,40 @@ export function buildLeadNotification(r: Registration): Message {
 <h1 style="margin:0 0 20px;font-size:22px;line-height:1.25;">${esc(oneLine(r.name))}, ${esc(oneLine(r.company))}</h1>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${tr}</table>
 <p style="margin:22px 0 0;">${button(`mailto:${encodeURIComponent(r.email)}`, "Reply to " + firstName(r.name))}</p>
-<p style="margin:22px 0 0;font-size:12px;line-height:1.6;color:${MUTED};">Checks passed before access was given: valid address, not a personal or temporary mailbox, not on the competitor blocklist, and the domain has working mail servers. The address itself has not been confirmed by a link or code, so the inbox is unverified until they reply.</p>`
+<p style="margin:22px 0 0;font-size:12px;line-height:1.6;color:${MUTED};">Checks passed before access was given: valid address, not a personal or temporary mailbox, not on the competitor blocklist, and the domain has working mail servers. The person then entered a one-time code we emailed to that address, so they can read that inbox.</p>`
+  );
+
+  return { subject, text, html };
+}
+
+
+/** To the visitor, first: the one-time code that proves they can read this inbox. */
+export function buildCodeEmail(name: string, code: string, minutes: number): Message {
+  const hello = firstName(name);
+  const subject = `Your ${brand.name} verification code: ${code}`;
+
+  const text = [
+    `Hello ${hello},`,
+    "",
+    "Your verification code for the case studies is:",
+    "",
+    code,
+    "",
+    `It works for ${minutes} minutes. Enter it on the page you were just on.`,
+    "",
+    "If you didn't ask for this, you can ignore this email. Nobody can open the case studies without the code.",
+    "",
+    `The ${brand.name} team`,
+    ADDRESS,
+  ].join("\n");
+
+  const html = shell(
+    `Your verification code is ${code}.`,
+    `<p style="margin:0 0 16px;">Hello ${esc(hello)},</p>
+<p style="margin:0 0 20px;">Your verification code for the case studies is:</p>
+<p style="margin:0 0 24px;"><span style="display:inline-block;background:#f2f5f3;border:1px solid #e1e9e4;border-radius:10px;padding:14px 22px;font-family:'Courier New',monospace;font-size:28px;font-weight:700;letter-spacing:.2em;color:${INK};">${esc(code)}</span></p>
+<p style="margin:0 0 16px;">It works for ${minutes} minutes. Enter it on the page you were just on.</p>
+<p style="margin:0;font-size:12px;color:${MUTED};">If you didn't ask for this, you can ignore this email. Nobody can open the case studies without the code.</p>`
   );
 
   return { subject, text, html };

@@ -3,14 +3,32 @@ import { clients } from "@/components/clients/data";
 import { getAccess } from "@/lib/case-access/access";
 import { isKnownCrawler, PRIVATE_HEADERS } from "@/lib/case-access/crawlers";
 import { classifyEmail } from "@/lib/case-access/email-policy";
-import { sendRegistrationEmails } from "@/lib/case-access/notify";
+import { cookies } from "next/headers";
+import {
+  CHALLENGE_COOKIE_MAX_AGE,
+  CODE_TTL_MS,
+  PENDING_COOKIE,
+  RATE_COOKIE,
+  canSend,
+  cookieBase,
+  formatCode,
+  issueChallenge,
+  maskEmail,
+  readPending,
+  readRate,
+  recordSend,
+  resendInSeconds,
+} from "@/lib/case-access/challenge";
+import { buildCodeEmail } from "@/lib/case-access/emails";
+import { sendMail } from "@/lib/case-access/mailer";
 import { clientIp, tooManyAttempts } from "@/lib/case-access/rate-limit";
-import { ACCESS_COOKIE, ACCESS_MAX_AGE_SECONDS, accessConfigured, createAccessToken } from "@/lib/case-access/token";
+import { accessConfigured } from "@/lib/case-access/token";
 import { checkDomainReceivesMail } from "@/lib/case-access/verify-domain";
 
-// Registering to read the case studies. The visitor gives a name, company and company email; if the address passes
-// our checks we remember them with a signed cookie and email them and our sales inbox. GET says whether the
-// current browser has already registered, so returning visitors are never asked again.
+// Registering to read the case studies, step one. The visitor gives a name, company and company email; if the address
+// passes our checks we email it a one-time code. Nothing is unlocked and nobody at Mawkish is told yet: that
+// happens in ./verify once they type the code back, which proves they can read that inbox. GET says whether this
+// browser is already registered, or has a code waiting to be entered.
 
 const CONTACT_EMAIL = "info@mawkishtechnologies.com";
 const noStore = PRIVATE_HEADERS;
@@ -26,7 +44,24 @@ function fail(status: number, error: string, field?: string, code?: string) {
 
 export async function GET() {
   const access = await getAccess();
-  return NextResponse.json({ unlocked: access !== null }, { headers: noStore });
+  if (access) return NextResponse.json({ unlocked: true }, { headers: noStore });
+
+  // A code may be waiting (the visitor reloaded, or came back from their email app): let the page offer the code box.
+  const store = await cookies();
+  const pending = readPending(store.get(PENDING_COOKIE)?.value);
+  if (!pending) return NextResponse.json({ unlocked: false }, { headers: noStore });
+  const rate = readRate(store.get(RATE_COOKIE)?.value);
+  return NextResponse.json(
+    { unlocked: false, pending: { email: maskEmail(pending.email), resendIn: resendInSeconds(rate) } },
+    { headers: noStore }
+  );
+}
+
+/** "Use a different email": forget the code that is waiting. The send counter is kept. */
+export async function DELETE() {
+  const res = NextResponse.json({ ok: true }, { headers: noStore });
+  res.cookies.set({ name: PENDING_COOKIE, value: "", ...cookieBase, maxAge: 0 });
+  return res;
 }
 
 export async function POST(request: Request) {
@@ -49,7 +84,7 @@ export async function POST(request: Request) {
 
   // A hidden field no person fills in. Bots do; pretend it worked and give them nothing.
   if (clean(body.website, 200)) {
-    return NextResponse.json({ ok: true }, { headers: noStore });
+    return NextResponse.json({ ok: true, step: "code", email: "***", resendIn: 120 }, { headers: noStore });
   }
 
   const ip = clientIp(request.headers);
@@ -98,46 +133,33 @@ export async function POST(request: Request) {
       : fail(422, `We couldn't find a mailbox for ${verdict.domain}. Please check the address.`, "email", "no-mail");
   }
 
-  const token = createAccessToken(verdict.domain);
-  if (!token) return fail(500, "Server misconfiguration. Please try again later.");
-
   const caseId = typeof body.caseId === "string" && clients.some((c) => c.id === body.caseId) ? body.caseId : undefined;
-  const h = request.headers;
-  const place = [h.get("x-vercel-ip-city"), h.get("x-vercel-ip-country-region"), h.get("x-vercel-ip-country")]
-    .map((p) => {
-      try {
-        return p ? decodeURIComponent(p) : "";
-      } catch {
-        return p ?? "";
-      }
-    })
-    .filter(Boolean)
-    .join(", ");
 
-  // Mail is best-effort: it must never stand between a vetted visitor and the case studies.
-  await sendRegistrationEmails({
-    name,
-    company,
-    email: verdict.email,
-    domain: verdict.domain,
-    mx: domainCheck.mx,
-    caseId,
-    submittedAt: new Date(),
-    ip,
-    userAgent: clean(h.get("user-agent"), 300),
-    referrer: clean(h.get("referer"), 300),
-    location: place,
-  }).catch((err) => console.error("[case-access] Could not send registration emails:", err));
+  // Codes sent to this browser so far. A different email is allowed straight away (people mistype); the cap still counts.
+  const store = await cookies();
+  const rate = readRate(store.get(RATE_COOKIE)?.value);
+  const allowed = canSend(rate, false);
+  if (!allowed.ok) return fail(429, "Too many requests. Please try again in a bit.", undefined, "limit");
 
-  const res = NextResponse.json({ ok: true }, { headers: noStore });
-  res.cookies.set({
-    name: ACCESS_COOKIE,
-    value: token,
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: ACCESS_MAX_AGE_SECONDS,
-  });
+  const challenge = issueChallenge({ name, company, email: verdict.email, domain: verdict.domain, mx: domainCheck.mx.slice(0, 3), caseId });
+  if (!challenge) return fail(500, "Server misconfiguration. Please try again later.");
+
+  // Unlike the notification emails, this one cannot be skipped: without it the visitor has no way in.
+  try {
+    const mail = buildCodeEmail(name, formatCode(challenge.code), CODE_TTL_MS / 60000);
+    const result = await sendMail({ to: verdict.email, ...mail });
+    if (!result.sent) throw new Error(result.reason ?? "not sent");
+  } catch (err) {
+    console.error("[case-access] Could not send the verification code:", err);
+    return fail(503, "We couldn't send your code just now. Please try again in a moment.");
+  }
+
+  const counted = recordSend(rate);
+  const res = NextResponse.json(
+    { ok: true, step: "code", email: maskEmail(verdict.email), resendIn: resendInSeconds(counted.rate) },
+    { headers: noStore }
+  );
+  res.cookies.set({ name: PENDING_COOKIE, value: challenge.token, ...cookieBase, maxAge: CHALLENGE_COOKIE_MAX_AGE });
+  if (counted.token) res.cookies.set({ name: RATE_COOKIE, value: counted.token, ...cookieBase, maxAge: CHALLENGE_COOKIE_MAX_AGE });
   return res;
 }

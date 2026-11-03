@@ -156,3 +156,11 @@
 .cl .c-cons + .c-err { margin: -10px 0 12px; }
 .cl .c-retry { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-top: 28px; }
 .cl .c-retry .btn.sec { color: var(--ink); border-color: var(--line); background: transparent; cursor: pointer; font: inherit; font-weight: 700; }
+
+/* Registration gate, step two: the emailed code. */
+.cl .c-f input.c-code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 22px; font-weight: 700; letter-spacing: .18em; text-align: center; text-transform: uppercase; }
+.cl .c-f input.c-code::placeholder { letter-spacing: .12em; font-weight: 400; color: #a3b0aa; }
+.cl .c-note { display: block; color: #17694b; font-size: 12.5px; margin-top: 6px; }
+.cl .c-sub { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+.cl .c-linkbtn { background: none; border: 0; padding: 4px 0; font: inherit; font-size: 13px; font-weight: 700; color: #17694b; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.cl .c-linkbtn[disabled] { color: #7a8a83; cursor: default; text-decoration: none; }

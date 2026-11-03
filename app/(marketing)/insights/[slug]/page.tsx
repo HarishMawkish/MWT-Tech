@@ -93,8 +93,14 @@ export default async function InsightDetailPage({
     otherBlogs = [...sameCategory, ...different].slice(0, 2);
   }
 
+  // A cover or gallery entry in Sanity can exist without a file attached (an empty image field). It has no URL, and
+  // asking for one throws and fails the whole build, so only entries that really have an image are used.
+  const photos = blogPost
+    ? [blogPost.coverImage, ...(blogPost.galleryImages ?? [])].filter((img) => Boolean(img?.asset))
+    : [];
+
   const galleryImages: GalleryImage[] = blogPost
-    ? [blogPost.coverImage, ...(blogPost.galleryImages ?? [])].map((img, i) => ({
+    ? photos.map((img, i) => ({
         thumb: urlFor(img).width(1200).url(),
         full: urlFor(img).width(2400).url(),
         alt: String(("alt" in img && img.alt) || (i === 0 ? blogPost.title : `${blogPost.title} — photo ${i + 1}`)),
@@ -162,17 +168,14 @@ export default async function InsightDetailPage({
 
       {/* Article */}
       <article className="bg-black">
-        {blogPost && (
+        {blogPost && photos.length > 0 && (
           <div className="relative mx-auto max-w-5xl px-6 lg:px-8">
             <Reveal>
               <BlogImageSlideshow
-                images={[
-                  { src: urlFor(blogPost.coverImage).width(2000).url(), alt: blogPost.title },
-                  ...(blogPost.galleryImages ?? []).map((img, i) => ({
-                    src: urlFor(img).width(2000).url(),
-                    alt: img.alt || `${blogPost.title} — photo ${i + 2}`,
-                  })),
-                ]}
+                images={photos.map((img, i) => ({
+                  src: urlFor(img).width(2000).url(),
+                  alt: String(("alt" in img && img.alt) || (i === 0 ? blogPost.title : `${blogPost.title} — photo ${i + 1}`)),
+                }))}
               />
             </Reveal>
           </div>
