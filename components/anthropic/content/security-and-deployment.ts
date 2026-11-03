@@ -1,0 +1,160 @@
+import type { ProductContent } from "../content-types";
+
+// Security and deployment. Every statement below comes from Anthropic's own pages (claude.com's regional compliance page,
+// Enterprise solutions page, Claude Platform page, the three cloud partner pages, the Fable model page, and anthropic.com's
+// Supported Regions Policy and company page), read in November 2026. Anthropic's Trust Center could not be read by our tools,
+// so nothing here depends on it beyond what the pages above say.
+
+export const securityAndDeployment: ProductContent = {
+  slug: "security-and-deployment",
+  crumb: "Security and deployment",
+  eyebrow: "Security and deployment",
+  title: ["What happens to your data,", "and where Claude runs."],
+  lede: "Before Claude goes near company data, security, legal and IT need answers: is our data used for training, where is it stored and processed, which certifications apply, who can see what, and can we run it inside the cloud we already trust? This page gathers what Anthropic's own pages say, in one place.",
+  primary: { label: "Data and training", href: "#data" },
+  secondary: { label: "Sri Lanka and India", href: "#regions" },
+  note: "Anthropic is a public benefit corporation. Full compliance documentation is in its Trust Center.",
+  hero: {
+    app: "Security review · Checklist",
+    icon: "shield",
+    label: "Illustration of a security review checklist for a Claude deployment. Sample data.",
+    rows: {
+      title: "Before go-live",
+      items: [
+        { a: "Training on our data", b: "Off by default", pill: { t: "Confirmed", tone: "ok" } },
+        { a: "Data residency", b: "Asia-Pacific region", pill: { t: "Chosen", tone: "ok" } },
+        { a: "SSO and SCIM", b: "Identity provider", pill: { t: "Live", tone: "ok" } },
+        { a: "Retention period", b: "Policy to agree", pill: { t: "Open", tone: "wr" } },
+      ],
+    },
+  },
+  heroCaption: "Illustration of a checklist, simplified. Sample data.",
+
+  does: {
+    eyebrow: "In short",
+    title: "Six answers security teams ask for first.",
+    lede: "Each is expanded below, with where Anthropic says it.",
+    items: [
+      { title: "Training", body: "By default, Anthropic does not use your prompts, data or results from commercial deployments to train its models." },
+      { title: "Certifications", body: "SOC 2 Type 2, ISO/IEC 27001, ISO/IEC 27017, ISO/IEC 27018 and CSA STAR, with GDPR and CCPA compliance and a HIPAA-ready offering." },
+      { title: "Residency", body: "Choose where data is stored and processed, with regions in Asia-Pacific (including India and Singapore), Europe, Canada and the United States." },
+      { title: "Your cloud", body: "Run Claude through Amazon Bedrock, Google Cloud or Microsoft Foundry, with your cloud's identity, logging, billing and commitments." },
+      { title: "Control", body: "SSO, SCIM, roles, audit logs, retention controls, IP allowlisting and a Compliance API on Claude Enterprise." },
+      { title: "Availability", body: "Sri Lanka and India are both on Anthropic's list of supported countries and regions." },
+    ],
+  },
+
+  blocks: [
+    {
+      id: "data",
+      kind: "pairs",
+      eyebrow: "Data and training",
+      title: "What Anthropic does, and does not do, with your data.",
+      lede: "From the Enterprise, Claude Platform and model pages.",
+      a: "Topic",
+      b: "What Anthropic says",
+      rows: [
+        { l: "Training", r: "Prompts, data and results are not used to train Anthropic's models by default. For commercial deployments of the Claude Platform, customer data is not used for training by default." },
+        { l: "Feedback", r: "For Enterprise, the exception is feedback you choose to send, such as thumbs-up or thumbs-down ratings." },
+        { l: "Safety monitoring", r: "Like all Claude services, Enterprise usage is subject to automated safety monitoring to detect misuse." },
+        { l: "Retention", r: "Custom data retention controls are available on Claude Enterprise." },
+        { l: "The most capable models", r: "Fable and Mythos require 30-day data retention for safety monitoring by default. Enterprises eligible for Enterprise Frontier Safeguards can store Fable data on their own cloud, with any human review done by the customer by default; until that rollout is complete, eligible customers get zero data retention on Fable." },
+        { l: "Zero data retention", r: "Enterprise Frontier Safeguards give eligible Claude Platform customers zero data retention, with safeguards for detecting misuse." },
+      ],
+    },
+    {
+      id: "certifications",
+      kind: "defs",
+      eyebrow: "Compliance and certifications",
+      title: "The standards Anthropic lists.",
+      lede: "From Anthropic's regional compliance and Enterprise pages. Certificates and reports are in its Trust Center.",
+      items: [
+        { title: "Security certifications", body: "SOC 2 Type 2 for security, availability and confidentiality; ISO/IEC 27001 for information security; ISO/IEC 27017 for cloud security; ISO/IEC 27018 for cloud privacy; and CSA STAR." },
+        { title: "Privacy and regulation", body: "GDPR, with regional processing within the EU and EEA, CCPA, and a Data Processing Addendum defining each party's roles." },
+        { title: "Health data", body: "A HIPAA-ready offering for protected health information." },
+        { title: "Data subject rights", body: "Support for data subject rights, retention policies and deletion." },
+      ],
+    },
+    {
+      id: "residency",
+      kind: "pairs",
+      eyebrow: "Data residency",
+      title: "Where data is stored, and where it is processed.",
+      lede: "Anthropic separates the two. Both are chosen through regional endpoints on your cloud provider.",
+      a: "Term",
+      b: "What Anthropic says",
+      rows: [
+        { l: "Data residency", r: "Controls where prompts, outputs and conversation history are stored." },
+        { l: "Inference residency", r: "Controls where Claude processes requests and generates responses." },
+        { l: "Regions", r: "Europe, the United States, Canada and Asia-Pacific, including Japan, South Korea, Singapore, India and Australia." },
+        { l: "Global or regional endpoints", r: "Global endpoints route to regions with capacity for maximum uptime, with no price premium. Regional endpoints guarantee that storage and processing stay in the region, and may be priced to reflect regional infrastructure." },
+        { l: "By cloud", r: "Anthropic's regional table shows Asia-Pacific included on AWS Bedrock and Google Cloud, and not included on Microsoft Foundry, when we read it." },
+      ],
+      note: "Some advanced features vary by platform; Anthropic advises checking each cloud's feature support before you commit.",
+    },
+    {
+      id: "clouds",
+      kind: "pairs",
+      eyebrow: "Running Claude on your cloud",
+      title: "Three clouds, two models of management.",
+      lede: "On each cloud, Anthropic offers Claude either managed by Anthropic (the full Claude Platform, billed by the cloud) or managed by the cloud provider itself.",
+      a: "Cloud",
+      b: "What Anthropic says",
+      rows: [
+        { l: "Amazon Web Services", r: "The Claude Platform on AWS, with AWS authentication, billing and commitment retirement; Claude on Amazon Bedrock, fully managed by AWS, with inputs, outputs and inference inside the AWS security boundary; and Claude Enterprise in AWS Marketplace." },
+        { l: "Google Cloud", r: "Claude managed by Anthropic, with every Claude Platform feature, Google Cloud billing and commitment retirement; or managed by Google Cloud, with Google as data processor, its governance and controls, and integrations such as Model Armor, Agent Engine and BigQuery." },
+        { l: "Microsoft Foundry", r: "Generally available, with Azure authentication, billing and governance, usage on your Azure invoice and eligible for your Azure Consumption Commitment. Inference can run in an Azure data zone operated by Anthropic." },
+      ],
+    },
+    {
+      id: "regions",
+      kind: "pairs",
+      eyebrow: "Sri Lanka and India",
+      title: "Our two markets, stated plainly.",
+      lede: "What Anthropic's own pages say about the two countries we work in, as we read them in November 2026.",
+      a: "Question",
+      b: "What Anthropic says",
+      rows: [
+        { l: "Is Claude available?", r: "Yes. Both Sri Lanka and India are on Anthropic's Supported Regions Policy, which covers Claude's apps (including Claude Code and Cowork), the API and developer platform, and Claude models through cloud platforms and authorised resellers." },
+        { l: "Who counts as supported", r: "The policy also turns on where an organisation is incorporated or headquartered and who owns or controls it, not only where users are. A subsidiary of a group based outside the supported list should check before it signs." },
+        { l: "Can data stay in India?", r: "India is among the Asia-Pacific regions Anthropic names for regional data residency, through regional endpoints on your cloud provider." },
+        { l: "Sri Lanka residency", r: "Anthropic's pages do not name a Sri Lankan region. Sri Lankan organisations would choose a nearby Asia-Pacific region, such as India or Singapore, and should confirm that against their own regulatory obligations." },
+      ],
+      note: "The version of the Supported Regions Policy we read takes effect on 12 November 2026. Check the current list before you commit.",
+    },
+  ],
+
+  roles: {
+    eyebrow: "Who needs this page",
+    title: "The people who sign off a Claude deployment.",
+    lede: "Each has a different first question.",
+    rows: [
+      { who: "CISOs and security teams", does: "Training defaults, certifications, audit logs, SIEM integration, IP allowlisting." },
+      { who: "Data protection officers", does: "Residency, retention, the Data Processing Addendum and data subject rights." },
+      { who: "Cloud and platform teams", does: "Which cloud, which endpoints, and how Claude fits existing IAM and VPCs." },
+      { who: "Procurement", does: "Direct from Anthropic, through a cloud marketplace, or against an existing cloud commitment." },
+      { who: "Legal", does: "Supported regions, ownership rules and Anthropic's commercial terms." },
+    ],
+  },
+
+  faq: [
+    { q: "Does Anthropic train on our data?", a: "Anthropic says that by default it does not use prompts, data or results from commercial deployments to train its models. For Enterprise, feedback you choose to send is the exception." },
+    { q: "Which certifications does Anthropic hold?", a: "Its regional compliance page lists SOC 2 Type 2, ISO/IEC 27001, ISO/IEC 27017, ISO/IEC 27018 and CSA STAR, with GDPR, HIPAA and a Data Processing Addendum. The Enterprise page adds CCPA." },
+    { q: "Can our data stay in India?", a: "Anthropic names India among the Asia-Pacific regions where regional data residency is available, through regional endpoints on cloud providers." },
+    { q: "Is Claude available in Sri Lanka?", a: "Yes. Sri Lanka is on Anthropic's Supported Regions Policy. Anthropic does not name a Sri Lankan data region, so a nearby Asia-Pacific region would be used." },
+    { q: "Can Claude run inside our existing cloud?", a: "Yes, on Amazon Web Services, Google Cloud or Microsoft Foundry, either managed by Anthropic and billed by the cloud, or managed by the cloud provider." },
+    { q: "Why could you not read the Trust Center?", a: "Anthropic's Trust Center loads in a way our research tools could not read. Everything on this page comes from Anthropic's other official pages; the Trust Center holds the certificates and reports themselves." },
+  ],
+  sources: [
+    { label: "Regional compliance", href: "https://claude.com/regional-compliance" },
+    { label: "Supported Regions Policy", href: "https://www.anthropic.com/legal/supported-regions" },
+    { label: "Claude enterprise solutions", href: "https://claude.com/solutions/enterprise" },
+    { label: "Claude Platform", href: "https://claude.com/platform/api" },
+    { label: "Claude on AWS", href: "https://claude.com/partners/claude-on-aws" },
+    { label: "Claude on Google Cloud", href: "https://claude.com/partners/google-cloud" },
+    { label: "Claude in Microsoft Foundry", href: "https://claude.com/partners/microsoft-foundry" },
+    { label: "Claude Fable (data retention)", href: "https://www.anthropic.com/claude/fable" },
+    { label: "Anthropic Trust Center", href: "https://trust.anthropic.com/" },
+  ],
+  checked: "Checked against Anthropic's own pages in November 2026.",
+};

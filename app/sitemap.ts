@@ -4,6 +4,8 @@ import { insights, services } from "@/lib/site-data";
 import { sapPages, sapPath } from "@/lib/sap-pages";
 import { swyftfloPages, swPath } from "@/lib/swyftflo-pages";
 import { odooPages, odPath } from "@/lib/odoo-pages";
+import { mihcmPages, mhPath } from "@/lib/mihcm-pages";
+import { anthropicPages, anPath } from "@/lib/anthropic-pages";
 import { absoluteUrl } from "@/lib/seo";
 
 // Every public page, with the SAP pages listed first and weighted highest. Search engines read this to find pages.
@@ -29,6 +31,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...salesforcePages.map((p) => entry(sfPath(p.slug), p.slug ? 0.7 : 0.9, "monthly", p.updated)),
     // Odoo: the hub, then one page per family and one per supporting topic
     ...odooPages.map((p) => entry(odPath(p.slug), p.slug ? 0.7 : 0.9, "monthly", p.updated)),
+    // MiHCM: the hub, then one page per edition and one per part of MiHCM Enterprise
+    ...mihcmPages.map((p) => entry(mhPath(p.slug), p.slug ? 0.7 : 0.8, "monthly", p.updated)),
+    // Anthropic: the hub, then one page per product and supporting topic
+    ...anthropicPages.map((p) => entry(anPath(p.slug), p.slug ? 0.7 : 0.8, "monthly", p.updated)),
     entry("/industries", 0.7, "monthly"),
     entry("/insights", 0.6, "weekly"),
     ...insights.map((p) => entry(`/insights/${p.slug}`, 0.5, "monthly")),

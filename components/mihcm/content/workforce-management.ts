@@ -1,0 +1,242 @@
+import type { ProductContent } from "../content-types";
+
+// Workforce Management. Every statement below comes from MiHCM's own pages (Core HR, Payroll for Sri Lanka, Time &
+// Attendance, the MiHCM Enterprise page and MiHCM's Sri Lanka Payroll Guide 2026), read in November 2026. Statutory
+// figures are MiHCM's, as its guide states them; they are not tax advice.
+
+export const workforceManagement: ProductContent = {
+  slug: "workforce-management",
+  crumb: "Workforce Management",
+  eyebrow: "Workforce Management",
+  title: ["One employee record,", "paid correctly on every shift."],
+  lede: "Workforce Management is the foundation of MiHCM Enterprise: MiHCM Core, Payroll, Time & Attendance and Organisation Planning. It is where a person's record lives, where shifts and overtime are counted, and where pay is calculated against each country's statutory rules. Everything else in MiHCM reads from it.",
+  primary: { label: "See the four modules", href: "#explore" },
+  secondary: { label: "Sri Lankan payroll, explained", href: "#lk-payroll" },
+  note: "Module names and icons are MiHCM's own. MiHCM Lite includes a simpler version of Core HR, Payroll and Time & Attendance.",
+  hero: {
+    app: "Payroll · Monthly run",
+    icon: "payroll",
+    label: "Illustration of a Sri Lankan monthly payroll run: the checklist, statutory totals and reports ready to submit. Sample data.",
+    tiles: [
+      { h: "Employees paid", k: "1,240", s: "This month" },
+      { h: "EPF and ETF", k: "Ready", s: "Detail and page totals", tone: "ok" },
+      { h: "Negative salaries", k: "0", s: "Report clear", tone: "ok" },
+    ],
+    steps: { title: "Before salaries go out", items: [{ t: "Attendance locked", state: "done" }, { t: "Loans and increments", state: "done" }, { t: "APIT calculated", state: "done" }, { t: "Salary to bank", state: "now" }] },
+    rows: {
+      title: "Statutory reports",
+      items: [
+        { a: "Monthly EPF/ETF", pill: { t: "Ready", tone: "ok" } },
+        { a: "Monthly PAYE tax", pill: { t: "Ready", tone: "ok" } },
+        { a: "Monthly stamp duty", pill: { t: "Ready", tone: "ok" } },
+      ],
+    },
+  },
+  heroCaption: "Illustration of a payroll run, simplified. Sample data.",
+
+  does: {
+    eyebrow: "What it does",
+    title: "The facts payroll depends on, kept straight.",
+    lede: "Most payroll errors start upstream: a profile that was updated in one place and not another, an overtime rule nobody can trace, a headcount that Finance and HR count differently. Workforce Management closes those gaps before pay day.",
+    items: [
+      { title: "One profile per person", body: "Every personal, contact, employment and document detail in one place, with a completion indicator that flags what is missing, so payroll and every other process work from the same picture." },
+      { title: "Every movement recorded", body: "Confirmation, transfers, promotions, disciplinary actions, resignations, clearance and retirement, each with the documents it needs, on a timeline per employee." },
+      { title: "Leave by the law", body: "Leave policies automated in line with each country's labour law, including carry-forward, encashment, lieu leave and probation-period entitlements." },
+      { title: "Attendance payroll can trust", body: "Rotating rosters, midnight shifts, grace periods and overtime ceilings set once; attendance periods lock before payroll runs." },
+      { title: "Pay by each country's rules", body: "Retirement funds, tax, gratuity and social security calculated by the engine, with reports in each authority's format." },
+      { title: "A headcount everyone agrees on", body: "Live org charts and an approved headcount plan that new hires are checked against, so Finance and HR quote the same number." },
+    ],
+  },
+
+  explore: {
+    eyebrow: "Explore",
+    title: "Four modules, up close.",
+    lede: "Pick a module to see what it covers, as MiHCM describes it, and how its screen might look.",
+    tabs: [
+      {
+        id: "core",
+        label: "MiHCM Core",
+        icon: "core",
+        title: "The single employee record everything depends on",
+        tagline: "Profiles, org charts, movements and leave, from onboarding to retirement.",
+        points: [
+          "A digital profile holds personal, work, family, contact, medical and bank details, work experience, qualifications, skills, memberships, employment history and correspondence.",
+          "A timeline shows every key movement in an employee's lifecycle, and people who leave are kept as deactivated profiles that can be reactivated if they are re-employed.",
+          "Letters are generated in the platform from the employee's own data, documents are filed in categorised folders, and EviaSign integration adds secure e-signatures.",
+          "Org charts tag each entity to its legislative entity, so each follows its own labour law; a position chart maps recruitment, contracts, reporting lines and job descriptions to each role.",
+          "Role-based access by module (for example Profile Manager, Employee Self-Service or Recruitment), with predefined roles to keep permissions consistent.",
+          "Disciplinary procedures, resignations, exit interviews and clearance of issued items are recorded in one structured off-boarding flow.",
+        ],
+        look: { title: "A profile that is actually current", body: "MiHCM's point: a new phone number is changed on one screen, and there are no three other places still showing the old one, because there is only one record." },
+        screen: {
+          app: "MiHCM Core · Employee profile",
+          icon: "core",
+          label: "Illustration of an employee profile with a completion indicator, documents and a lifecycle timeline. Sample data.",
+          tiles: [{ h: "Profile", k: "94%", s: "Bank details missing", tone: "wr" }, { h: "Reports to", k: "Manager B", s: "Finance, LK-01" }],
+          rows: { title: "Documents", items: [{ a: "Appointment letter", pill: { t: "E-signed", tone: "ok" } }, { a: "Confirmation letter", pill: { t: "Generated", tone: "in" } }] },
+          steps: { title: "Timeline", items: [{ t: "Joined", state: "done" }, { t: "Confirmed", state: "done" }, { t: "Transferred", state: "now" }] },
+        },
+      },
+      {
+        id: "payroll",
+        label: "Payroll",
+        icon: "payroll",
+        title: "One payroll engine, compliant in each country",
+        tagline: "Statutory calculations, a formula builder and 20+ reports.",
+        points: [
+          "Native processing across 13 markets in South and South East Asia, run in-house rather than through a local partner.",
+          "Pre-configured for each country's tax laws and employment regulations, and updated as they change.",
+          "An advanced formula builder gives full control over salary definitions and other payroll calculations.",
+          "Multi-company and multi-currency payroll from one dashboard, for groups with several entities.",
+          "Weekly or monthly pay schedules with different rates by type of employment, and a checklist that confirms attendance, loans and increments before each run.",
+          "GIRO payments and eSubmissions to statutory authorities by default, and API integration with third-party systems and banking platforms.",
+          "Enterprise security: user management, information-security controls and a complete audit trail.",
+        ],
+        look: { title: "Built for the rule change", body: "MiHCM's question: what if payroll already knew the rule changed, wherever it changed? Statutory rates and tables are maintained in the engine, not in an email to the payroll team." },
+        screen: {
+          app: "Payroll · Reports",
+          icon: "payroll",
+          label: "Illustration of a payroll report library with Sri Lankan statutory reports. Sample data.",
+          rows: { title: "Statutory reports", items: [{ a: "EPF/ETF detail, 1st half", pill: { t: "Ready", tone: "ok" } }, { a: "T10 certificates", pill: { t: "Ready", tone: "ok" } }, { a: "PAYE Part A and B", pill: { t: "Ready", tone: "ok" } }, { a: "Salary to bank", pill: { t: "Queued", tone: "in" } }] },
+        },
+      },
+      {
+        id: "time-attendance",
+        label: "Time & Attendance",
+        icon: "time-attendance",
+        title: "Every shift and overtime rule, applied before payroll sees it",
+        tagline: "Any device, real operations, payroll-ready output.",
+        points: [
+          "Biometric and access-control devices from any vendor (fingerprint, facial, finger-wave and iris recognition, RFID and barcode) feed one attendance record.",
+          "Face-recognition attendance on MiHCM Mobile, with geotagging and geofencing, and shared kiosks for staff without a phone.",
+          "Rotating rosters, flexi and midnight shifts, grace periods and overtime ceilings are configured once, and supervisors are alerted as overtime nears its limit.",
+          "Single, double and triple overtime, adjustments for late arrivals and meal breaks, prior authorisation and batch approvals, with overtime capped per cost centre.",
+          "Local working-hour limits, rest days and holiday premiums apply automatically, and attendance periods lock before payroll runs.",
+          "Reports include late, daily absent, overtime claimed versus approved, invalid attendance and no-pay reports.",
+        ],
+        look: { title: "11:47 pm in Johor", body: "MiHCM's example: a night shift clocking in against an overtime ceiling nobody can trace. In MiHCM the rule, who set it and who approved the overtime are all on record." },
+        screen: {
+          app: "Time & Attendance · Night shift",
+          icon: "time-attendance",
+          label: "Illustration of a night-shift attendance view with overtime approaching its ceiling. Sample data.",
+          tiles: [{ h: "Clocked in", k: "182", s: "Shift C, 22:00" }, { h: "Overtime", k: "88%", s: "Of cost-centre ceiling", tone: "wr" }],
+          bars: { title: "Overtime by line", rows: [["Line 1", 72, "Within cap", "g"], ["Line 2", 94, "Near cap", "o"], ["Line 3", 40, "Within cap", "g"]] },
+        },
+      },
+      {
+        id: "organisation-planning",
+        label: "Organisation Planning",
+        icon: "organisation-planning",
+        title: "The org chart and the headcount plan as one living document",
+        tagline: "Live charts, approved headcount and a shared job description library.",
+        points: [
+          "Org charts render live from the organisation set-up and show headcount, gender split, resignations, new joiners and open vacancies for every entity.",
+          "Headcount requests route through approval into one plan showing present, requested and approved headcount and the variance, by employment type.",
+          "New hires are checked against the approved number, and manpower plans show the gap between budgeted and actual headcount.",
+          "A central library of job descriptions, set up by group, company or department, is assigned to designations from one screen and feeds hiring requests and succession criteria.",
+          "Job descriptions set out responsibilities, reporting lines, qualifications, key result areas and competency profiles.",
+        ],
+        look: { title: "One number for HR and Finance", body: "MiHCM's scenario: HR submits five headcount requests and Finance asks what the headcount actually is. With one plan, both see present, requested and approved side by side." },
+        screen: {
+          app: "Organisation Planning · Headcount",
+          icon: "organisation-planning",
+          label: "Illustration of a headcount plan with present, requested and approved numbers by department. Sample data.",
+          bars: { title: "Headcount plan", rows: [["Present", 86, "412"], ["Requested", 92, "438", "o"], ["Approved", 89, "426", "g"]] },
+          rows: { title: "Requests", items: [{ a: "Finance, 2 roles", pill: { t: "Approved", tone: "ok" } }, { a: "Operations, 3 roles", pill: { t: "In review", tone: "wr" } }] },
+        },
+      },
+    ],
+  },
+
+  blocks: [
+    {
+      id: "lk-payroll",
+      kind: "defs",
+      eyebrow: "Sri Lankan payroll, explained",
+      title: "Four statutory obligations on every payslip.",
+      lede: "MiHCM's Sri Lanka Payroll Guide 2026 sets out what every employer in Sri Lanka must manage each month. The framework is not complicated in principle, the guide says, but it is detailed, and the details changed more than once in the past year.",
+      items: [
+        { title: "EPF: Employees' Provident Fund", body: "Mandatory retirement savings. The employer contributes 12% of total earnings and the employee 8%, with no salary cap, due to the Central Bank's EPF Department by the last working day of the following month." },
+        { title: "ETF: Employees' Trust Fund", body: "A separate fund paid by the employer alone: 3% of total earnings, with no employee contribution, due on the same date as EPF." },
+        { title: "Gratuity", body: "A lump sum for employees with five or more years of service at an employer of 15 or more workmen: half a month's salary per completed year for monthly-rated workmen, payable on termination for any reason, not only retirement." },
+        { title: "APIT: Advance Personal Income Tax", body: "Progressive income tax withheld at source and paid to the Inland Revenue Department by the 15th of the following month, worked out from each employee's monthly earnings and non-cash benefits against IRD Tax Table No. 01." },
+      ],
+      note: "Figures as stated in MiHCM's Sri Lanka Payroll Guide 2026. They change; confirm current rates with your tax adviser.",
+    },
+    {
+      id: "lk-mistakes",
+      kind: "pairs",
+      eyebrow: "Where it goes wrong",
+      title: "The four most common payroll mistakes in Sri Lanka.",
+      lede: "MiHCM's guide says the usual failures are not dramatic; they are systemic. Each is the kind of rule a payroll engine should hold for you.",
+      a: "Mistake",
+      b: "What MiHCM's guide says",
+      rows: [
+        { l: "The wrong base", r: "Calculating EPF, ETF or gratuity on basic salary alone, when qualifying allowances should be included too." },
+        { l: "Old tax relief", r: "Applying the pre-April 2025 APIT personal relief after the threshold moved to Rs. 150,000 a month." },
+        { l: "Two payments treated as one", r: "Treating gratuity and TEWA termination compensation as the same payment, when they are calculated under separate statutes and can both apply." },
+        { l: "Last year's minimum wage", r: "Working from last year's minimum wage after the Rs. 30,000 rate took effect in January 2026." },
+      ],
+      note: "MiHCM says its engine maintains contribution rates, tax tables and Wages Board rules in line with regulatory updates, and applies the right overtime, no-pay and late-deduction formulas for Shop & Office or Wages Board employees.",
+    },
+    {
+      id: "lk-reports",
+      kind: "flow",
+      eyebrow: "Month-end, in Sri Lanka",
+      title: "From attendance to authority, in one run.",
+      lede: "What MiHCM Payroll produces for a Sri Lankan month-end, from its payroll page and guide.",
+      steps: [
+        { t: "Lock attendance", s: "Overtime, no-pay and late deductions settled.", icon: "time-attendance" },
+        { t: "Calculate", s: "APIT, EPF at 12% and 8%, ETF at 3%.", icon: "payroll" },
+        { t: "Reconcile", s: "Basic and cash salary, negative salary checks.", icon: "payroll" },
+        { t: "Pay", s: "Salary, EPF and ETF bank files for major Sri Lankan banks.", icon: "payroll" },
+        { t: "Report", s: "EPF/ETF page totals, T9 and T10, PAYE Part A and B.", icon: "payroll" },
+      ],
+      note: "MiHCM names bank file formats for Bank of Ceylon, Commercial Bank, HNB, HSBC, People's Bank, NSB, Seylan, Sampath, DFCC and the Central Bank, and generates T9 and T10 certificates and EPF/ETF page totals for each half-year.",
+    },
+  ],
+
+  roles: {
+    eyebrow: "Who uses it",
+    title: "The people who keep the foundation true.",
+    lede: "Roles drawn from MiHCM's Core HR, Payroll and Time & Attendance pages.",
+    rows: [
+      { who: "HR administrators", does: "Keep profiles complete, record movements and generate letters, with access set by role and module." },
+      { who: "Payroll officers", does: "Run the checklist, reconcile, process salaries and produce statutory reports and bank files." },
+      { who: "Supervisors", does: "Manage rosters and shifts, approve overtime in batches and get alerts as overtime nears its ceiling." },
+      { who: "Finance", does: "See approved headcount against budget and the full cost of payroll by cost centre." },
+      { who: "Employees", does: "Update their own details, see payslips and leave balances, and check in by device, phone or kiosk." },
+    ],
+  },
+
+  fits: {
+    eyebrow: "Other systems",
+    title: "How it connects.",
+    lede: "From MiHCM's Payroll, Time & Attendance and Enterprise pages.",
+    rows: [
+      { name: "Banks", how: "Payroll files upload to any bank, with GIRO payments and Sri Lankan bank formats named by MiHCM." },
+      { name: "Statutory authorities", how: "eSubmissions to statutory and regulatory authorities are provided by default." },
+      { name: "ERP and finance", how: "REST APIs and webhooks exchange workforce and payroll data with group ERP and finance systems." },
+      { name: "Attendance devices", how: "Biometric, RFID and barcode devices from any vendor." },
+      { name: "Third-party payroll", how: "Time & Attendance also connects to third-party payroll systems, for organisations that keep their existing payroll." },
+      { name: "Documents and signatures", how: "Third-party document management systems, and EviaSign for e-signatures." },
+    ],
+  },
+
+  faq: [
+    { q: "Which payroll countries does MiHCM support?", a: "MiHCM's Enterprise page lists native statutory payroll in 13 countries across South and South East Asia, including Sri Lanka, Bangladesh, the Maldives, Pakistan, Malaysia, Singapore and Thailand. Its payroll page names eleven of them. India is not listed." },
+    { q: "Which Sri Lankan statutory reports does it produce?", a: "MiHCM's payroll page lists EPF/ETF detail and page totals for each half-year, T9 and T10, PAYE Part A and Part B, monthly EPF/ETF, monthly PAYE tax and monthly stamp duty, among more than 20 reports." },
+    { q: "Can we use our existing attendance machines?", a: "MiHCM says it integrates with biometric and access-control devices from any vendor, including fingerprint, facial, finger-wave and iris recognition, RFID and barcode devices." },
+    { q: "Can it handle Wages Board employees?", a: "MiHCM's guide says its engine applies the appropriate overtime, no-pay and late-deduction formulas for Shop & Office or Wages Board employees, with Wages Board rules maintained in line with regulatory updates." },
+    { q: "Can it run payroll for several companies?", a: "Yes. MiHCM describes centralised payroll for multiple companies and currencies from one dashboard." },
+    { q: "Is this tax advice?", a: "No. The statutory figures on this page are as MiHCM's Sri Lanka Payroll Guide 2026 states them. Rates change; confirm them with your tax adviser." },
+  ],
+  sources: [
+    { label: "MiHCM Core HR", href: "https://mihcm.com/solutions/core-hr?site_locale=en-lk" },
+    { label: "MiHCM Payroll (Sri Lanka)", href: "https://mihcm.com/en-lk/solutions/payroll" },
+    { label: "MiHCM Time & Attendance", href: "https://mihcm.com/solutions/time-and-attendance?site_locale=en-lk" },
+    { label: "MiHCM Enterprise", href: "https://mihcm.com/en-lk/mihcm-enterprise" },
+    { label: "Sri Lanka Payroll Guide 2026 (MiHCM)", href: "https://mihcm.com/en-lk/resources/guides/sri-lanka-payroll-guide" },
+  ],
+  checked: "Checked against MiHCM's own pages and guide in November 2026.",
+};
