@@ -254,14 +254,14 @@ function CloudTile({ t, delay, current }: { t: MenuTile; delay: number; current:
 }
 
 /** One of the main products: a tall card with a thick bar in its colour, a large number and a bold name. */
-function MainCard({ m, n, delay, current }: { m: NonNullable<MenuCategory["main"]>[number]; n: number; delay: number; current: boolean }) {
+function MainCard({ m, n, delay, current, dense }: { m: NonNullable<MenuCategory["main"]>[number]; n: number; delay: number; current: boolean; dense?: boolean }) {
   return (
     <li className="sap-rise" style={{ animationDelay: `${delay}ms`, animationDuration: "0.5s" }}>
       <Link
         href={m.href}
         aria-current={current ? "page" : undefined}
         style={{ "--a": m.accent } as CSSProperties}
-        className={`group relative flex h-full min-h-[11.4rem] flex-col justify-between overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--a)_30%,#d3dfd9)] bg-white px-4 pb-4 pt-5 transition-all duration-300 ${EASE} hover:-translate-y-1 hover:border-[var(--a)] hover:shadow-[0_22px_36px_-22px_color-mix(in_srgb,var(--a)_70%,#000)] active:scale-[0.98]`}
+        className={`group relative flex h-full ${dense ? "min-h-[8.6rem]" : "min-h-[11.4rem]"} flex-col justify-between overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--a)_30%,#d3dfd9)] bg-white px-4 pb-4 pt-5 transition-all duration-300 ${EASE} hover:-translate-y-1 hover:border-[var(--a)] hover:shadow-[0_22px_36px_-22px_color-mix(in_srgb,var(--a)_70%,#000)] active:scale-[0.98]`}
       >
         <span aria-hidden="true" className="absolute inset-x-0 top-0 h-[6px] bg-[var(--a)]" />
         <span
@@ -270,7 +270,14 @@ function MainCard({ m, n, delay, current }: { m: NonNullable<MenuCategory["main"
           style={{ background: "linear-gradient(160deg, color-mix(in srgb, var(--a) 14%, transparent), transparent 70%)" }}
         />
         <span className="relative flex items-start justify-between">
-          <span className="font-display text-[42px] font-extrabold leading-none tracking-[-0.03em] text-[var(--a)]">{String(n).padStart(2, "0")}</span>
+          {m.icon ? (
+            <span className="grid h-[46px] w-[46px] place-items-center rounded-[13px] bg-white shadow-[0_0_0_1px_rgba(20,32,25,0.1),0_4px_12px_rgba(20,32,25,0.08)]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`/images/odoo/apps/${m.icon}.svg`} alt="" width={34} height={34} className="h-[34px] w-[34px] object-contain" />
+            </span>
+          ) : (
+            <span className="font-display text-[42px] font-extrabold leading-none tracking-[-0.03em] text-[var(--a)]">{String(n).padStart(2, "0")}</span>
+          )}
           <span
             aria-hidden="true"
             className="grid h-8 w-8 place-items-center rounded-full border border-[#cfdad4] text-[13px] text-[#4d6157] transition-all duration-300 group-hover:border-[var(--a)] group-hover:bg-[var(--a)] group-hover:text-white"
@@ -279,7 +286,7 @@ function MainCard({ m, n, delay, current }: { m: NonNullable<MenuCategory["main"
           </span>
         </span>
         <span className="relative mt-4 block">
-          <span className={`block font-display text-[22px] font-extrabold leading-[1.1] tracking-[-0.01em] ${INK}`}>{m.label}</span>
+          <span className={`block font-display ${dense ? "text-[19px]" : "text-[22px]"} font-extrabold leading-[1.1] tracking-[-0.01em] ${INK}`}>{m.label}</span>
           <span className="mt-2 block text-[13px] leading-[1.35] text-[#58695f]">{m.sub}</span>
         </span>
       </Link>
@@ -306,11 +313,11 @@ function Panel({ cat, pathname }: { cat: MenuCategory; pathname: string }) {
             </Link>
           )}
         </div>
-        <ul className="grid grid-cols-3 gap-3">
+        <ul className={`grid gap-3 ${cat.mainCols === 4 ? "grid-cols-4" : "grid-cols-3"}`}>
           {cat.main.map((m, i) => (
-            <MainCard key={m.href} m={m} n={i + 1} delay={i * 60} current={pathname === m.href} />
+            <MainCard key={m.href} m={m} n={i + 1} delay={i * 60} current={pathname === m.href} dense={cat.mainCols === 4} />
           ))}
-          {cat.cta && (
+          {cat.cta && cat.mainCols !== 4 && (
             <li className="sap-rise" style={{ animationDelay: `${cat.main.length * 60}ms`, animationDuration: "0.5s" }}>
               <CtaCard cta={cat.cta} delay={0} />
             </li>
@@ -335,6 +342,20 @@ function Panel({ cat, pathname }: { cat: MenuCategory; pathname: string }) {
                 )}
               </span>
             ))}
+            {cat.cta && cat.mainCols === 4 && (
+              <Link
+                href={cat.cta.href}
+                className="group/cta ml-auto inline-flex items-baseline gap-2 rounded-md px-1.5 py-0.5 text-[13px] font-medium text-[#3e5248] transition-colors hover:bg-[#e3eee8] hover:text-[#071912]"
+              >
+                {cat.cta.title}
+                <b className="font-extrabold text-[#1f7a5a]">
+                  {cat.cta.label}
+                  <span aria-hidden="true" className="ml-1 inline-block transition-transform duration-300 group-hover/cta:translate-x-1">
+                    &rarr;
+                  </span>
+                </b>
+              </Link>
+            )}
           </div>
         )}
       </div>

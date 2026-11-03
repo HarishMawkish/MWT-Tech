@@ -55,3 +55,22 @@ The requirements doc also calls for a set of items that are operational/infra wo
 - **Google Maps** — the contact page embeds an OpenStreetMap iframe (no API key required) centered on Colombo; swap for a Google Maps embed + real office address once available.
 - **Domain, SSL, DNS, analytics/SEO submission** — these are registrar/hosting-account actions, not code.
 - Partner logos (Samishti Infotec, Levarus) are referenced by name only — add real logo assets under `public/` once received.
+
+## Case-study access (Clients page)
+
+Case studies are gated: a visitor registers once (name, company, company email, consent) and is then remembered.
+
+- **What is checked** (`lib/case-access/`): the address is valid; it is not a free provider (Gmail, Yahoo, Outlook, iCloud and so on) or a throwaway inbox (`email-policy.ts`); its domain is not on the competitor blocklist (`competitors.ts`); and the domain has working mail servers (`verify-domain.ts`). The inbox itself is not confirmed by a link or code.
+- **Competitor blocklist**: one entry per company in `competitors.ts`, with the evidence for it. Matching covers the domain and its subdomains. Adding a company also cuts off anyone from that domain who registered earlier.
+- **Remembering**: a signed, HTTP-only cookie (`mw_case_access`, 12 months). Needs `CASE_ACCESS_SECRET` (32+ characters) in the environment. In production, registration fails until it is set; in development a built-in key is used. Generate one with `node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"`.
+- **Why it is real**: the case-study bodies live in `lib/case-access/case-details.ts` and are served by `/api/case-studies/[id]` only to a browser holding a valid cookie. They are not in the page's JavaScript.
+- **Kept away from crawlers**: `/api/` (including the case-study endpoints) is disallowed in `app/robots.ts` for every crawler and, explicitly, for the AI crawlers listed in `lib/case-access/crawlers.ts`. Those endpoints also send `X-Robots-Tag: noindex, nofollow, noarchive, noai`, refuse known crawler user-agents (so a bot cannot register either), and rate-limit bursts. robots.txt is only a request; the cookie lock is what actually stops a crawler. Case studies are never added to the sitemap.
+- **Email**: the welcome email and the sales summary (to `nafaz@mawkishtechnologies.com`) are written in `emails.ts`, but sending is not configured yet. Plug a transport into `sendMail()` in `mailer.ts`; nothing else needs to change.
+
+## Odoo pages
+
+`/services/odoo` is the Odoo hub, with eight family pages (Finance, Sales, Websites, Supply Chain, Human Resources, Marketing, Service Delivery, Productivity) and three supporting pages (Odoo AI, Studio, editions and hosting). Each app in a family is a tab, and `/services/odoo/<page>#<app>` opens it.
+
+- **Content** is in `components/odoo/content/` (one typed file per page) and `components/odoo/data.ts` (the 51 apps and the families). Metadata and structured data are in `lib/odoo-pages.ts`; add a page there, in the content index and in the data file.
+- **Icons** are Odoo's own, from its brand-assets page, in `public/images/odoo/`. Do not redraw them, and do not use Odoo's partner badges.
+- **Sources**: every statement is from Odoo's own pages and documentation; the record, source ledger, verification and open points are in `docs/odoo-product-knowledge.md`. Odoo's documentation lags its release notes, so check both when editing.

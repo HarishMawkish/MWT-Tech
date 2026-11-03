@@ -3,13 +3,17 @@
 import { useState, type FormEvent } from "react";
 import { trackEvent } from "@/lib/analytics";
 
-const intents = [
-  { value: "consultation", label: "Schedule a Consultation" },
-  { value: "demo", label: "Request a Demo" },
-  { value: "proposal", label: "Request a Proposal" },
-];
+/** What the visitor came to do. No longer a dropdown, but still sent: links such as /contact?intent=demo set it. */
+const INTENTS = ["consultation", "demo", "proposal"];
 
-export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
+export function ContactForm({
+  defaultIntent,
+  services,
+}: {
+  defaultIntent?: string;
+  services: string[];
+}) {
+  const intent = defaultIntent && INTENTS.includes(defaultIntent) ? defaultIntent : "consultation";
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -25,6 +29,7 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
       email: String(data.get("email") || ""),
       company: String(data.get("company") || ""),
       intent: String(data.get("intent") || ""),
+      service: String(data.get("service") || ""),
       message: String(data.get("message") || ""),
     };
 
@@ -49,16 +54,12 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
 
   if (status === "success") {
     return (
-      <div role="status" className="rounded-2xl border border-mw-secondary/30 bg-mw-secondary/5 p-8 text-center">
-        <h3 className="font-display text-xl font-bold text-white">Thank you.</h3>
-        <p className="mt-2 text-sm text-mw-ink/70">
+      <div role="status" className="t-ok">
+        <h3>Thank you.</h3>
+        <p>
           We&rsquo;ve received your message and will be in touch shortly.
         </p>
-        <button
-          type="button"
-          onClick={() => setStatus("idle")}
-          className="mt-5 min-h-11 rounded-full border border-mw-secondary/40 px-5 text-sm font-semibold text-mw-secondary transition hover:bg-mw-secondary/10"
-        >
+        <button type="button" onClick={() => setStatus("idle")} className="t-btn">
           Send another message
         </button>
       </div>
@@ -66,11 +67,11 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-mw-ink/80">
-            Full name
+    <form onSubmit={handleSubmit} className="t-form">
+      <div className="t-row">
+        <div className="t-f">
+          <label htmlFor="name">
+            Name
           </label>
           <input
             id="name"
@@ -78,11 +79,10 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
             type="text"
             autoComplete="name"
             required
-            className="w-full min-h-11 rounded-lg border border-mw-line bg-transparent px-4 py-2.5 text-base text-mw-ink outline-none transition-colors placeholder:text-mw-ink/40 focus:border-mw-secondary focus-visible:ring-2 focus-visible:ring-mw-secondary/40 focus-visible:outline-none sm:text-sm"
           />
         </div>
-        <div>
-          <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-mw-ink/80">
+        <div className="t-f">
+          <label htmlFor="email">
             Work email
           </label>
           <input
@@ -91,14 +91,13 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
             type="email"
             autoComplete="email"
             required
-            className="w-full min-h-11 rounded-lg border border-mw-line bg-transparent px-4 py-2.5 text-base text-mw-ink outline-none transition-colors placeholder:text-mw-ink/40 focus:border-mw-secondary focus-visible:ring-2 focus-visible:ring-mw-secondary/40 focus-visible:outline-none sm:text-sm"
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="company" className="mb-1.5 block text-sm font-medium text-mw-ink/80">
+      <div className="t-row">
+        <div className="t-f">
+          <label htmlFor="company">
             Company
           </label>
           <input
@@ -106,43 +105,38 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
             name="company"
             type="text"
             autoComplete="organization"
-            className="w-full min-h-11 rounded-lg border border-mw-line bg-transparent px-4 py-2.5 text-base text-mw-ink outline-none transition-colors placeholder:text-mw-ink/40 focus:border-mw-secondary focus-visible:ring-2 focus-visible:ring-mw-secondary/40 focus-visible:outline-none sm:text-sm"
           />
         </div>
-        <div>
-          <label htmlFor="intent" className="mb-1.5 block text-sm font-medium text-mw-ink/80">
-            I&rsquo;d like to&hellip;
+        <div className="t-f">
+          <label htmlFor="service">
+            Service
           </label>
-          <select
-            id="intent"
-            name="intent"
-            defaultValue={defaultIntent || "consultation"}
-            className="w-full min-h-11 rounded-lg border border-mw-line bg-transparent px-4 py-2.5 text-base text-mw-ink outline-none transition-colors placeholder:text-mw-ink/40 focus:border-mw-secondary focus-visible:ring-2 focus-visible:ring-mw-secondary/40 focus-visible:outline-none sm:text-sm"
-          >
-            {intents.map((i) => (
-              <option key={i.value} value={i.value} className="bg-white text-neutral-900">
-                {i.label}
+          <input type="hidden" name="intent" value={intent} />
+          <select id="service" name="service" defaultValue="">
+            <option value="">Not sure yet</option>
+            {services.map((s) => (
+              <option key={s} value={s}>
+                {s}
               </option>
             ))}
           </select>
         </div>
       </div>
 
-      <div>
-        <label htmlFor="message" className="mb-1.5 block text-sm font-medium text-mw-ink/80">
+      <div className="t-f">
+        <label htmlFor="message">
           How can we help?
         </label>
         <textarea
           id="message"
           name="message"
           required
-          rows={5}
-          className="w-full min-h-11 rounded-lg border border-mw-line bg-transparent px-4 py-2.5 text-base text-mw-ink outline-none transition-colors placeholder:text-mw-ink/40 focus:border-mw-secondary focus-visible:ring-2 focus-visible:ring-mw-secondary/40 focus-visible:outline-none sm:text-sm"
+          rows={3}
         />
       </div>
 
       {status === "error" && (
-        <p role="alert" className="text-sm text-red-600 dark:text-red-400">
+        <p role="alert" className="t-err">
           {errorMessage}
         </p>
       )}
@@ -150,7 +144,7 @@ export function ContactForm({ defaultIntent }: { defaultIntent?: string }) {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full min-h-11 rounded-full bg-mw-mint px-6 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-mw-void active:scale-[0.98] disabled:opacity-60 sm:w-auto"
+        className="t-btn"
       >
         {status === "submitting" ? "Sending…" : "Send Message"}
       </button>

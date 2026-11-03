@@ -19,10 +19,6 @@ export function Footer() {
               <LogoMark className="h-10 w-10" />
               <span className="font-display tracking-wide text-base text-white">MAWKISH TECHNOLOGIES</span>
             </div>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed">
-              A business transformation partner helping organizations create measurable outcomes through SAP,
-              Salesforce, Odoo, and enterprise technology.
-            </p>
             <div className="mt-6 flex flex-wrap gap-3">
               {socials.map((s) => (
                 <a

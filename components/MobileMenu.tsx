@@ -289,7 +289,7 @@ export function MobileMenu({
           href={siteConfig.primaryCta.href}
           className="mt-6 flex min-h-12 items-center justify-center rounded-xl bg-mw-mint px-5 text-center text-xs font-semibold uppercase tracking-wider text-white active:scale-[0.98]"
         >
-          {siteConfig.primaryCta.label}
+          Contact
         </Link>
       </nav>
     </div>

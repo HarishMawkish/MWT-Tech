@@ -29,6 +29,8 @@ const nextConfig = {
       })),
       // The Salesforce overview used to be the generic service page. It now has its own hub.
       { source: "/services/salesforce-solutions", destination: "/services/salesforce", permanent: true },
+      // The Odoo overview used to be the generic service page. It now has its own hub.
+      { source: "/services/odoo-implementation", destination: "/services/odoo", permanent: true },
     ];
   },
   images: {
