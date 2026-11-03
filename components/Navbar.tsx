@@ -5,12 +5,15 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Logo } from "./Logo";
 import { ServicesMenu } from "./ServicesMenu";
+import { IndustriesMenu } from "./IndustriesMenu";
 import { navLinks, siteConfig } from "@/lib/site-data";
 import { MobileMenu } from "./MobileMenu";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
-  const [megaOpen, setMegaOpen] = useState(false);
+  const [menu, setMenu] = useState<"services" | "industries" | null>(null);
+  const megaOpen = menu === "services";
+  const indOpen = menu === "industries";
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
   const megaTimer = useRef<number | undefined>(undefined);
@@ -18,20 +21,20 @@ export function Navbar() {
   // The services panel opens as soon as the pointer reaches the link, and closes
   // after a short grace period, so crossing the gap between the link and the
   // panel doesn't shut it.
-  const openMega = () => {
+  const openMega = (id: "services" | "industries" = "services") => {
     window.clearTimeout(megaTimer.current);
-    setMegaOpen(true);
+    setMenu(id);
   };
   const closeMega = (delay = 180) => {
     window.clearTimeout(megaTimer.current);
-    megaTimer.current = window.setTimeout(() => setMegaOpen(false), delay);
+    megaTimer.current = window.setTimeout(() => setMenu(null), delay);
   };
   useEffect(() => () => window.clearTimeout(megaTimer.current), []);
 
   // Close the menus whenever the route changes.
   useEffect(() => {
     setOpen(false);
-    setMegaOpen(false);
+    setMenu(null);
   }, [pathname]);
 
   // Escape closes the mobile menu and any focused dropdown.
@@ -39,7 +42,7 @@ export function Navbar() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
       setOpen(false);
-      setMegaOpen(false);
+      setMenu(null);
       const active = document.activeElement as HTMLElement | null;
       if (active && headerRef.current?.contains(active)) active.blur();
     };
@@ -59,15 +62,18 @@ export function Navbar() {
           <nav aria-label="Primary" className="flex h-full items-center">
             {navLinks.map((link) => {
               const active = isActive(link.href);
+              const id = link.children ? "services" : link.href === "/industries" ? "industries" : null;
+              const hasMenu = id !== null;
+              const shown = id === "services" ? megaOpen : id === "industries" ? indOpen : false;
               return (
                 <div
                   key={link.href}
                   className="group relative h-full"
-                  onPointerEnter={link.children ? openMega : undefined}
-                  onPointerLeave={link.children ? () => closeMega() : undefined}
-                  onFocus={link.children ? openMega : undefined}
+                  onPointerEnter={hasMenu ? () => openMega(id) : undefined}
+                  onPointerLeave={hasMenu ? () => closeMega() : undefined}
+                  onFocus={hasMenu ? () => openMega(id) : undefined}
                   onBlur={
-                    link.children
+                    hasMenu
                       ? (e) => {
                           // Keep it open while focus moves into the panel.
                           if (!headerRef.current?.contains(e.relatedTarget as Node | null)) closeMega(0);
@@ -78,16 +84,16 @@ export function Navbar() {
                   <Link
                     href={link.href}
                     aria-current={active ? "page" : undefined}
-                    aria-haspopup={link.children ? "true" : undefined}
-                    aria-expanded={link.children ? megaOpen : undefined}
+                    aria-haspopup={hasMenu ? "true" : undefined}
+                    aria-expanded={hasMenu ? shown : undefined}
                     className={`relative flex h-full items-center gap-1.5 px-3.5 text-[14px] font-medium tracking-[0.005em] transition-colors duration-150 after:absolute after:inset-x-3.5 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-mw-mint after:transition-transform after:duration-200 after:ease-[cubic-bezier(0.23,1,0.32,1)] aria-[current=page]:after:scale-x-100 aria-expanded:after:scale-x-100 ${
-                      active || (link.children && megaOpen) ? "text-white" : "text-white/70 hover:text-white"
+                      active || shown ? "text-white" : "text-white/70 hover:text-white"
                     }`}
                   >
                     {link.label}
-                    {link.children && (
+                    {hasMenu && (
                       <svg
-                        className={`h-3 w-3 opacity-70 transition-transform duration-200 ${megaOpen ? "rotate-180" : ""}`}
+                        className={`h-3 w-3 opacity-70 transition-transform duration-200 ${shown ? "rotate-180" : ""}`}
                         viewBox="0 0 12 12"
                         fill="none"
                         aria-hidden="true"
@@ -129,7 +135,8 @@ export function Navbar() {
         </button>
       </div>
 
-      <ServicesMenu open={megaOpen} onEnter={openMega} onLeave={() => closeMega()} pathname={pathname} />
+      <ServicesMenu open={megaOpen} onEnter={() => openMega("services")} onLeave={() => closeMega()} pathname={pathname} />
+      <IndustriesMenu open={indOpen} onEnter={() => openMega("industries")} onLeave={() => closeMega()} pathname={pathname} />
 
       <MobileMenu open={open} onClose={() => setOpen(false)} pathname={pathname} isActive={isActive} />
     </header>

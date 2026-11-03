@@ -34,6 +34,7 @@ export const navLinks = [
   { label: "Industries", href: "/industries" },
   { label: "Clients", href: "/clients" },
   { label: "News & Insights", href: "/insights" },
+  { label: "Careers", href: "/careers" },
 ];
 
 export const stats = [

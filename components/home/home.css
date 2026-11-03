@@ -1,0 +1,943 @@
+/* Homepage. Scoped entirely under .hp, so nothing here reaches the rest of
+   the site. Tokens, type scale, section rhythm and component shapes are
+   deliberately the same as the SAP pages (.rp / rise.css) so the homepage and
+   the SAP section read as one design. */
+
+.hp {
+  --bg: #050807;
+  --bg-2: #0a110e;
+  --bg-3: #0d1714;
+  --line: #1c2823;
+  --line-hi: #2c3d36;
+  --fg: #eef3f0;
+  --muted: #9aaaa2;
+  --green: #1f7a5a;
+  --green-hi: #34b386;
+  --paper: #f3f6f4;
+  --ink: #142019;
+  --ink-soft: #5c6c65;
+
+  --display: var(--font-pjs), "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: var(--font-manrope), "Manrope", "Segoe UI", system-ui, sans-serif;
+
+  /* Motion. Built-in CSS easings are too weak for UI; these are the strong
+     curves used across the site's newer sections. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  color-scheme: dark;
+}
+
+.hp,
+.hp * {
+  box-sizing: border-box;
+}
+
+.hp {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.hp .in {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+
+.hp section {
+  padding-block: 88px;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- type ---------- */
+
+.hp h1,
+.hp h2,
+.hp h3 {
+  font-family: var(--display);
+  line-height: 1.12;
+  text-wrap: balance;
+  margin: 0;
+  /* The site's global base layer uppercases every heading. The SAP pages
+     opt out of that, and so does this one. */
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+.hp h2 {
+  font-size: clamp(28px, 3.6vw, 42px);
+  font-weight: 800;
+}
+
+.hp h3 {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.hp p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.hp .eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--green-hi);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.hp .lede {
+  color: var(--muted);
+  font-size: 18px;
+  max-width: 62ch;
+  margin-top: 18px;
+}
+
+.hp .sub {
+  color: var(--muted);
+  font-size: 15px;
+  margin-top: 18px;
+}
+
+/* ---------- buttons ---------- */
+
+.hp .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 24px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background-color 180ms var(--ease-out),
+    border-color 180ms var(--ease-out), color 180ms var(--ease-out);
+}
+
+.hp .btn.pri {
+  background: var(--green);
+  color: #fff;
+}
+
+.hp .btn.sec {
+  border-color: var(--line-hi);
+  color: var(--fg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hp .btn.pri:hover {
+    background: #24906a;
+  }
+  .hp .btn.sec:hover {
+    border-color: var(--green-hi);
+  }
+}
+
+.hp a:focus-visible,
+.hp button:focus-visible,
+.hp summary:focus-visible {
+  outline: 2px solid var(--green-hi);
+  outline-offset: 3px;
+}
+
+/* Text link with a travelling arrow. */
+.hp .tlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  margin-top: 22px;
+}
+
+.hp .tlink i {
+  font-style: normal;
+  color: var(--green-hi);
+  transition: transform 180ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hp .tlink:hover i {
+    transform: translateX(4px);
+  }
+}
+
+/* ---------- scroll reveal ---------- */
+
+.hp .rv {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.hp .rv.rv-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 560ms var(--ease-out), transform 560ms var(--ease-out);
+  transition-delay: var(--d, 0ms);
+}
+
+/* Reduced motion keeps the fade (it still signals arrival) and drops the
+   positional movement. */
+@media (prefers-reduced-motion: reduce) {
+  .hp .rv {
+    transform: none;
+  }
+  .hp .rv.rv-in {
+    transition: opacity 240ms ease;
+  }
+}
+
+/* ---------- hero ---------- */
+
+.hp .hero {
+  border-top: 0;
+  padding-block: 72px 80px;
+  background:
+    radial-gradient(900px 440px at 78% 8%, rgba(31, 122, 90, 0.24), transparent 70%),
+    radial-gradient(700px 400px at 10% 90%, rgba(31, 122, 90, 0.12), transparent 70%);
+}
+
+/* Copy left, figures right, the same split the SAP hero uses, so the
+   headline doesn't sit against half a screen of empty space. */
+.hp .hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.hp .hero h1 {
+  font-size: clamp(36px, 4.4vw, 56px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  max-width: 14ch;
+}
+
+.hp .hero h1 em {
+  font-style: normal;
+  color: var(--green-hi);
+}
+
+.hp .hero .ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 34px;
+}
+
+/* Hero figures, 2×2 beside the copy. Tabular numerals so the numbers
+   align on their own column. */
+.hp .figures {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Direct children only. `.figures div` would also match the .n/.l divs
+   inside each cell and pad them a second time. */
+.hp .figures > div {
+  background: var(--bg-2);
+  padding: 26px 22px;
+}
+
+.hp .figures .n {
+  font-family: var(--display);
+  font-size: clamp(32px, 3.2vw, 42px);
+  font-weight: 800;
+  color: var(--fg);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.hp .figures .l {
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.45;
+  margin-top: 10px;
+}
+
+/* ---------- platform rail ---------- */
+
+.hp .rail {
+  padding-block: 28px;
+}
+
+.hp .rail .label {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.hp .rail .logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+/* Vendor marks sit on white cards, the way the company-profile deck shows
+   them. Recolouring them to a single value destroys the internal detail of
+   solid-shape logos like SAP and AWS, and repainting a vendor's mark is a
+   brand-guideline problem in any case. */
+.hp .rail .chip {
+  display: grid;
+  place-items: center;
+  height: 56px;
+  width: 124px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  padding: 12px 18px;
+  opacity: 0.86;
+  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
+}
+
+.hp .rail .chip img {
+  max-height: 26px;
+  max-width: 88px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hp .rail .chip:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+/* ---------- generic two-column ---------- */
+
+.hp .two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.hp .two.top {
+  align-items: start;
+}
+
+/* ---------- photography ---------- */
+
+/* Both site photographs are bright, warm office interiors. Dropped straight
+   onto this page they fight the dark green surface, so each sits in a framed
+   well with a green wash over it, the same treatment the company-profile
+   deck uses for its photography. */
+.hp .shot {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.55);
+  aspect-ratio: 4 / 3;
+}
+
+.hp .shot img {
+  object-fit: cover;
+  /* Pulls the warm office light slightly toward the page's cooler green
+     without washing the photograph out. */
+  filter: saturate(0.82) contrast(1.04) brightness(0.92);
+}
+
+/* A scrim for the caption, plus a light green wash so the photography sits
+   in the same family as the rest of the page. Deliberately NOT a multiply
+   blend, because against this near-black surface it that crushes the image to black. */
+.hp .shot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to top, rgba(5, 8, 7, 0.78) 0%, rgba(5, 8, 7, 0.08) 52%, transparent 75%),
+    linear-gradient(140deg, rgba(31, 122, 90, 0.2), transparent 55%);
+}
+
+.hp .shot .cap {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+  z-index: 2;
+  font-size: 12.5px;
+  color: rgba(238, 243, 240, 0.78);
+  letter-spacing: 0.02em;
+}
+
+.hp .shot.wide {
+  aspect-ratio: 16 / 10;
+}
+
+/* ---------- accountability ladder ---------- */
+
+.hp .ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.hp .rung {
+  background: var(--bg-2);
+  padding: 20px 22px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: center;
+  transition: background-color 220ms var(--ease-out);
+}
+
+.hp .rung .who {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.hp .rung .does {
+  color: var(--muted);
+  font-size: 14.5px;
+  margin-top: 3px;
+}
+
+.hp .rung .tag {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--line-hi);
+  border-radius: 999px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+/* The Mawkish rung is the point of the whole section, so it inverts. */
+.hp .rung.mine {
+  background: var(--green);
+}
+
+.hp .rung.mine .does {
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.hp .rung.mine .tag {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.hp .pullline {
+  margin-top: 26px;
+  border-left: 2px solid var(--green);
+  padding-left: 16px;
+  font-size: 17px;
+  max-width: 56ch;
+}
+
+/* ---------- the engagement ----------
+   A timeline rather than a row of cards. Five stops sit on one rule; the
+   band underneath spans all five, so the page shows that Mawkish's
+   responsibilities run the whole length instead of only claiming it. */
+
+.hp .journey {
+  margin-top: 56px;
+}
+
+.hp .stops {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 28px;
+  position: relative;
+}
+
+/* The rule the stops sit on. Fades at both ends so it reads as a continuing
+   line rather than a boxed-in bar. */
+.hp .stops::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 7px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--line-hi) 6%,
+    var(--line-hi) 94%,
+    transparent
+  );
+}
+
+.hp .stop .dot {
+  display: block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid var(--green-hi);
+  background: var(--bg);
+  position: relative;
+  z-index: 1;
+}
+
+.hp .stop .no {
+  font-family: var(--display);
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--line-hi);
+  margin-top: 22px;
+  font-variant-numeric: tabular-nums;
+  transition: color 240ms var(--ease-out);
+}
+
+.hp .stop .phase {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green-hi);
+  margin-top: 14px;
+}
+
+.hp .stop h3 {
+  font-size: 18px;
+  margin-top: 8px;
+}
+
+.hp .stop p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 10px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hp .stop:hover .no {
+    color: var(--green-hi);
+  }
+}
+
+/* The continuous band. Full width of the five stops above it. */
+.hp .band {
+  margin-top: 44px;
+  border: 1px solid var(--green);
+  border-radius: 14px;
+  background: linear-gradient(
+    90deg,
+    rgba(31, 122, 90, 0.22),
+    rgba(31, 122, 90, 0.06)
+  );
+  padding: 18px 22px 20px;
+}
+
+.hp .band-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.hp .band-k {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green-hi);
+}
+
+.hp .band-sub {
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+/* Six equal cells in one row, each a number over its label, split by hairlines. */
+.hp .band-items {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  border-top: 1px solid rgba(52, 179, 134, 0.24);
+}
+
+.hp .band-items li {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 16px 2px;
+  border-left: 1px solid rgba(52, 179, 134, 0.24);
+}
+
+.hp .band-items li:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.hp .band-items .bi-n {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--green-hi);
+}
+
+.hp .band-items .bi-t {
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--fg);
+}
+
+/* ---------- delivery model ----------
+   An index, not a card grid: platform name on the left, the arrangement on
+   the right, separated by hairlines. */
+
+.hp .model {
+  margin-top: 44px;
+  border-top: 1px solid var(--line);
+}
+
+.hp .mrow {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 32px;
+  padding: 26px 4px;
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+  transition: background-color 220ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hp .mrow:hover {
+    background-color: var(--bg-2);
+  }
+}
+
+.hp .mname {
+  font-family: var(--display);
+  font-size: clamp(20px, 2.1vw, 26px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+.hp .mhow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green-hi);
+}
+
+.hp .mbody p {
+  color: var(--muted);
+  font-size: 15px;
+  margin-top: 10px;
+  max-width: 62ch;
+}
+
+/* ---------- proof ---------- */
+
+.hp .solutions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.hp .solutions span {
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: var(--fg);
+}
+
+/* ---------- industries ---------- */
+
+.hp .inds {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 44px;
+}
+
+.hp .ind {
+  background: var(--bg-2);
+  padding: 24px;
+  transition: background-color 220ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hp .ind:hover {
+    background: var(--bg-3);
+  }
+}
+
+.hp .ind h3 {
+  font-size: 16.5px;
+}
+
+.hp .ind p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+/* ---------- commitments ---------- */
+
+.hp .cmts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.hp .cmt {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px;
+}
+
+.hp .cmt h3 {
+  font-size: 16.5px;
+}
+
+.hp .cmt p {
+  color: var(--muted);
+  font-size: 14.5px;
+  margin-top: 8px;
+}
+
+/* ---------- light section ---------- */
+
+/* The SAP pages alternate a paper-coloured section into the dark stack to
+   break the rhythm. The commitments section is this page's one. */
+.hp section.light {
+  background: var(--paper);
+  color: var(--ink);
+  border-top-color: var(--paper);
+}
+
+.hp section.light h2,
+.hp section.light h3 {
+  color: var(--ink);
+}
+
+.hp section.light .eyebrow {
+  color: var(--green);
+}
+
+.hp section.light .lede,
+.hp section.light .cmt p,
+.hp section.light .sub {
+  color: var(--ink-soft);
+}
+
+.hp section.light .cmt {
+  background: #fff;
+  border-color: #e2e8e5;
+}
+
+.hp section.light .tlink {
+  color: var(--ink);
+}
+
+.hp section.light .tlink i {
+  color: var(--green);
+}
+
+.hp section.light .btn.sec {
+  border-color: #cfdad5;
+  color: var(--ink);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hp section.light .btn.sec:hover {
+    border-color: var(--green);
+  }
+}
+
+/* ---------- responsive ---------- */
+
+/* Once the six labels can no longer sit on one line, let them wrap and drop
+   the dividers: a divider at the start of a wrapped line reads as a stray
+   mark rather than a separator. */
+@media (max-width: 1180px) {
+  .hp .band-items {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .hp .band-items li:nth-child(3n + 1) {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .hp .band-items li:nth-child(n + 4) {
+    border-top: 1px solid rgba(52, 179, 134, 0.24);
+    margin-top: 14px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .hp section {
+    padding-block: 64px;
+  }
+  .hp .two {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .hp .inds {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .hp .figures {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .hp .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .hp .hero h1 {
+    max-width: 18ch;
+  }
+
+  /* The timeline turns vertical: the rule runs down the left, each stop
+     hangs off it. Same idea, read top to bottom. */
+  .hp .stops {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-left: 34px;
+  }
+  .hp .stops::before {
+    left: 7px;
+    right: auto;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    height: auto;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--line-hi) 4%,
+      var(--line-hi) 96%,
+      transparent
+    );
+  }
+  .hp .stop {
+    padding-bottom: 34px;
+    position: relative;
+  }
+  .hp .stop .dot {
+    position: absolute;
+    left: -34px;
+    top: 4px;
+  }
+  .hp .stop .no {
+    margin-top: 0;
+    font-size: 22px;
+  }
+  .hp .mrow {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hp section {
+    padding-block: 52px;
+  }
+  .hp .hero {
+    padding-block: 48px 60px;
+  }
+  .hp .inds,
+  .hp .cmts {
+    grid-template-columns: 1fr;
+  }
+  .hp .band-items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .hp .band-items li {
+    border-left: 0 !important;
+    padding-left: 0 !important;
+    margin-top: 0 !important;
+    border-top: 0 !important;
+  }
+  .hp .lede {
+    font-size: 16.5px;
+  }
+  .hp .rung {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  .hp .rung .tag {
+    justify-self: start;
+  }
+  .hp .rail .chip {
+    width: 96px;
+    height: 48px;
+  }
+}
+
+/* ---------- careers ---------- */
+.hp .sub a.inline {
+  color: var(--green-hi);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.hp .sub a.inline:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.hp .join .model {
+  margin-top: 0;
+}
+.hp .join .mrow {
+  grid-template-columns: 170px 1fr;
+  gap: 24px;
+  align-items: baseline;
+}
+.hp .join .mbody p {
+  color: var(--muted);
+  font-size: 15.5px;
+}
+@media (max-width: 1000px) {
+  .hp .join .model {
+    margin-top: 8px;
+  }
+}
+@media (max-width: 560px) {
+  .hp .join .mrow {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

@@ -43,6 +43,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...insights.map((p) => entry(`/insights/${p.slug}`, 0.5, "monthly")),
     entry("/about", 0.6, "yearly"),
     entry("/contact", 0.7, "yearly"),
+    entry("/careers", 0.6, "weekly"),
     entry("/copyright", 0.4, "yearly"),
     // Only the public Clients list. Case studies are gated and have no URLs of their own: never list them here.
     entry("/clients", 0.6, "monthly"),

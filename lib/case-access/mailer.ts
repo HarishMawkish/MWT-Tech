@@ -2,7 +2,8 @@ import nodemailer, { type Transporter } from "nodemailer";
 import { brand } from "@/lib/seo";
 
 // Sends the case-study emails over SMTP. Configure with SMTP_HOST, SMTP_PORT, SMTP_USER and SMTP_PASS (the same
-// names the contact-form mail server uses). Without them, development prints the message to the terminal so the
+// names the contact-form mail server uses). MAIL_FROM is also read: the sender address on a domain verified with
+// the mail provider, needed with Resend, where SMTP_USER is just "resend". Without them, development prints the message to the terminal so the
 // flow can be tried; production reports "not configured" and the caller decides what to do.
 
 export type Mail = {
@@ -40,8 +41,13 @@ export async function sendMail(mail: Mail): Promise<MailResult> {
     }
     return { sent: false, reason: "mailer-not-configured" };
   }
+  const sender = (process.env.MAIL_FROM?.trim() || process.env.SMTP_USER!.trim()).replace(/[\r\n<>"]/g, "");
+  if (!sender.includes("@")) {
+    // Resend and similar relays log in with a name or API key, not an address, so a sender must be set explicitly.
+    throw new Error("MAIL_FROM is not set to an email address (SMTP_USER is not one).");
+  }
   await t.sendMail({
-    from: `"${brand.name}" <${process.env.SMTP_USER!.trim()}>`,
+    from: `"${brand.name}" <${sender}>`,
     to: mail.to,
     cc: mail.cc,
     replyTo: mail.replyTo,
