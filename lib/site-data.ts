@@ -28,6 +28,7 @@ export const navLinks = [
       { label: "Odoo Solutions", href: "/services/odoo" },
       { label: "MiHCM", href: "/services/mihcm" },
       { label: "Anthropic AI", href: "/services/anthropic" },
+      { label: "Databricks", href: "/services/databricks" },
     ],
   },
   { label: "Industries", href: "/industries" },

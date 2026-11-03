@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
 import { ProductBody } from "@/components/salesforce/ProductBody";
 import { SfPage } from "@/components/salesforce/SfPage";
+import { CloudBody, cloudAccent, isCloudSlug } from "@/components/salesforce/clouds/CloudBody";
 import { contents } from "@/components/salesforce/content";
 import { products, type ProductSlug } from "@/components/salesforce/data";
 import { salesforceLd, salesforceMetadata } from "@/lib/salesforce-pages";
@@ -22,6 +23,19 @@ export async function generateMetadata({ params }: { params: Promise<{ product: 
 export default async function SalesforceProductPage({ params }: { params: Promise<{ product: string }> }) {
   const { product } = await params;
   if (!isSlug(product)) notFound();
+
+  // The five main clouds have pages written on their own; the supporting products come from the shared template.
+  if (isCloudSlug(product)) {
+    return (
+      <>
+        <JsonLd data={salesforceLd(product)} />
+        <SfPage accent={cloudAccent[product]}>
+          <CloudBody slug={product} />
+        </SfPage>
+      </>
+    );
+  }
+
   return (
     <>
       <JsonLd data={salesforceLd(product)} />

@@ -53,6 +53,21 @@
 .mh .lede b, .mh .lede strong { color: var(--fg); font-weight: 700; }
 .mh .two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
 .mh .two.mid { align-items: center; }
+/* An illustration has no heading to line up with, so when it is shorter than the prose beside it, centre it: the
+   leftover height is then balanced above and below instead of left as a hole at the bottom of the section. */
+.mh .two > figure, .mh .two > div:has(> figure:only-child),
+.mh .mx > figure, .mh .mx > div:has(> figure:only-child),
+.mh .levels > figure { align-self: center; }
+/* A tab pane is a block of copy beside a picture of the thing it describes. They are peers, so they sit
+   centred against each other rather than one hanging from the top with the gap under it. */
+.mh .mx.tabpane { align-items: center; }
+.mh .levels > div:has(> .screen) { align-self: center; }
+/* And where one side of the row is a single block of cards, let the block fill the column, so the two sides
+   finish on the same line instead of leaving a step. The extra height is shared evenly between its rows. */
+.mh .two > .includes, .mh .two > div:has(> .includes:last-child) { align-self: stretch; }
+.mh .two > div:has(> .includes:last-child) { display: flex; flex-direction: column; }
+.mh .two > div:has(> .includes:last-child) > .includes { flex: 1; }
+.mh .two > .includes, .mh .two > div:has(> .includes:last-child) > .includes { grid-auto-rows: minmax(0, 1fr); }
 .mh .caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
 .mh a:focus-visible, .mh button:focus-visible, .mh summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
 
@@ -627,7 +642,7 @@ section.light .screen, .mh .tabpane .screen { box-shadow: 0 30px 70px rgba(10,30
 .mh .pairs-note { margin-top: 18px; color: var(--muted); font-size: 14px; max-width: 75ch; }
 
 /* a drawn screen: stacked blocks, with a second column when there are two kinds */
-.mh .scr-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 10px; align-items: start; }
+.mh .scr-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 10px; align-items: stretch; }
 .mh .kan { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 8px; }
 .mh .kan > div { background: #eef1f6; border-radius: 9px; padding: 8px; display: grid; gap: 6px; align-content: start; min-width: 0; }
 .mh .kan h5 { margin: 0 0 2px; font: 800 10.5px/1.2 var(--body); color: var(--app-muted); letter-spacing: .04em; text-transform: uppercase; }
