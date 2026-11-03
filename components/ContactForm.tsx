@@ -140,7 +140,7 @@ export function ContactForm({
         </select>
       </div>
 
-      <div className="t-f">
+      <div className="t-f t-grow">
         <label htmlFor="message">
           How can we help?
         </label>
