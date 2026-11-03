@@ -18,14 +18,14 @@ const RFP_EMAIL = "info@mawkishtechnologies.com";
 
 const rfps = [
   {
-    title: "AI tenders",
-    body: "Issuing a government tender for artificial intelligence? Send us the RFP, or your request to take part.",
-    subject: "AI tender: RFP / EOI participation request",
+    title: "Government AI tenders",
+    body: "Calling for government AI tenders? Send us the RFP, or your request to take part.",
+    subject: "Government AI tender: RFP / EOI participation request",
   },
   {
-    title: "ERP and digitalisation tenders",
-    body: "Calling for government ERP or digitalisation proposals? Email us the RFP or EOI participation request.",
-    subject: "ERP and digitalisation tender: RFP / EOI participation request",
+    title: "Government ERP & digitalisation tenders",
+    body: "Calling for government ERP or digitalisation tenders? Email us the RFP or EOI participation request.",
+    subject: "Government ERP and digitalisation tender: RFP / EOI participation request",
   },
 ];
 
