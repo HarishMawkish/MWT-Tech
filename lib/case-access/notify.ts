@@ -1,4 +1,4 @@
-import { buildLeadNotification, buildWelcomeEmail, NOTIFY_TO, REPLY_TO, type Registration } from "./emails";
+import { buildLeadNotification, buildWelcomeEmail, NOTIFY_CC, NOTIFY_TO, REPLY_TO, type Registration } from "./emails";
 import { sendMail } from "./mailer";
 
 /**
@@ -11,7 +11,7 @@ export async function sendRegistrationEmails(r: Registration): Promise<void> {
 
   const results = await Promise.allSettled([
     sendMail({ to: r.email, replyTo: REPLY_TO, ...welcome }),
-    sendMail({ to: NOTIFY_TO, replyTo: r.email, ...lead }),
+    sendMail({ to: NOTIFY_TO, cc: NOTIFY_CC, replyTo: r.email, ...lead }),
   ]);
 
   results.forEach((res, i) => {

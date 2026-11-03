@@ -142,8 +142,172 @@ type FieldName = "name" | "company" | "email" | "consent";
 const FIELDS: FieldName[] = ["name", "company", "email", "consent"];
 const EMAIL_SHAPE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+type PendingCode = { email: string; resendAt: number };
+
+/** "k7mq4txp" or "K7MQ-4TXP " both become "K7MQ-4TXP"; anything that cannot be part of a code is dropped. */
+function formatTyped(raw: string) {
+  const c = raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8);
+  return c.length > 4 ? `${c.slice(0, 4)}-${c.slice(4)}` : c;
+}
+
+/** Step two: the visitor types the code we emailed. Everything here survives leaving the page to open their mail. */
+function CodeStep({
+  pending,
+  setPending,
+  onUnlocked,
+}: {
+  pending: PendingCode;
+  setPending: (p: PendingCode | null) => void;
+  onUnlocked: () => void;
+}) {
+  const [code, setCode] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, []);
+  const wait = Math.max(0, Math.ceil((pending.resendAt - now) / 1000));
+  const clock = `${Math.floor(wait / 60)}:${String(wait % 60).padStart(2, "0")}`;
+
+  async function post(path: string, body?: unknown) {
+    const res = await fetch(`/api/case-study-access/${path}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body ?? {}),
+    });
+    const data = (await res.json().catch(() => ({}))) as { error?: string; code?: string; email?: string; resendIn?: number };
+    return { res, data };
+  }
+
+  async function verify(e: FormEvent) {
+    e.preventDefault();
+    if (busy) return;
+    if (code.replace("-", "").length < 8) {
+      setError("Please enter the 8-character code from the email.");
+      return;
+    }
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      const { res, data } = await post("verify", { code });
+      if (res.ok) {
+        trackEvent("generate_lead", { form: "case_study_access" });
+        onUnlocked();
+        return;
+      }
+      if (data.code === "restart") {
+        setPending(null);
+        return;
+      }
+      setError(data.error || "Something went wrong. Please try again.");
+    } catch {
+      setError("We couldn't reach our server. Please try again shortly.");
+    }
+    setBusy(false);
+  }
+
+  async function resend() {
+    if (busy || wait > 0) return;
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      const { res, data } = await post("resend");
+      if (res.ok) {
+        setCode("");
+        setNotice("We've sent you a new code. Only the newest one works.");
+        setPending({ email: data.email || pending.email, resendAt: Date.now() + (data.resendIn ?? 120) * 1000 });
+      } else if (data.code === "restart") {
+        setPending(null);
+        return;
+      } else {
+        if (data.code === "wait" && data.resendIn) setPending({ ...pending, resendAt: Date.now() + data.resendIn * 1000 });
+        setError(data.error || "Something went wrong. Please try again.");
+      }
+    } catch {
+      setError("We couldn't reach our server. Please try again shortly.");
+    }
+    setBusy(false);
+  }
+
+  async function changeEmail() {
+    await fetch("/api/case-study-access", { method: "DELETE" }).catch(() => undefined);
+    setPending(null);
+  }
+
+  return (
+    <form className="c-form c-fade" noValidate onSubmit={verify}>
+      <div className="c-lock" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#17694b" strokeWidth="2">
+          <rect x="2.5" y="4.5" width="15" height="11" rx="2" />
+          <path d="M3 6l7 5 7-5" />
+        </svg>
+      </div>
+      <h2>Check your email</h2>
+      <p>
+        We sent an 8-character code to <b>{pending.email}</b>. Enter it here to open the case studies. If you don&apos;t see it,
+        check your junk folder.
+      </p>
+      <div className="c-f">
+        <label htmlFor="c-code">Verification code</label>
+        <input
+          type="text"
+          id="c-code"
+          className="c-code"
+          value={code}
+          onChange={(e) => setCode(formatTyped(e.target.value))}
+          autoComplete="one-time-code"
+          autoCapitalize="characters"
+          autoCorrect="off"
+          spellCheck={false}
+          placeholder="XXXX-XXXX"
+          maxLength={12}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? "c-code-err" : undefined}
+        />
+        {error ? (
+          <span className="c-err" id="c-code-err" role="alert">
+            {error}
+          </span>
+        ) : null}
+        {notice ? (
+          <span className="c-note" role="status">
+            {notice}
+          </span>
+        ) : null}
+      </div>
+      <button type="submit" className="btn pri" disabled={busy}>
+        {busy ? "Checking…" : "Open the case studies →"}
+      </button>
+      <div className="c-sub">
+        <button type="button" className="c-linkbtn" onClick={resend} disabled={busy || wait > 0}>
+          {wait > 0 ? `Send a new code in ${clock}` : "Send a new code"}
+        </button>
+        <button type="button" className="c-linkbtn" onClick={changeEmail} disabled={busy}>
+          Wrong email?
+        </button>
+      </div>
+    </form>
+  );
+}
+
 /** The registration form shown in place of a case study. The server makes every real decision; this only helps the visitor. */
-function AccessForm({ caseId, onUnlocked }: { caseId: string; onUnlocked: () => void }) {
+function AccessForm({
+  caseId,
+  onUnlocked,
+  pending,
+  setPending,
+}: {
+  caseId: string;
+  onUnlocked: () => void;
+  pending: PendingCode | null;
+  setPending: (p: PendingCode | null) => void;
+}) {
   const [busy, setBusy] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [formError, setFormError] = useState("");
@@ -182,10 +346,11 @@ function AccessForm({ caseId, onUnlocked }: { caseId: string; onUnlocked: () => 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const data = (await res.json().catch(() => ({}))) as { error?: string; field?: string };
+      const data = (await res.json().catch(() => ({}))) as { error?: string; field?: string; email?: string; resendIn?: number };
       if (res.ok) {
-        trackEvent("generate_lead", { form: "case_study_access" });
-        onUnlocked();
+        // The details passed our checks and a code is on its way. Access opens once the code is entered.
+        setPending({ email: data.email || "your email", resendAt: Date.now() + (data.resendIn ?? 120) * 1000 });
+        setBusy(false);
         return;
       }
       const message = data.error || "Something went wrong. Please try again.";
@@ -207,6 +372,8 @@ function AccessForm({ caseId, onUnlocked }: { caseId: string; onUnlocked: () => 
         {errors[f]}
       </span>
     ) : null;
+
+  if (pending) return <CodeStep pending={pending} setPending={setPending} onUnlocked={onUnlocked} />;
 
   return (
     <form className="c-form c-fade" noValidate onSubmit={submit}>
@@ -262,10 +429,11 @@ function AccessForm({ caseId, onUnlocked }: { caseId: string; onUnlocked: () => 
         </span>
       ) : null}
       <button type="submit" className="btn pri" disabled={busy}>
-        {busy ? "Checking your details…" : "Open the case study →"}
+        {busy ? "Sending your code…" : "Continue →"}
       </button>
       <p className="c-fine">
-        Please use your company email. Personal addresses such as Gmail or Yahoo can&apos;t be accepted.
+        Please use your company email. Personal addresses such as Gmail or Yahoo can&apos;t be accepted. We&apos;ll email
+        you a code to confirm it&apos;s yours.
       </p>
     </form>
   );
@@ -280,6 +448,8 @@ export function ClientsPage({ fontClass }: { fontClass: string }) {
   const [fc, setFc] = useState("all");
   // Whether this browser has already registered. Asked of the server once, the first time a case study is opened.
   const [access, setAccess] = useState<Access>("checking");
+  // A code has been emailed to this browser and is waiting to be typed in (also true after a reload or a trip to the mail app).
+  const [pending, setPending] = useState<PendingCode | null>(null);
   const [details, setDetails] = useState<Record<string, CaseDetail>>({});
   const [failedId, setFailedId] = useState<string | null>(null);
 
@@ -308,7 +478,11 @@ export function ClientsPage({ fontClass }: { fontClass: string }) {
     let live = true;
     fetch("/api/case-study-access", { cache: "no-store" })
       .then((r) => r.json())
-      .then((d: { unlocked?: boolean }) => live && setAccess(d.unlocked ? "open" : "locked"))
+      .then((d: { unlocked?: boolean; pending?: { email: string; resendIn: number } }) => {
+        if (!live) return;
+        if (d.pending) setPending({ email: d.pending.email, resendAt: Date.now() + d.pending.resendIn * 1000 });
+        setAccess(d.unlocked ? "open" : "locked");
+      })
       .catch(() => live && setAccess("locked"));
     return () => {
       live = false;
@@ -520,7 +694,7 @@ export function ClientsPage({ fontClass }: { fontClass: string }) {
 
                   {locked ? (
                     <div className="c-gate">
-                      <AccessForm key={current.id} caseId={current.id} onUnlocked={() => setAccess("open")} />
+                      <AccessForm key={current.id} caseId={current.id} onUnlocked={() => setAccess("open")} pending={pending} setPending={setPending} />
                     </div>
                   ) : null}
                 </div>
