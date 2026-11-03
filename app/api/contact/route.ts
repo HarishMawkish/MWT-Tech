@@ -5,6 +5,7 @@ type ContactPayload = {
   name: string;
   email: string;
   company?: string;
+  phone?: string;
   intent?: string;
   service?: string;
   message: string;
@@ -22,7 +23,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
   }
 
-  const { name, email, company, intent, service, message } = body;
+  const { name, email, company, phone, intent, service, message } = body;
 
   if (!name?.trim() || !email?.trim() || !message?.trim()) {
     return NextResponse.json({ error: "Name, email, and message are required." }, { status: 400 });
@@ -34,6 +35,11 @@ export async function POST(request: Request) {
   const chosenService = typeof service === "string" ? service.trim() : "";
   if (chosenService && !isKnownService(chosenService)) {
     return NextResponse.json({ error: "Please choose a service from the list." }, { status: 400 });
+  }
+
+  const chosenPhone = typeof phone === "string" ? phone.trim() : "";
+  if (!/^[+()\d\s.-]{6,30}$/.test(chosenPhone)) {
+    return NextResponse.json({ error: "Please provide a valid phone number (required)." }, { status: 400 });
   }
 
   const backendUrl = process.env.BACKEND_URL;
@@ -49,17 +55,15 @@ export async function POST(request: Request) {
     const backendRes = await fetch(`${backendUrl}/api/contact`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      // "intent" is sent exactly as before. The mail server may not know about "service" yet, so the chosen service
-      // is also written at the top of the message, which always reaches the email.
+      // The mail backend reads "service" and "phone" itself (email body, subject and HubSpot).
       body: JSON.stringify({
         name,
         email,
         company,
+        phone: chosenPhone,
         intent,
         service: chosenService,
-        message: chosenService ? `Service: ${chosenService}
-
-${message}` : message,
+        message,
       }),
       cache: "no-store",
     });

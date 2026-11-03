@@ -28,6 +28,7 @@ export function ContactForm({
       name: String(data.get("name") || ""),
       email: String(data.get("email") || ""),
       company: String(data.get("company") || ""),
+      phone: String(data.get("phone") || ""),
       intent: String(data.get("intent") || ""),
       service: String(data.get("service") || ""),
       message: String(data.get("message") || ""),
@@ -108,19 +109,35 @@ export function ContactForm({
           />
         </div>
         <div className="t-f">
-          <label htmlFor="service">
-            Service
+          <label htmlFor="phone">
+            Phone number
           </label>
-          <input type="hidden" name="intent" value={intent} />
-          <select id="service" name="service" defaultValue="">
-            <option value="">Not sure yet</option>
-            {services.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            inputMode="tel"
+            required
+            pattern="[+()\d\s.\-]{6,30}"
+            title="Digits, spaces and + ( ) - . only"
+          />
         </div>
+      </div>
+
+      <div className="t-f">
+        <label htmlFor="service">
+          Service
+        </label>
+        <input type="hidden" name="intent" value={intent} />
+        <select id="service" name="service" defaultValue="">
+          <option value="">Not sure yet</option>
+          {services.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="t-f">
