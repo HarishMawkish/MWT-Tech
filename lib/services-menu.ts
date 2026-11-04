@@ -11,6 +11,8 @@ export type MenuFeatured = {
   href: string;
   /** A logo image. Without one, the card shows a cloud in `accent`. */
   mark?: string;
+  /** Plain text badge shown in place of a logo (used where the logos are not ours to use). */
+  badge?: string;
   /** "contain" shows a wide logo whole on white, instead of cropping it to fill the square (MiHCM's product logos). */
   markFit?: "contain";
   accent?: string;
@@ -50,6 +52,11 @@ export type MenuCategory = {
   featuredTitle?: string;
   /** Two programmes shown in a band above the groups. */
   featured?: MenuFeatured[];
+  /** Columns in the featured band. Two by default (GROW and RISE); Cloud Infrastructure has three platforms. */
+  featuredCols?: 2 | 3;
+  /** Where the "all" link at the foot of the panel goes, and what it says. Defaults to all services. */
+  allHref?: string;
+  allLabel?: string;
   /** Offerings under short headings (SAP only). Display-only for now. */
   groups?: MenuGroup[];
   /** Sits in the last cell of the groups grid. */
@@ -464,16 +471,72 @@ export const servicesMenu: MenuCategory[] = [
     },
   },
   {
-    id: "hyperscalers",
-    label: "Hyperscalers",
-    descriptor: "Cloud Infrastructure Provider",
-    logos: [
-      { src: "/images/solutions/AWS.png", alt: "AWS" },
-      { src: "/images/solutions/Microsoft.png", alt: "Microsoft" },
+    id: "cloud",
+    mark: "/images/solutions/cloud-infrastructure.svg",
+    label: "Cloud Infrastructure",
+    href: "/services/cloud-infrastructure",
+    descriptor: "AWS, Azure, Google Cloud",
+    featuredTitle: "Cloud platforms",
+    featuredCols: 3,
+    featured: [
+      { label: "AWS", sub: "SAP and workloads on Amazon Web Services", href: "/services/cloud-infrastructure/aws", badge: "AWS" },
+      { label: "Microsoft Azure", sub: "SAP, Microsoft 365 and Azure together", href: "/services/cloud-infrastructure/microsoft-azure", badge: "AZURE" },
+      { label: "Google Cloud", sub: "SAP, data and AI on Google Cloud", href: "/services/cloud-infrastructure/google-cloud", badge: "GCP" },
+    ],
+    groups: [
       {
-        src: "https://zql0rfjwszzixew9.public.blob.vercel-storage.com/solutions/Google%20Cloud.png",
-        alt: "Google Cloud",
+        title: "Advise & plan",
+        items: [
+          { label: "Cloud Strategy & Readiness Assessment", href: "/services/cloud-infrastructure/cloud-readiness-assessment" },
+          { label: "Business Case & TCO", href: "/services/cloud-infrastructure/business-case-tco" },
+          { label: "Landing Zone & Architecture Design", href: "/services/cloud-infrastructure/landing-zone-architecture" },
+          { label: "Migration Funding & Marketplace Buying", href: "/services/cloud-infrastructure/migration-funding-marketplace" },
+        ],
+      },
+      {
+        title: "Migrate & modernise",
+        items: [
+          { label: "SAP ECC & S/4HANA to the Cloud", href: "/services/cloud-infrastructure/sap-to-cloud" },
+          { label: "RISE with SAP: Cloud & Region Choice", href: "/services/cloud-infrastructure/rise-cloud-region-choice" },
+          { label: "Database & Application Migration", href: "/services/cloud-infrastructure/database-application-migration" },
+          { label: "Infrastructure Modernisation", href: "/services/cloud-infrastructure/infrastructure-modernisation" },
+        ],
+      },
+      {
+        title: "Build & connect",
+        items: [
+          { label: "Infrastructure Provisioning as Code", href: "/services/cloud-infrastructure/infrastructure-as-code" },
+          { label: "Network & Connectivity to RISE and BTP", href: "/services/cloud-infrastructure/network-connectivity-rise-btp" },
+          { label: "Identity & Single Sign-On", href: "/services/cloud-infrastructure/identity-single-sign-on" },
+          { label: "Hosting for Non-SAP Workloads", href: "/services/cloud-infrastructure/non-sap-workload-hosting" },
+        ],
+      },
+      {
+        title: "Run & optimise",
+        items: [
+          { label: "Managed Cloud Operations", href: "/services/cloud-infrastructure/managed-cloud-operations" },
+          { label: "FinOps & Cost Optimisation", href: "/services/cloud-infrastructure/finops-cost-optimisation" },
+          { label: "High Availability, DR & Backup", href: "/services/cloud-infrastructure/high-availability-dr-backup" },
+          { label: "Cloud Security & Compliance", href: "/services/cloud-infrastructure/cloud-security-compliance" },
+        ],
+      },
+      {
+        title: "Data, AI & skills",
+        items: [
+          { label: "AI & Data on SAP Data", href: "/services/cloud-infrastructure/ai-data-on-sap" },
+          { label: "Microsoft 365 & Copilot with SAP", href: "/services/cloud-infrastructure/microsoft-365-copilot-sap" },
+          { label: "DevOps & Automation", href: "/services/cloud-infrastructure/devops-automation" },
+          { label: "Training & Enablement", href: "/services/cloud-infrastructure/training-enablement" },
+        ],
       },
     ],
+    cta: {
+      title: "Still running SAP in your own data centre?",
+      body: "A cloud readiness assessment compares RISE with SAP and a move to the cloud, with the cost, risk and timeline of each.",
+      label: "Book an assessment",
+      href: "/contact",
+    },
+    allHref: "/services/cloud-infrastructure",
+    allLabel: "All cloud services",
   },
 ];

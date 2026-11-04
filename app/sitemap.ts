@@ -7,6 +7,7 @@ import { odooPages, odPath } from "@/lib/odoo-pages";
 import { mihcmPages, mhPath } from "@/lib/mihcm-pages";
 import { anthropicPages, anPath } from "@/lib/anthropic-pages";
 import { databricksPages, dbPath } from "@/lib/databricks-pages";
+import { CLOUD_HUB_PATH, cloudHub, cloudPages, cloudPath } from "@/lib/cloud-pages";
 import { absoluteUrl } from "@/lib/seo";
 
 // Every public page, with the SAP pages listed first and weighted highest. Search engines read this to find pages.
@@ -36,6 +37,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...mihcmPages.map((p) => entry(mhPath(p.slug), p.slug ? 0.7 : 0.8, "monthly", p.updated)),
     // Anthropic: the hub, then one page per product and supporting topic
     ...anthropicPages.map((p) => entry(anPath(p.slug), p.slug ? 0.7 : 0.8, "monthly", p.updated)),
+    // Cloud Infrastructure: the hub, then one page per service
+    entry(CLOUD_HUB_PATH, 0.85, "weekly", cloudHub.updated),
+    ...cloudPages.map((p) => entry(cloudPath(p.slug), 0.75, "monthly", cloudHub.updated)),
     // Databricks: the hub, then one page per platform product and supporting topic
     ...databricksPages.map((p) => entry(dbPath(p.slug), p.slug ? 0.7 : 0.85, "monthly", p.updated)),
     entry("/industries", 0.7, "monthly"),
