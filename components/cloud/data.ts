@@ -35,6 +35,8 @@ export type CloudPageData = {
   rels: [group: string, title: string, slug: string][];
   cta: CloudHead & { btn: string; items: string[] };
   sources: [label: string, href: string][];
+  /** The class of each band as supplied. The light and dark bands alternate, and the pattern differs by page. */
+  cls: { hero: string; why: string; str: string; what: string; how: string; tbl: string; sap: string; two: string; rel: string };
 };
 
 export const cloudPageData: CloudPageData[] = [
@@ -333,7 +335,18 @@ export const cloudPageData: CloudPageData[] = [
         "AWS: Bedrock in SAP generative AI hub",
         "https://aws.amazon.com/blogs/awsforsap/power-your-business-with-secure-and-scalable-generative-ai-services-from-aws-and-sap/"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "light",
+      "how": "",
+      "tbl": "light",
+      "sap": "",
+      "two": "light",
+      "rel": "light"
+    }
   },
   {
     "slug": "microsoft-azure",
@@ -630,7 +643,18 @@ export const cloudPageData: CloudPageData[] = [
         "SAP News: BDC Connect for Microsoft Fabric",
         "https://news.sap.com/?p=238914"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "light",
+      "how": "",
+      "tbl": "light",
+      "sap": "",
+      "two": "light",
+      "rel": "light"
+    }
   },
   {
     "slug": "google-cloud",
@@ -927,7 +951,18 @@ export const cloudPageData: CloudPageData[] = [
         "Google: Delhi NCR region open",
         "https://blog.google/intl/en-in/products/google-companies/new-google-cloud-region-delhi-ncr-now-open/"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "light",
+      "how": "",
+      "tbl": "light",
+      "sap": "",
+      "two": "light",
+      "rel": "light"
+    }
   },
   {
     "slug": "cloud-readiness-assessment",
@@ -1210,7 +1245,18 @@ export const cloudPageData: CloudPageData[] = [
         "Sri Lanka PDPA compliance from 1 January 2027 (Daily FT)",
         "https://www.ft.lk/front-page/Data-protection-compliance-regime-takes-effect-on-1-Jan-2027/44-795776"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "business-case-tco",
@@ -1486,7 +1532,18 @@ export const cloudPageData: CloudPageData[] = [
         "Google Cloud Quick TCO Estimator",
         "https://docs.cloud.google.com/migration-center/docs/quick_tco_estimator"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "landing-zone-architecture",
@@ -1777,7 +1834,18 @@ export const cloudPageData: CloudPageData[] = [
         "SAP Deployment Automation Framework on Azure",
         "https://learn.microsoft.com/en-us/azure/sap/automation/deployment-framework"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "migration-funding-marketplace",
@@ -2058,7 +2126,18 @@ export const cloudPageData: CloudPageData[] = [
         "GROW with SAP on AWS Marketplace (CIO Dive)",
         "https://www.ciodive.com/news/sap-aws-cloud-erp-solution-partnership/734515/"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "sap-to-cloud",
@@ -2344,7 +2423,18 @@ export const cloudPageData: CloudPageData[] = [
         "AWS: Launch Wizard for SAP",
         "https://docs.aws.amazon.com/launchwizard/latest/userguide/launch-wizard-sap.html"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "rise-cloud-region-choice",
@@ -2638,7 +2728,18 @@ export const cloudPageData: CloudPageData[] = [
         "Schwarz Digits: RISE with SAP on STACKIT",
         "https://schwarz-digits.de/en/presse/archive/2026/schwarz-digits-launches-rise-with-sap-on-stackit-at-competitive-market-prices"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "database-application-migration",
@@ -2934,7 +3035,18 @@ export const cloudPageData: CloudPageData[] = [
         "Microsoft: Windows Server 2016 end of support",
         "https://www.microsoft.com/windows-server/blog"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "infrastructure-modernisation",
@@ -3222,7 +3334,18 @@ export const cloudPageData: CloudPageData[] = [
         "Microsoft Learn: Azure Migrate web apps to App Service and AKS",
         "https://learn.microsoft.com/azure/migrate/migrate-services-overview"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "infrastructure-as-code",
@@ -3500,7 +3623,18 @@ export const cloudPageData: CloudPageData[] = [
         "Azure Verified Modules overview",
         "https://azure.github.io/Azure-Verified-Modules/overview/"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "network-connectivity-rise-btp",
@@ -3790,7 +3924,18 @@ export const cloudPageData: CloudPageData[] = [
         "Explaining the SAP Cloud Connector, SAP Learning",
         "https://learning.sap.com/courses/implementing-sap-service-and-asset-manager/explaining-the-sap-cloud-connector"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "identity-single-sign-on",
@@ -4076,7 +4221,18 @@ export const cloudPageData: CloudPageData[] = [
         "Data protection compliance regime takes effect on 1 Jan 2027, Daily FT",
         "https://www.ft.lk/front-page/Data-protection-compliance-regime-takes-effect-on-1-Jan-2027/44-795776"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "non-sap-workload-hosting",
@@ -4372,7 +4528,18 @@ export const cloudPageData: CloudPageData[] = [
         "AWS Launch Wizard in Hyderabad Region, AWS",
         "https://aws.amazon.com/about-aws/whats-new/2023/07/aws-launch-wizard-hyderabad-dubai-regions"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "managed-cloud-operations",
@@ -4652,7 +4819,18 @@ export const cloudPageData: CloudPageData[] = [
         "SAP: Securing RISE with SAP",
         "https://blogs.sap.com/2021/07/04/securing-rise-with-sap/"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "finops-cost-optimisation",
@@ -4919,7 +5097,18 @@ export const cloudPageData: CloudPageData[] = [
         "SAPinsider: SAP support deadlines",
         "https://sapinsider.org/blogs/sap-support-deadlines-2027-2030-2033/"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "high-availability-dr-backup",
@@ -5195,7 +5384,18 @@ export const cloudPageData: CloudPageData[] = [
         "SAP HANA System Replication Guide",
         "https://help.sap.com/doc/c81e9406d08046c0a118c8bef71f6bdc/2.0.08/en-US/SAP_HANA_System_Replication_Guide_en.pdf"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "cloud-security-compliance",
@@ -5480,7 +5680,18 @@ export const cloudPageData: CloudPageData[] = [
         "SAP: Securing RISE with SAP",
         "https://blogs.sap.com/2021/07/04/securing-rise-with-sap/"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "ai-data-on-sap",
@@ -5776,7 +5987,18 @@ export const cloudPageData: CloudPageData[] = [
         "SAP: Top 5 SAP Sapphire 2026 AI announcements",
         "https://www.sap.com/blogs/top-5-sapphire-2026-ai-announcements"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "microsoft-365-copilot-sap",
@@ -6062,7 +6284,18 @@ export const cloudPageData: CloudPageData[] = [
         "Microsoft Fabric: SAP BDC Connect for Microsoft Fabric",
         "https://blog.fabric.microsoft.com/en-GB/blog/29410/"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "devops-automation",
@@ -6352,7 +6585,18 @@ export const cloudPageData: CloudPageData[] = [
         "Google Cloud: Automating SAP deployments",
         "https://docs.cloud.google.com/sap/docs/automation-for-sap"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   },
   {
     "slug": "training-enablement",
@@ -6652,6 +6896,17 @@ export const cloudPageData: CloudPageData[] = [
         "Linux Foundation: FinOps Certified Practitioner",
         "https://training.linuxfoundation.org/certification/certified-finops/"
       ]
-    ]
+    ],
+    "cls": {
+      "hero": "hero cs-hero",
+      "why": "light",
+      "str": "",
+      "what": "",
+      "how": "light",
+      "tbl": "",
+      "sap": "light",
+      "two": "",
+      "rel": "light"
+    }
   }
 ];

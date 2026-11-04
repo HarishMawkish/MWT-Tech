@@ -38,7 +38,7 @@ export function CloudBody({ d }: { d: CloudPageData }) {
         </div>
       </section>
 
-      <section className="light">
+      <section className={d.cls.why || undefined}>
         <div className="in">
           <span className="eyebrow">{d.why.eyebrow}</span>
           <h2>{d.why.h2}</h2>
@@ -55,7 +55,7 @@ export function CloudBody({ d }: { d: CloudPageData }) {
       </section>
 
       {d.str && (
-        <section>
+        <section className={d.cls.str || undefined}>
           <div className="in">
             <span className="eyebrow">{d.str.eyebrow}</span>
             <h2>{d.str.h2}</h2>
@@ -72,7 +72,7 @@ export function CloudBody({ d }: { d: CloudPageData }) {
         </section>
       )}
 
-      <section className="light">
+      <section className={d.cls.what || undefined}>
         <div className="in">
           <span className="eyebrow">{d.what.eyebrow}</span>
           <h2>{d.what.h2}</h2>
@@ -89,7 +89,7 @@ export function CloudBody({ d }: { d: CloudPageData }) {
         </div>
       </section>
 
-      <section id="how">
+      <section id="how" className={d.cls.how || undefined}>
         <div className="in">
           <span className="eyebrow">{d.how.eyebrow}</span>
           <h2>{d.how.h2}</h2>
@@ -107,7 +107,7 @@ export function CloudBody({ d }: { d: CloudPageData }) {
         </div>
       </section>
 
-      <section className="light">
+      <section className={d.cls.tbl || undefined}>
         <div className="in">
           <span className="eyebrow">{d.tbl.eyebrow}</span>
           <h2>{d.tbl.h2}</h2>
@@ -140,7 +140,7 @@ export function CloudBody({ d }: { d: CloudPageData }) {
         </div>
       </section>
 
-      <section>
+      <section className={d.cls.sap || undefined}>
         <div className="in cs-sap">
           <div>
             <span className="eyebrow">{d.sap.eyebrow}</span>
@@ -158,7 +158,7 @@ export function CloudBody({ d }: { d: CloudPageData }) {
       {/* The site's standard copyright card, in the same place it sits on the SAP pages: just above the FAQ. */}
       <CopyrightNotice inline />
 
-      <section className="light">
+      <section className={d.cls.two || undefined}>
         <div className="in cs-two">
           <div>
             <span className="eyebrow">{d.del.eyebrow}</span>
@@ -184,7 +184,7 @@ export function CloudBody({ d }: { d: CloudPageData }) {
         </div>
       </section>
 
-      <section className="light">
+      <section className={d.cls.rel || undefined}>
         <div className="in">
           <span className="eyebrow">{d.relH.eyebrow}</span>
           <h2>{d.relH.h2}</h2>

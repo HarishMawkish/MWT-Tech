@@ -261,6 +261,12 @@
 .cx .legal { padding-block: 28px 44px; color: var(--muted); font-size: 12.5px; }
 .cx .legal p { max-width: 90ch; }
 
+/* The site's global styles uppercase headings; these pages use normal case, as supplied. */
+.cx h1, .cx h2, .cx h3, .cx h4 { text-transform: none; }
+
+/* The site-wide phone rules must not restyle these pages: keep the buttons exactly as supplied. */
+.cx .cta-band .btn, .cx .cta-band a[class*="btn"], .cx .cta-band .ctas a { max-width: none; white-space: normal; overflow-wrap: normal; text-align: inherit; justify-content: normal; line-height: inherit; }
+
 /* ---- hub page ---- */
 .cx .cs-rels-four { grid-template-columns: repeat(2, minmax(0,1fr)); margin-bottom: 0; }
 .cx .cs-rel { position: relative; }
