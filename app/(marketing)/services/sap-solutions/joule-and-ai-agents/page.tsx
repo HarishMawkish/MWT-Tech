@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { JoulePage } from "@/components/sap-joule/JoulePage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "joule-and-ai-agents";
 
@@ -13,6 +14,7 @@ export default function JouleAndAiAgentsPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <JoulePage />
+    <CanaryNote id="sap" />
     </>
   );
 }

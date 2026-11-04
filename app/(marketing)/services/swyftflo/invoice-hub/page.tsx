@@ -3,6 +3,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { SwPage } from "@/components/swyftflo/SwPage";
 import { InvoiceHubBody } from "@/components/swyftflo/pages/InvoiceHubBody";
 import { swyftfloLd, swyftfloMetadata } from "@/lib/swyftflo-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "invoice-hub";
 
@@ -15,6 +16,7 @@ export default function InvoiceHubPage() {
       <SwPage>
         <InvoiceHubBody />
       </SwPage>
+    <CanaryNote id="swyftflo" />
     </>
   );
 }

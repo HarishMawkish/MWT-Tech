@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { ReleasePage } from "@/components/sap-release/ReleasePage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "release-and-upgrade-management";
 
@@ -13,6 +14,7 @@ export default function ReleaseAndUpgradeManagementPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <ReleasePage />
+    <CanaryNote id="sap" />
     </>
   );
 }

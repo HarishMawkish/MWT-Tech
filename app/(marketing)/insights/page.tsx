@@ -8,6 +8,7 @@ import {
   getAllBlogPosts,
   getAllBlogCategories,
 } from "@/lib/sanity/queries";
+import { CanaryNote } from "@/components/CanaryNote";
 
 export const metadata: Metadata = {
   title: "Insights & Perspectives",
@@ -149,6 +150,7 @@ export default async function InsightsPage() {
       </section>
 
       <CtaBand />
+    <CanaryNote id="insights" />
     </>
   );
 }

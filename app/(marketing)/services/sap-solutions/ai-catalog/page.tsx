@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { AiCatalogPage } from "@/components/sap-aicatalog/AiCatalogPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "ai-catalog";
 
@@ -13,6 +14,7 @@ export default function AiCatalogRoutePage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <AiCatalogPage />
+    <CanaryNote id="sap" />
     </>
   );
 }

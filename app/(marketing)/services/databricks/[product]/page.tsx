@@ -5,6 +5,7 @@ import { Body } from "@/components/databricks/Body";
 import { DbPage } from "@/components/databricks/DbPage";
 import { ALL_SLUGS, bySlug, isDbSlug } from "@/components/databricks/data";
 import { databricksLd, databricksMetadata } from "@/lib/databricks-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 // One route for every Databricks page. Only the slugs in the product list exist; anything else is a 404.
 export function generateStaticParams() {
@@ -25,6 +26,7 @@ export default async function DatabricksProductPage({ params }: { params: Promis
       <DbPage accent={bySlug(product)!.accent}>
         <Body slug={product} />
       </DbPage>
+    <CanaryNote id="databricks" />
     </>
   );
 }

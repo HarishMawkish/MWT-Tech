@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CareersPage } from "@/components/careers/CareersPage";
 import { brand, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const description =
   "Join Mawkish Technologies. Open roles across SAP, Salesforce, AWS, sales and marketing in Colombo, with AI on every task and mentors from day one.";
@@ -21,5 +22,10 @@ export const metadata: Metadata = {
 };
 
 export default function CareersRoute() {
-  return <CareersPage />;
+  return (
+    <>
+      <CareersPage />
+      <CanaryNote id="careers" />
+    </>
+  );
 }

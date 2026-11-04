@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { IntegrationPage } from "@/components/sap-integration/IntegrationPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "sap-and-non-sap-integration";
 
@@ -13,6 +14,7 @@ export default function SapAndNonSapIntegrationPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <IntegrationPage />
+    <CanaryNote id="sap" />
     </>
   );
 }

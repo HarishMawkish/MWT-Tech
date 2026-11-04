@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { SupportPage } from "@/components/sap-support/SupportPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "application-management-support";
 
@@ -13,6 +14,7 @@ export default function ApplicationManagementSupportPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <SupportPage />
+    <CanaryNote id="sap" />
     </>
   );
 }

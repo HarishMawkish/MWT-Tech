@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { TestingPage } from "@/components/sap-testing/TestingPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "test-automation";
 
@@ -13,6 +14,7 @@ export default function TestAutomationPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <TestingPage />
+    <CanaryNote id="sap" />
     </>
   );
 }

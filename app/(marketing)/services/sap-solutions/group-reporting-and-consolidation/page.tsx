@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { GroupRepPage } from "@/components/sap-grouprep/GroupRepPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "group-reporting-and-consolidation";
 
@@ -13,6 +14,7 @@ export default function GroupReportingAndConsolidationPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <GroupRepPage />
+    <CanaryNote id="sap" />
     </>
   );
 }
