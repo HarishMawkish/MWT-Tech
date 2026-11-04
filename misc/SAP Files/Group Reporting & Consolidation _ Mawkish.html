@@ -1,0 +1,532 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Group Reporting &amp; Consolidation | Mawkish</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Mawkish dark site, full-width bands; each band pairs copy with a drawn SAP Fiori-style screen */
+:root {
+  --bg: #050807;
+  --bg-2: #0a110e;
+  --line: #1c2823;
+  --fg: #eef3f0;
+  --muted: #9aaaa2;
+  --green: #1f7a5a;
+  --green-hi: #34b386;
+  --paper: #f3f6f4;
+  --ink: #142019;
+  --ink-soft: #5c6c65;
+  --fiori: #0a6ed1;
+  --fiori-bg: #f5f6f7;
+  --warn: #e9730c;
+  --display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.in { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 88px; border-top: 1px solid var(--line); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 19px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 16px; display: block; }
+.lede { color: var(--muted); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border: 1px solid transparent; }
+.btn.pri { background: var(--green); color: #fff; }
+.btn.pri:hover { background: #24906a; }
+.btn.sec { border-color: #2c3d36; color: var(--fg); }
+.btn.sec:hover { border-color: var(--green-hi); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
+
+/* header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(5,8,7,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.site .in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; flex-direction: column; align-items: center; font-weight: 800; letter-spacing: .3em; font-size: 9px; color: var(--fg); text-decoration: none; }
+.logo svg { width: 54px; height: 26px; }
+.nav { display: flex; gap: 26px; align-items: center; }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 700; font-size: 12.5px; letter-spacing: .07em; }
+.nav a.on { color: var(--green-hi); }
+.nav .btn { padding: 12px 18px; }
+@media (max-width: 900px) { .nav a:not(.btn) { display: none; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 56px 88px; background: radial-gradient(900px 420px at 80% 10%, rgba(31,122,90,.22), transparent 70%); }
+.crumbs { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 em { font-style: normal; color: var(--green-hi); }
+.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.name-note { margin-top: 28px; font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--green); padding-left: 14px; max-width: 54ch; }
+.name-note b { color: var(--fg); font-weight: 600; }
+
+/* Fiori mock screens */
+.screen { background: var(--fiori-bg); color: #32363a; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06); font-size: 12px; line-height: 1.4; min-width: 0; }
+.shell { background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; gap: 12px; padding: 9px 14px; }
+.shell .sap { background: linear-gradient(135deg,#0a6ed1,#0854a0); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 7px; border-radius: 3px; letter-spacing: .02em; }
+.shell .t { font-weight: 600; color: #32363a; flex: 1; }
+.shell .search { flex: 1.4; background: #eff1f2; border-radius: 16px; height: 24px; display: flex; align-items: center; padding: 0 10px; color: #8b9196; font-size: 11px; }
+.shell .joule-btn { width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); }
+.shell .av { width: 24px; height: 24px; border-radius: 50%; background: #d1e8ff; color: #0a6ed1; font-weight: 700; font-size: 10px; display: grid; place-items: center; }
+.body-pad { padding: 16px; }
+.greet { font-size: 15px; font-weight: 700; color: #1d2d3e; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.tile { background: #fff; border-radius: 10px; padding: 11px 12px; box-shadow: 0 0 0 1px #e5e5e5; min-height: 92px; display: flex; flex-direction: column; justify-content: space-between; }
+.tile .h { font-weight: 600; color: #1d2d3e; font-size: 11.5px; }
+.tile .s { color: #6a6d70; font-size: 10.5px; }
+.tile .k { font-size: 22px; font-weight: 300; color: #0a6ed1; font-variant-numeric: tabular-nums; }
+.tile .k.neg { color: #bb0000; } .tile .k.pos { color: #107e3e; }
+.tile .k small { font-size: 11px; color: #6a6d70; margin-left: 2px; }
+.spark { height: 26px; width: 100%; }
+.split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; margin-top: 10px; }
+.card-f { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; padding: 12px; min-width: 0; }
+.card-f .h { font-weight: 700; font-size: 11.5px; color: #1d2d3e; margin-bottom: 8px; }
+.row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid #eee; font-size: 11px; }
+.row:first-of-type { border-top: 0; }
+.pill { font-size: 9.5px; font-weight: 700; border-radius: 9px; padding: 1px 7px; white-space: nowrap; }
+.pill.ok { background: #f1fdf6; color: #107e3e; box-shadow: inset 0 0 0 1px #c6ecd3; }
+.pill.wr { background: #fef7f1; color: #e9730c; box-shadow: inset 0 0 0 1px #f8d3b0; }
+.pill.in { margin: 0; max-width: none; padding: 1px 7px; background: #eef6fe; color: #0a6ed1; box-shadow: inset 0 0 0 1px #c5def7; }
+.joule { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; display: flex; flex-direction: column; min-width: 0; }
+.joule .jh { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid #eee; font-weight: 700; font-size: 11.5px; }
+.joule .jh i { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); display: inline-block; }
+.joule .msgs { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.bub { border-radius: 10px; padding: 7px 9px; font-size: 10.8px; max-width: 92%; }
+.bub.u { align-self: flex-end; background: #0a6ed1; color: #fff; border-bottom-right-radius: 3px; }
+.bub.j { background: #f2f2f7; color: #1d2d3e; border-bottom-left-radius: 3px; }
+.bub.j b { color: #0a6ed1; }
+.typing span { display: inline-block; width: 5px; height: 5px; margin-right: 3px; border-radius: 50%; background: #8b9196; }
+@media (prefers-reduced-motion: no-preference) {
+  .typing span { animation: blink 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
+}
+.caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+/* journey explainer */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.includes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.includes div { background: var(--bg-2); padding: 22px; }
+.includes h3 { font-size: 16px; margin-bottom: 6px; }
+.includes p { color: var(--muted); font-size: 14.5px; }
+.ico { width: 30px; height: 30px; margin-bottom: 12px; color: var(--green-hi); }
+
+/* fit check */
+.fit { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 44px; align-items: start; }
+.qs { display: flex; flex-direction: column; gap: 10px; }
+.q { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.q span { font-size: 15px; min-width: 0; }
+.yn { display: flex; gap: 4px; flex: none; background: #0f1814; border-radius: 9px; padding: 3px; }
+.yn button { font: 700 12px var(--body); letter-spacing: .06em; border: 0; border-radius: 7px; padding: 7px 12px; background: transparent; color: var(--muted); cursor: pointer; }
+.yn button[aria-pressed="true"] { background: var(--green); color: #fff; }
+.yn button.no[aria-pressed="true"] { background: #6b3a12; }
+.result { position: sticky; top: 100px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 28px; }
+.result .lab { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.meter { height: 10px; background: #dde5e1; border-radius: 6px; margin: 14px 0 18px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 6px; transition: width .35s; }
+.result h3 { font-size: 24px; margin-bottom: 10px; }
+.result p { color: var(--ink-soft); font-size: 15px; }
+.result .btn { margin-top: 20px; }
+
+/* capabilities */
+.caps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.cap { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.cap ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+.cap ul li { margin-bottom: 4px; }
+.cap .tagline { color: var(--fg); font-size: 15px; }
+
+/* AI */
+.agents { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.agent { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.agent .n { width: 36px; height: 36px; border-radius: 10px; background: rgba(52,179,134,.12); color: var(--green-hi); display: grid; place-items: center; }
+.agent h3 { font-size: 16px; margin-bottom: 2px; }
+.agent p { color: var(--muted); font-size: 14.5px; }
+.prog { height: 4px; background: #e6e9eb; border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.prog i { display: block; height: 100%; background: #0a6ed1; width: 72%; }
+@media (prefers-reduced-motion: no-preference) {
+  .prog i { animation: load 3.2s ease-in-out infinite alternate; }
+  @keyframes load { from { width: 38% } to { width: 92% } }
+}
+
+/* release timeline */
+.tl { margin-top: 48px; overflow-x: auto; }
+.tl svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.fact { border-top: 2px solid var(--green); padding-top: 14px; }
+.fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 14px; }
+
+/* extensibility */
+.layers { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.layer { display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.layer .who { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--green-hi); padding-top: 3px; }
+.layer h3 { font-size: 16px; margin-bottom: 4px; }
+.layer p { color: var(--muted); font-size: 14.5px; }
+.layer.core { background: var(--paper); color: var(--ink); border-color: transparent; }
+.layer.core .who { color: var(--green); }
+.layer.core p { color: var(--ink-soft); }
+
+/* activate */
+.phases { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ph { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.ph:last-child { border-right: 0; }
+.ph .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.ph h3 { font-size: 17px; }
+.ph p { color: var(--muted); font-size: 13.5px; }
+.ph .we { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--fg); }
+.ph .we b { color: var(--green-hi); font-weight: 700; }
+
+/* users */
+.users { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+.users table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; }
+.users th, .users td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.users th { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.users td:first-child { font-weight: 700; white-space: nowrap; }
+.users td:nth-child(2) { color: var(--muted); }
+.users tr:last-child td { border-bottom: 0; }
+.note { margin-top: 16px; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+/* faq */
+.faq { margin-top: 36px; display: flex; flex-direction: column; gap: 10px; max-width: 860px; }
+details { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 16.5px; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--green-hi); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 18px; max-width: 70ch; }
+
+/* cta */
+.cta-band { background: linear-gradient(120deg, #0e3a2b, #0a1a14 60%); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.cta-band ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cta-band li { display: flex; gap: 10px; font-size: 15px; }
+.cta-band li::before { content: "✓"; color: var(--green-hi); font-weight: 800; }
+footer { padding-block: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+footer .in { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .hero-grid, .two, .fit, .cta-band { grid-template-columns: 1fr; }
+  .caps { grid-template-columns: 1fr 1fr; }
+  .phases { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .ph:nth-child(3) { border-right: 0; }
+  .ph:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .result { position: static; }
+}
+@media (max-width: 620px) {
+  section { padding-block: 64px; }
+  .caps, .includes { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: 1fr; }
+  .ph { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .tiles .tile:nth-child(3) { display: none; }
+  .split { grid-template-columns: 1fr; }
+  .layer { grid-template-columns: 1fr; gap: 6px; }
+  .cta-band { padding: 36px 24px; }
+  .q { flex-direction: column; align-items: flex-start; }
+}
+
+/* light bands: same components, re-tokened */
+section.light { --bg-2: #ffffff; --line: #d9e2dd; --fg: #142019; --muted: #55655e; --green-hi: #17694b; background: #f2f5f3; color: var(--fg); border-top-color: transparent; }
+section.light .includes { background: var(--line); }
+section.light .cap, section.light details { box-shadow: 0 1px 2px rgba(20,32,25,.05); }
+/* Video library */
+.vf { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
+.vf button { font: 600 13.5px/1 var(--body); padding: 10px 15px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
+.vf button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.vf button span { color: var(--muted); margin-left: 6px; font-weight: 500; }
+.vf button[aria-pressed="true"] span { color: inherit; opacity: .6; }
+.vgrid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; margin-top: 26px; }
+.vcard { display: flex; flex-direction: column; text-decoration: none; color: var(--fg); border-radius: 14px; background: var(--bg-2); border: 1px solid var(--line); overflow: hidden; transition: transform .25s, border-color .25s; }
+.vcard:hover { transform: translateY(-3px); border-color: var(--green); }
+.vcard.feat { grid-column: span 2; }
+.poster { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; padding: 18px 20px; display: flex; flex-direction: column; justify-content: space-between; background: radial-gradient(120% 140% at 100% 0%, #1f7a5a 0%, #0c2a1f 48%, #06110d 100%); }
+.poster[data-k="mod"] { background: radial-gradient(120% 140% at 100% 0%, #0a6ed1 0%, #0b2340 50%, #050c16 100%); }
+.poster[data-k="rel"] { background: radial-gradient(120% 140% at 100% 0%, #5d36ff 0%, #1b1446 50%, #07061a 100%); }
+.poster::after { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(200deg, #000 10%, transparent 70%); -webkit-mask-image: linear-gradient(200deg, #000 10%, transparent 70%); pointer-events: none; }
+.poster .top { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+.poster .ch { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; color: #fff; letter-spacing: .04em; }
+.poster .ch b { background: linear-gradient(135deg,#0a6ed1,#0854a0); padding: 2px 6px; border-radius: 3px; font-size: 10px; }
+.poster .tag { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+.poster .big { position: relative; z-index: 1; font-family: var(--display); font-weight: 800; color: #fff; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.08; letter-spacing: -.01em; max-width: 80%; text-wrap: balance; }
+.vcard.feat .poster .big { font-size: clamp(26px, 3.4vw, 44px); }
+.poster .play { position: absolute; right: 18px; bottom: 18px; z-index: 1; width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,.95); display: grid; place-items: center; box-shadow: 0 10px 30px rgba(0,0,0,.35); transition: transform .25s; }
+.vcard:hover .play { transform: scale(1.08); }
+.vmeta { padding: 16px 18px 18px; display: grid; gap: 6px; }
+.vmeta h3 { font-size: 16px; line-height: 1.3; }
+.vmeta p { color: var(--muted); font-size: 14px; margin: 0; }
+.vmeta .d { font-size: 12px; color: var(--muted); letter-spacing: .02em; }
+.vnote { margin-top: 22px; color: var(--muted); font-size: 13px; max-width: 80ch; }
+
+@media (max-width: 980px) { .vgrid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .vgrid { grid-template-columns: 1fr; } }
+.vcard:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 2px; }
+</style>
+<header class="site">
+  <div class="in">
+    <a class="logo" href="#top" aria-label="Mawkish Technologies">
+      <svg viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L20 4 L32 18 L44 4 L62 28 Z" fill="none" stroke="#eef3f0" stroke-width="4" stroke-linejoin="round"/><path d="M20 28 L32 14 L44 28" fill="#eef3f0"/></svg>
+      MAWKISH
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">ABOUT US</a>
+      <a href="#" class="on">OUR SERVICES</a>
+      <a href="#">INDUSTRIES</a>
+      <a href="#">INSIGHTS &amp; PERSPECTIVES</a>
+      <a href="#book" class="btn pri">Schedule a consultation</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+/* Group reporting components */
+section.light .users td { color: var(--fg); } section.light .users td:nth-child(2) { color: var(--muted); }
+.two .facts .fact b { font-size: 23px; white-space: nowrap; }
+#watch .vgrid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.mon { width: 100%; border-collapse: collapse; font-size: 10.5px; color: #32363a; }
+.mon th { font-size: 9px; color: #6a6d70; font-weight: 700; padding: 5px 4px; border-bottom: 1px solid #e5e5e5; text-align: center; }
+.mon th:first-child, .mon td:first-child { text-align: left; }
+.mon td { padding: 6px 4px; border-bottom: 1px solid #f0f0f0; text-align: center; }
+.mon td small { display: block; color: #6a6d70; font-size: 9px; }
+.st { display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
+.st.ok { background: #3fa45b; } .st.er { background: #d04343; } .st.wt { background: #e5e8eb; } .st.go { background: #5899da; }
+.icm { display: grid; grid-template-columns: minmax(0,1fr) 72px 72px auto; gap: 8px; align-items: center; font-size: 10.5px; padding: 6px 0; border-top: 1px solid #eee; color: #32363a; }
+.icm.hd { font-size: 9px; color: #6a6d70; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; border-top: 0; }
+.icm span:nth-child(2), .icm span:nth-child(3) { text-align: right; font-variant-numeric: tabular-nums; }
+.icm small { display: block; color: #6a6d70; font-size: 9px; }
+.steps6 { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 10px; margin-top: 40px; counter-reset: s; }
+.s6 { border: 1px solid var(--line); border-radius: 14px; padding: 16px; background: var(--bg-2); display: flex; flex-direction: column; gap: 6px; }
+.s6 .n { font-family: var(--display); font-size: 12px; font-weight: 800; letter-spacing: .1em; color: var(--green-hi); text-transform: uppercase; }
+.s6 h3 { font-size: 15px; }
+.s6 p { color: var(--muted); font-size: 13px; }
+.dc { margin-top: 36px; border: 1px solid var(--line); border-radius: 16px; background: var(--bg-2); padding: 18px; }
+.dc svg { width: 100%; height: auto; display: block; }
+.dc-list { display: none; }
+@media (max-width: 1080px) { .steps6 { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+@media (max-width: 620px) { .steps6, #watch .vgrid { grid-template-columns: 1fr; } .dc svg { display: none; } .dc-list { display: grid; gap: 8px; margin: 0; padding-left: 20px; color: var(--muted); font-size: 15px; } .dc-list b { color: var(--fg); } .icm { grid-template-columns: minmax(0,1fr) 60px 60px; } .icm > :nth-child(4) { display: none; } }
+</style>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="in">
+      <div class="crumbs"><a href="#">Services</a> / <a href="#">SAP Solutions</a> / Group Reporting &amp; Consolidation</div>
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Group Reporting &amp; Consolidation</span>
+          <h1>Close the group in days, <em>not weeks.</em></h1>
+          <p class="lede">For most groups, consolidation still means collecting trial balances by email, chasing intercompany differences, and rebuilding a spreadsheet that only one person understands. SAP Cloud ERP includes group reporting in the same system as your accounting: SAP companies flow in directly, other subsidiaries load their numbers, and the system matches, translates and eliminates. We set it up for your group structure and standards.</p>
+          <div class="ctas">
+            <a href="#book" class="btn pri">Speed up your group close →</a>
+            <a href="#steps" class="btn sec">How consolidation works</a>
+          </div>
+        </div>
+
+        <figure style="margin:0">
+          <div class="screen" role="img" aria-label="Illustration of the consolidation monitor for the September period: five consolidation units with status for data collection, validation, currency translation, intercompany matching and eliminations. Sri Lanka and Maldives units are complete, the Bangladesh unit has a validation error, the UK unit is still waiting for data">
+            <div class="shell"><span class="sap">SAP</span><span class="t">Data Monitor · Group LKR · Sep 2026</span><span class="joule-btn"></span><span class="av">GC</span></div>
+            <div class="body-pad">
+              <div class="tiles">
+                <div class="tile"><div><div class="h">Units</div><div class="s">In the group</div></div><div class="k">5</div></div>
+                <div class="tile"><div><div class="h">Complete</div><div class="s">Ready to eliminate</div></div><div class="k pos">2</div></div>
+                <div class="tile"><div><div class="h">Open</div><div class="s">Error or waiting</div></div><div class="k neg">3</div></div>
+              </div>
+              <div class="card-f" style="margin-top:10px">
+                <table class="mon">
+                  <thead><tr><th>Unit</th><th>Data</th><th>Validate</th><th>Translate</th><th>Match IC</th></tr></thead>
+                  <tbody>
+                    <tr><td>LK01 Holding<small>SAP · real time</small></td><td><span class="st ok"></span></td><td><span class="st ok"></span></td><td><span class="st ok"></span></td><td><span class="st ok"></span></td></tr>
+                    <tr><td>LK02 Plantations<small>SAP · real time</small></td><td><span class="st ok"></span></td><td><span class="st ok"></span></td><td><span class="st ok"></span></td><td><span class="st ok"></span></td></tr>
+                    <tr><td>MV01 Maldives<small>Upload · USD</small></td><td><span class="st ok"></span></td><td><span class="st ok"></span></td><td><span class="st ok"></span></td><td><span class="st go"></span></td></tr>
+                    <tr><td>BD01 Bangladesh<small>Upload · BDT</small></td><td><span class="st ok"></span></td><td><span class="st er"></span></td><td><span class="st wt"></span></td><td><span class="st wt"></span></td></tr>
+                    <tr><td>UK01 London<small>Upload · GBP</small></td><td><span class="st wt"></span></td><td><span class="st wt"></span></td><td><span class="st wt"></span></td><td><span class="st wt"></span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <figcaption class="caption">Illustration of the consolidation data monitor in SAP Cloud ERP. Sample data.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section class="light" id="steps">
+    <div class="in">
+      <span class="eyebrow">How consolidation works</span>
+      <h2>Every step of the group close, in one system.</h2>
+      <p class="lede">Group reporting in SAP Cloud ERP runs the consolidation as a set of steps you follow in a monitor, period after period. Each step is logged, so auditors can trace any group number back to the entries behind it.</p>
+      <div class="steps6">
+        <div class="s6"><span class="n">1 · Collect</span><h3>Data in</h3><p>SAP companies flow in directly. Others upload or enter their numbers.</p></div>
+        <div class="s6"><span class="n">2 · Validate</span><h3>Check it</h3><p>Rules catch errors, such as a balance sheet that doesn't balance.</p></div>
+        <div class="s6"><span class="n">3 · Translate</span><h3>One currency</h3><p>Each unit's figures are translated into the group currency.</p></div>
+        <div class="s6"><span class="n">4 · Match</span><h3>Intercompany</h3><p>Sales, loans and balances between companies are matched.</p></div>
+        <div class="s6"><span class="n">5 · Eliminate</span><h3>Remove internal</h3><p>Intercompany items and investments are eliminated.</p></div>
+        <div class="s6"><span class="n">6 · Report</span><h3>Group accounts</h3><p>Group statements and analysis, with drill-down to source.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA COLLECTION -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">Not everyone is on SAP</span>
+      <h2>Bring in every subsidiary, whatever system it uses.</h2>
+      <p class="lede">Your SAP companies need no data collection at all: their postings are already in the group ledger. Subsidiaries on other systems, such as a small overseas sales office on a local package, load their trial balance from a file or enter it in a form. SAP maps their accounts to your group chart, and validations check the data before it goes any further.</p>
+      <div class="dc">
+        <svg viewBox="0 0 1000 200" role="img" aria-label="Data collection: SAP Cloud ERP companies post directly in real time, while subsidiaries on other systems upload trial balances or enter data in forms; both pass through mapping and validation into the group ledger, which feeds consolidation and group reports">
+          <g font-family="inherit" font-size="14" font-weight="700" text-anchor="middle">
+            <rect x="10" y="20" width="230" height="64" rx="12" fill="none" stroke="#7f938a"/><text x="125" y="48" fill="currentColor">SAP Cloud ERP companies</text><text x="125" y="68" font-size="12" font-weight="500" fill="#7f938a">real time, no upload</text>
+            <rect x="10" y="116" width="230" height="64" rx="12" fill="none" stroke="#7f938a"/><text x="125" y="144" fill="currentColor">Other subsidiaries</text><text x="125" y="164" font-size="12" font-weight="500" fill="#7f938a">file upload or forms</text>
+            <rect x="320" y="116" width="200" height="64" rx="12" fill="none" stroke="#7f938a"/><text x="420" y="144" fill="currentColor">Map and validate</text><text x="420" y="164" font-size="12" font-weight="500" fill="#7f938a">to your group accounts</text>
+            <rect x="600" y="60" width="180" height="80" rx="12" fill="none" stroke="#34b386" stroke-width="2"/><text x="690" y="96" fill="currentColor">Group ledger</text><text x="690" y="116" font-size="12" font-weight="500" fill="#7f938a">one set of numbers</text>
+            <rect x="840" y="60" width="150" height="80" rx="12" fill="none" stroke="#7f938a"/><text x="915" y="96" fill="currentColor">Group</text><text x="915" y="116" fill="currentColor">reports</text>
+          </g>
+          <g stroke="#7f938a" stroke-width="2" fill="none">
+            <path d="M240 52 H560 L592 82"/><path d="M240 148 H312"/><path d="M520 148 H560 L592 118"/><path d="M780 100 H832"/>
+            <path d="M304 142l8 6-8 6M824 94l8 6-8 6"/>
+          </g>
+        </svg>
+        <ol class="dc-list"><li><b>SAP Cloud ERP companies</b> post directly, in real time.</li><li><b>Other subsidiaries</b> upload a trial balance or use forms.</li><li>Their data is <b>mapped and validated</b> to your group accounts.</li><li>Everything lands in <b>one group ledger</b> for consolidation and reports.</li></ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERCOMPANY -->
+  <section class="light">
+    <div class="in two">
+      <div>
+        <span class="eyebrow">Intercompany</span>
+        <h2>Find intercompany differences before month-end, not after.</h2>
+        <p class="lede">Intercompany differences are where group closes stall: one company booked the invoice, the other didn't; one used last month's rate. SAP matches intercompany balances and transactions between your companies, shows the differences with the reason, and lets each side fix them during the month.</p>
+        <p class="lede">The matching results then drive the eliminations automatically, so what was agreed is what gets eliminated.</p>
+        <div class="facts">
+          <div class="fact"><b>Matched</b><span>both sides compared automatically</span></div>
+          <div class="fact"><b>Explained</b><span>differences shown with their reason</span></div>
+          <div class="fact"><b>Eliminated</b><span>matched items drive eliminations</span></div>
+        </div>
+      </div>
+      <figure style="margin:0">
+        <div class="screen" role="img" aria-label="Illustration of intercompany reconciliation: four company pairs comparing receivables and payables in LKR thousands. Holding and Plantations match, Plantations and Maldives differ by 1,250 due to an exchange rate, Holding and Bangladesh have an invoice missing on one side, Holding and London match">
+          <div class="shell"><span class="sap">SAP</span><span class="t">Intercompany Reconciliation · Sep 2026</span><span class="joule-btn"></span><span class="av">GC</span></div>
+          <div class="body-pad">
+            <div class="tiles">
+              <div class="tile"><div><div class="h">Pairs</div><div class="s">Company pairs</div></div><div class="k">12</div></div>
+              <div class="tile"><div><div class="h">Matched</div><div class="s">No difference</div></div><div class="k pos">10</div></div>
+              <div class="tile"><div><div class="h">Differences</div><div class="s">LKR '000</div></div><div class="k neg">3,400</div></div>
+            </div>
+            <div class="card-f" style="margin-top:10px">
+              <div class="icm hd"><span>Pair</span><span>Receivable</span><span>Payable</span><span></span></div>
+              <div class="icm"><span>LK01 ↔ LK02<small>Management fees</small></span><span>18,400</span><span>18,400</span><span class="pill ok">Matched</span></div>
+              <div class="icm"><span>LK02 ↔ MV01<small>Tea sales · rate used</small></span><span>42,750</span><span>41,500</span><span class="pill wr">FX</span></div>
+              <div class="icm"><span>LK01 ↔ BD01<small>Invoice not booked</small></span><span>2,150</span><span>0</span><span class="pill wr">Missing</span></div>
+              <div class="icm"><span>LK01 ↔ UK01<small>Loan interest</small></span><span>6,300</span><span>6,300</span><span class="pill ok">Matched</span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="caption">Illustration of intercompany matching in SAP Cloud ERP. Sample data.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- STANDARDS & STRUCTURE -->
+  <section>
+    <div class="in two">
+      <div>
+        <span class="eyebrow">Your group, your standards</span>
+        <h2>Built for how your group is owned and reported.</h2>
+        <p class="lede">Sri Lankan groups report under SLFRS, based on IFRS, and many also report to overseas owners or lenders in USD. Group reporting in SAP Cloud ERP supports several group currencies, consolidation groups for different views of the group, and changes in ownership such as acquisitions, disposals and minority interests.</p>
+        <p class="lede">We design your group chart of accounts, consolidation units and groups, and the reports your board and auditors need, so the structure still works when the group grows.</p>
+      </div>
+      <div class="includes">
+        <div><h3>Group chart of accounts</h3><p>One chart, mapped from each subsidiary's accounts.</p></div>
+        <div><h3>Several currencies</h3><p>Group accounts in LKR, with USD or other views as needed.</p></div>
+        <div><h3>Ownership changes</h3><p>Acquisitions, disposals and minority interests handled.</p></div>
+        <div><h3>Several views</h3><p>Legal, management and regional groups side by side.</p></div>
+        <div><h3>Audit trail</h3><p>Every group number traceable to its source entries.</p></div>
+        <div><h3>Group reports</h3><p>Statements, notes support and analysis with drill-down.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI & PLANNING -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">What's next</span>
+      <h2>Plan and forecast at group level too.</h2>
+      <p class="lede">Consolidation isn't only for actuals. With SAP Analytics Cloud, your subsidiaries can submit budgets and forecasts that are consolidated the same way as actuals, so group plan and group actual finally compare like for like. SAP has also released a financial consolidation assistant that helps with data submissions and error resolution; we check what's available for your release.</p>
+      <div class="users">
+        <table>
+          <thead><tr><th>Need</th><th>What we set up</th></tr></thead>
+          <tbody>
+            <tr><td>Monthly management consolidation</td><td>Group reporting with a short, fixed close calendar</td></tr>
+            <tr><td>Year-end statutory group accounts</td><td>Full consolidation including investments and minority interests</td></tr>
+            <tr><td>Group budget and forecast</td><td>Planning in SAP Analytics Cloud, consolidated like actuals</td></tr>
+            <tr><td>Subsidiaries not on SAP</td><td>File uploads or forms, with mapping and validations</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO LIBRARY -->
+  <section class="" id="watch">
+    <div class="in">
+      <span class="eyebrow">Watch and learn</span>
+      <h2>See it from SAP.</h2>
+      <p class="lede">Videos from SAP’s official YouTube channels on group reporting.</p>
+      <div class="vgrid"><a class="vcard" href="https://www.youtube.com/watch?v=vKrj-RP4SBg" target="_blank" rel="noopener" data-yt="vKrj-RP4SBg" aria-label="Play on YouTube: Introducing SAP S/4HANA Cloud for group reporting">
+      <div class="poster" data-k="start"><div class="top"><span class="ch"><b>SAP</b>YouTube</span><span class="tag">Start here</span></div><div class="big">Group Reporting</div><span class="play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M5 2.5v13l11-6.5z" fill="#0b2a1f"/></svg></span></div>
+      <div class="vmeta"><h3>Introducing SAP S/4HANA Cloud for group reporting</h3><p>A short introduction from SAP Learning to group reporting in SAP’s cloud ERP: data collection, consolidation and group reports.</p><span class="d">SAP Community · December 2023</span></div></a><a class="vcard" href="https://www.youtube.com/watch?v=EFelOaZuczQ" target="_blank" rel="noopener" data-yt="EFelOaZuczQ" aria-label="Play on YouTube: Finance in SAP S/4HANA Cloud Public Edition 2608">
+      <div class="poster" data-k="rel"><div class="top"><span class="ch"><b>SAP</b>YouTube</span><span class="tag">Release 2608</span></div><div class="big">Finance in 2608</div><span class="play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M5 2.5v13l11-6.5z" fill="#0b2a1f"/></svg></span></div>
+      <div class="vmeta"><h3>Finance in SAP S/4HANA Cloud Public Edition 2608</h3><p>SAP’s release highlights for finance in the August 2026 release.</p><span class="d">SAP · October 2026</span></div></a></div>
+      <p class="vnote">Published by SAP on its official YouTube channels.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">Questions we hear</span>
+      <h2>Straight answers.</h2>
+      <div class="faq">
+        <details><summary>Do we need a separate consolidation tool?</summary><p>Usually not. Group reporting is part of SAP Cloud ERP, so it runs on the same data as your accounting. Very large or complex groups sometimes need more, and we'll tell you if that's you.</p></details>
+        <details><summary>Do all our subsidiaries have to move to SAP?</summary><p>No. Subsidiaries on other systems can upload their trial balances or enter data in forms. Many groups move them to SAP over time, often using a simpler setup for small companies.</p></details>
+        <details><summary>Can it handle SLFRS and reporting to overseas owners?</summary><p>Yes. You can run group accounts in more than one currency and keep separate consolidation groups for different reporting needs. We design the structure with your finance team and auditors.</p></details>
+        <details><summary>How long does it take to set up?</summary><p>It depends on the number of units and how clean your intercompany process is. We usually start with a parallel run alongside your current consolidation, so you can compare before you switch.</p></details>
+        <details><summary>Is group reporting included in SAP Cloud ERP?</summary><p>Group reporting is part of SAP Cloud ERP's finance scope. Some options depend on your licence. We confirm what your subscription includes.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="book">
+    <div class="in">
+      <div class="cta-band">
+        <div>
+          <span class="eyebrow">Start here</span>
+          <h2>Make your next group close the fastest yet.</h2>
+          <p class="lede">In one session, we walk through your group structure, your current close calendar and where it stalls, and show how group reporting in SAP Cloud ERP would handle it.</p>
+          <div style="margin-top:28px"><a href="#" class="btn pri">Book a group close review →</a></div>
+        </div>
+        <ul>
+          <li>Group structure and currencies</li>
+          <li>Subsidiaries on other systems</li>
+          <li>Intercompany matching</li>
+          <li>SLFRS and overseas reporting</li>
+          <li>A parallel run before switching</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="in"><span>© Mawkish Technologies · Colombo, Sri Lanka</span><span>SAP, SAP Cloud ERP and SAP Analytics Cloud are trademarks of SAP SE. Screens shown are illustrations.</span></div>
+</footer>
+
+</body></html>

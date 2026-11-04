@@ -1,0 +1,261 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Mawkish SAP Menu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: dark site header mimicking mawkishtechnologies.com, mega-menu panel open beneath it, change log below */
+:root {
+  --site-bg: #050807;
+  --site-fg: #f2f5f3;
+  --site-muted: #9aa8a1;
+  --green: #1f7a5a;
+  --green-text: #2f9e76;
+  --panel: #eef2f0;
+  --panel-side: #e4eae7;
+  --card: #ffffff;
+  --ink: #12201a;
+  --ink-soft: #5b6b64;
+  --rule: #cfd9d4;
+  --new: #1f7a5a;
+  --renamed: #b7791f;
+  --merged: #6b5bb5;
+  --moved: #2f6fae;
+  --font: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--site-bg); color: var(--site-fg); font-family: var(--font); }
+.wrap { max-width: 1320px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 64px; }
+
+/* header */
+.hdr { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.logo { display: flex; flex-direction: column; align-items: center; gap: 2px; font-weight: 800; letter-spacing: .28em; font-size: 10px; }
+.logo svg { width: 64px; height: 30px; }
+.nav { display: flex; align-items: center; gap: 28px; border: 1px solid #1e2a25; border-radius: 16px; padding: 8px 8px 8px 28px; flex-wrap: wrap; }
+.nav a { color: var(--site-fg); text-decoration: none; font-weight: 700; font-size: 13px; letter-spacing: .06em; }
+.nav a.on { color: var(--green-text); }
+.nav .cta { background: var(--green); padding: 14px 22px; border-radius: 10px; }
+
+/* toolbar */
+.bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin: 28px 0 14px; }
+.bar p { margin: 0; color: var(--site-muted); font-size: 13px; max-width: 60ch; }
+.toggle { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; cursor: pointer; user-select: none; }
+.toggle input { width: 18px; height: 18px; accent-color: var(--green); }
+.legend { display: none; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--site-muted); margin-bottom: 12px; }
+body.show .legend { display: flex; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+
+/* mega menu */
+.mega { display: grid; grid-template-columns: 290px 1fr; background: var(--panel); color: var(--ink); border-radius: 26px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+.side { background: var(--panel-side); padding: 16px; display: flex; flex-direction: column; gap: 4px; }
+.side a { display: block; padding: 14px 18px; border-radius: 12px; text-decoration: none; color: var(--ink); }
+.side a b { display: block; font-size: 15px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.side a small { display: block; font-size: 12.5px; color: var(--ink-soft); margin-top: 3px; }
+.side a.on { background: var(--card); box-shadow: inset 3px 0 0 var(--green), 0 4px 14px rgba(0,0,0,.06); }
+.side a:hover:not(.on) { background: rgba(255,255,255,.5); }
+
+.main { padding: 28px 28px 24px; min-width: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); padding-bottom: 12px; border-bottom: 1px solid var(--rule); margin: 0 0 16px; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+.card { display: flex; align-items: center; gap: 16px; background: var(--card); border: 1px solid var(--rule); border-radius: 14px; padding: 16px 18px; text-decoration: none; color: var(--ink); }
+.card:hover { border-color: var(--green); }
+.badge { width: 52px; height: 40px; border-radius: 6px; display: grid; place-items: center; font-size: 8px; font-weight: 800; line-height: 1; text-align: center; flex: none; }
+.badge.grow { background: #e9f1fb; color: #0a3d91; border: 1px solid #c9dbf2; }
+.badge.rise { background: #0a3d91; color: #fff; }
+.card div { flex: 1; min-width: 0; }
+.card b { display: block; font-size: 18px; font-weight: 800; letter-spacing: .03em; }
+.card small { color: var(--ink-soft); font-size: 13.5px; }
+.arrow { width: 34px; height: 34px; border-radius: 50%; background: var(--panel); display: grid; place-items: center; color: var(--green); flex: none; }
+
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 28px; }
+.col h3 { font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); padding-bottom: 10px; border-bottom: 1px solid var(--rule); margin: 0 0 10px; }
+.col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.col a { display: flex; align-items: baseline; gap: 8px; padding: 7px 0; color: var(--ink); text-decoration: none; font-size: 15.5px; font-weight: 500; line-height: 1.3; }
+.col a:hover, .col a:focus-visible { color: var(--green); outline: none; }
+.col a .tag { display: none; font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; color: #fff; flex: none; transform: translateY(-1px); }
+body.show .col a .tag { display: inline-block; }
+.tag.new { background: var(--new); } .tag.renamed { background: var(--renamed); } .tag.merged { background: var(--merged); } .tag.moved { background: var(--moved); }
+.col a .hint { display: block; font-size: 12.5px; color: var(--ink-soft); font-weight: 400; margin-top: 2px; }
+
+.promo { background: var(--ink); color: #e9f1ed; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
+.promo b { font-size: 16px; line-height: 1.35; }
+.promo p { margin: 0; font-size: 13px; color: #a9bab2; line-height: 1.5; }
+.promo a { color: #7fd6b0; font-weight: 800; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; }
+
+.all { display: inline-block; margin-top: 22px; font-size: 13px; font-weight: 800; letter-spacing: .2em; color: var(--green); text-decoration: none; }
+
+/* change log */
+.log { margin-top: 48px; }
+.log h2 { font-size: 20px; margin: 0 0 6px; text-wrap: balance; }
+.log > p { color: var(--site-muted); margin: 0 0 18px; font-size: 14px; max-width: 70ch; line-height: 1.55; }
+.tbl { overflow-x: auto; border: 1px solid #1e2a25; border-radius: 12px; }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 14px; }
+th, td { text-align: left; padding: 11px 16px; border-bottom: 1px solid #1a2420; vertical-align: top; }
+th { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--site-muted); font-weight: 700; background: #0b120f; }
+td:first-child { color: var(--site-muted); }
+tr:last-child td { border-bottom: 0; }
+td .tag { display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; color: #fff; }
+
+@media (max-width: 1100px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .mega { grid-template-columns: 1fr; }
+  .side { flex-direction: row; overflow-x: auto; }
+  .side a { flex: none; }
+  .cards { grid-template-columns: 1fr; }
+  .nav { gap: 16px; padding-left: 16px; }
+}
+@media (max-width: 560px) {
+  .grid { grid-template-columns: 1fr; }
+  .main { padding: 20px 18px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .col a, .card, .side a { transition: color .15s, border-color .15s, background .15s; }
+}
+</style>
+
+<div class="wrap">
+  <header class="hdr">
+    <div class="logo">
+      <svg viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L20 4 L32 18 L44 4 L62 28 Z" fill="none" stroke="#f2f5f3" stroke-width="4" stroke-linejoin="round"/><path d="M20 28 L32 14 L44 28" fill="#f2f5f3"/></svg>
+      MAWKISH
+    </div>
+    <nav class="nav" aria-label="Main">
+      <a href="#">ABOUT US</a>
+      <a href="#" class="on">OUR SERVICES ⌃</a>
+      <a href="#">INDUSTRIES</a>
+      <a href="#">INSIGHTS &amp; PERSPECTIVES</a>
+      <a href="#" class="cta">SCHEDULE A CONSULTATION</a>
+    </nav>
+  </header>
+
+  <div class="bar">
+    <p>Proposed SAP Solutions mega-menu. GROW and RISE are unchanged. Everything below them is regrouped and renamed. This is a visual mockup only.</p>
+    <label class="toggle" for="showChanges"><input type="checkbox" id="showChanges"> Show what changed</label>
+  </div>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--new)"></i>New service</span>
+    <span><i class="dot" style="background:var(--renamed)"></i>Renamed</span>
+    <span><i class="dot" style="background:var(--merged)"></i>Merged from two items</span>
+    <span><i class="dot" style="background:var(--moved)"></i>Moved to a new group</span>
+  </div>
+
+  <section class="mega" aria-label="Our services menu">
+    <aside class="side">
+      <a href="#" class="on"><b>SAP Solutions</b><small>Cloud ERP, AI &amp; data</small></a>
+      <a href="#"><b>Salesforce</b><small>CRM &amp; customer experience</small></a>
+      <a href="#"><b>Odoo</b><small>ERP for growing businesses</small></a>
+      <a href="#"><b>Swyftflo</b><small>Supply chain solution</small></a>
+      <a href="#"><b>MIHCM</b><small>HR &amp; HCM solution</small></a>
+      <a href="#"><b>Databricks</b><small>Enterprise data platform</small></a>
+      <a href="#"><b>Cloud Infrastructure</b><small>AWS, Azure, Google Cloud</small></a>
+    </aside>
+
+    <div class="main">
+      <p class="eyebrow">Cloud ERP Programmes</p>
+      <div class="cards">
+        <a class="card" href="#"><span class="badge grow">GROW<br>WITH<br>SAP</span><div><b>GROW WITH SAP</b><small>S/4HANA Public Cloud</small></div><span class="arrow">→</span></a>
+        <a class="card" href="#"><span class="badge rise">RISE<br>WITH<br>SAP</span><div><b>RISE WITH SAP</b><small>S/4HANA Private Cloud</small></div><span class="arrow">→</span></a>
+      </div>
+
+      <div class="grid">
+        <div class="col">
+          <h3>Advise &amp; Plan</h3>
+          <ul>
+            <li><a href="#">Cloud ERP Readiness Assessment <span class="tag new">New</span></a></li>
+            <li><a href="#">Fit-to-Standard Workshops <span class="tag new">New</span></a></li>
+            <li><a href="#">Licensing &amp; Commercial Advisory <span class="tag merged">Merged</span></a></li>
+            <li><a href="#">Two-Tier ERP for Subsidiaries <span class="tag new">New</span></a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Implement &amp; Migrate</h3>
+          <ul>
+            <li><a href="#">Cloud ERP Implementation <span class="tag renamed">Renamed</span></a></li>
+            <li><a href="#">Move from ECC &amp; On-Premise <span class="tag merged">Merged</span></a></li>
+            <li><a href="#">Data Migration <span class="tag new">New</span></a></li>
+            <li><a href="#">Rollouts &amp; Localisation <span class="tag renamed">Renamed</span></a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Extend &amp; Integrate</h3>
+          <ul>
+            <li><a href="#">SAP BTP Extensions &amp; Apps <span class="tag moved">Moved</span></a></li>
+            <li><a href="#">Process Automation with SAP Build <span class="tag moved">Moved</span></a></li>
+            <li><a href="#">SAP &amp; Non-SAP Integration <span class="tag moved">Moved</span></a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Run &amp; Optimise</h3>
+          <ul>
+            <li><a href="#">Application Management Support <span class="tag renamed">Renamed</span></a></li>
+            <li><a href="#">Release &amp; Upgrade Management <span class="tag new">New</span></a></li>
+            <li><a href="#">Test Automation <span class="tag new">New</span></a></li>
+            <li><a href="#">Security, Roles &amp; Authorisations <span class="tag new">New</span></a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>AI &amp; Data</h3>
+          <ul>
+            <li><a href="#">SAP Business AI <span class="tag renamed">Renamed</span></a></li>
+            <li><a href="#">Joule &amp; AI Agents <span class="tag renamed">Renamed</span></a></li>
+            <li><a href="#">SAP Business Data Cloud <span class="tag renamed">Renamed</span></a></li>
+            <li><a href="#">SAP Analytics Cloud <span class="tag renamed">Renamed</span></a></li>
+            <li><a href="#">Group Reporting &amp; Consolidation <span class="tag renamed">Renamed</span></a></li>
+          </ul>
+        </div>
+        <div class="promo">
+          <b>Not sure where to start with Cloud ERP?</b>
+          <p>A two-week readiness assessment maps your processes to SAP standard and gives you a costed roadmap.</p>
+          <a href="#">Book an assessment →</a>
+        </div>
+      </div>
+
+      <a class="all" href="#">ALL SERVICES →</a>
+    </div>
+  </section>
+
+  <section class="log">
+    <h2>From the developer's draft to this version</h2>
+    <p>The draft had 15 links plus the 2 cards. This version has 20 links plus the 2 cards: 7 new services, 2 pairs merged, the rest renamed or regrouped. "SAP" is only kept where it is part of a product name, because the whole panel is already under SAP Solutions. "Deployment" is dropped everywhere.</p>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Developer's draft</th><th>Proposed</th><th>Group</th><th>Change</th></tr></thead>
+        <tbody>
+          <tr><td>—</td><td>Cloud ERP Readiness Assessment</td><td>Advise &amp; Plan</td><td><span class="tag new">New</span></td></tr>
+          <tr><td>—</td><td>Fit-to-Standard Workshops</td><td>Advise &amp; Plan</td><td><span class="tag new">New</span></td></tr>
+          <tr><td>SAP Cloud ERP Licensing + SAP Cloud ERP Commercial Construct</td><td>Licensing &amp; Commercial Advisory</td><td>Advise &amp; Plan</td><td><span class="tag merged">Merged</span></td></tr>
+          <tr><td>—</td><td>Two-Tier ERP for Subsidiaries</td><td>Advise &amp; Plan</td><td><span class="tag new">New</span></td></tr>
+          <tr><td>SAP Implementation</td><td>Cloud ERP Implementation</td><td>Implement &amp; Migrate</td><td><span class="tag renamed">Renamed</span></td></tr>
+          <tr><td>SAP ECC Migration + SAP S/4HANA On Prem Migration</td><td>Move from ECC &amp; On-Premise</td><td>Implement &amp; Migrate</td><td><span class="tag merged">Merged</span></td></tr>
+          <tr><td>—</td><td>Data Migration</td><td>Implement &amp; Migrate</td><td><span class="tag new">New</span></td></tr>
+          <tr><td>SAP Rollout</td><td>Rollouts &amp; Localisation</td><td>Implement &amp; Migrate</td><td><span class="tag renamed">Renamed</span></td></tr>
+          <tr><td>SAP BTP Development</td><td>SAP BTP Extensions &amp; Apps</td><td>Extend &amp; Integrate</td><td><span class="tag moved">Moved</span></td></tr>
+          <tr><td>SAP Application Development &amp; Automation</td><td>Process Automation with SAP Build</td><td>Extend &amp; Integrate</td><td><span class="tag moved">Moved</span></td></tr>
+          <tr><td>SAP Integration</td><td>SAP &amp; Non-SAP Integration</td><td>Extend &amp; Integrate</td><td><span class="tag moved">Moved</span></td></tr>
+          <tr><td>SAP Support Service</td><td>Application Management Support</td><td>Run &amp; Optimise</td><td><span class="tag renamed">Renamed</span></td></tr>
+          <tr><td>—</td><td>Release &amp; Upgrade Management</td><td>Run &amp; Optimise</td><td><span class="tag new">New</span></td></tr>
+          <tr><td>—</td><td>Test Automation</td><td>Run &amp; Optimise</td><td><span class="tag new">New</span></td></tr>
+          <tr><td>—</td><td>Security, Roles &amp; Authorisations</td><td>Run &amp; Optimise</td><td><span class="tag new">New</span></td></tr>
+          <tr><td>SAP Business AI Deployment</td><td>SAP Business AI</td><td>AI &amp; Data</td><td><span class="tag renamed">Renamed</span></td></tr>
+          <tr><td>SAP Joule Deployment</td><td>Joule &amp; AI Agents</td><td>AI &amp; Data</td><td><span class="tag renamed">Renamed</span></td></tr>
+          <tr><td>SAP BDC Deployment</td><td>SAP Business Data Cloud</td><td>AI &amp; Data</td><td><span class="tag renamed">Renamed</span></td></tr>
+          <tr><td>SAP Analytics Cloud Deployment</td><td>SAP Analytics Cloud</td><td>AI &amp; Data</td><td><span class="tag renamed">Renamed</span></td></tr>
+          <tr><td>SAP Group Reporting Deployment</td><td>Group Reporting &amp; Consolidation</td><td>AI &amp; Data</td><td><span class="tag renamed">Renamed</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<script>
+  const cb = document.getElementById('showChanges');
+  const apply = () => document.body.classList.toggle('show', cb.checked);
+  cb.addEventListener('change', apply);
+  apply();
+</script>
+
+</body></html>

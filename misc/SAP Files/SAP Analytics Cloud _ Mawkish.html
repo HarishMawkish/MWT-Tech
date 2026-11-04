@@ -1,0 +1,539 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>SAP Analytics Cloud | Mawkish</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Mawkish dark site, full-width bands; each band pairs copy with a drawn SAP Fiori-style screen */
+:root {
+  --bg: #050807;
+  --bg-2: #0a110e;
+  --line: #1c2823;
+  --fg: #eef3f0;
+  --muted: #9aaaa2;
+  --green: #1f7a5a;
+  --green-hi: #34b386;
+  --paper: #f3f6f4;
+  --ink: #142019;
+  --ink-soft: #5c6c65;
+  --fiori: #0a6ed1;
+  --fiori-bg: #f5f6f7;
+  --warn: #e9730c;
+  --display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.in { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 88px; border-top: 1px solid var(--line); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 19px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 16px; display: block; }
+.lede { color: var(--muted); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border: 1px solid transparent; }
+.btn.pri { background: var(--green); color: #fff; }
+.btn.pri:hover { background: #24906a; }
+.btn.sec { border-color: #2c3d36; color: var(--fg); }
+.btn.sec:hover { border-color: var(--green-hi); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
+
+/* header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(5,8,7,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.site .in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; flex-direction: column; align-items: center; font-weight: 800; letter-spacing: .3em; font-size: 9px; color: var(--fg); text-decoration: none; }
+.logo svg { width: 54px; height: 26px; }
+.nav { display: flex; gap: 26px; align-items: center; }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 700; font-size: 12.5px; letter-spacing: .07em; }
+.nav a.on { color: var(--green-hi); }
+.nav .btn { padding: 12px 18px; }
+@media (max-width: 900px) { .nav a:not(.btn) { display: none; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 56px 88px; background: radial-gradient(900px 420px at 80% 10%, rgba(31,122,90,.22), transparent 70%); }
+.crumbs { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 em { font-style: normal; color: var(--green-hi); }
+.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.name-note { margin-top: 28px; font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--green); padding-left: 14px; max-width: 54ch; }
+.name-note b { color: var(--fg); font-weight: 600; }
+
+/* Fiori mock screens */
+.screen { background: var(--fiori-bg); color: #32363a; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06); font-size: 12px; line-height: 1.4; min-width: 0; }
+.shell { background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; gap: 12px; padding: 9px 14px; }
+.shell .sap { background: linear-gradient(135deg,#0a6ed1,#0854a0); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 7px; border-radius: 3px; letter-spacing: .02em; }
+.shell .t { font-weight: 600; color: #32363a; flex: 1; }
+.shell .search { flex: 1.4; background: #eff1f2; border-radius: 16px; height: 24px; display: flex; align-items: center; padding: 0 10px; color: #8b9196; font-size: 11px; }
+.shell .joule-btn { width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); }
+.shell .av { width: 24px; height: 24px; border-radius: 50%; background: #d1e8ff; color: #0a6ed1; font-weight: 700; font-size: 10px; display: grid; place-items: center; }
+.body-pad { padding: 16px; }
+.greet { font-size: 15px; font-weight: 700; color: #1d2d3e; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.tile { background: #fff; border-radius: 10px; padding: 11px 12px; box-shadow: 0 0 0 1px #e5e5e5; min-height: 92px; display: flex; flex-direction: column; justify-content: space-between; }
+.tile .h { font-weight: 600; color: #1d2d3e; font-size: 11.5px; }
+.tile .s { color: #6a6d70; font-size: 10.5px; }
+.tile .k { font-size: 22px; font-weight: 300; color: #0a6ed1; font-variant-numeric: tabular-nums; }
+.tile .k.neg { color: #bb0000; } .tile .k.pos { color: #107e3e; }
+.tile .k small { font-size: 11px; color: #6a6d70; margin-left: 2px; }
+.spark { height: 26px; width: 100%; }
+.split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; margin-top: 10px; }
+.card-f { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; padding: 12px; min-width: 0; }
+.card-f .h { font-weight: 700; font-size: 11.5px; color: #1d2d3e; margin-bottom: 8px; }
+.row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid #eee; font-size: 11px; }
+.row:first-of-type { border-top: 0; }
+.pill { font-size: 9.5px; font-weight: 700; border-radius: 9px; padding: 1px 7px; white-space: nowrap; }
+.pill.ok { background: #f1fdf6; color: #107e3e; box-shadow: inset 0 0 0 1px #c6ecd3; }
+.pill.wr { background: #fef7f1; color: #e9730c; box-shadow: inset 0 0 0 1px #f8d3b0; }
+.pill.in { margin: 0; max-width: none; padding: 1px 7px; background: #eef6fe; color: #0a6ed1; box-shadow: inset 0 0 0 1px #c5def7; }
+.joule { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; display: flex; flex-direction: column; min-width: 0; }
+.joule .jh { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid #eee; font-weight: 700; font-size: 11.5px; }
+.joule .jh i { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); display: inline-block; }
+.joule .msgs { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.bub { border-radius: 10px; padding: 7px 9px; font-size: 10.8px; max-width: 92%; }
+.bub.u { align-self: flex-end; background: #0a6ed1; color: #fff; border-bottom-right-radius: 3px; }
+.bub.j { background: #f2f2f7; color: #1d2d3e; border-bottom-left-radius: 3px; }
+.bub.j b { color: #0a6ed1; }
+.typing span { display: inline-block; width: 5px; height: 5px; margin-right: 3px; border-radius: 50%; background: #8b9196; }
+@media (prefers-reduced-motion: no-preference) {
+  .typing span { animation: blink 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
+}
+.caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+/* journey explainer */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.includes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.includes div { background: var(--bg-2); padding: 22px; }
+.includes h3 { font-size: 16px; margin-bottom: 6px; }
+.includes p { color: var(--muted); font-size: 14.5px; }
+.ico { width: 30px; height: 30px; margin-bottom: 12px; color: var(--green-hi); }
+
+/* fit check */
+.fit { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 44px; align-items: start; }
+.qs { display: flex; flex-direction: column; gap: 10px; }
+.q { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.q span { font-size: 15px; min-width: 0; }
+.yn { display: flex; gap: 4px; flex: none; background: #0f1814; border-radius: 9px; padding: 3px; }
+.yn button { font: 700 12px var(--body); letter-spacing: .06em; border: 0; border-radius: 7px; padding: 7px 12px; background: transparent; color: var(--muted); cursor: pointer; }
+.yn button[aria-pressed="true"] { background: var(--green); color: #fff; }
+.yn button.no[aria-pressed="true"] { background: #6b3a12; }
+.result { position: sticky; top: 100px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 28px; }
+.result .lab { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.meter { height: 10px; background: #dde5e1; border-radius: 6px; margin: 14px 0 18px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 6px; transition: width .35s; }
+.result h3 { font-size: 24px; margin-bottom: 10px; }
+.result p { color: var(--ink-soft); font-size: 15px; }
+.result .btn { margin-top: 20px; }
+
+/* capabilities */
+.caps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.cap { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.cap ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+.cap ul li { margin-bottom: 4px; }
+.cap .tagline { color: var(--fg); font-size: 15px; }
+
+/* AI */
+.agents { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.agent { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.agent .n { width: 36px; height: 36px; border-radius: 10px; background: rgba(52,179,134,.12); color: var(--green-hi); display: grid; place-items: center; }
+.agent h3 { font-size: 16px; margin-bottom: 2px; }
+.agent p { color: var(--muted); font-size: 14.5px; }
+.prog { height: 4px; background: #e6e9eb; border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.prog i { display: block; height: 100%; background: #0a6ed1; width: 72%; }
+@media (prefers-reduced-motion: no-preference) {
+  .prog i { animation: load 3.2s ease-in-out infinite alternate; }
+  @keyframes load { from { width: 38% } to { width: 92% } }
+}
+
+/* release timeline */
+.tl { margin-top: 48px; overflow-x: auto; }
+.tl svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.fact { border-top: 2px solid var(--green); padding-top: 14px; }
+.fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 14px; }
+
+/* extensibility */
+.layers { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.layer { display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.layer .who { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--green-hi); padding-top: 3px; }
+.layer h3 { font-size: 16px; margin-bottom: 4px; }
+.layer p { color: var(--muted); font-size: 14.5px; }
+.layer.core { background: var(--paper); color: var(--ink); border-color: transparent; }
+.layer.core .who { color: var(--green); }
+.layer.core p { color: var(--ink-soft); }
+
+/* activate */
+.phases { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ph { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.ph:last-child { border-right: 0; }
+.ph .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.ph h3 { font-size: 17px; }
+.ph p { color: var(--muted); font-size: 13.5px; }
+.ph .we { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--fg); }
+.ph .we b { color: var(--green-hi); font-weight: 700; }
+
+/* users */
+.users { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+.users table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; }
+.users th, .users td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.users th { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.users td:first-child { font-weight: 700; white-space: nowrap; }
+.users td:nth-child(2) { color: var(--muted); }
+.users tr:last-child td { border-bottom: 0; }
+.note { margin-top: 16px; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+/* faq */
+.faq { margin-top: 36px; display: flex; flex-direction: column; gap: 10px; max-width: 860px; }
+details { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 16.5px; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--green-hi); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 18px; max-width: 70ch; }
+
+/* cta */
+.cta-band { background: linear-gradient(120deg, #0e3a2b, #0a1a14 60%); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.cta-band ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cta-band li { display: flex; gap: 10px; font-size: 15px; }
+.cta-band li::before { content: "✓"; color: var(--green-hi); font-weight: 800; }
+footer { padding-block: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+footer .in { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .hero-grid, .two, .fit, .cta-band { grid-template-columns: 1fr; }
+  .caps { grid-template-columns: 1fr 1fr; }
+  .phases { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .ph:nth-child(3) { border-right: 0; }
+  .ph:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .result { position: static; }
+}
+@media (max-width: 620px) {
+  section { padding-block: 64px; }
+  .caps, .includes { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: 1fr; }
+  .ph { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .tiles .tile:nth-child(3) { display: none; }
+  .split { grid-template-columns: 1fr; }
+  .layer { grid-template-columns: 1fr; gap: 6px; }
+  .cta-band { padding: 36px 24px; }
+  .q { flex-direction: column; align-items: flex-start; }
+}
+
+/* light bands: same components, re-tokened */
+section.light { --bg-2: #ffffff; --line: #d9e2dd; --fg: #142019; --muted: #55655e; --green-hi: #17694b; background: #f2f5f3; color: var(--fg); border-top-color: transparent; }
+section.light .includes { background: var(--line); }
+section.light .cap, section.light details { box-shadow: 0 1px 2px rgba(20,32,25,.05); }
+/* Video library */
+.vf { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
+.vf button { font: 600 13.5px/1 var(--body); padding: 10px 15px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
+.vf button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.vf button span { color: var(--muted); margin-left: 6px; font-weight: 500; }
+.vf button[aria-pressed="true"] span { color: inherit; opacity: .6; }
+.vgrid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; margin-top: 26px; }
+.vcard { display: flex; flex-direction: column; text-decoration: none; color: var(--fg); border-radius: 14px; background: var(--bg-2); border: 1px solid var(--line); overflow: hidden; transition: transform .25s, border-color .25s; }
+.vcard:hover { transform: translateY(-3px); border-color: var(--green); }
+.vcard.feat { grid-column: span 2; }
+.poster { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; padding: 18px 20px; display: flex; flex-direction: column; justify-content: space-between; background: radial-gradient(120% 140% at 100% 0%, #1f7a5a 0%, #0c2a1f 48%, #06110d 100%); }
+.poster[data-k="mod"] { background: radial-gradient(120% 140% at 100% 0%, #0a6ed1 0%, #0b2340 50%, #050c16 100%); }
+.poster[data-k="rel"] { background: radial-gradient(120% 140% at 100% 0%, #5d36ff 0%, #1b1446 50%, #07061a 100%); }
+.poster::after { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(200deg, #000 10%, transparent 70%); -webkit-mask-image: linear-gradient(200deg, #000 10%, transparent 70%); pointer-events: none; }
+.poster .top { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+.poster .ch { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; color: #fff; letter-spacing: .04em; }
+.poster .ch b { background: linear-gradient(135deg,#0a6ed1,#0854a0); padding: 2px 6px; border-radius: 3px; font-size: 10px; }
+.poster .tag { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+.poster .big { position: relative; z-index: 1; font-family: var(--display); font-weight: 800; color: #fff; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.08; letter-spacing: -.01em; max-width: 80%; text-wrap: balance; }
+.vcard.feat .poster .big { font-size: clamp(26px, 3.4vw, 44px); }
+.poster .play { position: absolute; right: 18px; bottom: 18px; z-index: 1; width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,.95); display: grid; place-items: center; box-shadow: 0 10px 30px rgba(0,0,0,.35); transition: transform .25s; }
+.vcard:hover .play { transform: scale(1.08); }
+.vmeta { padding: 16px 18px 18px; display: grid; gap: 6px; }
+.vmeta h3 { font-size: 16px; line-height: 1.3; }
+.vmeta p { color: var(--muted); font-size: 14px; margin: 0; }
+.vmeta .d { font-size: 12px; color: var(--muted); letter-spacing: .02em; }
+.vnote { margin-top: 22px; color: var(--muted); font-size: 13px; max-width: 80ch; }
+
+@media (max-width: 980px) { .vgrid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .vgrid { grid-template-columns: 1fr; } }
+.vcard:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 2px; }
+</style>
+<header class="site">
+  <div class="in">
+    <a class="logo" href="#top" aria-label="Mawkish Technologies">
+      <svg viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L20 4 L32 18 L44 4 L62 28 Z" fill="none" stroke="#eef3f0" stroke-width="4" stroke-linejoin="round"/><path d="M20 28 L32 14 L44 28" fill="#eef3f0"/></svg>
+      MAWKISH
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">ABOUT US</a>
+      <a href="#" class="on">OUR SERVICES</a>
+      <a href="#">INDUSTRIES</a>
+      <a href="#">INSIGHTS &amp; PERSPECTIVES</a>
+      <a href="#book" class="btn pri">Schedule a consultation</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+/* Analytics Cloud components */
+section.light .users td { color: var(--fg); } section.light .users td:nth-child(2) { color: var(--muted); }
+.two .facts .fact b { font-size: 23px; white-space: nowrap; }
+#watch .vgrid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.chart { background: #fff; border-radius: 8px; box-shadow: 0 0 0 1px #e5e5e5; padding: 10px 12px; }
+.chart .h { font-size: 11px; font-weight: 700; color: #1d2d3e; margin-bottom: 6px; display: flex; justify-content: space-between; }
+.chart .h span { font-weight: 500; color: #6a6d70; }
+.chart svg { width: 100%; height: auto; display: block; }
+.lg { display: flex; gap: 12px; font-size: 9.5px; color: #6a6d70; margin-top: 4px; }
+.lg i { display: inline-block; width: 10px; height: 3px; border-radius: 2px; margin-right: 4px; vertical-align: middle; }
+.sgrid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; margin-top: 10px; }
+.pg { width: 100%; border-collapse: collapse; font-size: 10.5px; color: #32363a; }
+.pg th { text-align: right; font-size: 9.5px; color: #6a6d70; font-weight: 700; padding: 5px 6px; border-bottom: 1px solid #e5e5e5; }
+.pg th:first-child, .pg td:first-child { text-align: left; }
+.pg td { text-align: right; padding: 5px 6px; border-bottom: 1px solid #f0f0f0; font-variant-numeric: tabular-nums; }
+.pg td.ed { background: #fffbe6; box-shadow: inset 0 0 0 1px #f0c000; }
+.pg tr.tot td { font-weight: 800; color: #1d2d3e; border-bottom: 0; }
+.pg td.neg { color: #bb0000; } .pg td.pos { color: #107e3e; }
+.uses3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 40px; }
+.u3 { border: 1px solid var(--line); border-radius: 16px; padding: 22px; background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.u3 .n { font-family: var(--display); font-size: 13px; font-weight: 800; letter-spacing: .12em; color: var(--green-hi); text-transform: uppercase; }
+.u3 h3 { font-size: 17px; }
+.u3 p { color: var(--muted); font-size: 14px; }
+.u3 .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: auto; padding-top: 6px; }
+.u3 .tags span { font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 12px; border: 1px solid var(--line); color: var(--muted); }
+@media (max-width: 1080px) { .uses3 { grid-template-columns: 1fr 1fr; } .sgrid { grid-template-columns: 1fr; } }
+@media (max-width: 620px) { .uses3, #watch .vgrid { grid-template-columns: 1fr; } }
+</style>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="in">
+      <div class="crumbs"><a href="#">Services</a> / <a href="#">SAP Solutions</a> / SAP Analytics Cloud</div>
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">SAP Analytics Cloud</span>
+          <h1>Report, plan and forecast <em>in one place.</em></h1>
+          <p class="lede">Month-end packs built in Excel. Budgets emailed back and forth in twenty versions. Forecasts nobody trusts. SAP Analytics Cloud replaces all three with one tool connected to SAP Cloud ERP: live dashboards for management, budgets and forecasts your teams enter together, and AI that explains what changed. We design it around the decisions you need to make.</p>
+          <div class="ctas">
+            <a href="#book" class="btn pri">Replace your Excel packs →</a>
+            <a href="#plan" class="btn sec">How planning works</a>
+          </div>
+        </div>
+
+        <figure style="margin:0">
+          <div class="screen" role="img" aria-label="Illustration of an SAP Analytics Cloud management dashboard: revenue year to date LKR 4.8 billion, 3 percent ahead of budget, gross margin 31.4 percent, operating cash LKR 620 million, with a monthly chart of actual revenue against budget and forecast">
+            <div class="shell"><span class="sap">SAP</span><span class="t">Analytics Cloud · Management Pack</span><span class="joule-btn"></span><span class="av">CFO</span></div>
+            <div class="body-pad">
+              <div class="tiles">
+                <div class="tile"><div><div class="h">Revenue YTD</div><div class="s">vs budget +3%</div></div><div class="k pos">4.8<small>bn</small></div></div>
+                <div class="tile"><div><div class="h">Gross margin</div><div class="s">vs budget −0.6 pt</div></div><div class="k neg">31.4<small>%</small></div></div>
+                <div class="tile"><div><div class="h">Operating cash</div><div class="s">LKR, this month</div></div><div class="k">620<small>m</small></div></div>
+              </div>
+              <div class="chart" style="margin-top:10px">
+                <div class="h">Revenue by month, LKR m <span>Apr–Mar</span></div>
+                <svg viewBox="0 0 400 120" aria-hidden="true">
+                  <g stroke="#eef0f2"><path d="M0 20H400M0 55H400M0 90H400"/></g>
+                  <g fill="#5899da">
+                    <rect x="8" y="58" width="22" height="52" rx="2"/><rect x="41" y="52" width="22" height="58" rx="2"/><rect x="74" y="55" width="22" height="55" rx="2"/><rect x="107" y="46" width="22" height="64" rx="2"/><rect x="140" y="42" width="22" height="68" rx="2"/><rect x="173" y="38" width="22" height="72" rx="2"/><rect x="206" y="44" width="22" height="66" rx="2"/>
+                  </g>
+                  <g fill="#c3d8ee"><rect x="239" y="40" width="22" height="70" rx="2"/><rect x="272" y="36" width="22" height="74" rx="2"/><rect x="305" y="34" width="22" height="76" rx="2"/><rect x="338" y="30" width="22" height="80" rx="2"/><rect x="371" y="26" width="22" height="84" rx="2"/></g>
+                  <path d="M19 62 L52 58 L85 56 L118 52 L151 48 L184 45 L217 44 L250 42 L283 39 L316 36 L349 33 L382 30" fill="none" stroke="#e9730c" stroke-width="2" stroke-dasharray="4 3"/>
+                </svg>
+                <div class="lg"><span><i style="background:#5899da"></i>Actual</span><span><i style="background:#c3d8ee"></i>Forecast</span><span><i style="background:#e9730c"></i>Budget</span></div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="caption">Illustration of an SAP Analytics Cloud dashboard. Sample data.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IT DOES -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">One tool, three jobs</span>
+      <h2>Business intelligence, planning and prediction together.</h2>
+      <p class="lede">Most companies buy a reporting tool, a budgeting tool and a forecasting spreadsheet, and spend every month reconciling them. SAP Analytics Cloud does all three on the same numbers, connected to SAP Cloud ERP.</p>
+      <div class="uses3">
+        <div class="u3"><span class="n">Report</span><h3>Dashboards people use</h3><p>Management packs, board reports and team dashboards, on live SAP data and on phones as well as laptops.</p><div class="tags"><span>Live data</span><span>Mobile</span><span>Board packs</span></div></div>
+        <div class="u3"><span class="n">Plan</span><h3>Budgets without the email</h3><p>Every manager enters their budget in one shared plan, with approvals, versions and a full audit trail.</p><div class="tags"><span>Budgets</span><span>Forecasts</span><span>Workflow</span></div></div>
+        <div class="u3"><span class="n">Predict</span><h3>AI that explains</h3><p>Forecasts from your history, automatic explanations of what moved a number, and questions answered in plain English.</p><div class="tags"><span>Smart insights</span><span>Forecasts</span><span>Joule</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANNING -->
+  <section id="plan">
+    <div class="in two">
+      <div>
+        <span class="eyebrow">Planning</span>
+        <h2>One plan, everyone working in it.</h2>
+        <p class="lede">Each cost centre manager enters their budget in a form with last year's actuals beside it. Head office sets the drivers, such as exchange rates, salary increases and inflation, and the numbers update for everyone. Finance sees progress in real time and approves each submission.</p>
+        <p class="lede">The approved plan goes back to SAP Cloud ERP, so your reports there compare actual against plan without anyone copying numbers. We start from SAP's ready-made planning content for finance and adapt it to your structure.</p>
+        <div class="facts">
+          <div class="fact"><b>Shared</b><span>one plan, no emailed spreadsheets</span></div>
+          <div class="fact"><b>Drivers</b><span>change a rate once, update every plan</span></div>
+          <div class="fact"><b>In SAP</b><span>approved plans flow back to the ERP</span></div>
+        </div>
+      </div>
+      <figure style="margin:0">
+        <div class="screen" role="img" aria-label="Illustration of a budget entry form in SAP Analytics Cloud for the Colombo sales office cost centre, comparing last year's actuals to next year's budget in LKR thousands for salaries, travel, marketing and rent, with marketing being edited and a total showing an 8.1 percent increase, status submitted for approval">
+          <div class="shell"><span class="sap">SAP</span><span class="t">Analytics Cloud · Budget 2027</span><span class="joule-btn"></span><span class="av">CC</span></div>
+          <div class="body-pad">
+            <div class="card-f">
+              <div class="h">Cost centre 1100 · Colombo sales office · LKR '000</div>
+              <table class="pg">
+                <thead><tr><th>Account</th><th>Actual 2026</th><th>Budget 2027</th><th>Change</th></tr></thead>
+                <tbody>
+                  <tr><td>Salaries</td><td>48,200</td><td>52,060</td><td class="neg">+8.0%</td></tr>
+                  <tr><td>Travel</td><td>6,400</td><td>6,100</td><td class="pos">−4.7%</td></tr>
+                  <tr><td>Marketing</td><td>12,500</td><td class="ed">14,000</td><td class="neg">+12.0%</td></tr>
+                  <tr><td>Rent and utilities</td><td>9,800</td><td>10,290</td><td class="neg">+5.0%</td></tr>
+                  <tr class="tot"><td>Total</td><td>76,900</td><td>82,450</td><td>+7.2%</td></tr>
+                </tbody>
+              </table>
+              <div class="row" style="margin-top:6px"><span>Salary driver: +8% · set by head office</span><span class="pill in">Submitted</span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="caption">Illustration of budget entry in SAP Analytics Cloud. Sample data.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- AI -->
+  <section class="light">
+    <div class="in two">
+      <div>
+        <span class="eyebrow">AI in analytics</span>
+        <h2>Ask why, and get an answer.</h2>
+        <p class="lede">When a number moves, SAP Analytics Cloud can tell you what drove it: which region, product or customer made the difference. Managers can ask questions in plain English and get a chart back. Predictive forecasting uses your own history to suggest next quarter's numbers as a starting point for the plan.</p>
+        <p class="lede">With Joule, SAP's AI assistant, your teams can ask questions across analytics and SAP Cloud ERP, and SAP's AI can now summarise a whole dashboard in a few sentences.</p>
+      </div>
+      <figure style="margin:0">
+        <div class="screen" role="img" aria-label="Illustration of AI explanations in SAP Analytics Cloud: a question asking why gross margin fell in September, with an answer that the export tea segment margin fell 2.4 points due to higher auction prices, and the hotel segment added 0.5 points, with a list of contributors">
+          <div class="shell"><span class="sap">SAP</span><span class="t">Analytics Cloud · Insights</span><span class="joule-btn"></span><span class="av">FC</span></div>
+          <div class="body-pad">
+            <div class="joule">
+              <div class="jh"><i></i>Ask a question</div>
+              <div class="msgs">
+                <div class="bub u">Why did gross margin fall in September?</div>
+                <div class="bub j">Gross margin fell <b>0.6 points</b> against budget. The main driver was <b>export tea</b>: higher auction prices cut its margin by <b>2.4 points</b>. Hotel sales partly offset this, adding <b>0.5 points</b>.</div>
+              </div>
+            </div>
+            <div class="card-f" style="margin-top:10px">
+              <div class="h">Top contributors to the change</div>
+              <div class="row"><span>Export tea · purchase price</span><span class="pill wr">−2.4 pt</span></div>
+              <div class="row"><span>Hotels and restaurants · volume</span><span class="pill ok">+0.5 pt</span></div>
+              <div class="row"><span>Freight · rate change</span><span class="pill wr">−0.3 pt</span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="caption">Illustration of AI-assisted insights in SAP Analytics Cloud. Sample data.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- WHERE IT FITS -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">Where it fits</span>
+      <h2>Built-in reports, Analytics Cloud, or both?</h2>
+      <p class="lede">SAP Cloud ERP already has strong real-time reporting built in, and you should use it. SAP Analytics Cloud adds what the ERP doesn't do on its own. We'll tell you which you need for each report, so you don't pay for what you already have.</p>
+      <div class="users">
+        <table>
+          <thead><tr><th>You need</th><th>Use</th></tr></thead>
+          <tbody>
+            <tr><td>Day-to-day lists and checks: open orders, overdue invoices, stock</td><td>Reports and apps built into SAP Cloud ERP</td></tr>
+            <tr><td>Management dashboards and board packs</td><td>SAP Analytics Cloud on live SAP data</td></tr>
+            <tr><td>Budgets, forecasts and what-if scenarios</td><td>SAP Analytics Cloud planning</td></tr>
+            <tr><td>Data from several systems or companies together</td><td>SAP Analytics Cloud with <a href="#" style="color:var(--green-hi);font-weight:700;text-decoration:none">Business Data Cloud →</a></td></tr>
+            <tr><td>Group consolidation and statutory reporting</td><td><a href="#" style="color:var(--green-hi);font-weight:700;text-decoration:none">Group Reporting →</a> in SAP Cloud ERP</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW WE WORK -->
+  <section class="light">
+    <div class="in two">
+      <div>
+        <span class="eyebrow">How we work</span>
+        <h2>From your Excel pack to live dashboards.</h2>
+        <p class="lede">We start with the reports your management already reads and the budget process you run today. We rebuild the pack on live SAP data, simplify where we can, and set up planning for your next budget cycle. Your finance team is trained to change dashboards and plans themselves.</p>
+      </div>
+      <div class="includes">
+        <div><h3>Reporting review</h3><p>Which reports matter, who reads them, and what's missing.</p></div>
+        <div><h3>Management pack</h3><p>Rebuilt on live SAP data, on desktop and mobile.</p></div>
+        <div><h3>Budget and forecast</h3><p>Planning set up for your structure and approval steps.</p></div>
+        <div><h3>Plan back to SAP</h3><p>Approved plans sent to SAP Cloud ERP for plan-actual reporting.</p></div>
+        <div><h3>Access and security</h3><p>Each person sees only their own company, region or cost centre.</p></div>
+        <div><h3>Your team trained</h3><p>Finance can build and change stories without us.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO LIBRARY -->
+  <section class="" id="watch">
+    <div class="in">
+      <span class="eyebrow">Watch and learn</span>
+      <h2>See it from SAP.</h2>
+      <p class="lede">A video from SAP’s official YouTube channel on SAP’s analytics and data offering.</p>
+      <div class="vgrid"><a class="vcard" href="https://www.youtube.com/watch?v=OkwQimWDeos" target="_blank" rel="noopener" data-yt="OkwQimWDeos" aria-label="Play on YouTube: Demo: SAP Business Data Cloud">
+      <div class="poster" data-k="start"><div class="top"><span class="ch"><b>SAP</b>YouTube</span><span class="tag">Demo</span></div><div class="big">Analytics and data</div><span class="play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M5 2.5v13l11-6.5z" fill="#0b2a1f"/></svg></span></div>
+      <div class="vmeta"><h3>Demo: SAP Business Data Cloud</h3><p>SAP’s demo of its data and analytics offering, which includes SAP Analytics Cloud for dashboards and planning.</p><span class="d">SAP · February 2025</span></div></a></div>
+      <p class="vnote">Published by SAP on its official YouTube channel.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">Questions we hear</span>
+      <h2>Straight answers.</h2>
+      <div class="faq">
+        <details><summary>Is SAP Analytics Cloud included in SAP Cloud ERP?</summary><p>SAP Cloud ERP includes its own reporting and can show some SAP Analytics Cloud content inside the ERP. Full dashboards and planning need a separate SAP Analytics Cloud subscription. We tell you what you need for your use.</p></details>
+        <details><summary>Can we keep using Excel?</summary><p>Yes. SAP Analytics Cloud has an Excel add-in, so finance teams can work with live, governed data in Excel when they prefer it.</p></details>
+        <details><summary>Is our data copied out of SAP?</summary><p>For dashboards, SAP Analytics Cloud can read data live from SAP Cloud ERP without copying it. Planning works on its own copy of the data it needs, which is kept in step with SAP.</p></details>
+        <details><summary>How long does a first budget take to set up?</summary><p>It depends on your structure and approval steps. We plan it so you're ready before your budget cycle starts, starting from SAP's ready-made finance planning content.</p></details>
+        <details><summary>Can managers use it on their phones?</summary><p>Yes. Dashboards work on phones and tablets through SAP's mobile app, with the same access rules as on the desktop.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="book">
+    <div class="in">
+      <div class="cta-band">
+        <div>
+          <span class="eyebrow">Start here</span>
+          <h2>Close the month, not your spreadsheets.</h2>
+          <p class="lede">In one session, we review your management reports and budget process, show the same pack on live SAP data, and propose a plan for your next budget cycle.</p>
+          <div style="margin-top:28px"><a href="#" class="btn pri">Book an analytics review →</a></div>
+        </div>
+        <ul>
+          <li>Management pack on live data</li>
+          <li>Budgets without the email</li>
+          <li>Forecasts with AI</li>
+          <li>Plan back into SAP</li>
+          <li>Built-in reports used first</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="in"><span>© Mawkish Technologies · Colombo, Sri Lanka</span><span>SAP, SAP Analytics Cloud, SAP Business Data Cloud, SAP Cloud ERP and Joule are trademarks of SAP SE. Excel is a trademark of Microsoft. Screens shown are illustrations.</span></div>
+</footer>
+
+</body></html>

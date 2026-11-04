@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RISE with SAP: Cloud &amp; Region Choice | Mawkish</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Mawkish dark site, full-width bands; each band pairs copy with a drawn SAP Fiori-style screen */
+:root {
+  --bg: #050807;
+  --bg-2: #0a110e;
+  --line: #1c2823;
+  --fg: #eef3f0;
+  --muted: #9aaaa2;
+  --green: #1f7a5a;
+  --green-hi: #34b386;
+  --paper: #f3f6f4;
+  --ink: #142019;
+  --ink-soft: #5c6c65;
+  --fiori: #0a6ed1;
+  --fiori-bg: #f5f6f7;
+  --warn: #e9730c;
+  --display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.in { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 88px; border-top: 1px solid var(--line); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 19px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 16px; display: block; }
+.lede { color: var(--muted); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border: 1px solid transparent; }
+.btn.pri { background: var(--green); color: #fff; }
+.btn.pri:hover { background: #24906a; }
+.btn.sec { border-color: #2c3d36; color: var(--fg); }
+.btn.sec:hover { border-color: var(--green-hi); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
+
+/* header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(5,8,7,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.site .in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; flex-direction: column; align-items: center; font-weight: 800; letter-spacing: .3em; font-size: 9px; color: var(--fg); text-decoration: none; }
+.logo svg { width: 54px; height: 26px; }
+.nav { display: flex; gap: 26px; align-items: center; }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 700; font-size: 12.5px; letter-spacing: .07em; }
+.nav a.on { color: var(--green-hi); }
+.nav .btn { padding: 12px 18px; }
+@media (max-width: 900px) { .nav a:not(.btn) { display: none; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 56px 88px; background: radial-gradient(900px 420px at 80% 10%, rgba(31,122,90,.22), transparent 70%); }
+.crumbs { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 em { font-style: normal; color: var(--green-hi); }
+.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.name-note { margin-top: 28px; font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--green); padding-left: 14px; max-width: 54ch; }
+.name-note b { color: var(--fg); font-weight: 600; }
+
+/* Fiori mock screens */
+.screen { background: var(--fiori-bg); color: #32363a; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06); font-size: 12px; line-height: 1.4; min-width: 0; }
+.shell { background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; gap: 12px; padding: 9px 14px; }
+.shell .sap { background: linear-gradient(135deg,#0a6ed1,#0854a0); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 7px; border-radius: 3px; letter-spacing: .02em; }
+.shell .t { font-weight: 600; color: #32363a; flex: 1; }
+.shell .search { flex: 1.4; background: #eff1f2; border-radius: 16px; height: 24px; display: flex; align-items: center; padding: 0 10px; color: #8b9196; font-size: 11px; }
+.shell .joule-btn { width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); }
+.shell .av { width: 24px; height: 24px; border-radius: 50%; background: #d1e8ff; color: #0a6ed1; font-weight: 700; font-size: 10px; display: grid; place-items: center; }
+.body-pad { padding: 16px; }
+.greet { font-size: 15px; font-weight: 700; color: #1d2d3e; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.tile { background: #fff; border-radius: 10px; padding: 11px 12px; box-shadow: 0 0 0 1px #e5e5e5; min-height: 92px; display: flex; flex-direction: column; justify-content: space-between; }
+.tile .h { font-weight: 600; color: #1d2d3e; font-size: 11.5px; }
+.tile .s { color: #6a6d70; font-size: 10.5px; }
+.tile .k { font-size: 22px; font-weight: 300; color: #0a6ed1; font-variant-numeric: tabular-nums; }
+.tile .k.neg { color: #bb0000; } .tile .k.pos { color: #107e3e; }
+.tile .k small { font-size: 11px; color: #6a6d70; margin-left: 2px; }
+.spark { height: 26px; width: 100%; }
+.split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; margin-top: 10px; }
+.card-f { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; padding: 12px; min-width: 0; }
+.card-f .h { font-weight: 700; font-size: 11.5px; color: #1d2d3e; margin-bottom: 8px; }
+.row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid #eee; font-size: 11px; }
+.row:first-of-type { border-top: 0; }
+.pill { font-size: 9.5px; font-weight: 700; border-radius: 9px; padding: 1px 7px; white-space: nowrap; }
+.pill.ok { background: #f1fdf6; color: #107e3e; box-shadow: inset 0 0 0 1px #c6ecd3; }
+.pill.wr { background: #fef7f1; color: #e9730c; box-shadow: inset 0 0 0 1px #f8d3b0; }
+.pill.in { margin: 0; max-width: none; padding: 1px 7px; background: #eef6fe; color: #0a6ed1; box-shadow: inset 0 0 0 1px #c5def7; }
+.joule { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; display: flex; flex-direction: column; min-width: 0; }
+.joule .jh { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid #eee; font-weight: 700; font-size: 11.5px; }
+.joule .jh i { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); display: inline-block; }
+.joule .msgs { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.bub { border-radius: 10px; padding: 7px 9px; font-size: 10.8px; max-width: 92%; }
+.bub.u { align-self: flex-end; background: #0a6ed1; color: #fff; border-bottom-right-radius: 3px; }
+.bub.j { background: #f2f2f7; color: #1d2d3e; border-bottom-left-radius: 3px; }
+.bub.j b { color: #0a6ed1; }
+.typing span { display: inline-block; width: 5px; height: 5px; margin-right: 3px; border-radius: 50%; background: #8b9196; }
+@media (prefers-reduced-motion: no-preference) {
+  .typing span { animation: blink 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
+}
+.caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+/* journey explainer */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.includes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.includes div { background: var(--bg-2); padding: 22px; }
+.includes h3 { font-size: 16px; margin-bottom: 6px; }
+.includes p { color: var(--muted); font-size: 14.5px; }
+.ico { width: 30px; height: 30px; margin-bottom: 12px; color: var(--green-hi); }
+
+/* fit check */
+.fit { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 44px; align-items: start; }
+.qs { display: flex; flex-direction: column; gap: 10px; }
+.q { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.q span { font-size: 15px; min-width: 0; }
+.yn { display: flex; gap: 4px; flex: none; background: #0f1814; border-radius: 9px; padding: 3px; }
+.yn button { font: 700 12px var(--body); letter-spacing: .06em; border: 0; border-radius: 7px; padding: 7px 12px; background: transparent; color: var(--muted); cursor: pointer; }
+.yn button[aria-pressed="true"] { background: var(--green); color: #fff; }
+.yn button.no[aria-pressed="true"] { background: #6b3a12; }
+.result { position: sticky; top: 100px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 28px; }
+.result .lab { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.meter { height: 10px; background: #dde5e1; border-radius: 6px; margin: 14px 0 18px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 6px; transition: width .35s; }
+.result h3 { font-size: 24px; margin-bottom: 10px; }
+.result p { color: var(--ink-soft); font-size: 15px; }
+.result .btn { margin-top: 20px; }
+
+/* capabilities */
+.caps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.cap { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.cap ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+.cap ul li { margin-bottom: 4px; }
+.cap .tagline { color: var(--fg); font-size: 15px; }
+
+/* AI */
+.agents { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.agent { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.agent .n { width: 36px; height: 36px; border-radius: 10px; background: rgba(52,179,134,.12); color: var(--green-hi); display: grid; place-items: center; }
+.agent h3 { font-size: 16px; margin-bottom: 2px; }
+.agent p { color: var(--muted); font-size: 14.5px; }
+.prog { height: 4px; background: #e6e9eb; border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.prog i { display: block; height: 100%; background: #0a6ed1; width: 72%; }
+@media (prefers-reduced-motion: no-preference) {
+  .prog i { animation: load 3.2s ease-in-out infinite alternate; }
+  @keyframes load { from { width: 38% } to { width: 92% } }
+}
+
+/* release timeline */
+.tl { margin-top: 48px; overflow-x: auto; }
+.tl svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.fact { border-top: 2px solid var(--green); padding-top: 14px; }
+.fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 14px; }
+
+/* extensibility */
+.layers { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.layer { display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.layer .who { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--green-hi); padding-top: 3px; }
+.layer h3 { font-size: 16px; margin-bottom: 4px; }
+.layer p { color: var(--muted); font-size: 14.5px; }
+.layer.core { background: var(--paper); color: var(--ink); border-color: transparent; }
+.layer.core .who { color: var(--green); }
+.layer.core p { color: var(--ink-soft); }
+
+/* activate */
+.phases { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ph { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.ph:last-child { border-right: 0; }
+.ph .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.ph h3 { font-size: 17px; }
+.ph p { color: var(--muted); font-size: 13.5px; }
+.ph .we { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--fg); }
+.ph .we b { color: var(--green-hi); font-weight: 700; }
+
+/* users */
+.users { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+.users table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; }
+.users th, .users td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.users th { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.users td:first-child { font-weight: 700; white-space: nowrap; }
+.users td:nth-child(2) { color: var(--muted); }
+.users tr:last-child td { border-bottom: 0; }
+.note { margin-top: 16px; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+/* faq */
+.faq { margin-top: 36px; display: flex; flex-direction: column; gap: 10px; max-width: 860px; }
+details { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 16.5px; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--green-hi); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 18px; max-width: 70ch; }
+
+/* cta */
+.cta-band { background: linear-gradient(120deg, #0e3a2b, #0a1a14 60%); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.cta-band ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cta-band li { display: flex; gap: 10px; font-size: 15px; }
+.cta-band li::before { content: "✓"; color: var(--green-hi); font-weight: 800; }
+footer { padding-block: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+footer .in { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .hero-grid, .two, .fit, .cta-band { grid-template-columns: 1fr; }
+  .caps { grid-template-columns: 1fr 1fr; }
+  .phases { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .ph:nth-child(3) { border-right: 0; }
+  .ph:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .result { position: static; }
+}
+@media (max-width: 620px) {
+  section { padding-block: 64px; }
+  .caps, .includes { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: 1fr; }
+  .ph { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .tiles .tile:nth-child(3) { display: none; }
+  .split { grid-template-columns: 1fr; }
+  .layer { grid-template-columns: 1fr; gap: 6px; }
+  .cta-band { padding: 36px 24px; }
+  .q { flex-direction: column; align-items: flex-start; }
+}
+
+/* light bands: same components, re-tokened */
+section.light { --bg-2: #ffffff; --line: #d9e2dd; --fg: #142019; --muted: #55655e; --green-hi: #17694b; background: #f2f5f3; color: var(--fg); border-top-color: transparent; }
+section.light .includes { background: var(--line); }
+section.light .cap, section.light details { box-shadow: 0 1px 2px rgba(20,32,25,.05); }
+
+html, body { margin: 0; }
+*, *::before, *::after { box-sizing: border-box; }
+/* Cloud service pages: classes prefixed cs- */
+.cs-hero h1 { max-width: 22ch; }
+.cs-facts { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; max-width: 980px; }
+.cs-facts div { border-top: 2px solid var(--green-hi); padding-top: 14px; }
+.cs-facts b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; line-height: 1.1; }
+.cs-facts span { display: block; color: var(--muted); font-size: 14.5px; margin-top: 6px; }
+.cs-why { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.cs-why div, .cs-str div { background: var(--bg-2); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+.cs-why h3, .cs-str h3 { font-size: 17px; }
+.cs-why p, .cs-str p { color: var(--muted); font-size: 15px; margin: 8px 0 0; }
+.cs-str { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; margin-top: 32px; }
+.cs-what { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.cs-what div { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+.cs-what .n { font-size: 12px; font-weight: 800; color: var(--green-hi); letter-spacing: .1em; }
+.cs-what h3 { font-size: 18px; margin-top: 8px; }
+.cs-what p { color: var(--muted); font-size: 15px; margin: 8px 0 0; }
+.cs-steps { list-style: none; margin: 36px 0 0; padding: 0; display: grid; grid-template-columns: repeat(var(--n), minmax(0,1fr)); gap: 0; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--bg-2); }
+.cs-steps li { padding: 22px 20px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 8px; }
+.cs-steps li:first-child { border-left: 0; }
+.cs-steps .n { width: 30px; height: 30px; border-radius: 50%; background: var(--green-hi); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 14px; }
+.cs-steps h3 { font-size: 16.5px; }
+.cs-steps p { color: var(--muted); font-size: 14.5px; margin: 0; }
+.cs-steps .d { margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--line); font-size: 13px; font-weight: 700; color: var(--green-hi); }
+.cs-tbl { margin-top: 30px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.cs-tbl table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+.cs-tbl th, .cs-tbl td { text-align: left; padding: 13px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.cs-tbl thead th { font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.cs-tbl tbody th { font-weight: 700; }
+.cs-tbl td { color: var(--muted); }
+.cs-tbl tr:last-child th, .cs-tbl tr:last-child td { border-bottom: 0; }
+.cs-sap { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); gap: 40px; align-items: start; }
+.cs-sapl { list-style: none; margin: 0; padding: 26px; border-radius: 18px; background: #0f2a1f; color: #e8f1ec; display: grid; gap: 12px; }
+.cs-sapl li { padding-left: 26px; position: relative; font-size: 15.5px; }
+.cs-sapl li::before { content: ""; position: absolute; left: 0; top: .45em; width: 12px; height: 12px; border-radius: 3px; background: #34b386; }
+.cs-two { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.3fr); gap: 48px; align-items: start; }
+.cs-del { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 10px; }
+.cs-del li { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px 14px 44px; position: relative; font-size: 15px; }
+.cs-del li::before { content: "✓"; position: absolute; left: 16px; top: 13px; color: var(--green-hi); font-weight: 800; }
+.cs-faq { display: grid; gap: 10px; margin-top: 24px; }
+.cs-rels { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin: 24px 0 44px; }
+.cs-rel { display: flex; flex-direction: column; gap: 4px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; text-decoration: none; color: var(--fg); position: relative; transition: border-color .2s, transform .2s; }
+.cs-rel:hover { border-color: var(--green-hi); transform: translateY(-2px); }
+.cs-rel span { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.cs-rel b { font-size: 17px; padding-right: 24px; }
+.cs-rel i { position: absolute; right: 18px; bottom: 18px; font-style: normal; color: var(--green-hi); font-weight: 800; }
+.cs-src { margin-top: 16px; }
+.cs-src ul { margin: 0 0 18px; padding-left: 18px; font-size: 13.5px; color: var(--muted); display: grid; gap: 4px; }
+.cs-src a { color: var(--green-hi); word-break: break-word; }
+.mk-cr { display: flex; align-items: center; gap: 12px; margin-top: 40px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); font-size: 13px; line-height: 1.5; color: var(--muted); }
+.mk-cr svg { flex: none; color: var(--green-hi); }
+.mk-cr b { color: var(--fg); }
+.mk-cr a { color: var(--green-hi); font-weight: 700; text-decoration: none; white-space: nowrap; }
+footer .mk-crf a { color: var(--green-hi); text-decoration: none; font-weight: 600; }
+@media (max-width: 1080px) {
+  .cs-why { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .cs-what { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .cs-steps { grid-template-columns: minmax(0,1fr); }
+  .cs-steps li { border-left: 0; border-top: 1px solid var(--line); }
+  .cs-steps li:first-child { border-top: 0; }
+}
+@media (max-width: 760px) {
+  .cs-facts, .cs-why, .cs-what, .cs-str, .cs-sap, .cs-two, .cs-rels { grid-template-columns: minmax(0,1fr); }
+  .cs-facts { gap: 18px; }
+  .cs-tbl { border: 0; overflow: visible; }
+  .cs-tbl thead { display: none; }
+  .cs-tbl table, .cs-tbl tbody, .cs-tbl tr, .cs-tbl th, .cs-tbl td { display: block; width: 100%; }
+  .cs-tbl tr { border: 1px solid var(--line); border-radius: 12px; margin-bottom: 12px; background: var(--bg-2); overflow: hidden; }
+  .cs-tbl tbody th { background: rgba(52,179,134,.08); }
+  .cs-tbl td::before { content: attr(data-c); display: block; font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 2px; }
+  .mk-cr { align-items: flex-start; } .mk-cr a { white-space: normal; }
+}
+@media (prefers-reduced-motion: reduce) { .cs-rel { transition: none; } }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="in">
+    <a class="logo" href="../index.html" aria-label="Mawkish Technologies">
+      <svg viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L20 4 L32 18 L44 4 L62 28 Z" fill="none" stroke="#eef3f0" stroke-width="4" stroke-linejoin="round"/><path d="M20 28 L32 14 L44 28" fill="#eef3f0"/></svg>
+      MAWKISH
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">ABOUT US</a>
+      <a href="../index.html" class="on">OUR SERVICES</a>
+      <a href="#">INDUSTRIES</a>
+      <a href="#">INSIGHTS &amp; PERSPECTIVES</a>
+      <a href="#book" class="btn pri">Schedule a consultation</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero cs-hero"><div class="in">
+  <div class="crumbs"><a href="../index.html">Services</a> / <a href="../index.html">Cloud Infrastructure</a> / Migrate &amp; Modernise</div>
+  <span class="eyebrow">Cloud Infrastructure · Migrate &amp; Modernise</span>
+  <h1>Choose the right cloud and region for RISE with SAP, <em>and connect it to everything else.</em></h1>
+  <p class="lede">Under RISE with SAP, SAP runs SAP Cloud ERP Private for you on a hyperscaler you choose. We help you pick the provider and region that suit users in Sri Lanka and India, make clear what SAP manages and what you still own, and connect the new landscape to your networks, identity and applications.</p>
+  <div class="ctas"><a href="#book" class="btn pri">Talk to a cloud architect →</a><a href="#how" class="btn sec">See how it works</a></div>
+  <div class="cs-facts"><div><b>1</b><span>Contract for SAP software, infrastructure and technical managed services</span></div><div><b>4</b><span>Microsoft Azure cloud regions in India, including Hyderabad</span></div><div><b>2</b><span>AWS regions in India: Mumbai and Hyderabad</span></div></div>
+</div></section>
+<section class="light"><div class="in">
+  <span class="eyebrow">Why it matters</span><h2>Why the cloud and region choice matters</h2><p class="lede">RISE with SAP takes away the work of running SAP infrastructure, but it does not make every decision for you. SAP&#x27;s private cloud runs on Microsoft Azure, AWS, Google Cloud or SAP&#x27;s own data centres, and the choice shapes latency, data residency, integration with your other systems and where your own cloud spend goes. There is no AWS, Azure or Google Cloud region in Sri Lanka, so Sri Lankan companies serve users from India or Singapore. And under the RISE agreement, connecting your network to the SAP environment is your responsibility, not SAP&#x27;s.</p>
+  <div class="cs-why"><div><h3>Latency for users</h3><p>Finance, warehouse and shop floor users feel every round trip. The region and the network path from Colombo or your Indian sites decide how responsive SAP feels.</p></div><div><h3>Data residency and law</h3><p>Sri Lanka&#x27;s Personal Data Protection Act No. 9 of 2022 brings its core obligations into force on 1 January 2027, including rules on cross-border processing. Region choice needs to fit your legal advice.</p></div><div><h3>Your other workloads</h3><p>Analytics, integration, AI, Databricks, Salesforce and HR systems work best close to SAP. Choosing the hyperscaler you already use, or plan to use, keeps data paths short.</p></div><div><h3>Clear responsibilities</h3><p>SAP manages the SAP environment in its own subscription or account. Your network, identity, interfaces, security monitoring and the systems around SAP stay with you.</p></div></div>
+</div></section>
+<section><div class="in">
+  <span class="eyebrow">What we do</span><h2>What we do</h2><p class="lede">We help you make the RISE infrastructure decisions with evidence, then build what sits around SAP.</p>
+  <div class="cs-what"><div><span class="n">01</span><h3>Hyperscaler comparison</h3><p>We compare AWS, Microsoft Azure and Google Cloud against your existing contracts, skills, integration needs and roadmap. You get a recommendation you can defend to the board.</p></div><div><span class="n">02</span><h3>Region selection</h3><p>We check which regions SAP offers for your RISE scope and measure latency from your offices to candidate regions in India and Singapore. We also consider disaster recovery pairing.</p></div><div><span class="n">03</span><h3>Responsibility map</h3><p>We set out, task by task, what SAP Enterprise Cloud Services does under your contract, what is optional, and what stays with you or with us. Nothing important falls between the gaps.</p></div><div><span class="n">04</span><h3>Network connectivity</h3><p>We design and build the connection from your offices and cloud accounts to the SAP managed network, using peering, VPN or private circuits. Address ranges, routing, firewalls and DNS are planned up front.</p></div><div><span class="n">05</span><h3>Identity and access</h3><p>We connect SAP Cloud ERP Private and SAP BTP to your identity provider for single sign-on and keep user access under your control.</p></div><div><span class="n">06</span><h3>Integration and data</h3><p>We connect SAP to your other applications, data platforms and AI services through SAP Integration Suite and native cloud services in your own subscription.</p></div></div>
+</div></section>
+<section class="light" id="how"><div class="in">
+  <span class="eyebrow">How it works</span><h2>How it works</h2>
+  <ol class="cs-steps" style="--n:5"><li><span class="n">1</span><h3>Understand needs</h3><p>We gather user locations, compliance needs, existing cloud contracts and integration lists. This sets the criteria for the decision.</p><span class="d">1 to 2 weeks</span></li><li><span class="n">2</span><h3>Compare and test</h3><p>We compare providers and regions, and run latency tests from your sites. You get a written recommendation with trade-offs.</p><span class="d">1 to 2 weeks</span></li><li><span class="n">3</span><h3>Agree responsibilities</h3><p>We review the RISE scope with you and SAP and write a responsibility map for operations, security and integration.</p><span class="d">1 week</span></li><li><span class="n">4</span><h3>Build connectivity</h3><p>We build your side of the network, identity and security, then work with SAP to complete peering or private connectivity and test it.</p><span class="d">3 to 6 weeks</span></li><li><span class="n">5</span><h3>Connect the estate</h3><p>We move interfaces, data flows and monitoring onto the new landscape and support you through go-live.</p><span class="d">Alongside the RISE project</span></li></ol>
+</div></section>
+<section><div class="in">
+  <span class="eyebrow">Across AWS, Azure and Google Cloud</span><h2>RISE with SAP on each cloud</h2><p class="lede">Regions near Sri Lanka and the native services you use on your side of the connection; SAP confirms which regions are offered for your scope.</p>
+  <div class="cs-tbl"><table><thead><tr><th scope="col">Need</th><th scope="col">AWS</th><th scope="col">Microsoft Azure</th><th scope="col">Google Cloud</th></tr></thead><tbody><tr><th scope="row">Regions nearest Sri Lanka</th><td data-c="AWS">Asia Pacific (Mumbai), Asia Pacific (Hyderabad), Asia Pacific (Singapore)</td><td data-c="Microsoft Azure">Central India (Pune), South India (Chennai), West India (Mumbai), India South Central (Hyderabad), Southeast Asia (Singapore)</td><td data-c="Google Cloud">asia-south1 (Mumbai), asia-south2 (Delhi), asia-southeast1 (Singapore)</td></tr><tr><th scope="row">Link your cloud to SAP&#x27;s network</th><td data-c="AWS">VPC peering or AWS Transit Gateway</td><td data-c="Microsoft Azure">Virtual network peering</td><td data-c="Google Cloud">VPC Network Peering through a transit VPC</td></tr><tr><th scope="row">Private line from your offices</th><td data-c="AWS">AWS Direct Connect or AWS Site-to-Site VPN</td><td data-c="Microsoft Azure">Azure ExpressRoute or Azure VPN Gateway</td><td data-c="Google Cloud">Cloud Interconnect or HA VPN</td></tr><tr><th scope="row">Identity for users</th><td data-c="AWS">AWS IAM Identity Center</td><td data-c="Microsoft Azure">Microsoft Entra ID</td><td data-c="Google Cloud">Cloud Identity</td></tr><tr><th scope="row">Data and analytics next to SAP</th><td data-c="AWS">Amazon S3, Amazon Redshift</td><td data-c="Microsoft Azure">Microsoft Fabric, Azure Data Factory</td><td data-c="Google Cloud">BigQuery</td></tr><tr><th scope="row">Monitoring of your side</th><td data-c="AWS">Amazon CloudWatch</td><td data-c="Microsoft Azure">Azure Monitor</td><td data-c="Google Cloud">Cloud Monitoring</td></tr></tbody></table></div>
+</div></section>
+<section class="light"><div class="in cs-sap">
+  <div><span class="eyebrow">For SAP landscapes</span><h2>What SAP manages and what you still own</h2><p class="lede">RISE with SAP bundles SAP Cloud ERP Private, the cloud infrastructure and technical managed services in one contract with SAP. SAP builds and runs the SAP environment in its own hyperscaler account or subscription, which only SAP can see and manage, so you do not manage the virtual machines, operating system or database. You keep full functional control of SAP, including access through SAP GUI and your own custom code. You also own everything outside SAP&#x27;s boundary: the network connection into it, your cloud accounts, identity, interfaces, application management and the tasks your contract lists as excluded.</p></div>
+  <ul class="cs-sapl"><li>SAP&#x27;s private cloud can run on Microsoft Azure, AWS, Google Cloud or SAP data centres, with other providers available in some markets.</li><li>Connecting your network to the RISE environment is the customer&#x27;s responsibility under the RISE agreement.</li><li>Support for resources inside SAP&#x27;s subscription goes through SAP; your own cloud provider support covers only your own accounts.</li><li>For the largest ECC estates, SAP also offers a time-bound SAP ERP, private edition, transition option under RISE, with conditions such as a move to SAP HANA before the end of 2030.</li></ul>
+</div></section>
+<section><div class="in cs-two">
+  <div><span class="eyebrow">What you get</span><h2>Deliverables</h2><ul class="cs-del"><li>Hyperscaler and region recommendation with latency results</li><li>RISE responsibility map for SAP, customer and partner</li><li>Network design with address plan, routing, firewall and DNS</li><li>Built and tested connectivity to the SAP managed environment</li><li>Single sign-on and identity integration</li><li>Integration and monitoring plan for the wider estate</li></ul></div>
+  <div><span class="eyebrow">Questions</span><h2>Frequently asked</h2><div class="cs-faq"><details><summary>Which clouds does RISE with SAP run on?</summary><p>SAP&#x27;s private cloud offering can run on Microsoft Azure, AWS, Google Cloud or SAP&#x27;s own data centres, and Alibaba Cloud is also listed by SAP. In some markets additional providers are available, such as STACKIT in Europe. For customers in Sri Lanka and India, AWS, Azure and Google Cloud are the usual choices.</p></details><details><summary>Is there a cloud region in Sri Lanka?</summary><p>No. AWS, Microsoft Azure and Google Cloud do not have a region in Sri Lanka today. Sri Lankan customers usually use regions in India, such as Mumbai, Pune, Chennai, Hyderabad or Delhi, or Singapore. SAP confirms which of these it offers for your RISE scope.</p></details><details><summary>Do we still need cloud skills if SAP runs the infrastructure?</summary><p>Yes, but for different work. You own the connection to SAP&#x27;s network, your identity provider, interfaces, security monitoring and the applications around SAP. Those run in your own cloud accounts, and we can build and run them for you.</p></details><details><summary>Does the hyperscaler choice change what SAP delivers?</summary><p>RISE with SAP is the same SAP offering whichever certified infrastructure provider you choose. What changes is how easily SAP connects to your other workloads, data platforms and existing cloud contracts, and which regions are available.</p></details><details><summary>Can we change our mind later?</summary><p>Moving a RISE landscape to another provider or region is a significant project that has to be agreed with SAP. That is why we recommend testing the decision properly before the contract is signed.</p></details></div></div>
+</div></section>
+<section class="light"><div class="in">
+  <span class="eyebrow">Related services</span><h2>Often paired with this</h2><div class="cs-rels"><a class="cs-rel" href="network-connectivity-rise-btp.html"><span>Build &amp; Connect</span><b>Network &amp; Connectivity to RISE and BTP</b><i>→</i></a><a class="cs-rel" href="sap-to-cloud.html"><span>Migrate &amp; Modernise</span><b>SAP ECC &amp; S/4HANA to the Cloud</b><i>→</i></a><a class="cs-rel" href="identity-single-sign-on.html"><span>Build &amp; Connect</span><b>Identity &amp; Single Sign-On</b><i>→</i></a></div>
+  <div class="cta-band" style="color:#eef3f0;--fg:#eef3f0;--muted:#a9bab2;--green-hi:#34b386">
+    <div><span class="eyebrow">Next step</span><h2>Plan your move with people who know SAP.</h2>
+    <p class="lede">One working session with our cloud and SAP architects. You leave with the options, the risks and a first plan.</p>
+    <div style="margin-top:28px"><a href="#book" class="btn pri">Talk to a cloud architect →</a></div></div>
+    <ul><li>Your landscape reviewed</li><li>The right cloud and region</li><li>A first roadmap</li></ul>
+  </div>
+  <aside class="mk-cr" aria-label="Copyright notice"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10" cy="10" r="8"/><path d="M12.6 7.6a3.4 3.4 0 1 0 0 4.8"/></svg><span><b>© 2026 Mawkish Technologies.</b> This guide is protected by copyright. You're welcome to learn from it and to quote it with credit and a link. Reproducing it, by hand or through AI, and publishing it as your own is not allowed. <a href="https://claude.ai/artifact/KRFaztbtc9jsgrjpkdppPX">Read our copyright notice →</a></span></aside>
+  <details class="cs-src"><summary>Sources</summary><ul><li><a href="https://learning.sap.com/courses/discovering-sap-activate-implementation-tools-and-methodology/describing-rise-with-sap" target="_blank" rel="noopener">SAP Learning: Describing RISE with SAP</a></li><li><a href="https://docs.aws.amazon.com/sap/latest/general/rise-responsibility.html" target="_blank" rel="noopener">AWS: Roles and responsibility for connectivity to RISE</a></li><li><a href="https://learn.microsoft.com/azure/sap/workloads/rise-integration" target="_blank" rel="noopener">Microsoft Learn: Integrating Azure with SAP RISE managed workloads</a></li><li><a href="https://docs.cloud.google.com/sap/docs/rise-connectivity" target="_blank" rel="noopener">Google Cloud: Network connectivity to RISE with SAP</a></li><li><a href="https://news.microsoft.com/source/asia/features/microsofts-newest-india-datacenter-region-goes-live-to-power-the-countrys-ai-economy-and-enable-frontier-firms/" target="_blank" rel="noopener">Microsoft: India South Central region in Hyderabad goes live</a></li><li><a href="https://press.aboutamazon.com/2022/11/aws-launches-second-infrastructure-region-in-india" target="_blank" rel="noopener">AWS: Second infrastructure region in India (Hyderabad)</a></li><li><a href="https://www.sap.com/israel/docs/download/agreements/product-use-and-support-terms/cls/en/list-of-data-centers-for-sap-cloud-services-english-v.9-2026.pdf" target="_blank" rel="noopener">SAP: List of data centres for SAP cloud services</a></li><li><a href="https://news.sap.com/?p=233946" target="_blank" rel="noopener">SAP News: SAP ERP, private edition, transition option</a></li><li><a href="https://www.ft.lk/front-page/Data-protection-compliance-regime-takes-effect-on-1-Jan-2027/44-795776" target="_blank" rel="noopener">Daily FT: Data protection compliance regime from 1 January 2027</a></li><li><a href="https://schwarz-digits.de/en/presse/archive/2026/schwarz-digits-launches-rise-with-sap-on-stackit-at-competitive-market-prices" target="_blank" rel="noopener">Schwarz Digits: RISE with SAP on STACKIT</a></li></ul></details>
+</div></section>
+</main>
+<footer><div class="in"><span class="mk-crf">© 2026 Mawkish Technologies · Colombo, Sri Lanka. All rights reserved. <a href="https://claude.ai/artifact/KRFaztbtc9jsgrjpkdppPX">Copyright notice</a></span><span>AWS, Microsoft Azure, Google Cloud and SAP are trademarks of their respective owners.</span></div></footer>
+</body>
+</html>

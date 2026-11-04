@@ -1,0 +1,1025 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>GROW with SAP | Mawkish</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Mawkish dark site, full-width bands; each band pairs copy with a drawn SAP Fiori-style screen */
+:root {
+  --bg: #050807;
+  --bg-2: #0a110e;
+  --line: #1c2823;
+  --fg: #eef3f0;
+  --muted: #9aaaa2;
+  --green: #1f7a5a;
+  --green-hi: #34b386;
+  --paper: #f3f6f4;
+  --ink: #142019;
+  --ink-soft: #5c6c65;
+  --fiori: #0a6ed1;
+  --fiori-bg: #f5f6f7;
+  --warn: #e9730c;
+  --display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.in { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 88px; border-top: 1px solid var(--line); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 19px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 16px; display: block; }
+.lede { color: var(--muted); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border: 1px solid transparent; }
+.btn.pri { background: var(--green); color: #fff; }
+.btn.pri:hover { background: #24906a; }
+.btn.sec { border-color: #2c3d36; color: var(--fg); }
+.btn.sec:hover { border-color: var(--green-hi); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
+
+/* header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(5,8,7,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.site .in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; flex-direction: column; align-items: center; font-weight: 800; letter-spacing: .3em; font-size: 9px; color: var(--fg); text-decoration: none; }
+.logo svg { width: 54px; height: 26px; }
+.nav { display: flex; gap: 26px; align-items: center; }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 700; font-size: 12.5px; letter-spacing: .07em; }
+.nav a.on { color: var(--green-hi); }
+.nav .btn { padding: 12px 18px; }
+@media (max-width: 900px) { .nav a:not(.btn) { display: none; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 56px 88px; background: radial-gradient(900px 420px at 80% 10%, rgba(31,122,90,.22), transparent 70%); }
+.crumbs { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 em { font-style: normal; color: var(--green-hi); }
+.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.name-note { margin-top: 28px; font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--green); padding-left: 14px; max-width: 54ch; }
+.name-note b { color: var(--fg); font-weight: 600; }
+
+/* Fiori mock screens */
+.screen { background: var(--fiori-bg); color: #32363a; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06); font-size: 12px; line-height: 1.4; min-width: 0; }
+.shell { background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; gap: 12px; padding: 9px 14px; }
+.shell .sap { background: linear-gradient(135deg,#0a6ed1,#0854a0); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 7px; border-radius: 3px; letter-spacing: .02em; }
+.shell .t { font-weight: 600; color: #32363a; flex: 1; }
+.shell .search { flex: 1.4; background: #eff1f2; border-radius: 16px; height: 24px; display: flex; align-items: center; padding: 0 10px; color: #8b9196; font-size: 11px; }
+.shell .joule-btn { width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); }
+.shell .av { width: 24px; height: 24px; border-radius: 50%; background: #d1e8ff; color: #0a6ed1; font-weight: 700; font-size: 10px; display: grid; place-items: center; }
+.body-pad { padding: 16px; }
+.greet { font-size: 15px; font-weight: 700; color: #1d2d3e; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.tile { background: #fff; border-radius: 10px; padding: 11px 12px; box-shadow: 0 0 0 1px #e5e5e5; min-height: 92px; display: flex; flex-direction: column; justify-content: space-between; }
+.tile .h { font-weight: 600; color: #1d2d3e; font-size: 11.5px; }
+.tile .s { color: #6a6d70; font-size: 10.5px; }
+.tile .k { font-size: 22px; font-weight: 300; color: #0a6ed1; font-variant-numeric: tabular-nums; }
+.tile .k.neg { color: #bb0000; } .tile .k.pos { color: #107e3e; }
+.tile .k small { font-size: 11px; color: #6a6d70; margin-left: 2px; }
+.spark { height: 26px; width: 100%; }
+.split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; margin-top: 10px; }
+.card-f { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; padding: 12px; min-width: 0; }
+.card-f .h { font-weight: 700; font-size: 11.5px; color: #1d2d3e; margin-bottom: 8px; }
+.row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid #eee; font-size: 11px; }
+.row:first-of-type { border-top: 0; }
+.pill { font-size: 9.5px; font-weight: 700; border-radius: 9px; padding: 1px 7px; white-space: nowrap; }
+.pill.ok { background: #f1fdf6; color: #107e3e; box-shadow: inset 0 0 0 1px #c6ecd3; }
+.pill.wr { background: #fef7f1; color: #e9730c; box-shadow: inset 0 0 0 1px #f8d3b0; }
+.pill.in { background: #eef6fe; color: #0a6ed1; box-shadow: inset 0 0 0 1px #c5def7; }
+.joule { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; display: flex; flex-direction: column; min-width: 0; }
+.joule .jh { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid #eee; font-weight: 700; font-size: 11.5px; }
+.joule .jh i { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); display: inline-block; }
+.joule .msgs { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.bub { border-radius: 10px; padding: 7px 9px; font-size: 10.8px; max-width: 92%; }
+.bub.u { align-self: flex-end; background: #0a6ed1; color: #fff; border-bottom-right-radius: 3px; }
+.bub.j { background: #f2f2f7; color: #1d2d3e; border-bottom-left-radius: 3px; }
+.bub.j b { color: #0a6ed1; }
+.typing span { display: inline-block; width: 5px; height: 5px; margin-right: 3px; border-radius: 50%; background: #8b9196; }
+@media (prefers-reduced-motion: no-preference) {
+  .typing span { animation: blink 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
+}
+.caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+/* journey explainer */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.includes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.includes div { background: var(--bg-2); padding: 22px; }
+.includes h3 { font-size: 16px; margin-bottom: 6px; }
+.includes p { color: var(--muted); font-size: 14.5px; }
+.ico { width: 30px; height: 30px; margin-bottom: 12px; color: var(--green-hi); }
+
+/* fit check */
+.fit { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 44px; align-items: start; }
+.qs { display: flex; flex-direction: column; gap: 10px; }
+.q { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.q span { font-size: 15px; min-width: 0; }
+.yn { display: flex; gap: 4px; flex: none; background: #0f1814; border-radius: 9px; padding: 3px; }
+.yn button { font: 700 12px var(--body); letter-spacing: .06em; border: 0; border-radius: 7px; padding: 7px 12px; background: transparent; color: var(--muted); cursor: pointer; }
+.yn button[aria-pressed="true"] { background: var(--green); color: #fff; }
+.yn button.no[aria-pressed="true"] { background: #6b3a12; }
+.result { position: sticky; top: 100px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 28px; }
+.result .lab { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.meter { height: 10px; background: #dde5e1; border-radius: 6px; margin: 14px 0 18px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 6px; transition: width .35s; }
+.result h3 { font-size: 24px; margin-bottom: 10px; }
+.result p { color: var(--ink-soft); font-size: 15px; }
+.result .btn { margin-top: 20px; }
+
+/* capabilities */
+.caps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.cap { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.cap ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+.cap ul li { margin-bottom: 4px; }
+.cap .tagline { color: var(--fg); font-size: 15px; }
+
+/* AI */
+.agents { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.agent { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.agent .n { width: 36px; height: 36px; border-radius: 10px; background: rgba(52,179,134,.12); color: var(--green-hi); display: grid; place-items: center; }
+.agent h3 { font-size: 16px; margin-bottom: 2px; }
+.agent p { color: var(--muted); font-size: 14.5px; }
+.prog { height: 4px; background: #e6e9eb; border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.prog i { display: block; height: 100%; background: #0a6ed1; width: 72%; }
+@media (prefers-reduced-motion: no-preference) {
+  .prog i { animation: load 3.2s ease-in-out infinite alternate; }
+  @keyframes load { from { width: 38% } to { width: 92% } }
+}
+
+/* release timeline */
+.tl { margin-top: 48px; overflow-x: auto; }
+.tl svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.fact { border-top: 2px solid var(--green); padding-top: 14px; }
+.fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 14px; }
+
+/* extensibility */
+.layers { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.layer { display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.layer .who { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--green-hi); padding-top: 3px; }
+.layer h3 { font-size: 16px; margin-bottom: 4px; }
+.layer p { color: var(--muted); font-size: 14.5px; }
+.layer.core { background: var(--paper); color: var(--ink); border-color: transparent; }
+.layer.core .who { color: var(--green); }
+.layer.core p { color: var(--ink-soft); }
+
+/* activate */
+.phases { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ph { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.ph:last-child { border-right: 0; }
+.ph .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.ph h3 { font-size: 17px; }
+.ph p { color: var(--muted); font-size: 13.5px; }
+.ph .we { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--fg); }
+.ph .we b { color: var(--green-hi); font-weight: 700; }
+
+/* users */
+.users { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+.users table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; }
+.users th, .users td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.users th { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.users td:first-child { font-weight: 700; white-space: nowrap; }
+.users td:nth-child(2) { color: var(--muted); }
+.users tr:last-child td { border-bottom: 0; }
+.note { margin-top: 16px; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+/* faq */
+.faq { margin-top: 36px; display: flex; flex-direction: column; gap: 10px; max-width: 860px; }
+details { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 16.5px; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--green-hi); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 18px; max-width: 70ch; }
+
+/* cta */
+.cta-band { background: linear-gradient(120deg, #0e3a2b, #0a1a14 60%); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.cta-band ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cta-band li { display: flex; gap: 10px; font-size: 15px; }
+.cta-band li::before { content: "✓"; color: var(--green-hi); font-weight: 800; }
+footer { padding-block: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+footer .in { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .hero-grid, .two, .fit, .cta-band { grid-template-columns: 1fr; }
+  .caps { grid-template-columns: 1fr 1fr; }
+  .phases { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .ph:nth-child(3) { border-right: 0; }
+  .ph:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .result { position: static; }
+}
+@media (max-width: 620px) {
+  section { padding-block: 64px; }
+  .caps, .includes { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: 1fr; }
+  .ph { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .tiles .tile:nth-child(3) { display: none; }
+  .split { grid-template-columns: 1fr; }
+  .layer { grid-template-columns: 1fr; gap: 6px; }
+  .cta-band { padding: 36px 24px; }
+  .q { flex-direction: column; align-items: flex-start; }
+}
+
+/* light bands: same components, re-tokened */
+section.light { --bg-2: #ffffff; --line: #d9e2dd; --fg: #142019; --muted: #55655e; --green-hi: #17694b; background: #f2f5f3; color: var(--fg); border-top-color: transparent; }
+section.light .includes { background: var(--line); }
+section.light .cap, section.light details { box-shadow: 0 1px 2px rgba(20,32,25,.05); }
+
+/* v2: module explorer + SAP video library */
+.mx-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 34px; }
+.mx-tabs button { font: 600 14px/1 var(--body); padding: 11px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-2); color: var(--fg); cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.mx-tabs button:hover { border-color: var(--green-hi); }
+.mx-tabs button[aria-selected="true"] { background: var(--green); border-color: var(--green); color: #fff; }
+.mx-tabs button:focus-visible, .apps button:focus-visible, .vf button:focus-visible, .vcard:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 2px; }
+.mx { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 44px; margin-top: 30px; align-items: start; }
+.mx-copy h3 { font-family: var(--display); font-size: 28px; letter-spacing: -.01em; }
+.mx-copy .tagline { color: var(--green-hi); font-weight: 700; margin-top: 6px; }
+.mx-copy ul { margin: 18px 0 0; padding: 0; list-style: none; display: grid; gap: 9px; }
+.mx-copy li { padding-left: 22px; position: relative; color: var(--muted); }
+.mx-copy li::before { content: ""; position: absolute; left: 0; top: .55em; width: 10px; height: 2px; background: var(--green-hi); }
+.explain { margin-top: 26px; padding: 18px 20px; border-radius: 12px; background: var(--bg-2); border: 1px solid var(--line); }
+.explain .lab { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--green-hi); }
+.explain h4 { font-family: var(--display); font-size: 17px; margin: 6px 0 6px; }
+.explain p { color: var(--muted); font-size: 15px; margin: 0; }
+.watch { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; font-weight: 700; color: var(--fg); text-decoration: none; font-size: 14px; }
+.watch .pl { width: 30px; height: 30px; border-radius: 50%; background: var(--green); display: grid; place-items: center; flex: none; }
+.watch:hover { color: var(--green-hi); }
+.apps { display: flex; gap: 4px; margin-bottom: -1px; position: relative; z-index: 1; overflow-x: auto; }
+.apps button { font: 600 12.5px/1.2 var(--body); padding: 10px 14px; border: 1px solid var(--line); border-bottom: 0; border-radius: 10px 10px 0 0; background: transparent; color: var(--muted); cursor: pointer; white-space: nowrap; display: flex; gap: 8px; align-items: center; }
+.apps button i { font-style: normal; font-size: 11px; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; background: var(--line); color: var(--fg); }
+.apps button[aria-selected="true"] { background: #fff; color: #1d2d3e; border-color: #dfe4e2; }
+.apps button[aria-selected="true"] i { background: #0a6ed1; color: #fff; }
+.mx .screen { border-top-left-radius: 0; box-shadow: 0 30px 70px rgba(10,30,20,.18), 0 0 0 1px #dfe4e2; }
+.mx .body-pad { display: grid; gap: 10px; min-height: 380px; align-content: start; }
+.mx .grid2 { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 10px; }
+.mx .tiles.n2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.mx .tile { min-height: 78px; }
+.ftab { width: 100%; border-collapse: collapse; font-size: 11px; }
+.ftab th { text-align: left; font-weight: 600; color: #6a6d70; padding: 5px 6px; border-bottom: 1px solid #e5e5e5; font-size: 10.5px; }
+.ftab td { padding: 6px; border-top: 1px solid #f0f0f0; color: #32363a; font-variant-numeric: tabular-nums; }
+.ftab td.r, .ftab th.r { text-align: right; }
+.ftab a { color: #0a6ed1; text-decoration: none; }
+.pill.er { background: #fff4f4; color: #bb0000; box-shadow: inset 0 0 0 1px #f2c0c0; }
+.pill.nt { background: #f5f6f7; color: #556b82; box-shadow: inset 0 0 0 1px #dde1e5; }
+.hb { display: grid; gap: 7px; }
+.hb .b { display: grid; grid-template-columns: 110px minmax(0,1fr) 54px; gap: 8px; align-items: center; font-size: 10.8px; }
+.hb .b span:last-child { text-align: right; font-variant-numeric: tabular-nums; color: #1d2d3e; font-weight: 600; }
+.hb .tr { height: 10px; background: #eff1f2; border-radius: 3px; overflow: hidden; }
+.hb .tr i { display: block; height: 100%; background: #5899da; border-radius: 3px; }
+.hb .tr i.g { background: #3fa45b; } .hb .tr i.o { background: #e9730c; } .hb .tr i.r { background: #d04343; }
+.cols { display: flex; align-items: flex-end; gap: 8px; height: 120px; padding: 0 2px; border-bottom: 1px solid #d9d9d9; position: relative; }
+.cols .c { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; position: relative; }
+.cols .c i { display: block; width: 70%; background: #5899da; border-radius: 3px 3px 0 0; }
+.cols .c i.neg { background: #d04343; }
+.cols .c em { position: absolute; left: 8%; right: 8%; border-top: 2px dashed #1d2d3e; }
+.cols-x { display: flex; gap: 8px; padding: 4px 2px 0; font-size: 9.5px; color: #6a6d70; }
+.cols-x span { flex: 1; text-align: center; }
+.legend { display: flex; gap: 14px; font-size: 10px; color: #6a6d70; margin-top: 6px; flex-wrap: wrap; }
+.legend b { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; background: #5899da; }
+.legend b.dash { height: 0; border-top: 2px dashed #1d2d3e; border-radius: 0; background: none; vertical-align: 2px; }
+.legend b.neg { background: #d04343; }
+.fbtn { font-size: 10px; font-weight: 700; color: #0a6ed1; border: 1px solid #0a6ed1; border-radius: 6px; padding: 2px 8px; white-space: nowrap; }
+.fbtn.em { background: #0a6ed1; color: #fff; }
+
+/* Video library */
+.vf { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
+.vf button { font: 600 13.5px/1 var(--body); padding: 10px 15px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
+.vf button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.vf button span { color: var(--muted); margin-left: 6px; font-weight: 500; }
+.vf button[aria-pressed="true"] span { color: inherit; opacity: .6; }
+.vgrid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; margin-top: 26px; }
+.vcard { display: flex; flex-direction: column; text-decoration: none; color: var(--fg); border-radius: 14px; background: var(--bg-2); border: 1px solid var(--line); overflow: hidden; transition: transform .25s, border-color .25s; }
+.vcard:hover { transform: translateY(-3px); border-color: var(--green); }
+.vcard.feat { grid-column: span 2; }
+.poster { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; padding: 18px 20px; display: flex; flex-direction: column; justify-content: space-between; background: radial-gradient(120% 140% at 100% 0%, #1f7a5a 0%, #0c2a1f 48%, #06110d 100%); }
+.poster[data-k="mod"] { background: radial-gradient(120% 140% at 100% 0%, #0a6ed1 0%, #0b2340 50%, #050c16 100%); }
+.poster[data-k="rel"] { background: radial-gradient(120% 140% at 100% 0%, #5d36ff 0%, #1b1446 50%, #07061a 100%); }
+.poster::after { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(200deg, #000 10%, transparent 70%); -webkit-mask-image: linear-gradient(200deg, #000 10%, transparent 70%); pointer-events: none; }
+.poster .top { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+.poster .ch { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; color: #fff; letter-spacing: .04em; }
+.poster .ch b { background: linear-gradient(135deg,#0a6ed1,#0854a0); padding: 2px 6px; border-radius: 3px; font-size: 10px; }
+.poster .tag { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+.poster .big { position: relative; z-index: 1; font-family: var(--display); font-weight: 800; color: #fff; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.08; letter-spacing: -.01em; max-width: 80%; text-wrap: balance; }
+.vcard.feat .poster .big { font-size: clamp(26px, 3.4vw, 44px); }
+.poster .play { position: absolute; right: 18px; bottom: 18px; z-index: 1; width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,.95); display: grid; place-items: center; box-shadow: 0 10px 30px rgba(0,0,0,.35); transition: transform .25s; }
+.vcard:hover .play { transform: scale(1.08); }
+.vmeta { padding: 16px 18px 18px; display: grid; gap: 6px; }
+.vmeta h3 { font-size: 16px; line-height: 1.3; }
+.vmeta p { color: var(--muted); font-size: 14px; margin: 0; }
+.vmeta .d { font-size: 12px; color: var(--muted); letter-spacing: .02em; }
+.vnote { margin-top: 22px; color: var(--muted); font-size: 13px; max-width: 80ch; }
+
+@media (max-width: 980px) {
+  .mx { grid-template-columns: minmax(0,1fr); gap: 28px; }
+  .vgrid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 620px) {
+  .vgrid { grid-template-columns: 1fr; }
+  .vcard.feat { grid-column: auto; }
+  .mx .grid2 { grid-template-columns: 1fr; }
+  .hb .b { grid-template-columns: 84px minmax(0,1fr) 46px; }
+  .mx .body-pad { min-height: 0; }
+  .mx .shell .search { display: none; }
+}
+.vcard.feat { grid-row: span 2; }
+.vcard.feat .poster { aspect-ratio: auto; flex: 1; min-height: 260px; padding: 28px 30px; }
+@media (max-width: 980px) { .vcard.feat { grid-column: auto; grid-row: auto; } .vcard.feat .poster { aspect-ratio: 16 / 9; flex: none; min-height: 0; padding: 18px 20px; } .vcard.feat .poster .big { font-size: clamp(20px, 2.2vw, 28px); } }
+</style>
+
+<header class="site">
+  <div class="in">
+    <a class="logo" href="#top" aria-label="Mawkish Technologies">
+      <svg viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L20 4 L32 18 L44 4 L62 28 Z" fill="none" stroke="#eef3f0" stroke-width="4" stroke-linejoin="round"/><path d="M20 28 L32 14 L44 28" fill="#eef3f0"/></svg>
+      MAWKISH
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">ABOUT US</a>
+      <a href="#" class="on">OUR SERVICES</a>
+      <a href="#">INDUSTRIES</a>
+      <a href="#">INSIGHTS &amp; PERSPECTIVES</a>
+      <a href="#book" class="btn pri">Schedule a consultation</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="in">
+      <div class="crumbs"><a href="#">Services</a> / <a href="#">SAP Solutions</a> / GROW with SAP</div>
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">GROW with SAP</span>
+          <h1>Run a growing business on <em>SAP Cloud ERP</em>, live in months.</h1>
+          <p class="lede">GROW with SAP gives fast-growing companies SAP's cloud ERP as a ready-to-run service. You get proven processes from day one, built-in AI, and upgrades SAP runs for you twice a year. Mawkish takes you from first workshop to go-live and keeps you current after.</p>
+          <div class="ctas">
+            <a href="#book" class="btn pri">Book a readiness assessment →</a>
+            <a href="#fit" class="btn sec">Is it right for us?</a>
+          </div>
+          <p class="name-note"><b>About the names.</b> GROW with SAP is the offering. The software inside it is SAP Cloud ERP, also known as SAP S/4HANA Cloud Public Edition.</p>
+        </div>
+
+        <figure style="margin:0">
+          <div class="screen" role="img" aria-label="Illustration of the SAP Cloud ERP My Home page with finance tiles, an approvals list and the Joule assistant">
+            <div class="shell"><span class="sap">SAP</span><span class="t">My Home</span><span class="search">Search apps, products, documents…</span><span class="joule-btn"></span><span class="av">NP</span></div>
+            <div class="body-pad">
+              <div class="greet">Good morning, Nirmala</div>
+              <div class="tiles">
+                <div class="tile"><div><div class="h">Days Sales Outstanding</div><div class="s">Last 12 months</div></div><div class="k pos">38<small>days</small></div></div>
+                <div class="tile"><div><div class="h">Overdue Payables</div><div class="s">Company code 1710</div></div><div class="k neg">4.2<small>M LKR</small></div></div>
+                <div class="tile"><div><div class="h">Cash Position</div><div class="s">Today vs forecast</div></div>
+                  <svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true"><path d="M0 20 L14 17 L28 18 L42 12 L56 14 L70 8 L84 9 L100 4 L100 26 L0 26 Z" fill="#d1e8ff"/><path d="M0 20 L14 17 L28 18 L42 12 L56 14 L70 8 L84 9 L100 4" fill="none" stroke="#0a6ed1" stroke-width="1.6"/><circle cx="100" cy="4" r="2.4" fill="#0a6ed1"/></svg>
+                </div>
+              </div>
+              <div class="split">
+                <div class="card-f">
+                  <div class="h">My Inbox · 4 approvals</div>
+                  <div class="row"><span>PO 4500018832 · Packaging film</span><span class="pill wr">Approve</span></div>
+                  <div class="row"><span>Supplier invoice 5105600711</span><span class="pill in">Review</span></div>
+                  <div class="row"><span>Journal entry · Accrual Oct</span><span class="pill ok">Posted</span></div>
+                  <div class="row"><span>Sales order 1002 · Credit block</span><span class="pill wr">Release</span></div>
+                </div>
+                <div class="joule">
+                  <div class="jh"><i></i>Joule</div>
+                  <div class="msgs">
+                    <div class="bub u">Which customers are likely to pay late this month?</div>
+                    <div class="bub j">3 customers are at risk, with <b>12.6M LKR</b> open. Should I draft dunning notes?</div>
+                    <div class="bub j typing" aria-hidden="true"><span></span><span></span><span></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="caption">Illustration of the SAP Fiori "My Home" start page with Joule. Sample data.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IS IT -->
+  <section class="light">
+    <div class="in two">
+      <div>
+        <span class="eyebrow">What you get</span>
+        <h2>One subscription. Software, systems, operations and upgrades.</h2>
+        <p class="lede">With GROW with SAP you don't buy servers, plan upgrade projects or patch databases. SAP runs the cloud. You and Mawkish focus on how your business works in it.</p>
+        <p class="lede">It is built for companies that want to adopt proven ways of working instead of rebuilding old ones. That's what keeps projects short and upgrades painless.</p>
+      </div>
+      <div class="includes">
+        <div>
+          <svg class="ico" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="5" width="22" height="6" rx="2"/><rect x="4" y="13" width="22" height="6" rx="2"/><rect x="4" y="21" width="22" height="5" rx="2"/></svg>
+          <h3>Ready-made best practices</h3><p>Thousands of preconfigured processes, from order to cash to the financial close, ready to switch on.</p>
+        </div>
+        <div>
+          <svg class="ico" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 20a6 6 0 0 1 1-12 8 8 0 0 1 15 2 5 5 0 0 1 0 10z"/></svg>
+          <h3>Three systems included</h3><p>Development, test and production systems, run and backed up by SAP.</p>
+        </div>
+        <div>
+          <svg class="ico" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 4v6M15 20v6M4 15h6M20 15h6"/><circle cx="15" cy="15" r="4"/></svg>
+          <h3>AI built in</h3><p>Joule, SAP's AI assistant, and embedded AI features come as standard across the system.</p>
+        </div>
+        <div>
+          <svg class="ico" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M25 15a10 10 0 1 1-3-7"/><path d="M25 5v6h-6"/></svg>
+          <h3>Always current</h3><p>Two major releases a year plus smaller updates, applied by SAP. No upgrade projects.</p>
+        </div>
+        <div>
+          <svg class="ico" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 22l6-7 5 4 9-11"/><path d="M5 26h20"/></svg>
+          <h3>Analytics included</h3><p>Live dashboards and reports run directly on your transactions, with no separate data warehouse.</p>
+        </div>
+        <div>
+          <svg class="ico" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 13l4 4 10-10"/><rect x="4" y="4" width="22" height="22" rx="4"/></svg>
+          <h3>Tools to run the project</h3><p>Project, test-automation and data-migration tools are included at no extra cost.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIT CHECK -->
+  <section id="fit">
+    <div class="in">
+      <span class="eyebrow">Is it right for you?</span>
+      <h2>Five questions that predict a good fit.</h2>
+      <p class="lede">These are the questions we ask in a first meeting. Answer them honestly. If GROW isn't the right fit, RISE with SAP usually is, and we'll tell you so.</p>
+
+      <div class="fit">
+        <div class="qs" id="qs">
+          <div class="q"><span>We're happy to start fresh instead of converting our current system.</span><div class="yn"><button type="button" class="yes" aria-pressed="false">Yes</button><button type="button" class="no" aria-pressed="false">No</button></div></div>
+          <div class="q"><span>We'd rather adopt proven standard processes than rebuild our own.</span><div class="yn"><button type="button" class="yes" aria-pressed="false">Yes</button><button type="button" class="no" aria-pressed="false">No</button></div></div>
+          <div class="q"><span>Our custom requirements are a handful of fields, forms and reports, not a different way of running the business.</span><div class="yn"><button type="button" class="yes" aria-pressed="false">Yes</button><button type="button" class="no" aria-pressed="false">No</button></div></div>
+          <div class="q"><span>We're fine with SAP upgrading the system twice a year, with a test window beforehand.</span><div class="yn"><button type="button" class="yes" aria-pressed="false">Yes</button><button type="button" class="no" aria-pressed="false">No</button></div></div>
+          <div class="q"><span>We're a growing mid-sized company, or a subsidiary of a larger group.</span><div class="yn"><button type="button" class="yes" aria-pressed="false">Yes</button><button type="button" class="no" aria-pressed="false">No</button></div></div>
+        </div>
+        <aside class="result" aria-live="polite">
+          <div class="lab">Your fit</div>
+          <div class="meter"><i id="meter"></i></div>
+          <h3 id="rTitle">Answer the questions to see where you land</h3>
+          <p id="rText">Each "yes" points toward GROW with SAP. Each "no" is something to look at more closely, and may point to RISE with SAP.</p>
+          <a href="#book" class="btn pri">Talk it through with us →</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITIES: MODULE EXPLORER -->
+  <section class="light" id="modules">
+    <div class="in">
+      <span class="eyebrow">Across the business</span>
+      <h2>One system from the first quote to the final close.</h2>
+      <p class="lede">SAP Cloud ERP covers the core of a mid-sized or growing company in one integrated system. Pick an area to see what it does, then look at the screens your people would actually use.</p>
+      <div class="mx-tabs" role="tablist" aria-label="Business areas" id="mxTabs"></div>
+      <div class="mx">
+        <div class="mx-copy" id="mxCopy"></div>
+        <figure style="margin:0">
+          <div class="apps" role="tablist" aria-label="Screens" id="mxApps"></div>
+          <div class="screen" id="mxScreen" role="img"></div>
+          <figcaption class="caption" style="color:var(--muted)">Illustrations of SAP Fiori apps in SAP Cloud ERP, simplified. App names are SAP's. Sample data.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI -->
+  <section>
+    <div class="in two">
+      <div>
+        <span class="eyebrow">AI that does the work</span>
+        <h2>Joule and AI agents inside the processes you already run.</h2>
+        <p class="lede">Joule is SAP's AI assistant, built into every screen. It answers questions about your own data and can take actions for you. AI agents go further and handle routine tasks from start to finish, with a person approving the result.</p>
+        <div class="agents">
+          <div class="agent"><span class="n"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h12M9 3v12"/></svg></span><div><h3>Month-end accruals</h3><p>Proposes accrual entries from open purchase orders and goods receipts, for your accountant to review.</p></div></div>
+          <div class="agent"><span class="n"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="M9 6v3l2 2"/></svg></span><div><h3>Cash and collections</h3><p>Flags customers likely to pay late and drafts the follow-up.</p></div></div>
+          <div class="agent"><span class="n"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 14l4-5 3 3 5-7"/></svg></span><div><h3>Production planning</h3><p>Spots material shortages and suggests how to reschedule.</p></div></div>
+        </div>
+      </div>
+      <figure style="margin:0">
+        <div class="screen" role="img" aria-label="Illustration of an AI agent proposing accrual entries for review">
+          <div class="shell"><span class="sap">SAP</span><span class="t">Manage Accruals</span><span class="joule-btn"></span><span class="av">NP</span></div>
+          <div class="body-pad">
+            <div class="card-f">
+              <div class="h">Agent run · October close</div>
+              <div class="prog"><i></i></div>
+              <div class="row" style="margin-top:10px"><span>Purchase orders analysed</span><b>214</b></div>
+              <div class="row"><span>Accrual proposals</span><b>37</b></div>
+              <div class="row"><span>Needs your review</span><span class="pill wr">5</span></div>
+            </div>
+            <div class="card-f" style="margin-top:10px">
+              <div class="h">Proposals for review</div>
+              <div class="row"><span>PO 4500018790 · Logistics services</span><span class="pill ok">Ready</span></div>
+              <div class="row"><span>PO 4500018802 · Machine maintenance</span><span class="pill ok">Ready</span></div>
+              <div class="row"><span>PO 4500018841 · Marketing agency</span><span class="pill wr">Check amount</span></div>
+            </div>
+            <div class="joule" style="margin-top:10px">
+              <div class="msgs">
+                <div class="bub j">I estimated the marketing agency accrual from the last three invoices because there's no goods receipt yet. <b>Approve or adjust?</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="caption">Illustration of an AI agent preparing accruals for review. Sample data. Which agents are available depends on your package and SAP's release.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- RELEASES -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">Always current</span>
+      <h2>New features twice a year, without an upgrade project.</h2>
+      <p class="lede">SAP releases a major update every February and August. Your test system is upgraded about three weeks before production, so you can check your processes first. The test automation tool is included, and new processes stay off until you choose to switch them on.</p>
+      <div class="tl">
+        <svg viewBox="0 0 1000 190" role="img" aria-label="Release timeline: release 2602 in February, 2608 in August, 2702 the following February. For each release the test system is upgraded about three weeks before production.">
+          <line x1="40" y1="96" x2="960" y2="96" style="stroke:var(--line)" stroke-width="2"/>
+          <g font-family="Manrope, sans-serif" font-size="13" style="fill:var(--muted)">
+            <text x="40" y="128">Jan</text><text x="190" y="128">Mar</text><text x="340" y="128">May</text><text x="490" y="128">Jul</text><text x="640" y="128">Sep</text><text x="790" y="128">Nov</text><text x="930" y="128">Jan</text>
+          </g>
+          <g>
+            <rect x="80" y="60" width="54" height="22" rx="5" fill="#1f7a5a" opacity=".45"/>
+            <rect x="134" y="60" width="26" height="22" rx="5" fill="#34b386"/>
+            <text x="80" y="48" font-family="Plus Jakarta Sans, sans-serif" font-weight="800" font-size="20" style="fill:var(--fg)">2602</text>
+            <rect x="530" y="60" width="54" height="22" rx="5" fill="#1f7a5a" opacity=".45"/>
+            <rect x="584" y="60" width="26" height="22" rx="5" fill="#34b386"/>
+            <text x="530" y="48" font-family="Plus Jakarta Sans, sans-serif" font-weight="800" font-size="20" style="fill:var(--fg)">2608</text>
+            <rect x="880" y="60" width="54" height="22" rx="5" fill="#1f7a5a" opacity=".45"/>
+            <rect x="934" y="60" width="26" height="22" rx="5" fill="#34b386"/>
+            <text x="880" y="48" font-family="Plus Jakarta Sans, sans-serif" font-weight="800" font-size="20" style="fill:var(--fg)">2702</text>
+          </g>
+          <g font-family="Manrope, sans-serif" font-size="11" style="fill:var(--muted)">
+            <circle cx="210" cy="96" r="4" style="fill:var(--muted)"/><text x="196" y="80">2602.1</text>
+            <circle cx="350" cy="96" r="4" style="fill:var(--muted)"/><text x="336" y="80">2602.2</text>
+            <circle cx="680" cy="96" r="4" style="fill:var(--muted)"/><text x="666" y="80">2608.1</text>
+            <circle cx="790" cy="96" r="4" style="fill:var(--muted)"/><text x="776" y="80">2608.2</text>
+          </g>
+          <g font-family="Manrope, sans-serif" font-size="13" style="fill:var(--fg)">
+            <rect x="40" y="156" width="14" height="14" rx="3" fill="#1f7a5a" opacity=".45"/><text x="62" y="168">Test system upgraded, you check your processes</text>
+            <rect x="420" y="156" width="14" height="14" rx="3" fill="#34b386"/><text x="442" y="168">Production upgraded</text>
+            <circle cx="620" cy="163" r="4" style="fill:var(--muted)"/><text x="633" y="168">Smaller feature updates between major releases</text>
+          </g>
+        </svg>
+      </div>
+      <div class="facts">
+        <div class="fact"><b>2</b><span>major releases a year, in February and August</span></div>
+        <div class="fact"><b>~6 weeks</b><span>notice before each upgrade</span></div>
+        <div class="fact"><b>~3 weeks</b><span>to test on the upgraded test system before production</span></div>
+        <div class="fact"><b>0</b><span>upgrade projects to budget for</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXTENSIBILITY -->
+  <section>
+    <div class="in two">
+      <div>
+        <span class="eyebrow">Your differences, protected</span>
+        <h2>Tailor it without breaking the upgrades.</h2>
+        <p class="lede">The standard system stays untouched. That's called a "clean core". Your changes sit in layers around it and use interfaces SAP keeps stable, so every upgrade carries your changes forward automatically.</p>
+        <p class="lede">We always start with the simplest layer that does the job, and we'll ask whether each change is a need or a nice-to-have. That question saves money on every future release.</p>
+      </div>
+      <div class="layers">
+        <div class="layer"><span class="who">Business users</span><div><h3>Key-user changes</h3><p>Add custom fields, adjust forms and emails, change screen layouts and build simple custom logic, all in the browser without code.</p></div></div>
+        <div class="layer"><span class="who">Developers, inside</span><div><h3>Developer extensions</h3><p>Custom logic and apps built inside the system with upgrade-safe tools, for requirements that need more than configuration.</p></div></div>
+        <div class="layer"><span class="who">Developers, alongside</span><div><h3>Side-by-side apps on SAP BTP</h3><p>Separate apps, automations and integrations on SAP's Business Technology Platform, connected through stable APIs.</p></div></div>
+        <div class="layer core"><span class="who">SAP standard</span><div><h3>Clean core</h3><p>SAP's processes and code, untouched. That's why upgrades just work.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW WE DELIVER -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">How Mawkish delivers</span>
+      <h2>From first workshop to go-live, in months, not years.</h2>
+      <p class="lede">We follow SAP Activate, SAP's method for cloud ERP projects. Instead of writing a long specification up front, we show your team the standard process working in a real system and only change what really needs to change.</p>
+      <div class="phases">
+        <div class="ph"><span class="st">Step 1</span><h3>Discover</h3><p>Agree the business case and the scope you need.</p><p class="we"><b>We:</b> run a readiness assessment and confirm GROW is the right fit.</p></div>
+        <div class="ph"><span class="st">Step 2</span><h3>Prepare</h3><p>Systems are set up and the team and plan are in place.</p><p class="we"><b>We:</b> set up the project and a working demo system.</p></div>
+        <div class="ph"><span class="st">Step 3</span><h3>Explore</h3><p>Fit-to-standard workshops with the people who do the work.</p><p class="we"><b>We:</b> demo each process and capture only real gaps.</p></div>
+        <div class="ph"><span class="st">Step 4</span><h3>Realize</h3><p>Configure, extend, integrate, migrate data and test.</p><p class="we"><b>We:</b> build it, load your data and run user acceptance testing with you.</p></div>
+        <div class="ph"><span class="st">Step 5</span><h3>Deploy</h3><p>Cutover, training and go-live.</p><p class="we"><b>We:</b> train your users and stay on site for go-live.</p></div>
+        <div class="ph"><span class="st">Step 6</span><h3>Run</h3><p>Upgrades, new features and new scope.</p><p class="we"><b>We:</b> support you, test each release and switch on what's new.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LICENSING -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">Licensing, simply</span>
+      <h2>You pay per user, by what each person does.</h2>
+      <p class="lede">SAP Cloud ERP is a subscription priced per user per month. Each person gets the user type that matches their role, so a warehouse operator doesn't cost the same as a financial controller.</p>
+      <div class="users">
+        <table>
+          <thead><tr><th>User type</th><th>Typical people</th><th>What they can do</th></tr></thead>
+          <tbody>
+            <tr><td>Finance Base / Premium</td><td>Accountants, controllers, treasury</td><td>Full finance processes. Premium adds wider scope and advanced AI.</td></tr>
+            <tr><td>Supply Chain Base / Premium</td><td>Planners, production and warehouse leads</td><td>Full supply chain and manufacturing. Premium adds sustainability and compliance.</td></tr>
+            <tr><td>Combo Base</td><td>Power users across functions</td><td>Finance Base and Supply Chain Base together.</td></tr>
+            <tr><td>Operational</td><td>Sales, purchasing and service staff</td><td>Day-to-day transactions such as orders, purchasing and deliveries.</td></tr>
+            <tr><td>Self-Service</td><td>Everyone else</td><td>Approvals, requests, timesheets and simple confirmations.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Every user type also includes Joule and embedded AI. We size your user mix as part of the readiness assessment, so the quote matches how your teams actually work.</p>
+    </div>
+  </section>
+
+  <!-- VIDEO LIBRARY -->
+  <section id="watch">
+    <div class="in">
+      <span class="eyebrow">Watch and learn</span>
+      <h2>See it from SAP, in their own words.</h2>
+      <p class="lede">A short library of videos from SAP's official YouTube channel: what GROW with SAP is, a tour of the product, and the latest release highlights for each part of the business. Most run three to six minutes.</p>
+      <div class="vf" role="group" aria-label="Filter videos" id="vf"></div>
+      <div class="vgrid" id="vgrid"></div>
+      <p class="vnote">All videos are published by SAP on its official YouTube channel. Videos from before 2025 use the product's earlier name, SAP S/4HANA Cloud Public Edition. The release numbers (2502, 2602) are SAP's release names: 2602 means February 2026.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">Questions we hear</span>
+      <h2>Straight answers.</h2>
+      <div class="faq">
+        <details><summary>What's the difference between GROW with SAP and RISE with SAP?</summary><p>Both put you on SAP's cloud ERP. GROW is for a fresh start on the standard cloud product, shared with other customers and upgraded by SAP twice a year. RISE gives you your own private instance, more room for deep custom code, and the option to convert an existing SAP ECC system. Most growing mid-sized companies and subsidiaries fit GROW. Large groups with complex customisation usually fit RISE.</p></details>
+        <details><summary>Can we keep our current SAP ECC configuration?</summary><p>No. GROW is always a fresh implementation, but you can bring your data with you. Migration tools are included, and many customers find it a good chance to clean up years of old data and workarounds.</p></details>
+        <details><summary>How long does an implementation take?</summary><p>For a mid-sized company with standard scope, a few months rather than years. The biggest factors are how many processes and countries are in scope, how much data you migrate, and how quickly your people can join the workshops. We give you a realistic plan after the readiness assessment.</p></details>
+        <details><summary>Will upgrades disrupt our business?</summary><p>They're designed not to. You get about six weeks' notice, the test system is upgraded about three weeks early, and the test automation tool is included. Extensions built the clean-core way carry over automatically. We can run regression testing for you each release.</p></details>
+        <details><summary>What if we need something the standard system doesn't do?</summary><p>First we check whether a standard process or a configuration setting covers it. If it doesn't, there are three upgrade-safe options: key-user changes, developer extensions, and side-by-side apps on SAP BTP. We'll recommend the simplest one that does the job.</p></details>
+        <details><summary>Does it work for our country?</summary><p>SAP provides local versions for around 60 countries, covering tax, legal reporting and language. Requirements in other countries can be added through localisation. We'll confirm exactly what applies to your entities during the assessment.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="book">
+    <div class="in">
+      <div class="cta-band">
+        <div>
+          <span class="eyebrow">Start here</span>
+          <h2>Find out in two weeks whether GROW with SAP fits.</h2>
+          <p class="lede">The Mawkish Cloud ERP Readiness Assessment maps your processes to SAP's standard, highlights the gaps, and gives you a scope, user mix and roadmap you can take to your board.</p>
+          <div style="margin-top:28px"><a href="#" class="btn pri">Book your assessment →</a></div>
+        </div>
+        <ul>
+          <li>Process fit by department</li>
+          <li>GROW or RISE recommendation, with reasons</li>
+          <li>Licence sizing by user type</li>
+          <li>Implementation timeline and team</li>
+          <li>Integration and data migration outline</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="in"><span>© Mawkish Technologies · Colombo, Sri Lanka</span><span>SAP, SAP S/4HANA, GROW with SAP and Joule are trademarks of SAP SE. Screens shown are illustrations.</span></div>
+</footer>
+
+<script>
+(() => {
+  const qs = [...document.querySelectorAll('#qs .q')];
+  const meter = document.getElementById('meter');
+  const t = document.getElementById('rTitle'), x = document.getElementById('rText');
+  const update = () => {
+    let yes = 0, answered = 0;
+    qs.forEach(q => {
+      const y = q.querySelector('.yes').getAttribute('aria-pressed') === 'true';
+      const n = q.querySelector('.no').getAttribute('aria-pressed') === 'true';
+      if (y) yes++; if (y || n) answered++;
+    });
+    meter.style.width = (yes / qs.length * 100) + '%';
+    if (answered < qs.length) {
+      t.textContent = answered ? `${answered} of ${qs.length} answered` : 'Answer the questions to see where you land';
+      x.textContent = 'Each "yes" points toward GROW with SAP. Each "no" is something to look at more closely, and may point to RISE with SAP.';
+    } else if (yes >= 4) {
+      t.textContent = 'Strong fit for GROW with SAP';
+      x.textContent = 'Your answers match the companies that get the most from SAP Cloud ERP. A readiness assessment will confirm the scope and give you a timeline.';
+    } else if (yes >= 2) {
+      t.textContent = 'Worth a closer look';
+      x.textContent = 'GROW may still fit, but your "no" answers need a conversation. Sometimes they turn out to be simpler than expected, and sometimes RISE with SAP is the better route.';
+    } else {
+      t.textContent = 'RISE with SAP may suit you better';
+      x.textContent = 'Your answers suggest you need more room to customise or a conversion path. RISE with SAP gives you SAP cloud ERP on a private instance. We can walk you through both.';
+    }
+  };
+  qs.forEach(q => {
+    const btns = q.querySelectorAll('button');
+    btns.forEach(b => b.addEventListener('click', () => {
+      btns.forEach(o => o.setAttribute('aria-pressed', String(o === b)));
+      update();
+    }));
+  });
+  update();
+})();
+</script>
+
+<script>
+/* Module explorer: each module has the original capability copy plus 3 drawn Fiori screens.
+   Cell shorthand in tables: "ok:Text" / "wr:" / "er:" / "in:" / "nt:" = status pill, "btn:Text" = button, "r" columns right-align. */
+(() => {
+  const M = [
+    { id: 'fin', name: 'Finance', tag: 'Close faster with one set of numbers.',
+      bullets: ['General ledger, assets, receivables and payables', 'Multiple accounting standards in parallel', 'Cash, bank and liquidity management', 'Margin analysis and revenue recognition'],
+      video: { id: 'gqsz8-Hif5Y', t: "Finance in SAP Cloud ERP 2602: SAP's release highlights" },
+      screens: [
+        { app: 'Cash Flow Analyzer', av: 'TR',
+          h: 'Cash today comes from the bank. The next eight weeks come from your own transactions.',
+          p: 'Bank balances, open invoices, purchase orders and sales orders all feed one liquidity forecast that updates as people post. Treasury stops building the forecast in a spreadsheet.',
+          b: [
+            { t: 'kpis', items: [['Cash position', 'All banks, today', '182.4', 'M LKR', ''], ['Expected inflows', 'Next 4 weeks', '96.1', 'M LKR', 'pos'], ['Expected outflows', 'Next 4 weeks', '88.7', 'M LKR', 'neg']] },
+            { t: 'cols', h: 'Net cash flow by week · forecast', labels: ['W45','W46','W47','W48','W49','W50','W51','W52'], vals: [14, 9, -6, 18, 11, -12, 7, 16], legend: [['', 'Net inflow'], ['neg', 'Net outflow']] }
+          ] },
+        { app: 'Process Receivables', av: 'AR',
+          h: 'Collectors start the day with a list ordered by risk, not by customer name.',
+          p: "The worklist predicts each customer's payment date from their history, so the team calls the customers who are about to be late, before they are.",
+          b: [
+            { t: 'table', h: 'Collections worklist · 27 customers', cols: ['Customer', 'Overdue (LKR)', 'Predicted', 'Action'], r: [1], rows: [
+              ['Ceylon Fresh Foods', '8,420,000', 'er:+9 days', 'btn:Remind'],
+              ['Lanka Retail Group', '5,115,500', 'wr:+4 days', 'btn:Call'],
+              ['Harbour Logistics', '2,030,000', 'ok:On time', 'nt:None'],
+              ['Kandy Hotels Ltd', '1,760,250', 'wr:+6 days', 'btn:Remind'] ] },
+            { t: 'joule', m: [['u', 'Why is Ceylon Fresh Foods flagged?'], ['j', 'They have paid an average of <b>9 days late</b> over the last 6 months and have <b>3 invoices</b> due this week. I drafted a reminder for you to review.']] }
+          ] },
+        { app: 'Financial Close Overview', av: 'FC',
+          h: 'The month-end close becomes a schedule, not a series of emails.',
+          p: 'Every close task across every company has an owner, a due date and a status. Jobs such as depreciation and currency revaluation run on schedule and record their results.',
+          b: [
+            { t: 'kpis', items: [['Tasks complete', 'October close', '142', '/168', 'pos'], ['Overdue', 'Across 4 companies', '3', 'tasks', 'neg'], ['Close day', 'Target day 5', '4', 'of 5', '']] },
+            { t: 'table', h: 'Task list · Company 1000', cols: ['Task', 'Owner', 'Status'], rows: [
+              ['Run depreciation', 'Scheduled job', 'ok:Completed'],
+              ['Foreign currency valuation', 'Scheduled job', 'ok:Completed'],
+              ['GR/IR clearing', 'D. Perera', 'in:In progress'],
+              ['Review accrual proposals', 'AI agent → N. Silva', 'wr:Needs review'],
+              ['Intercompany reconciliation', 'S. Fernando', 'nt:Not started'] ] }
+          ] }
+      ] },
+    { id: 'sal', name: 'Sales & service', tag: 'From quote to cash without re-keying.',
+      bullets: ['Quotes, contracts, orders and pricing', 'Billing, credit management and returns', 'Rebates, commissions and incentives', 'Service orders and contracts'],
+      video: { id: 'G-OsHSydMNk', t: "Sales in SAP Cloud ERP 2602: SAP's release highlights" },
+      screens: [
+        { app: 'Sales Management Overview', av: 'SM',
+          h: 'Sales managers see the pipeline and the orders on one page.',
+          p: 'Quotations, incoming orders and conversion rates come straight from the transactions, so the numbers in the sales meeting match the numbers in finance.',
+          b: [
+            { t: 'kpis', items: [['Incoming orders', 'Month to date', '312.6', 'M LKR', 'pos'], ['Open quotations', 'Expiring in 14 days: 9', '48', '', ''], ['Quote conversion', 'Last 90 days', '34', '%', '']] },
+            { t: 'bars', h: 'Incoming orders by product group · M LKR', unit: '', items: [['Packaged foods', 118, ''], ['Beverages', 86, ''], ['Household', 61, ''], ['Export bulk', 33, ''], ['Services', 14.6, '']], max: 120 }
+          ] },
+        { app: 'Manage Sales Orders', av: 'SO',
+          h: 'One order travels from quote to delivery to invoice without being typed in again.',
+          p: 'Each order shows exactly where it is. Pricing, credit checks and availability checks happen as the order is entered, not after.',
+          b: [
+            { t: 'table', h: 'Sales orders · 1,284', cols: ['Order', 'Customer', 'Net value (LKR)', 'Status'], r: [2], rows: [
+              ['<a>1002418</a>', 'Lanka Retail Group', '4,860,000', 'ok:Delivered'],
+              ['<a>1002421</a>', 'Ceylon Fresh Foods', '2,315,400', 'er:Credit block'],
+              ['<a>1002425</a>', 'Galle Supermarkets', '1,120,000', 'in:Being picked'],
+              ['<a>1002427</a>', 'Harbour Logistics', '640,800', 'ok:Billed'],
+              ['<a>1002430</a>', 'Kandy Hotels Ltd', '388,250', 'nt:Open'] ] }
+          ] },
+        { app: 'Sales Order Fulfillment', av: 'SF',
+          h: 'Instead of hunting for stuck orders, the system lists them and says why.',
+          p: 'Orders that cannot move forward appear in one place, grouped by the reason: a credit block, missing data, no stock or a billing block. Each one can be fixed from the same screen.',
+          b: [
+            { t: 'kpis', items: [['Delivery issues', 'Blocked or late', '6', 'orders', 'neg'], ['Incomplete data', 'Missing fields', '4', 'orders', ''], ['Billing issues', 'Ready but blocked', '2', 'orders', '']] },
+            { t: 'table', h: 'Orders that need attention', cols: ['Order', 'Issue', 'Since', ''], rows: [
+              ['1002421', 'er:Credit limit exceeded', '2 days', 'btn:Release'],
+              ['1002398', 'wr:Not enough stock', '1 day', 'btn:Reschedule'],
+              ['1002402', 'wr:Incoterms missing', 'Today', 'btn:Complete'] ] }
+          ] }
+      ] },
+    { id: 'pro', name: 'Procurement', tag: "Spend that's controlled, not chased.",
+      bullets: ['Requisitions, purchase orders and contracts', 'Supplier invoices and three-way matching', 'Supplier evaluation', 'Self-service buying for employees'],
+      video: { id: 'FK81eaC2fvI', t: "Sourcing and Procurement in the 2502 release: SAP's demo" },
+      screens: [
+        { app: 'Procurement Overview', av: 'PO',
+          h: 'Buyers and managers see where the money goes, and how much of it is on contract.',
+          p: 'Spend by category and supplier, contract coverage and purchasing that bypasses contracts are all visible without a separate analytics project.',
+          b: [
+            { t: 'kpis', items: [['Spend', 'Year to date', '1.24', 'B LKR', ''], ['Contract coverage', 'Share of spend', '71', '%', 'pos'], ['Off-contract spend', 'Last 90 days', '8.6', '%', 'neg']] },
+            { t: 'bars', h: 'Spend by category · M LKR', items: [['Raw materials', 512, ''], ['Packaging', 238, ''], ['Logistics', 176, ''], ['Maintenance', 142, ''], ['IT and services', 96, '']], max: 520 }
+          ] },
+        { app: 'Create Purchase Requisition', av: 'NP',
+          h: 'Employees buy from approved catalogues, like shopping online.',
+          p: 'Staff pick items from catalogues with agreed suppliers and prices. Approvals route automatically by amount and cost centre, and the purchase order is created for the buyer.',
+          b: [
+            { t: 'table', h: 'Catalogue: Office and IT', cols: ['Item', 'Supplier', 'Price (LKR)', ''], r: [2], rows: [
+              ['Laptop, 14-inch, standard', 'TechLanka (Pvt) Ltd', '312,000', 'btn:Add'],
+              ['Monitor, 27-inch', 'TechLanka (Pvt) Ltd', '68,500', 'btn:Add'],
+              ['Safety boots, size 9', 'Ceylon Safety Co.', '9,800', 'btn:Add'] ] },
+            { t: 'list', h: 'Cart · 3 items · 390,300 LKR', rows: [['Cost centre', 'nt:CC-4100 Operations'], ['Approval', 'in:Line manager → Finance'], ['Delivery', 'ok:Colombo HQ, 3 days']] }
+          ] },
+        { app: 'Manage Supplier Invoices', av: 'AP',
+          h: 'Invoices that match the order and the receipt post themselves. Only exceptions reach a person.',
+          p: 'Each invoice is checked against the purchase order and the goods receipt, called three-way matching. Price and quantity differences are blocked for payment until someone decides.',
+          b: [
+            { t: 'table', h: 'Supplier invoices · last 7 days', cols: ['Invoice', 'Supplier', 'Amount (LKR)', 'Match'], r: [2], rows: [
+              ['5105600711', 'PackPro Lanka', '1,846,000', 'er:Price variance'],
+              ['5105600714', 'Ceylon Safety Co.', '392,000', 'ok:Matched · posted'],
+              ['5105600716', 'Island Freight', '1,210,500', 'wr:Qty variance'],
+              ['5105600719', 'TechLanka (Pvt) Ltd', '624,000', 'ok:Matched · posted'] ] },
+            { t: 'joule', m: [['j', 'Invoice 5105600711 is <b>4.2% above</b> the PO price for packaging film. The contract allows 2%. Block for payment and ask the buyer?']] }
+          ] }
+      ] },
+    { id: 'mfg', name: 'Manufacturing', tag: "Plan what you'll make, make what you plan.",
+      bullets: ['Bills of material and production orders', 'Material requirements planning', 'Quality inspection', 'Batch and serial number tracking'],
+      video: { id: 'btRK-I9FlAo', t: "Manufacturing in SAP Cloud ERP 2602: SAP's release highlights" },
+      screens: [
+        { app: 'Monitor Material Coverage', av: 'MP',
+          h: 'Planners see the shortage before the production line does.',
+          p: 'Material requirements planning compares demand with stock and incoming supply. The planner gets a list of materials that will run short, the date it happens, and options to fix it.',
+          b: [
+            { t: 'table', h: 'Materials at risk · Plant 1100 Biyagama', cols: ['Material', 'Stock', 'Days of supply', 'Coverage'], r: [1, 2], rows: [
+              ['PET resin, food grade', '4.2 t', '3', 'er:Shortage 3 Nov'],
+              ['Shrink film 450 mm', '1,800 m', '6', 'wr:At risk 7 Nov'],
+              ['Label stock, gloss', '22,000 pcs', '19', 'ok:Covered'],
+              ['Caps 28 mm, blue', '140,000 pcs', '24', 'ok:Covered'] ] },
+            { t: 'joule', m: [['u', 'How do I fix the PET resin shortage?'], ['j', 'The open PO from PolyAsia is due <b>9 Nov</b>. Bringing it forward to 2 Nov covers demand, or I can move 1.5 t from Plant 1200.']] }
+          ] },
+        { app: 'Manage Production Orders', av: 'PS',
+          h: "The shop floor and the office look at the same orders.",
+          p: 'Supervisors see what is released, what is running late and what has been confirmed. Confirmations update stock and costs as they happen.',
+          b: [
+            { t: 'kpis', items: [['Released', 'This week', '24', 'orders', ''], ['Delayed', 'Past finish date', '3', 'orders', 'neg'], ['Confirmed today', 'Yield 98.1%', '11', 'orders', 'pos']] },
+            { t: 'bars', h: 'Progress by order', items: [['1000412 · 500 ml', 100, 'g'], ['1000415 · 1 L', 72, ''], ['1000418 · 5 L', 40, 'o'], ['1000421 · 500 ml', 12, '']], max: 100, unit: '%' }
+          ] },
+        { app: 'Manage Inspection Lots', av: 'QM',
+          h: 'Quality checks are part of the process, not a separate logbook.',
+          p: 'Inspection lots are created automatically at goods receipt or at the end of production. Results are recorded against each batch, so you can trace any finished product back to its raw materials.',
+          b: [
+            { t: 'table', h: 'Inspection lot 0100004512 · Batch B26-1031', cols: ['Characteristic', 'Target', 'Result', 'Valuation'], r: [1, 2], rows: [
+              ['Fill volume (ml)', '500 ± 5', '501.2', 'ok:Accept'],
+              ['Cap torque (Nm)', '1.8–2.4', '2.1', 'ok:Accept'],
+              ['Seal integrity', 'Pass', 'Pass', 'ok:Accept'],
+              ['Label position (mm)', '± 1.5', '2.3', 'er:Reject'] ] },
+            { t: 'list', h: 'Usage decision', rows: [['Batch B26-1031', 'wr:Pending · 1 characteristic rejected'], ['Stock', 'nt:Quality inspection stock']] }
+          ] }
+      ] },
+    { id: 'scm', name: 'Supply chain & warehouse', tag: 'Know what you have and where it is.',
+      bullets: ['Inventory and goods movements', 'Warehouse management', 'Available-to-promise checks', 'Transportation and freight'],
+      video: { id: 'b1sqoqKhvNA', t: "Supply Chain Management in SAP Cloud ERP 2602: SAP's release highlights" },
+      screens: [
+        { app: 'Inventory Analysis Overview', av: 'IM',
+          h: 'Stock value, slow movers and turnover, live, by site.',
+          p: 'Every goods movement updates stock and its value immediately. Slow-moving and dead stock are visible before they turn into write-offs.',
+          b: [
+            { t: 'kpis', items: [['Stock value', 'All plants', '846', 'M LKR', ''], ['Slow-moving', 'No issue in 90 days', '6.2', '%', 'neg'], ['Inventory turnover', 'Rolling 12 months', '7.4', 'x', 'pos']] },
+            { t: 'bars', h: 'Stock value by location · M LKR', items: [['Colombo DC', 388, ''], ['Biyagama plant', 254, ''], ['Kandy depot', 118, ''], ['Galle depot', 86, '']], max: 400 }
+          ] },
+        { app: 'Warehouse Monitor', av: 'WH',
+          h: 'Warehouse staff work from tasks on a handheld, not paper pick lists.',
+          p: 'Picking, packing and put-away become warehouse tasks with a bin and a quantity. Supervisors see open, overdue and completed work in real time.',
+          b: [
+            { t: 'kpis', items: [['Open tasks', 'Colombo DC', '128', '', ''], ['Overdue picks', 'Past wave time', '4', '', 'neg'], ['Waves released', 'Today', '6', '', 'pos']] },
+            { t: 'table', h: 'Warehouse tasks · Wave 0006', cols: ['Task', 'From bin', 'To', 'Qty', 'Status'], r: [3], rows: [
+              ['Pick', '02-14-03', 'Packing 2', '48 CS', 'in:In progress'],
+              ['Pick', '02-17-01', 'Packing 2', '12 CS', 'er:Overdue'],
+              ['Put-away', 'GR-ZONE', '05-02-04', '2 PAL', 'ok:Confirmed'] ] }
+          ] },
+        { app: 'Monitor Product Availability', av: 'AT',
+          h: 'Promise a delivery date you can keep.',
+          p: 'The available-to-promise check looks at stock, planned production and incoming supply before confirming a date. When supply is short, rules decide which customers are served first.',
+          b: [
+            { t: 'table', h: 'Availability · Bottled water 1 L', cols: ['Order', 'Requested', 'Confirmed', 'Status'], rows: [
+              ['1002418', '04 Nov', '04 Nov', 'ok:Fully confirmed'],
+              ['1002425', '05 Nov', '07 Nov', 'wr:Partly confirmed'],
+              ['1002433', '05 Nov', '11 Nov', 'er:Backorder'] ] },
+            { t: 'list', h: 'Backorder processing rule', rows: [['Priority 1', 'in:Key accounts'], ['Priority 2', 'nt:Export orders'], ['Priority 3', 'nt:All other orders']] }
+          ] }
+      ] },
+    { id: 'prj', name: 'Projects & services', tag: 'Run project businesses at a profit.',
+      bullets: ['Project planning and budgets', 'Time recording and resources', 'Milestone and time-and-material billing', 'Project profitability'],
+      video: { id: 'p2dYVUexaH4', t: "Professional Services in SAP Cloud ERP 2602: SAP's release highlights" },
+      screens: [
+        { app: 'Project Control', av: 'PM',
+          h: 'Know whether a project makes money while you can still change it.',
+          p: 'Costs from time, expenses and purchases post to the project as they happen. Project managers compare actual margin with plan every week, not after the final invoice.',
+          b: [
+            { t: 'kpis', items: [['Revenue', 'Project P-2611 · to date', '48.6', 'M LKR', ''], ['Cost', 'Time, travel, subcontract', '37.2', 'M LKR', ''], ['Margin', 'Plan 25.0%', '23.4', '%', 'neg']] },
+            { t: 'cols', h: 'Monthly cost · actual vs plan (M LKR)', labels: ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'], vals: [4.1, 5.6, 6.8, 7.4, 7.9, 5.4], plan: [4.5, 5.5, 6.2, 6.6, 7.0, 7.2], legend: [['', 'Actual'], ['dash', 'Plan']] }
+          ] },
+        { app: 'Manage Project Demands', av: 'RM',
+          h: 'Staff the right people, and see who is free.',
+          p: 'Project managers request roles and skills. Resource managers assign people and see utilisation across all projects, which keeps billable hours up.',
+          b: [
+            { t: 'bars', h: 'Consultant utilisation · November', items: [['A. Jayasuriya', 96, 'r'], ['K. Rajapaksha', 88, 'g'], ['M. Wickrama', 74, 'g'], ['T. Hettiarachchi', 52, 'o'], ['R. Gunasekara', 31, 'o']], max: 100, unit: '%' },
+            { t: 'list', h: 'Open demand · P-2611', rows: [['Senior FI consultant · 40 days', 'wr:Unassigned'], ['Integration developer · 25 days', 'ok:R. Gunasekara']] }
+          ] },
+        { app: 'Manage My Timesheet', av: 'KR',
+          h: 'Hours recorded today become billable revenue this month.',
+          p: 'Approved time flows into project costs and into time-and-material billing automatically. Nobody re-types timesheets into invoices.',
+          b: [
+            { t: 'table', h: 'Week 45 · K. Rajapaksha', cols: ['Day', 'Project', 'Hours', 'Status'], r: [2], rows: [
+              ['Mon', 'P-2611 · Finance design', '8.0', 'ok:Approved'],
+              ['Tue', 'P-2611 · Finance design', '7.5', 'ok:Approved'],
+              ['Wed', 'P-2604 · Support', '4.0', 'in:Submitted'],
+              ['Wed', 'Internal · Training', '4.0', 'in:Submitted'],
+              ['Thu', 'P-2611 · Data migration', '8.0', 'nt:Draft'] ] }
+          ] }
+      ] }
+  ];
+
+  const esc = s => s; // content is authored above, not user input
+  const cell = v => {
+    const m = /^(ok|wr|er|in|nt):(.*)$/.exec(v);
+    if (m) return `<span class="pill ${m[1]}">${m[2]}</span>`;
+    if (v.startsWith('btn:')) return `<span class="fbtn">${v.slice(4)}</span>`;
+    return esc(v);
+  };
+  const R = {
+    kpis: b => `<div class="tiles${b.items.length === 2 ? ' n2' : ''}">${b.items.map(([h, s, k, u, c]) => `<div class="tile"><div><div class="h">${h}</div><div class="s">${s}</div></div><div class="k ${c}">${k}<small>${u}</small></div></div>`).join('')}</div>`,
+    table: b => `<div class="card-f" style="overflow-x:auto"><div class="h">${b.h}</div><table class="ftab"><thead><tr>${b.cols.map((c, i) => `<th${(b.r || []).includes(i) ? ' class="r"' : ''}>${c}</th>`).join('')}</tr></thead><tbody>${b.rows.map(r => `<tr>${r.map((c, i) => `<td${(b.r || []).includes(i) ? ' class="r"' : ''}>${cell(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`,
+    bars: b => `<div class="card-f"><div class="h">${b.h}</div><div class="hb">${b.items.map(([l, v, c]) => `<div class="b"><span>${l}</span><div class="tr"><i class="${c}" style="width:${(v / b.max * 100).toFixed(1)}%"></i></div><span>${v}${b.unit || ''}</span></div>`).join('')}</div></div>`,
+    cols: b => {
+      const all = b.vals.concat(b.plan || []);
+      const max = Math.max(...all.map(Math.abs));
+      const hasNeg = b.vals.some(v => v < 0);
+      // with negatives, draw from a baseline at 40% height
+      const base = hasNeg ? 40 : 0, span = hasNeg ? 60 : 100;
+      const cols = b.vals.map((v, i) => {
+        const hgt = Math.abs(v) / max * (hasNeg ? (v < 0 ? base : span) : 100);
+        const style = hasNeg ? (v < 0 ? `height:${hgt}%;position:absolute;top:${100 - base}%;border-radius:0 0 3px 3px` : `height:${hgt}%;position:absolute;bottom:${base}%`) : `height:${hgt}%`;
+        const plan = b.plan ? `<em style="bottom:${(b.plan[i] / max * 100).toFixed(1)}%"></em>` : '';
+        return `<div class="c"><i class="${v < 0 ? 'neg' : ''}" style="${style}"></i>${plan}</div>`;
+      }).join('');
+      const zero = hasNeg ? `<div style="position:absolute;left:0;right:0;bottom:${base}%;border-top:1px solid #9aa0a6"></div>` : '';
+      return `<div class="card-f"><div class="h">${b.h}</div><div class="cols">${zero}${cols}</div><div class="cols-x">${b.labels.map(l => `<span>${l}</span>`).join('')}</div><div class="legend">${b.legend.map(([c, l]) => `<span><b class="${c}"></b>${l}</span>`).join('')}</div></div>`;
+    },
+    list: b => `<div class="card-f"><div class="h">${b.h}</div>${b.rows.map(([l, v]) => `<div class="row"><span>${l}</span>${cell(v)}</div>`).join('')}</div>`,
+    joule: b => `<div class="joule"><div class="jh"><i></i>Joule</div><div class="msgs">${b.m.map(([w, t]) => `<div class="bub ${w}">${t}</div>`).join('')}</div></div>`
+  };
+  const layout = bl => {
+    // a table/joule or bars/list pair sits side by side; KPI rows always span the width
+    const out = []; let i = 0;
+    while (i < bl.length) {
+      const a = bl[i], n = bl[i + 1];
+      if (n && a.t !== 'kpis' && n.t !== 'kpis' && (n.t === 'joule' || n.t === 'list') && a.t !== 'table') { out.push(`<div class="grid2">${R[a.t](a)}${R[n.t](n)}</div>`); i += 2; }
+      else { out.push(R[a.t](a)); i++; }
+    }
+    return out.join('');
+  };
+
+  const tabs = document.getElementById('mxTabs'), copy = document.getElementById('mxCopy'), apps = document.getElementById('mxApps'), scr = document.getElementById('mxScreen');
+  let mi = 0, si = 0;
+  const drawScreen = () => {
+    const m = M[mi], s = m.screens[si];
+    apps.innerHTML = m.screens.map((x, i) => `<button type="button" role="tab" aria-selected="${i === si}" data-i="${i}"><i>${i + 1}</i>${x.app}</button>`).join('');
+    scr.setAttribute('aria-label', `Illustration of the SAP Fiori app ${s.app}`);
+    scr.innerHTML = `<div class="shell"><span class="sap">SAP</span><span class="t">${s.app}</span><span class="search">Search apps, products, documents…</span><span class="joule-btn"></span><span class="av">${s.av}</span></div><div class="body-pad">${layout(s.b)}</div>`;
+    document.getElementById('mxExplain').innerHTML = `<div class="lab">What you're looking at · ${si + 1} of ${m.screens.length}</div><h4>${s.h}</h4><p>${s.p}</p>`;
+  };
+  const drawModule = () => {
+    const m = M[mi];
+    tabs.querySelectorAll('button').forEach((b, i) => b.setAttribute('aria-selected', String(i === mi)));
+    copy.innerHTML = `<h3>${m.name}</h3><p class="tagline">${m.tag}</p><ul>${m.bullets.map(b => `<li>${b}</li>`).join('')}</ul><div class="explain" id="mxExplain" aria-live="polite"></div><a class="watch" href="https://www.youtube.com/watch?v=${m.video.id}" target="_blank" rel="noopener"><span class="pl"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 1.5v9l7.5-4.5z" fill="#fff"/></svg></span>${m.video.t}</a>`;
+    drawScreen();
+  };
+  tabs.innerHTML = M.map((m, i) => `<button type="button" role="tab" aria-selected="${i === 0}" data-i="${i}">${m.name}</button>`).join('');
+  tabs.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; mi = +b.dataset.i; si = 0; drawModule(); });
+  apps.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; si = +b.dataset.i; drawScreen(); });
+  drawModule();
+})();
+
+/* Video library: official SAP YouTube channel (UCVnIv2xF2wyMMCSKv1qF3pA) only.
+   On the live site, swap each card for a click-to-load YouTube embed (youtube-nocookie.com/embed/ID). */
+(() => {
+  const V = [
+    { id: 'V-HXmIJgMJ8', k: 'start', big: 'Product tour', t: 'SAP S/4HANA Cloud Public Edition: product tour and demo', p: 'A guided walk through the cloud ERP: the start page, core processes and how users work day to day.', d: 'January 2024', feat: true },
+    { id: 'js6GcTp7PWQ', k: 'start', big: 'Why GROW with SAP', t: 'IN FOCUS: the GROW with SAP offering for midmarket companies', p: "SAP's launch conversation on what GROW includes and who it is for.", d: 'March 2023' },
+    { id: 'XAqp54zZ_Ro', k: 'start', big: 'What is GROW?', t: 'What is GROW with SAP? Three questions to Jürgen Röhricht', p: "SAP's head of public cloud for the Middle East and Europe explains the offering.", d: 'May 2023' },
+    { id: '_3PHMlne5cA', k: 'start', big: 'Implementing made easy', t: 'How SAP makes implementing the public cloud easier', p: 'Guided configuration, best practices and the tools that keep projects short.', d: 'April 2023' },
+    { id: 'gqsz8-Hif5Y', k: 'mod', big: 'Finance', t: 'Finance in SAP Cloud ERP 2602', p: 'Release highlights for accounting, close, treasury and receivables.', d: 'January 2026' },
+    { id: 'G-OsHSydMNk', k: 'mod', big: 'Sales', t: 'Sales in SAP Cloud ERP 2602', p: 'Release highlights for quote to cash, pricing and order fulfilment.', d: 'February 2026' },
+    { id: 'FK81eaC2fvI', k: 'mod', big: 'Procurement', t: 'Sourcing and Procurement in release 2502', p: 'Demo of requisitioning, purchasing, invoices and supplier management.', d: 'January 2025' },
+    { id: 'btRK-I9FlAo', k: 'mod', big: 'Manufacturing', t: 'Manufacturing in SAP Cloud ERP 2602', p: 'Release highlights for production planning, execution and quality.', d: 'January 2026' },
+    { id: 'b1sqoqKhvNA', k: 'mod', big: 'Supply chain', t: 'Supply Chain Management in SAP Cloud ERP 2602', p: 'Release highlights for inventory, warehousing and logistics.', d: 'March 2026' },
+    { id: 'p2dYVUexaH4', k: 'mod', big: 'Professional services', t: 'Professional Services in SAP Cloud ERP 2602', p: 'Release highlights for projects, resources, time and billing.', d: 'January 2026' },
+    { id: 'VKK7IiJHguE', k: 'rel', big: "What's new in 2602", t: "What's new in SAP Cloud ERP 2602", p: 'The headline changes in the February 2026 release, across the product.', d: 'January 2026' },
+    { id: 'vzesbl6sOsM', k: 'rel', big: 'AI in Cloud ERP', t: 'AI and next-generation ERP innovations in SAP Cloud ERP 2602', p: 'Joule, AI agents and the AI features added in the release.', d: 'January 2026' }
+  ];
+  const F = [['all', 'All'], ['start', 'Start here'], ['mod', 'By business area'], ['rel', 'Latest release and AI']];
+  const tagName = { start: 'Start here', mod: 'Release highlights', rel: 'Release 2602' };
+  const vf = document.getElementById('vf'), g = document.getElementById('vgrid');
+  let f = 'all';
+  const draw = () => {
+    vf.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.f === f)));
+    const list = V.filter(v => f === 'all' || v.k === f);
+    g.innerHTML = list.map((v, i) => `<a class="vcard${f === 'all' && v.feat ? ' feat' : ''}" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener" data-yt="${v.id}" aria-label="Play on YouTube: ${v.t}">
+      <div class="poster" data-k="${v.k}"><div class="top"><span class="ch"><b>SAP</b>YouTube</span><span class="tag">${tagName[v.k]}</span></div><div class="big">${v.big}</div><span class="play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M5 2.5v13l11-6.5z" fill="#0b2a1f"/></svg></span></div>
+      <div class="vmeta"><h3>${v.t}</h3><p>${v.p}</p><span class="d">SAP · ${v.d}</span></div></a>`).join('');
+  };
+  vf.innerHTML = F.map(([k, l]) => `<button type="button" data-f="${k}" aria-pressed="false">${l}<span>${k === 'all' ? V.length : V.filter(v => v.k === k).length}</span></button>`).join('');
+  vf.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; f = b.dataset.f; draw(); });
+  draw();
+})();
+</script>
+
+</body></html>

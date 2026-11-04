@@ -1,0 +1,725 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Rollouts &amp; Localisation | Mawkish</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Mawkish dark site, full-width bands; each band pairs copy with a drawn SAP Fiori-style screen */
+:root {
+  --bg: #050807;
+  --bg-2: #0a110e;
+  --line: #1c2823;
+  --fg: #eef3f0;
+  --muted: #9aaaa2;
+  --green: #1f7a5a;
+  --green-hi: #34b386;
+  --paper: #f3f6f4;
+  --ink: #142019;
+  --ink-soft: #5c6c65;
+  --fiori: #0a6ed1;
+  --fiori-bg: #f5f6f7;
+  --warn: #e9730c;
+  --display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.in { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 88px; border-top: 1px solid var(--line); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 19px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 16px; display: block; }
+.lede { color: var(--muted); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border: 1px solid transparent; }
+.btn.pri { background: var(--green); color: #fff; }
+.btn.pri:hover { background: #24906a; }
+.btn.sec { border-color: #2c3d36; color: var(--fg); }
+.btn.sec:hover { border-color: var(--green-hi); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
+
+/* header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(5,8,7,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.site .in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; flex-direction: column; align-items: center; font-weight: 800; letter-spacing: .3em; font-size: 9px; color: var(--fg); text-decoration: none; }
+.logo svg { width: 54px; height: 26px; }
+.nav { display: flex; gap: 26px; align-items: center; }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 700; font-size: 12.5px; letter-spacing: .07em; }
+.nav a.on { color: var(--green-hi); }
+.nav .btn { padding: 12px 18px; }
+@media (max-width: 900px) { .nav a:not(.btn) { display: none; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 56px 88px; background: radial-gradient(900px 420px at 80% 10%, rgba(31,122,90,.22), transparent 70%); }
+.crumbs { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 em { font-style: normal; color: var(--green-hi); }
+.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.name-note { margin-top: 28px; font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--green); padding-left: 14px; max-width: 54ch; }
+.name-note b { color: var(--fg); font-weight: 600; }
+
+/* Fiori mock screens */
+.screen { background: var(--fiori-bg); color: #32363a; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06); font-size: 12px; line-height: 1.4; min-width: 0; }
+.shell { background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; gap: 12px; padding: 9px 14px; }
+.shell .sap { background: linear-gradient(135deg,#0a6ed1,#0854a0); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 7px; border-radius: 3px; letter-spacing: .02em; }
+.shell .t { font-weight: 600; color: #32363a; flex: 1; }
+.shell .search { flex: 1.4; background: #eff1f2; border-radius: 16px; height: 24px; display: flex; align-items: center; padding: 0 10px; color: #8b9196; font-size: 11px; }
+.shell .joule-btn { width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); }
+.shell .av { width: 24px; height: 24px; border-radius: 50%; background: #d1e8ff; color: #0a6ed1; font-weight: 700; font-size: 10px; display: grid; place-items: center; }
+.body-pad { padding: 16px; }
+.greet { font-size: 15px; font-weight: 700; color: #1d2d3e; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.tile { background: #fff; border-radius: 10px; padding: 11px 12px; box-shadow: 0 0 0 1px #e5e5e5; min-height: 92px; display: flex; flex-direction: column; justify-content: space-between; }
+.tile .h { font-weight: 600; color: #1d2d3e; font-size: 11.5px; }
+.tile .s { color: #6a6d70; font-size: 10.5px; }
+.tile .k { font-size: 22px; font-weight: 300; color: #0a6ed1; font-variant-numeric: tabular-nums; }
+.tile .k.neg { color: #bb0000; } .tile .k.pos { color: #107e3e; }
+.tile .k small { font-size: 11px; color: #6a6d70; margin-left: 2px; }
+.spark { height: 26px; width: 100%; }
+.split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; margin-top: 10px; }
+.card-f { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; padding: 12px; min-width: 0; }
+.card-f .h { font-weight: 700; font-size: 11.5px; color: #1d2d3e; margin-bottom: 8px; }
+.row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid #eee; font-size: 11px; }
+.row:first-of-type { border-top: 0; }
+.pill { font-size: 9.5px; font-weight: 700; border-radius: 9px; padding: 1px 7px; white-space: nowrap; }
+.pill.ok { background: #f1fdf6; color: #107e3e; box-shadow: inset 0 0 0 1px #c6ecd3; }
+.pill.wr { background: #fef7f1; color: #e9730c; box-shadow: inset 0 0 0 1px #f8d3b0; }
+.pill.in { background: #eef6fe; color: #0a6ed1; box-shadow: inset 0 0 0 1px #c5def7; }
+.joule { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; display: flex; flex-direction: column; min-width: 0; }
+.joule .jh { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid #eee; font-weight: 700; font-size: 11.5px; }
+.joule .jh i { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); display: inline-block; }
+.joule .msgs { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.bub { border-radius: 10px; padding: 7px 9px; font-size: 10.8px; max-width: 92%; }
+.bub.u { align-self: flex-end; background: #0a6ed1; color: #fff; border-bottom-right-radius: 3px; }
+.bub.j { background: #f2f2f7; color: #1d2d3e; border-bottom-left-radius: 3px; }
+.bub.j b { color: #0a6ed1; }
+.typing span { display: inline-block; width: 5px; height: 5px; margin-right: 3px; border-radius: 50%; background: #8b9196; }
+@media (prefers-reduced-motion: no-preference) {
+  .typing span { animation: blink 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
+}
+.caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+/* journey explainer */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.includes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.includes div { background: var(--bg-2); padding: 22px; }
+.includes h3 { font-size: 16px; margin-bottom: 6px; }
+.includes p { color: var(--muted); font-size: 14.5px; }
+.ico { width: 30px; height: 30px; margin-bottom: 12px; color: var(--green-hi); }
+
+/* fit check */
+.fit { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 44px; align-items: start; }
+.qs { display: flex; flex-direction: column; gap: 10px; }
+.q { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.q span { font-size: 15px; min-width: 0; }
+.yn { display: flex; gap: 4px; flex: none; background: #0f1814; border-radius: 9px; padding: 3px; }
+.yn button { font: 700 12px var(--body); letter-spacing: .06em; border: 0; border-radius: 7px; padding: 7px 12px; background: transparent; color: var(--muted); cursor: pointer; }
+.yn button[aria-pressed="true"] { background: var(--green); color: #fff; }
+.yn button.no[aria-pressed="true"] { background: #6b3a12; }
+.result { position: sticky; top: 100px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 28px; }
+.result .lab { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.meter { height: 10px; background: #dde5e1; border-radius: 6px; margin: 14px 0 18px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 6px; transition: width .35s; }
+.result h3 { font-size: 24px; margin-bottom: 10px; }
+.result p { color: var(--ink-soft); font-size: 15px; }
+.result .btn { margin-top: 20px; }
+
+/* capabilities */
+.caps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.cap { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.cap ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+.cap ul li { margin-bottom: 4px; }
+.cap .tagline { color: var(--fg); font-size: 15px; }
+
+/* AI */
+.agents { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.agent { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.agent .n { width: 36px; height: 36px; border-radius: 10px; background: rgba(52,179,134,.12); color: var(--green-hi); display: grid; place-items: center; }
+.agent h3 { font-size: 16px; margin-bottom: 2px; }
+.agent p { color: var(--muted); font-size: 14.5px; }
+.prog { height: 4px; background: #e6e9eb; border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.prog i { display: block; height: 100%; background: #0a6ed1; width: 72%; }
+@media (prefers-reduced-motion: no-preference) {
+  .prog i { animation: load 3.2s ease-in-out infinite alternate; }
+  @keyframes load { from { width: 38% } to { width: 92% } }
+}
+
+/* release timeline */
+.tl { margin-top: 48px; overflow-x: auto; }
+.tl svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.fact { border-top: 2px solid var(--green); padding-top: 14px; }
+.fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 14px; }
+
+/* extensibility */
+.layers { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.layer { display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.layer .who { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--green-hi); padding-top: 3px; }
+.layer h3 { font-size: 16px; margin-bottom: 4px; }
+.layer p { color: var(--muted); font-size: 14.5px; }
+.layer.core { background: var(--paper); color: var(--ink); border-color: transparent; }
+.layer.core .who { color: var(--green); }
+.layer.core p { color: var(--ink-soft); }
+
+/* activate */
+.phases { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ph { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.ph:last-child { border-right: 0; }
+.ph .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.ph h3 { font-size: 17px; }
+.ph p { color: var(--muted); font-size: 13.5px; }
+.ph .we { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--fg); }
+.ph .we b { color: var(--green-hi); font-weight: 700; }
+
+/* users */
+.users { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+.users table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; }
+.users th, .users td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.users th { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.users td:first-child { font-weight: 700; white-space: nowrap; }
+.users td:nth-child(2) { color: var(--muted); }
+.users tr:last-child td { border-bottom: 0; }
+.note { margin-top: 16px; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+/* faq */
+.faq { margin-top: 36px; display: flex; flex-direction: column; gap: 10px; max-width: 860px; }
+details { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 16.5px; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--green-hi); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 18px; max-width: 70ch; }
+
+/* cta */
+.cta-band { background: linear-gradient(120deg, #0e3a2b, #0a1a14 60%); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.cta-band ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cta-band li { display: flex; gap: 10px; font-size: 15px; }
+.cta-band li::before { content: "✓"; color: var(--green-hi); font-weight: 800; }
+footer { padding-block: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+footer .in { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .hero-grid, .two, .fit, .cta-band { grid-template-columns: 1fr; }
+  .caps { grid-template-columns: 1fr 1fr; }
+  .phases { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .ph:nth-child(3) { border-right: 0; }
+  .ph:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .result { position: static; }
+}
+@media (max-width: 620px) {
+  section { padding-block: 64px; }
+  .caps, .includes { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: 1fr; }
+  .ph { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .tiles .tile:nth-child(3) { display: none; }
+  .split { grid-template-columns: 1fr; }
+  .layer { grid-template-columns: 1fr; gap: 6px; }
+  .cta-band { padding: 36px 24px; }
+  .q { flex-direction: column; align-items: flex-start; }
+}
+
+/* light bands: same components, re-tokened */
+section.light { --bg-2: #ffffff; --line: #d9e2dd; --fg: #142019; --muted: #55655e; --green-hi: #17694b; background: #f2f5f3; color: var(--fg); border-top-color: transparent; }
+section.light .includes { background: var(--line); }
+section.light .cap, section.light details { box-shadow: 0 1px 2px rgba(20,32,25,.05); }
+</style>
+<header class="site">
+  <div class="in">
+    <a class="logo" href="#top" aria-label="Mawkish Technologies">
+      <svg viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L20 4 L32 18 L44 4 L62 28 Z" fill="none" stroke="#eef3f0" stroke-width="4" stroke-linejoin="round"/><path d="M20 28 L32 14 L44 28" fill="#eef3f0"/></svg>
+      MAWKISH
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">ABOUT US</a>
+      <a href="#" class="on">OUR SERVICES</a>
+      <a href="#">INDUSTRIES</a>
+      <a href="#">INSIGHTS &amp; PERSPECTIVES</a>
+      <a href="#book" class="btn pri">Schedule a consultation</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+/* Localisation components */
+.part { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 36px; }
+.part a { display: flex; flex-direction: column; gap: 2px; padding: 16px 20px; border-radius: 14px; border: 1px solid #2c3d36; text-decoration: none; color: var(--fg); min-width: 240px; flex: 1; }
+.part a:hover { border-color: var(--green-hi); }
+.part a span { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--green-hi); }
+.part a b { font-family: var(--display); font-size: 18px; }
+.part a small { color: var(--muted); font-size: 13.5px; }
+.divider { border-top: 0; padding-block: 56px 40px; background: linear-gradient(180deg, #0e3a2b, var(--bg)); }
+.divider .in { display: flex; align-items: baseline; gap: 22px; flex-wrap: wrap; }
+.divider .pn { font-family: var(--display); font-size: clamp(52px, 8vw, 96px); font-weight: 800; line-height: .9; color: var(--green-hi); min-width: 1.25em; }
+.divider h2 { font-size: clamp(30px, 4vw, 48px); }
+.divider p { color: var(--muted); max-width: 60ch; margin-top: 10px; }
+.layers2 { display: flex; flex-direction: column; gap: 8px; }
+.ly { border-radius: 14px; padding: 18px 20px; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
+.ly h3 { font-size: 16.5px; }
+.ly p { font-size: 13.5px; margin-top: 2px; }
+.ly .own { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; white-space: nowrap; }
+.ly.l1 { background: #142019; color: #eef3f0; } .ly.l1 p { color: #a9bab2; } .ly.l1 .own { background: #0a6ed1; color: #fff; }
+.ly.l2 { background: #2a3a33; color: #eef3f0; } .ly.l2 p { color: #a9bab2; } .ly.l2 .own { background: #0a6ed1; color: #fff; }
+.ly.l3 { background: var(--green); color: #fff; } .ly.l3 p { color: #d7f0e5; } .ly.l3 .own { background: #fff; color: #17694b; }
+.comp { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 40px; }
+.cc { border: 1px solid var(--line); border-radius: 16px; padding: 22px; background: var(--bg-2); display: flex; flex-direction: column; gap: 10px; }
+.cc .k { font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--green-hi); }
+.cc h3 { font-size: 18px; }
+.cc .facts2 { display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+.cc .facts2 div { display: grid; grid-template-columns: auto 1fr; gap: 10px; border-top: 1px solid var(--line); padding-top: 6px; }
+.cc .facts2 b { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cc .facts2 span { color: var(--muted); }
+.cc .erp { margin-top: auto; font-size: 13.5px; background: rgba(52,179,134,.08); border-radius: 10px; padding: 10px 12px; }
+.cc .erp b { color: var(--green-hi); }
+.cc.hot { border-color: #e9a23b; }
+.cc.hot .k { color: #e9a23b; }
+.ramis { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--bg-2); }
+.ramis svg { min-width: 860px; width: 100%; height: auto; display: block; }
+.inds { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin-top: 40px; }
+.inds .cap h3 { font-size: 17px; }
+.inds .cap p { color: var(--muted); font-size: 14px; }
+.inds .cap ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 13.5px; }
+.pack { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+.pk { display: grid; grid-template-columns: 26px 1fr; gap: 12px; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; background: var(--bg-2); }
+.pk svg { color: var(--green-hi); margin-top: 2px; }
+.pk h3 { font-size: 15px; }
+.pk p { color: var(--muted); font-size: 13px; }
+.tmpl { margin-top: 8px; overflow-x: auto; }
+.tmpl svg { min-width: 560px; width: 100%; height: auto; display: block; }
+.ctry { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; margin-top: 40px; }
+.ctry .panel { border: 1px solid var(--line); border-radius: 16px; padding: 22px; background: var(--bg-2); }
+.ctry h3 { font-size: 17px; margin-bottom: 4px; }
+.ctry .sub { color: var(--muted); font-size: 13.5px; margin-bottom: 14px; }
+.flags { display: flex; flex-wrap: wrap; gap: 6px; }
+.flags span { font-size: 12.5px; font-weight: 600; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--line); }
+.flags span.hl { background: var(--green); color: #fff; border-color: var(--green); }
+.flags span.lk { background: #e9a23b; color: #2b1a00; border-color: #e9a23b; font-weight: 800; }
+.einv { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--bg-2); }
+.einv svg { min-width: 820px; width: 100%; height: auto; display: block; }
+.wave { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 0; margin-top: 40px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.wave > div { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.wave > div:last-child { border-right: 0; }
+.wave .st2 { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.wave h3 { font-size: 16.5px; }
+.wave p { color: var(--muted); font-size: 13.5px; }
+.srcs { margin-top: 22px; font-size: 12.5px; color: var(--muted); line-height: 1.7; }
+.srcs a { color: var(--muted); }
+@media (max-width: 1080px) { .comp { grid-template-columns: 1fr 1fr; } .inds { grid-template-columns: 1fr 1fr; } .wave { grid-template-columns: 1fr 1fr; } .wave > div { border-bottom: 1px solid var(--line); } }
+@media (max-width: 760px) { .pack, .ctry { grid-template-columns: 1fr; } }
+@media (max-width: 620px) { .comp, .inds, .wave { grid-template-columns: 1fr; } .wave > div { border-right: 0; } .ly { grid-template-columns: 1fr; } }
+</style>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="in">
+      <div class="crumbs"><a href="#">Services</a> / <a href="#">SAP Solutions</a> / Rollouts &amp; Localisation</div>
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Rollouts &amp; Localisation</span>
+          <h1>Local where it matters. <em>Global where you grow.</em></h1>
+          <p class="lede">Every country has its own tax, invoicing, payroll, banking and reporting rules. Your SAP system has to follow them without turning into a different system in each country. We localise SAP for Sri Lanka in depth, and we roll out one global template to every market you operate in.</p>
+          <div class="part">
+            <a href="#lk"><span>Part 1</span><b>Built for Sri Lanka</b><small>VAT, RAMIS, WHT, payroll, banking, tea and apparel</small></a>
+            <a href="#global"><span>Part 2</span><b>Ready for every country</b><small>Global templates, SAP local versions, e-invoicing</small></a>
+          </div>
+        </div>
+
+        <figure style="margin:0">
+          <div class="screen" role="img" aria-label="Illustration of a multi-country rollout plan with entities in Sri Lanka, India, the UAE and the Maldives, their localisation basis and go-live waves">
+            <div class="shell"><span class="sap" style="background:#1f7a5a">MK</span><span class="t">Global rollout · 4 countries, 7 companies</span><span class="av">MK</span></div>
+            <div class="body-pad">
+              <div class="tiles">
+                <div class="tile"><div><div class="h">Global template</div><div class="s">Shared processes</div></div><div class="k pos">86<small>%</small></div></div>
+                <div class="tile"><div><div class="h">Local requirements</div><div class="s">Across all countries</div></div><div class="k">64</div></div>
+                <div class="tile"><div><div class="h">E-invoicing links</div><div class="s">Live or planned</div></div><div class="k">3</div></div>
+              </div>
+              <div class="card-f" style="margin-top:10px">
+                <div class="h">Rollout waves</div>
+                <div class="row"><span>Sri Lanka · 3 companies · RAMIS VAT API</span><span class="pill ok">Wave 1 · Live</span></div>
+                <div class="row"><span>India · 2 companies · SAP local version</span><span class="pill in">Wave 2</span></div>
+                <div class="row"><span>UAE · 1 company · SAP local version</span><span class="pill in">Wave 2</span></div>
+                <div class="row"><span>Maldives · 1 company · template-based</span><span class="pill wr">Wave 3</span></div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="caption">Illustration of a group rollout plan. Sample data.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- PART 1 DIVIDER -->
+  <section class="divider" id="lk">
+    <div class="in">
+      <span class="pn">01</span>
+      <div><span class="eyebrow">Part 1</span><h2>Built for Sri Lanka.</h2><p>Sri Lanka's tax rules have changed more in the last three years than in the decade before. Here's what your SAP system has to handle today, and how we make it do so.</p></div>
+    </div>
+  </section>
+
+  <!-- STARTING POINT -->
+  <section class="light">
+    <div class="in two">
+      <div>
+        <span class="eyebrow">The honest starting point</span>
+        <h2>SAP doesn't ship a Sri Lanka version. That's where we come in.</h2>
+        <p class="lede">SAP provides ready-made local versions of its cloud ERP for about 60 countries, with tax, legal reporting and payment formats maintained by SAP. Sri Lanka isn't one of them, and neither are Bangladesh, Pakistan or the Maldives.</p>
+        <p class="lede">SAP Cloud ERP still runs in Sri Lanka. It's set up from a template country's settings, with a Sri Lanka layer built on top. But SAP doesn't keep that layer up to date when the rules change. Whoever builds it has to maintain it. So you need a partner who reads every IRD notice, not one who learns about them at year-end.</p>
+      </div>
+      <div class="layers2">
+        <div class="ly l1"><div><h3>SAP Cloud ERP core</h3><p>Processes, finance, supply chain, AI. Identical everywhere.</p></div><span class="own">Maintained by SAP</span></div>
+        <div class="ly l2"><div><h3>Template country settings</h3><p>Base tax and reporting framework, copied from a supported country.</p></div><span class="own">Maintained by SAP</span></div>
+        <div class="ly l3"><div><h3>Sri Lanka layer</h3><p>VAT and SSCL, RAMIS integration, WHT, invoice forms, bank files, statutory reports, payroll links.</p></div><span class="own">Built and kept current by Mawkish</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPLIANCE MAP -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">The Sri Lanka compliance map</span>
+      <h2>What your ERP has to handle in 2026.</h2>
+      <p class="lede">Current rules as of October 2026, with what each one means for your SAP system. Rates and thresholds change with budgets and IRD circulars, so this is the starting point for a project, not tax advice.</p>
+      <div class="comp">
+        <div class="cc hot">
+          <span class="k">New · VAT e-invoicing</span><h3>RAMIS VAT Web API</h3>
+          <div class="facts2">
+            <div><b>Real time</b><span>Invoice data sent from your ERP to the IRD's RAMIS system</span></div>
+            <div><b>Phase 1</b><span>Export-oriented VAT registrants: garment and tea exporters, tea manufacturers through brokers</span></div>
+            <div><b>Phase 2</b><span>All VAT-registered businesses. Full integration expected by end of 2026</span></div>
+          </div>
+          <p class="erp"><b>In SAP:</b> an API link from billing to RAMIS, with monitoring and resubmission. Submitted invoices can't be edited, so corrections must go through credit and debit notes.</p>
+        </div>
+        <div class="cc">
+          <span class="k">Indirect tax</span><h3>VAT</h3>
+          <div class="facts2">
+            <div><b>18%</b><span>Standard rate since January 2024</span></div>
+            <div><b>LKR 60m</b><span>Annual registration threshold, with LKR 36m proposed from July 2026</span></div>
+            <div><b>Schedules</b><span>Output, input, zero-rated, credit and debit notes, imports and exports</span></div>
+          </div>
+          <p class="erp"><b>In SAP:</b> tax codes and determination rules, compliant tax invoice and credit note layouts, and VAT return schedules generated from postings.</p>
+        </div>
+        <div class="cc hot">
+          <span class="k">Changed · Exporters</span><h3>SVAT has ended</h3>
+          <div class="facts2">
+            <div><b>1 Oct 2025</b><span>SVAT repealed. Registrations moved to standard VAT</span></div>
+            <div><b>No vouchers</b><span>Suppliers to exporters now issue standard VAT invoices</span></div>
+            <div><b>Refunds</b><span>Exporters recover input VAT through a refund process</span></div>
+          </div>
+          <p class="erp"><b>In SAP:</b> SVAT voucher logic removed, input VAT refund claims tracked, and the cash-flow impact visible in treasury.</p>
+        </div>
+        <div class="cc">
+          <span class="k">Turnover levy</span><h3>SSCL</h3>
+          <div class="facts2">
+            <div><b>2.5%</b><span>Social Security Contribution Levy on liable turnover</span></div>
+            <div><b>2026</b><span>Financial services exempted from January 2026</span></div>
+          </div>
+          <p class="erp"><b>In SAP:</b> SSCL calculated on liable turnover from billing data, with postings and a reconciliation report for the quarterly return.</p>
+        </div>
+        <div class="cc">
+          <span class="k">Withholding</span><h3>WHT and AIT</h3>
+          <div class="facts2">
+            <div><b>5%</b><span>Service fees to residents above LKR 100,000 a month</span></div>
+            <div><b>10%</b><span>Interest, and rent above LKR 100,000 a month</span></div>
+            <div><b>15%</b><span>Dividends</span></div>
+            <div><b>14%</b><span>Most payments to non-residents</span></div>
+          </div>
+          <p class="erp"><b>In SAP:</b> withholding codes on supplier payments, monthly thresholds tracked, certificates issued and remittance reports. Updated for the June 2026 IRD circular.</p>
+        </div>
+        <div class="cc">
+          <span class="k">People</span><h3>Payroll and statutory funds</h3>
+          <div class="facts2">
+            <div><b>8% / 12%</b><span>EPF, employee and employer</span></div>
+            <div><b>3%</b><span>ETF, employer</span></div>
+            <div><b>APIT</b><span>PAYE tax on IRD tables, due on the 15th</span></div>
+            <div><b>Rs 30,000</b><span>Minimum monthly wage from January 2026</span></div>
+          </div>
+          <p class="erp"><b>In SAP:</b> payroll runs in a local HCM system such as MiHCM, with postings and cost allocation flowing into SAP finance automatically.</p>
+        </div>
+        <div class="cc">
+          <span class="k">Banking</span><h3>Payments and collections</h3>
+          <div class="facts2">
+            <div><b>CEFTS</b><span>LankaPay real-time transfers</span></div>
+            <div><b>SLIPS</b><span>Bulk payments such as supplier runs and salaries</span></div>
+            <div><b>RTGS</b><span>High-value payments through the Central Bank</span></div>
+          </div>
+          <p class="erp"><b>In SAP:</b> payment files in each bank's format, or direct bank connectivity, plus bank statement import for automatic reconciliation.</p>
+        </div>
+        <div class="cc">
+          <span class="k">Reporting</span><h3>SLFRS and the tax year</h3>
+          <div class="facts2">
+            <div><b>SLFRS</b><span>Sri Lanka Accounting Standards, converged with IFRS</span></div>
+            <div><b>Apr–Mar</b><span>Tax year, often also the financial year</span></div>
+            <div><b>LKR + USD</b><span>Many exporters also report or price in US dollars</span></div>
+          </div>
+          <p class="erp"><b>In SAP:</b> the fiscal year and ledgers are fixed at setup and can't be changed later. We settle April–March versus calendar year, and group currency, in week one.</p>
+        </div>
+        <div class="cc">
+          <span class="k">Trade</span><h3>Customs and BOI</h3>
+          <div class="facts2">
+            <div><b>Customs</b><span>Import and export declarations, duties and cess</span></div>
+            <div><b>BOI</b><span>Board of Investment enterprises with special tax terms</span></div>
+            <div><b>Coming</b><span>RAMIS to prefill import and export schedules from Customs data</span></div>
+          </div>
+          <p class="erp"><b>In SAP:</b> landed cost on imports, duty and cess accruals, and export documents matched to Customs data for VAT reconciliation.</p>
+        </div>
+      </div>
+      <p class="srcs">Sources: IRD notice SEC/PN/VAT/2026-03 on VAT Web API integration (<a href="https://assets.kpmg.com/content/dam/kpmgsites/lk/pdf/kpmg-tax-news/2026/may/Notice-to-the-VAT-Registered-Persons-VAT-Invoice-Data-Integration.pdf">via KPMG Sri Lanka</a>) · <a href="https://regfollower.com/sri-lanka-inland-revenue-announces-end-of-svat-scheme/">End of SVAT</a> · <a href="https://factum.lk/health-and-economic-cooperation/factum-perspectives-sri-lankas-tax-reform-landscape-2026-a-critical-assessment/">VAT and SSCL 2026</a> · <a href="https://regfollower.com/sri-lanka-ird-issues-guidance-on-withholding-tax-deduction/">WHT circular SEC/2026/E/04</a> · <a href="https://mihcm.com/resources/guides/sri-lanka-payroll-guide">Sri Lanka payroll guide (MiHCM)</a>. Confirm current rates with your tax adviser.</p>
+    </div>
+  </section>
+
+  <!-- RAMIS FLOW -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">Deep dive · RAMIS VAT integration</span>
+      <h2>From SAP invoice to matched VAT record, in real time.</h2>
+      <p class="lede">The IRD's VAT Web API changes how VAT works in Sri Lanka. Your sales invoices are reported as you issue them, and your customers approve them in RAMIS before they can claim input tax. Errors can no longer be quietly fixed at month-end. Here's how it works with SAP.</p>
+      <div class="ramis">
+        <svg viewBox="0 0 1000 270" role="img" aria-label="Flow: an invoice is created in SAP billing; an API connector validates and sends it to RAMIS in real time; RAMIS records it on the supplier's VAT schedules; the customer reviews and approves the record in RAMIS e-Service, which changes it to Matched; the customer can then claim input tax. Corrections are made with credit or debit notes, which follow the same path.">
+          <g font-family="Manrope, sans-serif">
+            <rect x="20" y="40" width="190" height="96" rx="14" fill="#1f7a5a"/>
+            <text x="40" y="74" font-size="15" font-weight="800" fill="#fff">SAP billing</text>
+            <text x="40" y="96" font-size="12.5" fill="#d7f0e5">Invoice, credit or</text>
+            <text x="40" y="114" font-size="12.5" fill="#d7f0e5">debit note posted</text>
+            <path d="M214 88 H262" stroke="#55655e" stroke-width="2"/><path d="M254 82 l8 6 -8 6" fill="none" stroke="#55655e" stroke-width="2"/>
+            <rect x="268" y="40" width="190" height="96" rx="14" fill="#ffffff" stroke="#d9e2dd"/>
+            <text x="288" y="74" font-size="15" font-weight="800" fill="#142019">API connector</text>
+            <text x="288" y="96" font-size="12.5" fill="#55655e">Validates TINs and fields,</text>
+            <text x="288" y="114" font-size="12.5" fill="#55655e">sends, logs, retries</text>
+            <path d="M462 88 H510" stroke="#55655e" stroke-width="2"/><path d="M502 82 l8 6 -8 6" fill="none" stroke="#55655e" stroke-width="2"/>
+            <rect x="516" y="40" width="190" height="96" rx="14" fill="#142019"/>
+            <text x="536" y="74" font-size="15" font-weight="800" fill="#eef3f0">IRD RAMIS</text>
+            <text x="536" y="96" font-size="12.5" fill="#a9bab2">Records on supplier's</text>
+            <text x="536" y="114" font-size="12.5" fill="#a9bab2">VAT schedules</text>
+            <path d="M710 88 H758" stroke="#55655e" stroke-width="2"/><path d="M750 82 l8 6 -8 6" fill="none" stroke="#55655e" stroke-width="2"/>
+            <rect x="764" y="40" width="216" height="96" rx="14" fill="#ffffff" stroke="#d9e2dd"/>
+            <text x="784" y="74" font-size="15" font-weight="800" fill="#142019">Your customer</text>
+            <text x="784" y="96" font-size="12.5" fill="#55655e">Approves in RAMIS e-Service,</text>
+            <text x="784" y="114" font-size="12.5" fill="#55655e">status becomes Matched</text>
+            <path d="M872 140 V176" stroke="#55655e" stroke-width="2"/><path d="M866 168 l6 8 6 -8" fill="none" stroke="#55655e" stroke-width="2"/>
+            <rect x="764" y="182" width="216" height="60" rx="12" fill="#e3f3eb"/>
+            <text x="784" y="210" font-size="13.5" font-weight="800" fill="#17694b">Input tax claimable</text>
+            <text x="784" y="228" font-size="12" fill="#17694b">only on matched records</text>
+            <rect x="20" y="182" width="686" height="60" rx="12" fill="none" stroke="#e9a23b" stroke-dasharray="5 4"/>
+            <text x="40" y="210" font-size="13.5" font-weight="800" fill="#b7791f">No edits or deletions after submission</text>
+            <text x="40" y="228" font-size="12" fill="#55655e">Every correction is a new credit or debit note in SAP, and it travels the same path. Failed records can be uploaded by CSV.</text>
+          </g>
+        </svg>
+      </div>
+      <div class="facts" style="margin-top:32px">
+        <div class="fact"><b>1 May 2026</b><span>Tea brokers begin sending Colombo Tea Auction invoices</span></div>
+        <div class="fact"><b>Phase 1</b><span>Export-oriented enterprises, including garment and tea exporters</span></div>
+        <div class="fact"><b>End 2026</b><span>Full integration expected for all VAT registrants</span></div>
+        <div class="fact"><b>5,000</b><span>Records a buyer can approve at once in RAMIS</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INDUSTRIES -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">Sri Lankan industries</span>
+      <h2>Localisation goes deeper than tax.</h2>
+      <p class="lede">The businesses that drive Sri Lanka's economy run processes you won't find in a generic template. We build on SAP's standard and adapt it to how these industries actually work here.</p>
+      <div class="inds">
+        <div class="cap"><h3>Tea</h3><p>From estate to auction to export.</p><ul><li>Grades, lots and batch traceability</li><li>Colombo Tea Auction sales and broker settlement</li><li>Broker invoice data now flows to RAMIS</li><li>Export documents and multi-currency pricing</li></ul></div>
+        <div class="cap"><h3>Apparel and textiles</h3><p>Export manufacturing on tight margins.</p><ul><li>Style, colour and size variants</li><li>Subcontracting and cut-make-trim</li><li>Fabric imports at 18% VAT since April 2026</li><li>BOI terms and export VAT refunds</li></ul></div>
+        <div class="cap"><h3>Diversified conglomerates</h3><p>Many businesses, one group.</p><ul><li>Dozens of companies in one system</li><li>Intercompany trading and eliminations</li><li>Group reporting under SLFRS</li><li>Shared services for finance and procurement</li></ul></div>
+        <div class="cap"><h3>Manufacturing and distribution</h3><p>Building materials, beverages, consumer goods.</p><ul><li>Island-wide distributor and route sales</li><li>Production planning and quality</li><li>Trade promotions and rebates</li><li>Landed cost on imported materials</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PACK -->
+  <section class="light">
+    <div class="in two">
+      <div>
+        <span class="eyebrow">What we deliver</span>
+        <h2>The Sri Lanka layer, built and kept current.</h2>
+        <p class="lede">Every Mawkish SAP project in Sri Lanka includes the localisation below, configured and tested against your own transactions. Because SAP doesn't maintain it, we do. When an IRD circular or a budget changes a rate or a form, we update your system.</p>
+        <p class="lede">The July 2026 VAT amendments are a good example. A lower registration threshold and a new rate for financial services both needed system changes, not just a memo.</p>
+      </div>
+      <div class="pack">
+        <div class="pk"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg><div><h3>VAT and SSCL setup</h3><p>Tax codes, determination rules and return schedules.</p></div></div>
+        <div class="pk"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg><div><h3>RAMIS VAT API link</h3><p>Real-time submission, monitoring and resubmission.</p></div></div>
+        <div class="pk"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg><div><h3>Tax invoice forms</h3><p>Compliant invoice, credit and debit note layouts.</p></div></div>
+        <div class="pk"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg><div><h3>Withholding tax</h3><p>WHT and AIT codes, thresholds, certificates, remittances.</p></div></div>
+        <div class="pk"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg><div><h3>Bank payment files</h3><p>Formats for leading Sri Lankan banks, plus statement import.</p></div></div>
+        <div class="pk"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg><div><h3>SLFRS chart of accounts</h3><p>Structured for statutory and management reporting.</p></div></div>
+        <div class="pk"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg><div><h3>Payroll integration</h3><p>Postings from your HCM system, such as MiHCM, into finance.</p></div></div>
+        <div class="pk"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4 4 8-8"/></svg><div><h3>Regulatory watch</h3><p>IRD, CBSL and budget changes tracked and applied.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PART 2 DIVIDER -->
+  <section class="divider" id="global">
+    <div class="in">
+      <span class="pn">02</span>
+      <div><span class="eyebrow">Part 2</span><h2>Ready for every country you operate in.</h2><p>Many of our clients start in Sri Lanka and grow into India, the Middle East and beyond. The method that makes Sri Lanka work is the same one we use to roll SAP out across borders.</p></div>
+    </div>
+  </section>
+
+  <!-- TEMPLATE -->
+  <section class="light">
+    <div class="in two">
+      <div>
+        <span class="eyebrow">The global template</span>
+        <h2>Design once. Localise each country. Roll out in waves.</h2>
+        <p class="lede">A global template is your group's way of working in SAP: one chart of accounts, one set of processes, one set of reports. Each country adds only what its law requires, such as local tax, invoicing, banking and statutory reports. Nothing else changes from one country to the next.</p>
+        <p class="lede">The result is a group that closes the books the same way everywhere, shares data without translation, and opens a new country in weeks instead of months.</p>
+      </div>
+      <div class="tmpl">
+        <svg viewBox="0 0 560 330" role="img" aria-label="Global template diagram: a shared global template covering processes, chart of accounts, master data, reporting and integrations sits above country layers for Sri Lanka, India, UAE and further countries, each adding tax, e-invoicing, banking and statutory reports.">
+          <g font-family="Manrope, sans-serif">
+            <rect x="10" y="10" width="540" height="150" rx="16" fill="#142019"/>
+            <text x="32" y="44" font-size="16" font-weight="800" fill="#eef3f0">Global template</text>
+            <text x="32" y="66" font-size="12.5" fill="#a9bab2">Shared by every company, everywhere</text>
+            <g font-size="12" font-weight="700">
+              <rect x="32" y="84" width="150" height="28" rx="7" fill="#2a3a33"/><text x="44" y="103" fill="#eef3f0">Processes</text>
+              <rect x="192" y="84" width="150" height="28" rx="7" fill="#2a3a33"/><text x="204" y="103" fill="#eef3f0">Chart of accounts</text>
+              <rect x="352" y="84" width="176" height="28" rx="7" fill="#2a3a33"/><text x="364" y="103" fill="#eef3f0">Master data rules</text>
+              <rect x="32" y="118" width="150" height="28" rx="7" fill="#2a3a33"/><text x="44" y="137" fill="#eef3f0">Roles</text>
+              <rect x="192" y="118" width="150" height="28" rx="7" fill="#2a3a33"/><text x="204" y="137" fill="#eef3f0">Group reporting</text>
+              <rect x="352" y="118" width="176" height="28" rx="7" fill="#2a3a33"/><text x="364" y="137" fill="#eef3f0">Integrations</text>
+            </g>
+            <path d="M80 164 V188 M210 164 V188 M340 164 V188 M470 164 V188" stroke="#55655e" stroke-width="2"/>
+            <rect x="10" y="192" width="130" height="128" rx="14" fill="#e9a23b"/>
+            <text x="24" y="222" font-size="14" font-weight="800" fill="#2b1a00">Sri Lanka</text>
+            <text x="24" y="244" font-size="11.5" fill="#2b1a00">VAT, SSCL</text><text x="24" y="262" font-size="11.5" fill="#2b1a00">RAMIS API</text><text x="24" y="280" font-size="11.5" fill="#2b1a00">WHT, banks</text><text x="24" y="298" font-size="11.5" font-weight="800" fill="#2b1a00">Mawkish layer</text>
+            <rect x="146" y="192" width="130" height="128" rx="14" fill="#1f7a5a"/>
+            <text x="160" y="222" font-size="14" font-weight="800" fill="#fff">India</text>
+            <text x="160" y="244" font-size="11.5" fill="#d7f0e5">GST, TDS</text><text x="160" y="262" font-size="11.5" fill="#d7f0e5">E-invoice, e-way bill</text><text x="160" y="280" font-size="11.5" fill="#d7f0e5">Local banks</text><text x="160" y="298" font-size="11.5" font-weight="800" fill="#fff">SAP local version</text>
+            <rect x="282" y="192" width="130" height="128" rx="14" fill="#1f7a5a"/>
+            <text x="296" y="222" font-size="14" font-weight="800" fill="#fff">UAE</text>
+            <text x="296" y="244" font-size="11.5" fill="#d7f0e5">VAT, corporate tax</text><text x="296" y="262" font-size="11.5" fill="#d7f0e5">E-invoicing 2027</text><text x="296" y="280" font-size="11.5" fill="#d7f0e5">WPS payroll</text><text x="296" y="298" font-size="11.5" font-weight="800" fill="#fff">SAP local version</text>
+            <rect x="418" y="192" width="132" height="128" rx="14" fill="none" stroke="#9aaaa2" stroke-dasharray="5 4"/>
+            <text x="432" y="222" font-size="14" font-weight="800" style="fill:var(--fg)">Next country</text>
+            <text x="432" y="244" font-size="11.5" style="fill:var(--muted)">Local tax</text><text x="432" y="262" font-size="11.5" style="fill:var(--muted)">E-invoicing</text><text x="432" y="280" font-size="11.5" style="fill:var(--muted)">Banking, reports</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- COUNTRIES -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">Country coverage</span>
+      <h2>Two kinds of country, one approach.</h2>
+      <p class="lede">In about 60 countries, SAP maintains the local version itself, and we configure and connect it. Everywhere else, we build the local layer the way we do for Sri Lanka. Either way, the global template stays the same.</p>
+      <div class="ctry">
+        <div class="panel">
+          <h3>SAP local versions</h3>
+          <p class="sub">SAP maintains tax, legal reporting and formats. Highlighted: markets near our clients.</p>
+          <div class="flags">
+            <span class="hl">India</span><span class="hl">United Arab Emirates</span><span class="hl">Saudi Arabia</span><span class="hl">Qatar</span><span class="hl">Oman</span><span class="hl">Kuwait</span><span class="hl">Singapore</span><span class="hl">Malaysia</span><span class="hl">Thailand</span><span class="hl">Vietnam</span><span class="hl">Indonesia</span><span class="hl">Philippines</span><span class="hl">Australia</span><span>United Kingdom</span><span>United States</span><span>Germany</span><span>France</span><span>Netherlands</span><span>Japan</span><span>China</span><span>South Africa</span><span>Egypt</span><span>+ around 40 more</span>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Template plus local layer</h3>
+          <p class="sub">Built from a template country, with the local layer owned by the partner.</p>
+          <div class="flags">
+            <span class="lk">Sri Lanka</span><span>Maldives</span><span>Bangladesh</span><span>Pakistan</span><span>Nepal</span><span>Bahrain</span><span>Jordan</span><span>Kenya</span><span>Nigeria</span>
+          </div>
+          <p class="note" style="margin-top:18px">For SAP Cloud ERP Private, country coverage differs. We confirm the options for each country during the assessment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- E-INVOICING -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">E-invoicing across our markets</span>
+      <h2>Every market is moving to real-time tax reporting.</h2>
+      <p class="lede">Governments increasingly want to see invoices as they're issued. SAP Document and Reporting Compliance connects SAP to many of these systems out of the box. For the rest, such as Sri Lanka's RAMIS, we build the connection. Your finance team sees one monitor for all of them.</p>
+      <div class="einv">
+        <svg viewBox="0 0 1000 230" role="img" aria-label="E-invoicing timeline: India already live with e-invoicing and e-way bills; Sri Lanka RAMIS VAT API phase 1 in 2026 with full integration expected by end of 2026; UAE voluntary pilot from July 2026, mandatory for revenue of AED 50 million or more from January 2027 and for others from July 2027.">
+          <g font-family="Manrope, sans-serif">
+            <g font-size="12" font-weight="700" style="fill:var(--muted)">
+              <text x="200" y="26">2025</text><text x="360" y="26">2026 H1</text><text x="520" y="26">2026 H2</text><text x="680" y="26">2027 H1</text><text x="840" y="26">2027 H2</text>
+            </g>
+            <g font-size="14" font-weight="800" style="fill:var(--fg)"><text x="20" y="70">India</text><text x="20" y="130">Sri Lanka</text><text x="20" y="190">UAE</text></g>
+            <rect x="200" y="52" width="780" height="28" rx="7" fill="#1f7a5a"/><text x="212" y="71" font-size="12" font-weight="700" fill="#fff">Live: GST e-invoicing and e-way bills, through SAP's India local version</text>
+            <rect x="420" y="112" width="160" height="28" rx="7" fill="#e9a23b"/><text x="430" y="131" font-size="12" font-weight="700" fill="#2b1a00">Phase 1: exporters</text>
+            <rect x="584" y="112" width="396" height="28" rx="7" fill="#b7791f"/><text x="596" y="131" font-size="12" font-weight="700" fill="#fff">Phase 2: all VAT-registered · full by end 2026</text>
+            <rect x="520" y="172" width="160" height="28" rx="7" fill="#b7e1cf"/><text x="530" y="191" font-size="12" font-weight="700" fill="#0f2a1f">Voluntary pilot</text>
+            <rect x="684" y="172" width="156" height="28" rx="7" fill="#2f9e76"/><text x="694" y="191" font-size="12" font-weight="700" fill="#fff">AED 50m+ revenue</text>
+            <rect x="844" y="172" width="136" height="28" rx="7" fill="#17694b"/><text x="854" y="191" font-size="12" font-weight="700" fill="#fff">All businesses</text>
+          </g>
+        </svg>
+      </div>
+      <p class="srcs">UAE timeline per Ministerial Decision 244 of 2025 (<a href="https://kpmg.com/us/en/taxnewsflash/news/2025/10/uae-framework-scope-implementation-e-invoicing-system.html">KPMG</a>). Sri Lanka per IRD notice SEC/PN/VAT/2026-03. Bar lengths are approximate.</p>
+    </div>
+  </section>
+
+  <!-- ROLLOUT -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">The rollout playbook</span>
+      <h2>Each new country is faster than the last.</h2>
+      <p class="lede">After the first country, a rollout reuses the template, the test library and the training material. The work narrows to what's actually local. SAP's parallel project line lets us build the next country without disturbing the ones already live.</p>
+      <div class="wave">
+        <div><span class="st2">Step 1</span><h3>Country assessment</h3><p>Legal entities, tax registrations, e-invoicing, banking, payroll and statutory reports.</p></div>
+        <div><span class="st2">Step 2</span><h3>Local fit-gap</h3><p>Template processes reviewed with local teams. Only legal or business-critical differences are added.</p></div>
+        <div><span class="st2">Step 3</span><h3>Build the local layer</h3><p>Tax, forms, bank formats, integrations and reports, built in a parallel project line.</p></div>
+        <div><span class="st2">Step 4</span><h3>Test and migrate</h3><p>The template test library plus local test cases. Local data loaded and reconciled.</p></div>
+        <div><span class="st2">Step 5</span><h3>Go live and support</h3><p>Cutover, local hypercare, then the same support desk as every other country.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">Questions we hear</span>
+      <h2>Straight answers.</h2>
+      <div class="faq">
+        <details><summary>Can SAP Cloud ERP really run a Sri Lankan company?</summary><p>Yes. SAP doesn't provide a ready-made Sri Lanka version, but the system is configured from a template country and a Sri Lanka layer is added for VAT, SSCL, withholding tax, RAMIS integration, invoice formats and bank files. The difference is who maintains that layer: in Sri Lanka, it's your partner, not SAP.</p></details>
+        <details><summary>What happens when the IRD changes a rate or a rule?</summary><p>We track IRD notices, circulars and budget changes, assess the impact on your system, and apply the change before it takes effect. Most rate changes are configuration. Changes to schedules or the RAMIS API may need a small development, which we plan with you.</p></details>
+        <details><summary>Do we have to connect to RAMIS?</summary><p>The IRD is rolling out the VAT Web API in phases, starting with export-oriented businesses and expecting full integration by the end of 2026. Records can also be uploaded by CSV, but an ERP integration is the only practical option at volume. We build it as part of the project.</p></details>
+        <details><summary>We export in US dollars. Can SAP handle LKR and USD?</summary><p>Yes. SAP keeps several currencies on every posting: transaction, company and group currency. We decide early which currency each company reports in, because group currency is one of the settings that can't be changed later.</p></details>
+        <details><summary>Do you only work in Sri Lanka?</summary><p>No. We're based in Colombo and serve clients in Sri Lanka, India, the UAE and beyond. Many projects start with a Sri Lankan head office and roll out to subsidiaries abroad. The global template approach is designed for exactly that.</p></details>
+        <details><summary>How long does it take to add a country?</summary><p>Once the template is live, a new country in SAP's local-version list typically takes a few months, depending on scope and integrations. Countries that need a local layer built take longer the first time, and less after that.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="book">
+    <div class="in">
+      <div class="cta-band">
+        <div>
+          <span class="eyebrow">Start here</span>
+          <h2>Compliant in Colombo. Consistent everywhere else.</h2>
+          <p class="lede">Tell us which countries you operate in today and where you're heading. We'll map the local requirements, the template and the rollout sequence.</p>
+          <div style="margin-top:28px"><a href="#" class="btn pri">Plan your rollout →</a></div>
+        </div>
+        <ul>
+          <li>Sri Lanka layer: VAT, SSCL, WHT, RAMIS</li>
+          <li>Kept current with every IRD change</li>
+          <li>One global template for the whole group</li>
+          <li>SAP local versions in about 60 countries</li>
+          <li>E-invoicing monitored in one place</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="in"><span>© Mawkish Technologies · Colombo, Sri Lanka</span><span>SAP and SAP Cloud ERP are trademarks of SAP SE. Tax information is general and not tax advice. Screens shown are illustrations.</span></div>
+</footer>
+
+</body></html>

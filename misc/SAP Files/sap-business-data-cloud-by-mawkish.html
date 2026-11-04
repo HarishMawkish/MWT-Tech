@@ -1,0 +1,1224 @@
+<title>SAP Business Data Cloud | Mawkish</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Mawkish dark site, full-width bands; each band pairs copy with a drawn SAP Fiori-style screen */
+:root {
+  --bg: #050807;
+  --bg-2: #0a110e;
+  --line: #1c2823;
+  --fg: #eef3f0;
+  --muted: #9aaaa2;
+  --green: #1f7a5a;
+  --green-hi: #34b386;
+  --paper: #f3f6f4;
+  --ink: #142019;
+  --ink-soft: #5c6c65;
+  --fiori: #0a6ed1;
+  --fiori-bg: #f5f6f7;
+  --warn: #e9730c;
+  --display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.in { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 88px; border-top: 1px solid var(--line); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 19px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 16px; display: block; }
+.lede { color: var(--muted); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border: 1px solid transparent; }
+.btn.pri { background: var(--green); color: #fff; }
+.btn.pri:hover { background: #24906a; }
+.btn.sec { border-color: #2c3d36; color: var(--fg); }
+.btn.sec:hover { border-color: var(--green-hi); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
+
+/* header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(5,8,7,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.site .in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; flex-direction: column; align-items: center; font-weight: 800; letter-spacing: .3em; font-size: 9px; color: var(--fg); text-decoration: none; }
+.logo svg { width: 54px; height: 26px; }
+.nav { display: flex; gap: 26px; align-items: center; }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 700; font-size: 12.5px; letter-spacing: .07em; }
+.nav a.on { color: var(--green-hi); }
+.nav .btn { padding: 12px 18px; }
+@media (max-width: 900px) { .nav a:not(.btn) { display: none; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 56px 88px; background: radial-gradient(900px 420px at 80% 10%, rgba(31,122,90,.22), transparent 70%); }
+.crumbs { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 em { font-style: normal; color: var(--green-hi); }
+.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.name-note { margin-top: 28px; font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--green); padding-left: 14px; max-width: 54ch; }
+.name-note b { color: var(--fg); font-weight: 600; }
+
+/* Fiori mock screens */
+.screen { background: var(--fiori-bg); color: #32363a; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06); font-size: 12px; line-height: 1.4; min-width: 0; }
+.shell { background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; gap: 12px; padding: 9px 14px; }
+.shell .sap { background: linear-gradient(135deg,#0a6ed1,#0854a0); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 7px; border-radius: 3px; letter-spacing: .02em; }
+.shell .t { font-weight: 600; color: #32363a; flex: 1; }
+.shell .search { flex: 1.4; background: #eff1f2; border-radius: 16px; height: 24px; display: flex; align-items: center; padding: 0 10px; color: #8b9196; font-size: 11px; }
+.shell .joule-btn { width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); }
+.shell .av { width: 24px; height: 24px; border-radius: 50%; background: #d1e8ff; color: #0a6ed1; font-weight: 700; font-size: 10px; display: grid; place-items: center; }
+.body-pad { padding: 16px; }
+.greet { font-size: 15px; font-weight: 700; color: #1d2d3e; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.tile { background: #fff; border-radius: 10px; padding: 11px 12px; box-shadow: 0 0 0 1px #e5e5e5; min-height: 92px; display: flex; flex-direction: column; justify-content: space-between; }
+.tile .h { font-weight: 600; color: #1d2d3e; font-size: 11.5px; }
+.tile .s { color: #6a6d70; font-size: 10.5px; }
+.tile .k { font-size: 22px; font-weight: 300; color: #0a6ed1; font-variant-numeric: tabular-nums; }
+.tile .k.neg { color: #bb0000; } .tile .k.pos { color: #107e3e; }
+.tile .k small { font-size: 11px; color: #6a6d70; margin-left: 2px; }
+.spark { height: 26px; width: 100%; }
+.split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; margin-top: 10px; }
+.card-f { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; padding: 12px; min-width: 0; }
+.card-f .h { font-weight: 700; font-size: 11.5px; color: #1d2d3e; margin-bottom: 8px; }
+.row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid #eee; font-size: 11px; }
+.row:first-of-type { border-top: 0; }
+.pill { font-size: 9.5px; font-weight: 700; border-radius: 9px; padding: 1px 7px; white-space: nowrap; }
+.pill.ok { background: #f1fdf6; color: #107e3e; box-shadow: inset 0 0 0 1px #c6ecd3; }
+.pill.wr { background: #fef7f1; color: #e9730c; box-shadow: inset 0 0 0 1px #f8d3b0; }
+.pill.in { margin: 0; max-width: none; padding: 1px 7px; background: #eef6fe; color: #0a6ed1; box-shadow: inset 0 0 0 1px #c5def7; }
+.joule { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; display: flex; flex-direction: column; min-width: 0; }
+.joule .jh { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid #eee; font-weight: 700; font-size: 11.5px; }
+.joule .jh i { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); display: inline-block; }
+.joule .msgs { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.bub { border-radius: 10px; padding: 7px 9px; font-size: 10.8px; max-width: 92%; }
+.bub.u { align-self: flex-end; background: #0a6ed1; color: #fff; border-bottom-right-radius: 3px; }
+.bub.j { background: #f2f2f7; color: #1d2d3e; border-bottom-left-radius: 3px; }
+.bub.j b { color: #0a6ed1; }
+.typing span { display: inline-block; width: 5px; height: 5px; margin-right: 3px; border-radius: 50%; background: #8b9196; }
+@media (prefers-reduced-motion: no-preference) {
+  .typing span { animation: blink 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
+}
+.caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+/* journey explainer */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.includes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.includes div { background: var(--bg-2); padding: 22px; }
+.includes h3 { font-size: 16px; margin-bottom: 6px; }
+.includes p { color: var(--muted); font-size: 14.5px; }
+.ico { width: 30px; height: 30px; margin-bottom: 12px; color: var(--green-hi); }
+
+/* fit check */
+.fit { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 44px; align-items: start; }
+.qs { display: flex; flex-direction: column; gap: 10px; }
+.q { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.q span { font-size: 15px; min-width: 0; }
+.yn { display: flex; gap: 4px; flex: none; background: #0f1814; border-radius: 9px; padding: 3px; }
+.yn button { font: 700 12px var(--body); letter-spacing: .06em; border: 0; border-radius: 7px; padding: 7px 12px; background: transparent; color: var(--muted); cursor: pointer; }
+.yn button[aria-pressed="true"] { background: var(--green); color: #fff; }
+.yn button.no[aria-pressed="true"] { background: #6b3a12; }
+.result { position: sticky; top: 100px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 28px; }
+.result .lab { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.meter { height: 10px; background: #dde5e1; border-radius: 6px; margin: 14px 0 18px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 6px; transition: width .35s; }
+.result h3 { font-size: 24px; margin-bottom: 10px; }
+.result p { color: var(--ink-soft); font-size: 15px; }
+.result .btn { margin-top: 20px; }
+
+/* capabilities */
+.caps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.cap { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.cap ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+.cap ul li { margin-bottom: 4px; }
+.cap .tagline { color: var(--fg); font-size: 15px; }
+
+/* AI */
+.agents { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.agent { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.agent .n { width: 36px; height: 36px; border-radius: 10px; background: rgba(52,179,134,.12); color: var(--green-hi); display: grid; place-items: center; }
+.agent h3 { font-size: 16px; margin-bottom: 2px; }
+.agent p { color: var(--muted); font-size: 14.5px; }
+.prog { height: 4px; background: #e6e9eb; border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.prog i { display: block; height: 100%; background: #0a6ed1; width: 72%; }
+@media (prefers-reduced-motion: no-preference) {
+  .prog i { animation: load 3.2s ease-in-out infinite alternate; }
+  @keyframes load { from { width: 38% } to { width: 92% } }
+}
+
+/* release timeline */
+.tl { margin-top: 48px; overflow-x: auto; }
+.tl svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.fact { border-top: 2px solid var(--green); padding-top: 14px; }
+.fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 14px; }
+
+/* extensibility */
+.layers { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.layer { display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.layer .who { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--green-hi); padding-top: 3px; }
+.layer h3 { font-size: 16px; margin-bottom: 4px; }
+.layer p { color: var(--muted); font-size: 14.5px; }
+.layer.core { background: var(--paper); color: var(--ink); border-color: transparent; }
+.layer.core .who { color: var(--green); }
+.layer.core p { color: var(--ink-soft); }
+
+/* activate */
+.phases { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ph { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.ph:last-child { border-right: 0; }
+.ph .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.ph h3 { font-size: 17px; }
+.ph p { color: var(--muted); font-size: 13.5px; }
+.ph .we { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--fg); }
+.ph .we b { color: var(--green-hi); font-weight: 700; }
+
+/* users */
+.users { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+.users table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; }
+.users th, .users td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.users th { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.users td:first-child { font-weight: 700; white-space: nowrap; }
+.users td:nth-child(2) { color: var(--muted); }
+.users tr:last-child td { border-bottom: 0; }
+.note { margin-top: 16px; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+/* faq */
+.faq { margin-top: 36px; display: flex; flex-direction: column; gap: 10px; max-width: 860px; }
+details { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 16.5px; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--green-hi); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 18px; max-width: 70ch; }
+
+/* cta */
+.cta-band { background: linear-gradient(120deg, #0e3a2b, #0a1a14 60%); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.cta-band ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cta-band li { display: flex; gap: 10px; font-size: 15px; }
+.cta-band li::before { content: "✓"; color: var(--green-hi); font-weight: 800; }
+footer { padding-block: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+footer .in { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .hero-grid, .two, .fit, .cta-band { grid-template-columns: 1fr; }
+  .caps { grid-template-columns: 1fr 1fr; }
+  .phases { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .ph:nth-child(3) { border-right: 0; }
+  .ph:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .result { position: static; }
+}
+@media (max-width: 620px) {
+  section { padding-block: 64px; }
+  .caps, .includes { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: 1fr; }
+  .ph { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .tiles .tile:nth-child(3) { display: none; }
+  .split { grid-template-columns: 1fr; }
+  .layer { grid-template-columns: 1fr; gap: 6px; }
+  .cta-band { padding: 36px 24px; }
+  .q { flex-direction: column; align-items: flex-start; }
+}
+
+/* light bands: same components, re-tokened */
+section.light { --bg-2: #ffffff; --line: #d9e2dd; --fg: #142019; --muted: #55655e; --green-hi: #17694b; background: #f2f5f3; color: var(--fg); border-top-color: transparent; }
+section.light .includes { background: var(--line); }
+section.light .cap, section.light details { box-shadow: 0 1px 2px rgba(20,32,25,.05); }
+/* Video library */
+.vf { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
+.vf button { font: 600 13.5px/1 var(--body); padding: 10px 15px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
+.vf button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.vf button span { color: var(--muted); margin-left: 6px; font-weight: 500; }
+.vf button[aria-pressed="true"] span { color: inherit; opacity: .6; }
+.vgrid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; margin-top: 26px; }
+.vcard { display: flex; flex-direction: column; text-decoration: none; color: var(--fg); border-radius: 14px; background: var(--bg-2); border: 1px solid var(--line); overflow: hidden; transition: transform .25s, border-color .25s; }
+.vcard:hover { transform: translateY(-3px); border-color: var(--green); }
+.vcard.feat { grid-column: span 2; }
+.poster { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; padding: 18px 20px; display: flex; flex-direction: column; justify-content: space-between; background: radial-gradient(120% 140% at 100% 0%, #1f7a5a 0%, #0c2a1f 48%, #06110d 100%); }
+.poster[data-k="mod"] { background: radial-gradient(120% 140% at 100% 0%, #0a6ed1 0%, #0b2340 50%, #050c16 100%); }
+.poster[data-k="rel"] { background: radial-gradient(120% 140% at 100% 0%, #5d36ff 0%, #1b1446 50%, #07061a 100%); }
+.poster::after { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(200deg, #000 10%, transparent 70%); -webkit-mask-image: linear-gradient(200deg, #000 10%, transparent 70%); pointer-events: none; }
+.poster .top { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+.poster .ch { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; color: #fff; letter-spacing: .04em; }
+.poster .ch b { background: linear-gradient(135deg,#0a6ed1,#0854a0); padding: 2px 6px; border-radius: 3px; font-size: 10px; }
+.poster .tag { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+.poster .big { position: relative; z-index: 1; font-family: var(--display); font-weight: 800; color: #fff; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.08; letter-spacing: -.01em; max-width: 80%; text-wrap: balance; }
+.vcard.feat .poster .big { font-size: clamp(26px, 3.4vw, 44px); }
+.poster .play { position: absolute; right: 18px; bottom: 18px; z-index: 1; width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,.95); display: grid; place-items: center; box-shadow: 0 10px 30px rgba(0,0,0,.35); transition: transform .25s; }
+.vcard:hover .play { transform: scale(1.08); }
+.vmeta { padding: 16px 18px 18px; display: grid; gap: 6px; }
+.vmeta h3 { font-size: 16px; line-height: 1.3; }
+.vmeta p { color: var(--muted); font-size: 14px; margin: 0; }
+.vmeta .d { font-size: 12px; color: var(--muted); letter-spacing: .02em; }
+.vnote { margin-top: 22px; color: var(--muted); font-size: 13px; max-width: 80ch; }
+
+@media (max-width: 980px) { .vgrid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .vgrid { grid-template-columns: 1fr; } }
+.vcard:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 2px; }
+</style>
+<header class="site">
+  <div class="in">
+    <a class="logo" href="#top" aria-label="Mawkish Technologies">
+      <svg viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L20 4 L32 18 L44 4 L62 28 Z" fill="none" stroke="#eef3f0" stroke-width="4" stroke-linejoin="round"/><path d="M20 28 L32 14 L44 28" fill="#eef3f0"/></svg>
+      MAWKISH
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">ABOUT US</a>
+      <a href="#" class="on">OUR SERVICES</a>
+      <a href="#">INDUSTRIES</a>
+      <a href="#">INSIGHTS &amp; PERSPECTIVES</a>
+      <a href="#book" class="btn pri">Schedule a consultation</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+/* Business Data Cloud v2: all classes prefixed b- to stay clear of the site framework */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+main section[id] { scroll-margin-top: calc(var(--hdr, 72px) + 58px); }
+section.light .users td { color: var(--fg); } section.light .users td:nth-child(2) { color: var(--muted); }
+#watch .vgrid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.two .facts .fact b { font-size: 23px; white-space: nowrap; }
+
+/* in-page menu */
+.b-sub { position: sticky; top: var(--hdr, 72px); z-index: 4; background: rgba(5,8,7,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.b-sub .b-subin { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.b-sub .b-subin::-webkit-scrollbar { display: none; }
+.b-sub a { flex: none; color: var(--muted); text-decoration: none; font-size: 13.5px; font-weight: 600; padding: 15px 12px 13px; border-bottom: 2px solid transparent; white-space: nowrap; transition: color .2s, border-color .2s; }
+.b-sub a:hover { color: var(--fg); }
+.b-sub a.on { color: var(--fg); border-bottom-color: var(--green-hi); }
+.b-sub .b-prog { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, #17694b, #34b386); opacity: .5; }
+
+/* reveal on scroll */
+.b-js .b-rv { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+.b-js .b-rv.on { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .b-js .b-rv { opacity: 1; transform: none; transition: none; } }
+
+/* shared bits */
+.b-sec-num { font-family: var(--display); font-weight: 800; font-size: 12px; letter-spacing: .2em; color: var(--muted); margin-left: 10px; }
+.b-grid2 { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 56px; align-items: start; }
+.b-cards { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 34px; }
+.b-cards.b4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+.b-card { border: 1px solid var(--line); border-radius: 14px; padding: 20px; background: var(--bg-2); min-width: 0; }
+.b-card .b-k { font-family: var(--display); font-size: 11.5px; font-weight: 800; letter-spacing: .12em; color: var(--green-hi); text-transform: uppercase; }
+.b-card h3 { font-size: 17px; margin: 6px 0 6px; }
+.b-card p { color: var(--muted); font-size: 14.5px; margin: 0; }
+.b-card ul { color: var(--muted); font-size: 14px; margin: 8px 0 0; padding-left: 18px; }
+.b-fig { margin: 40px 0 0; border: 1px solid var(--line); border-radius: 16px; background: var(--bg-2); padding: 22px; }
+.b-fig svg { width: 100%; height: auto; display: block; }
+.b-fig figcaption { margin-top: 12px; font-size: 12.5px; color: var(--muted); }
+.b-list { display: none; }
+.b-callout { margin-top: 28px; border-left: 3px solid var(--green-hi); padding: 4px 0 4px 16px; color: var(--muted); font-size: 15px; max-width: 80ch; }
+.b-callout b { color: var(--fg); }
+.b-tag { display: inline-block; font-size: 11px; font-weight: 700; border-radius: 999px; padding: 2px 9px; border: 1px solid var(--line); color: var(--muted); margin: 0 4px 6px 0; }
+
+/* svg tokens */
+.b-box { fill: var(--bg-2); stroke: var(--line); stroke-width: 1.5; }
+.b-boxa { fill: none; stroke: var(--green-hi); stroke-width: 2; }
+.b-dash { fill: none; stroke: var(--green-hi); stroke-width: 1.5; stroke-dasharray: 6 6; }
+.b-t { fill: var(--fg); font-weight: 700; font-size: 15px; }
+.b-s { fill: var(--muted); font-size: 12.5px; font-weight: 500; }
+.b-e { fill: var(--green-hi); font-size: 11px; font-weight: 800; letter-spacing: .14em; }
+.b-ln { stroke: var(--muted); stroke-width: 1.6; fill: none; opacity: .7; }
+.b-dot { fill: #34b386; }
+section.light .b-dot { fill: #17694b; }
+.b-chip { fill: rgba(52,179,134,.1); stroke: rgba(52,179,134,.45); }
+section.light .b-chip { fill: rgba(23,105,75,.07); stroke: rgba(23,105,75,.35); }
+.b-flow { stroke: var(--green-hi); stroke-width: 2; fill: none; stroke-dasharray: 5 7; }
+@media (prefers-reduced-motion: no-preference) {
+  .b-flow { animation: bflow 1.4s linear infinite; }
+  @keyframes bflow { to { stroke-dashoffset: -24; } }
+}
+
+/* hero stack */
+.b-hero-fig { margin: 0; }
+.b-stack { width: 100%; height: auto; display: block; }
+.b-stack .b-layer rect.b-lr { fill: rgba(255,255,255,.025); stroke: var(--line); stroke-width: 1.5; }
+.b-stack .b-layer .b-glow { fill: none; stroke: #34b386; stroke-width: 2; opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .b-stack .b-layer { opacity: 0; transform: translateY(14px); animation: bin .8s ease forwards; }
+  .b-stack .b-layer:nth-of-type(1) { animation-delay: .9s; }
+  .b-stack .b-layer:nth-of-type(2) { animation-delay: .65s; }
+  .b-stack .b-layer:nth-of-type(3) { animation-delay: .4s; }
+  .b-stack .b-layer:nth-of-type(4) { animation-delay: .15s; }
+  @keyframes bin { to { opacity: 1; transform: none; } }
+  .b-stack .b-glow { animation: bglow 4.8s ease-in-out infinite; }
+  .b-stack .b-layer:nth-of-type(4) .b-glow { animation-delay: 1.6s; }
+  .b-stack .b-layer:nth-of-type(3) .b-glow { animation-delay: 2.4s; }
+  .b-stack .b-layer:nth-of-type(2) .b-glow { animation-delay: 3.2s; }
+  .b-stack .b-layer:nth-of-type(1) .b-glow { animation-delay: 4s; }
+  @keyframes bglow { 0%, 100% { opacity: 0; } 8% { opacity: .9; } 22% { opacity: 0; } }
+}
+
+/* overview: three messages */
+.b-msg { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 34px; counter-reset: m; }
+.b-msg div { border-top: 2px solid var(--green-hi); padding-top: 14px; }
+.b-msg h3 { font-size: 18px; }
+.b-msg.b-msgv { grid-template-columns: minmax(0,1fr); gap: 22px; margin-top: 6px; }
+.b-msg p { color: var(--muted); font-size: 15px; margin: 8px 0 0; }
+
+/* data product pipeline */
+.b-pipe { margin-top: 38px; }
+.b-steps { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 8px; position: relative; }
+.b-steps::before { content: ""; position: absolute; left: 4%; right: 4%; top: 22px; height: 2px; background: var(--line); }
+.b-steps .b-bar { position: absolute; left: 4%; top: 22px; height: 2px; width: 0; background: var(--green-hi); transition: width .5s ease; }
+.b-step { position: relative; background: none; border: 0; padding: 0; cursor: pointer; text-align: center; color: var(--muted); font: inherit; }
+.b-step .b-n { width: 46px; height: 46px; margin: 0 auto 10px; border-radius: 50%; display: grid; place-items: center; background: var(--bg-2); border: 2px solid var(--line); font-family: var(--display); font-weight: 800; color: var(--muted); transition: all .3s; position: relative; z-index: 1; }
+.b-step span { font-size: 13.5px; font-weight: 700; display: block; line-height: 1.3; }
+.b-step small { font-size: 12px; display: block; }
+.b-step.done .b-n { border-color: var(--green-hi); color: var(--green-hi); }
+.b-step.on .b-n { background: var(--green-hi); border-color: var(--green-hi); color: #fff; box-shadow: 0 0 0 6px rgba(23,105,75,.14); }
+.b-step.on span { color: var(--fg); }
+.b-step:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 4px; border-radius: 8px; }
+.b-detail { margin-top: 26px; display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); gap: 22px; border: 1px solid var(--line); background: var(--bg-2); border-radius: 16px; padding: 24px; min-height: 210px; }
+.b-detail h3 { font-size: 20px; }
+.b-detail p { color: var(--muted); font-size: 15px; margin: 10px 0 0; }
+.b-detail .b-who { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--green-hi); }
+.b-detail .b-viz { border-radius: 12px; background: #0f1714; color: #cfe3da; font: 12.5px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; padding: 16px; overflow: auto; white-space: pre; }
+.b-detail .b-viz i { font-style: normal; color: #7fd8b1; }
+.b-detail .b-viz u { text-decoration: none; color: #f2c46d; }
+.b-detail .b-viz em { font-style: normal; color: #7c8d86; }
+.b-fade { animation: bfade .45s ease; }
+@keyframes bfade { from { opacity: 0; transform: translateY(6px); } }
+@media (prefers-reduced-motion: reduce) { .b-fade { animation: none; } }
+.b-ctrl { display: flex; gap: 10px; margin-top: 14px; align-items: center; color: var(--muted); font-size: 13px; }
+.b-ctrl button { font: inherit; font-size: 13px; font-weight: 700; color: var(--green-hi); background: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+
+/* segmented toggle */
+.b-seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 4px; background: var(--bg-2); margin-top: 22px; }
+.b-seg button { font: inherit; font-size: 14px; font-weight: 700; border: 0; background: none; color: var(--muted); border-radius: 999px; padding: 8px 18px; cursor: pointer; }
+.b-seg button[aria-pressed="true"] { background: var(--green-hi); color: #fff; }
+.b-fr { margin-top: 18px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.2fr); gap: 22px; align-items: center; }
+.b-fr svg { width: 100%; max-width: 340px; height: auto; }
+.b-fr dl { margin: 0; display: grid; grid-template-columns: auto minmax(0,1fr); gap: 8px 16px; font-size: 14.5px; }
+.b-fr dt { font-weight: 700; color: var(--fg); }
+.b-fr dd { margin: 0; color: var(--muted); }
+
+/* governed install */
+.b-gov { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 0; margin-top: 30px; }
+.b-gov div { position: relative; padding: 16px 16px 16px 0; }
+.b-gov div::after { content: "→"; position: absolute; right: 6px; top: 14px; color: var(--green-hi); font-weight: 800; }
+.b-gov div:last-child::after { content: none; }
+.b-gov b { display: block; font-size: 15px; color: var(--fg); }
+.b-gov span { color: var(--muted); font-size: 13.5px; display: block; margin-top: 4px; padding-right: 18px; }
+.b-gov .b-i { font-family: var(--display); font-weight: 800; color: var(--green-hi); font-size: 12px; letter-spacing: .14em; }
+
+/* intelligent apps stack */
+.b-ia { display: grid; gap: 8px; margin-top: 30px; }
+.b-ia div { border: 1px solid var(--line); background: var(--bg-2); border-radius: 12px; padding: 13px 16px; display: grid; grid-template-columns: 150px minmax(0,1fr); gap: 14px; align-items: center; }
+.b-ia b { font-size: 14.5px; }
+.b-ia span { color: var(--muted); font-size: 13.5px; }
+.b-ia div:nth-child(1) { margin: 0 0 0 0; } .b-ia div:nth-child(2) { margin-left: 18px; } .b-ia div:nth-child(3) { margin-left: 36px; } .b-ia div:nth-child(4) { margin-left: 54px; border-style: dashed; }
+.b-js .b-ia.b-rv div { opacity: 0; transform: translateX(-16px); transition: opacity .5s ease, transform .5s ease; }
+.b-js .b-ia.b-rv.on div { opacity: 1; transform: none; }
+.b-js .b-ia.b-rv.on div:nth-child(2) { transition-delay: .15s; } .b-js .b-ia.b-rv.on div:nth-child(3) { transition-delay: .3s; } .b-js .b-ia.b-rv.on div:nth-child(4) { transition-delay: .45s; }
+.b-spaces { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; margin-top: 16px; }
+.b-spaces div { border: 1px dashed var(--green-hi); border-radius: 12px; padding: 12px 14px; }
+.b-spaces b { display: block; font-size: 14px; }
+.b-spaces span { font-size: 13px; color: var(--muted); }
+
+/* SAP-like screen extras */
+.b-dp { display: grid; grid-template-columns: minmax(0,1fr) auto auto; gap: 8px; align-items: center; font-size: 11px; padding: 6px 0; border-top: 1px solid #eee; color: #32363a; }
+.b-dp:first-of-type { border-top: 0; }
+.b-dp small { display: block; color: #6a6d70; font-size: 9.5px; }
+.b-src { font-size: 9px; font-weight: 800; border-radius: 4px; padding: 1px 6px; background: #eef6fe; color: #0a6ed1; white-space: nowrap; }
+.b-src.cu { background: #f5f0ff; color: #5d36ff; }
+.b-kpi3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; }
+.b-bars { display: grid; gap: 6px; }
+.b-br { display: grid; grid-template-columns: 110px minmax(0,1fr) 40px; gap: 8px; align-items: center; font-size: 10.5px; color: #32363a; }
+.b-br .b-tr { height: 8px; background: #eff1f2; border-radius: 4px; overflow: hidden; }
+.b-br .b-tr i { display: block; height: 100%; background: #5899da; border-radius: 4px; transform-origin: 0 50%; }
+.b-br .b-tr i.hi { background: #e9730c; }
+.b-br span:last-child { text-align: right; font-variant-numeric: tabular-nums; color: #6a6d70; }
+.b-js .b-rv .b-br .b-tr i { transform: scaleX(0); transition: transform 1s ease .3s; }
+.b-js .b-rv.on .b-br .b-tr i { transform: none; }
+.b-plan { width: 100%; border-collapse: collapse; font-size: 10.5px; color: #32363a; }
+.b-plan th { text-align: right; font-weight: 700; color: #6a6d70; padding: 4px 6px; border-bottom: 1px solid #e5e5e5; }
+.b-plan th:first-child, .b-plan td:first-child { text-align: left; }
+.b-plan td { text-align: right; padding: 5px 6px; border-bottom: 1px solid #f0f0f0; font-variant-numeric: tabular-nums; }
+.b-plan td.b-ed { background: #fff8e1; box-shadow: inset 0 0 0 1px #f2c46d; }
+.b-chart { display: flex; align-items: flex-end; gap: 6px; height: 74px; padding-top: 6px; }
+.b-chart i { flex: 1; background: #5899da; border-radius: 3px 3px 0 0; transform-origin: 50% 100%; }
+.b-chart i.f { background: repeating-linear-gradient(45deg, #9cc3ea 0 4px, #c7dcf2 4px 8px); }
+.b-js .b-rv .b-chart i { transform: scaleY(0); transition: transform .8s ease; }
+.b-js .b-rv.on .b-chart i { transform: none; }
+.b-js .b-rv.on .b-chart i:nth-child(n+2) { transition-delay: .08s; } .b-js .b-rv.on .b-chart i:nth-child(n+4) { transition-delay: .16s; } .b-js .b-rv.on .b-chart i:nth-child(n+6) { transition-delay: .24s; } .b-js .b-rv.on .b-chart i:nth-child(n+8) { transition-delay: .32s; }
+
+/* datasphere layers */
+.b-layers { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 0; margin-top: 34px; }
+.b-layers div { border: 1px solid var(--line); background: var(--bg-2); padding: 18px; position: relative; }
+.b-layers div:first-child { border-radius: 14px 0 0 14px; }
+.b-layers div:last-child { border-radius: 0 14px 14px 0; }
+.b-layers div + div { border-left: 0; }
+.b-layers div:not(:last-child)::after { content: ""; position: absolute; right: -9px; top: 50%; width: 16px; height: 16px; background: var(--bg-2); border-top: 1px solid var(--line); border-right: 1px solid var(--line); transform: translateY(-50%) rotate(45deg); z-index: 1; }
+.b-layers .b-i { font-family: var(--display); font-weight: 800; font-size: 12px; letter-spacing: .14em; color: var(--green-hi); }
+.b-layers h3 { font-size: 16.5px; margin: 6px 0; }
+.b-layers p { color: var(--muted); font-size: 13.5px; margin: 0; }
+.b-js .b-layers.b-rv div { opacity: 0; transition: opacity .5s ease; }
+.b-js .b-layers.b-rv.on div { opacity: 1; }
+.b-js .b-layers.b-rv.on div:nth-child(2) { transition-delay: .2s; } .b-js .b-layers.b-rv.on div:nth-child(3) { transition-delay: .4s; } .b-js .b-layers.b-rv.on div:nth-child(4) { transition-delay: .6s; }
+
+/* fit helper */
+.b-helper { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,1fr); gap: 28px; margin-top: 34px; align-items: start; }
+.b-q { border: 1px solid var(--line); border-radius: 14px; background: var(--bg-2); padding: 16px 18px; margin-bottom: 10px; }
+.b-q legend { font-weight: 700; font-size: 15px; padding: 0; float: left; width: 100%; margin-bottom: 10px; }
+.b-q fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.b-opts { display: flex; flex-wrap: wrap; gap: 8px; clear: both; }
+.b-opts label { cursor: pointer; }
+.b-opts input { position: absolute; opacity: 0; pointer-events: none; }
+.b-opts span { display: inline-block; border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; font-size: 13.5px; color: var(--muted); transition: all .2s; }
+.b-opts input:checked + span { background: var(--green-hi); border-color: var(--green-hi); color: #fff; }
+.b-opts input:focus-visible + span { outline: 2px solid var(--green-hi); outline-offset: 2px; }
+.b-res { position: sticky; top: calc(var(--hdr, 72px) + 74px); border: 1px solid var(--green-hi); border-radius: 16px; padding: 22px; background: linear-gradient(180deg, rgba(52,179,134,.08), transparent 60%), var(--bg-2); }
+.b-res h3 { font-size: 20px; margin-bottom: 4px; }
+.b-res .b-sum { color: var(--muted); font-size: 14.5px; margin: 6px 0 14px; }
+.b-res ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.b-res li { display: grid; grid-template-columns: 22px minmax(0,1fr); gap: 10px; align-items: start; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--line); opacity: .5; transition: opacity .35s, border-color .35s, background .35s; }
+.b-res li b { display: block; font-size: 14px; }
+.b-res li small { color: var(--muted); font-size: 12.5px; display: block; }
+.b-res li i { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--line); margin-top: 1px; transition: all .35s; }
+.b-res li.on { opacity: 1; border-color: var(--green-hi); background: rgba(52,179,134,.06); }
+.b-res li.on i { background: var(--green-hi); border-color: var(--green-hi); box-shadow: inset 0 0 0 3px var(--bg-2); }
+
+/* getting started timeline */
+.b-tl { list-style: none; margin: 34px 0 0; padding: 0; position: relative; display: grid; gap: 0; }
+.b-tl::before { content: ""; position: absolute; left: 21px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+.b-tl li { display: grid; grid-template-columns: 44px minmax(0,1fr); gap: 16px; padding: 0 0 22px; position: relative; }
+.b-tl .b-n { width: 44px; height: 44px; border-radius: 50%; background: var(--bg-2); border: 2px solid var(--green-hi); display: grid; place-items: center; font-family: var(--display); font-weight: 800; color: var(--green-hi); position: relative; }
+.b-tl b { display: block; font-size: 16px; margin-top: 9px; }
+.b-tl span { color: var(--muted); font-size: 14.5px; display: block; margin-top: 2px; }
+.b-tl .b-who { display: inline; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--green-hi); margin-left: 8px; }
+.b-js .b-tl.b-rv li { opacity: 0; transform: translateY(10px); transition: opacity .45s ease, transform .45s ease; }
+.b-js .b-tl.b-rv.on li { opacity: 1; transform: none; }
+.b-js .b-tl.b-rv.on li:nth-child(2) { transition-delay: .1s; } .b-js .b-tl.b-rv.on li:nth-child(3) { transition-delay: .2s; } .b-js .b-tl.b-rv.on li:nth-child(4) { transition-delay: .3s; } .b-js .b-tl.b-rv.on li:nth-child(5) { transition-delay: .4s; } .b-js .b-tl.b-rv.on li:nth-child(6) { transition-delay: .5s; }
+.b-phases { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; margin-top: 18px; }
+.b-phases div { border-radius: 14px; padding: 18px; background: var(--bg-2); border: 1px solid var(--line); border-top: 3px solid var(--green-hi); }
+.b-phases b { font-size: 16px; display: block; }
+.b-phases small { font-size: 11.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--green-hi); }
+.b-phases p { color: var(--muted); font-size: 14px; margin: 6px 0 0; }
+
+@media (max-width: 1080px) {
+  .b-cards.b4, .b-phases { grid-template-columns: 1fr 1fr; }
+  .b-gov { grid-template-columns: 1fr 1fr 1fr; row-gap: 6px; }
+  .b-gov div:nth-child(3)::after { content: none; }
+}
+@media (max-width: 980px) {
+  .b-grid2, .b-helper, .b-detail, .b-fr { grid-template-columns: minmax(0,1fr); gap: 28px; }
+  .b-res { position: static; }
+  .b-cards, .b-msg:not(.b-msgv) { grid-template-columns: 1fr 1fr; }
+  .b-layers { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .b-layers div, .b-layers div:first-child, .b-layers div:last-child { border-radius: 14px; border-left: 1px solid var(--line); }
+  .b-layers div::after { display: none; }
+}
+@media (max-width: 720px) {
+  .b-steps { grid-template-columns: repeat(3, minmax(0,1fr)); row-gap: 18px; }
+  .b-steps::before, .b-steps .b-bar { display: none; }
+}
+@media (max-width: 620px) {
+  .b-cards, .b-cards.b4, .b-msg, .b-layers, .b-phases, .b-spaces, #watch .vgrid { grid-template-columns: minmax(0,1fr); }
+  .b-gov { grid-template-columns: 1fr; }
+  .b-gov div::after { content: "↓"; right: auto; left: auto; position: static; display: block; margin-top: 4px; }
+  .b-gov div:nth-child(3)::after { content: "↓"; }
+  .b-fig svg.b-wide { display: none; }
+  .b-list { display: grid; gap: 8px; margin: 0; padding-left: 20px; color: var(--muted); font-size: 15px; }
+  .b-list b { color: var(--fg); }
+  .b-ia div { grid-template-columns: 1fr; gap: 2px; }
+  .b-ia div:nth-child(n) { margin-left: 0; }
+  .b-br { grid-template-columns: 84px minmax(0,1fr) 34px; }
+  .b-detail { padding: 18px; }
+  .b-sub a { padding: 13px 10px 11px; font-size: 13px; }
+}
+</style>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="in">
+      <div class="crumbs"><a href="#">Services</a> / <a href="#">SAP Solutions</a> / SAP Business Data Cloud</div>
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">SAP Business Data Cloud · Technical guide</span>
+          <h1>One data foundation for analytics, planning <em>and AI.</em></h1>
+          <p class="lede">SAP Business Data Cloud brings SAP Datasphere, SAP Analytics Cloud, SAP BW and SAP HANA Cloud together as one managed service, with SAP Databricks built in. SAP delivers your business data as ready-made data products that keep their meaning, and you combine them with the rest of your data. This page explains how it works underneath, layer by layer, and how we help you decide what you need.</p>
+          <div class="ctas">
+            <a href="#architecture" class="btn pri">See how it works →</a>
+            <a href="#fit" class="btn sec">Is it for you?</a>
+          </div>
+        </div>
+
+        <figure class="b-hero-fig">
+          <svg class="b-stack" viewBox="0 0 540 500" role="img" aria-label="SAP Business Data Cloud in four layers. From the bottom: lake storage holding data products; intelligent compute with SAP HANA Cloud, SAP Databricks and SAP Snowflake; the knowledge core with SAP Datasphere and SAP Analytics Cloud; and at the top, Joule, AI agents and intelligent applications. Sources such as SAP Cloud ERP, SuccessFactors, Ariba and non-SAP systems feed the lake.">
+            <defs><path id="b-up1" d="M78 474 V398"/><path id="b-up2" d="M206 474 V398"/><path id="b-up3" d="M334 474 V398"/><path id="b-up4" d="M462 474 V398"/></defs>
+            <g font-family="inherit">
+              <g class="b-layer">
+                <rect class="b-lr" x="10" y="8" width="520" height="86" rx="14"/><rect class="b-glow" x="10" y="8" width="520" height="86" rx="14"/>
+                <text class="b-e" x="30" y="34">AI AGENTS &amp; INTELLIGENT APPS</text>
+                <rect class="b-chip" x="30" y="48" width="78" height="30" rx="15"/><text class="b-t" x="69" y="68" text-anchor="middle" font-size="13.5">Joule</text>
+                <rect class="b-chip" x="118" y="48" width="104" height="30" rx="15"/><text class="b-t" x="170" y="68" text-anchor="middle" font-size="13.5">AI agents</text>
+                <rect class="b-chip" x="232" y="48" width="196" height="30" rx="15"/><text class="b-t" x="330" y="68" text-anchor="middle" font-size="13.5">Intelligent applications</text>
+              </g>
+              <g class="b-layer">
+                <rect class="b-lr" x="10" y="104" width="520" height="86" rx="14"/><rect class="b-glow" x="10" y="104" width="520" height="86" rx="14"/>
+                <text class="b-e" x="30" y="130">KNOWLEDGE CORE</text>
+                <rect class="b-chip" x="30" y="144" width="150" height="30" rx="15"/><text class="b-t" x="105" y="164" text-anchor="middle" font-size="13.5">SAP Datasphere</text>
+                <rect class="b-chip" x="190" y="144" width="190" height="30" rx="15"/><text class="b-t" x="285" y="164" text-anchor="middle" font-size="13.5">SAP Analytics Cloud</text>
+                <rect class="b-chip" x="390" y="144" width="120" height="30" rx="15" stroke-dasharray="4 4"/><text class="b-s" x="450" y="164" text-anchor="middle">SAP BW (option)</text>
+              </g>
+              <g class="b-layer">
+                <rect class="b-lr" x="10" y="200" width="520" height="86" rx="14"/><rect class="b-glow" x="10" y="200" width="520" height="86" rx="14"/>
+                <text class="b-e" x="30" y="226">INTELLIGENT COMPUTE</text>
+                <rect class="b-chip" x="30" y="240" width="146" height="30" rx="15"/><text class="b-t" x="103" y="260" text-anchor="middle" font-size="13.5">SAP HANA Cloud</text>
+                <rect class="b-chip" x="186" y="240" width="146" height="30" rx="15"/><text class="b-t" x="259" y="260" text-anchor="middle" font-size="13.5">SAP Databricks</text>
+                <rect class="b-chip" x="342" y="240" width="146" height="30" rx="15"/><text class="b-t" x="415" y="260" text-anchor="middle" font-size="13.5">SAP Snowflake</text>
+              </g>
+              <g class="b-layer">
+                <rect class="b-lr" x="10" y="296" width="520" height="96" rx="14"/><rect class="b-glow" x="10" y="296" width="520" height="96" rx="14"/>
+                <text class="b-e" x="30" y="322">LAKE STORAGE</text>
+                <text class="b-t" x="30" y="350" font-size="14.5">Data products in an open lake</text>
+                <text class="b-s" x="30" y="372">SAP-managed and your own, shared without copying</text>
+                <g fill="none" stroke="#34b386" stroke-width="1.5" opacity=".8"><ellipse cx="468" cy="330" rx="34" ry="9"/><path d="M434 330 V362 a34 9 0 0 0 68 0 V330"/><path d="M434 346 a34 9 0 0 0 68 0" opacity=".5"/></g>
+              </g>
+              <g class="b-s" text-anchor="middle" font-size="12">
+                <rect x="20" y="474" width="116" height="24" rx="6" fill="none" stroke="currentColor" opacity=".35"/><text x="78" y="490">SAP Cloud ERP</text>
+                <rect x="148" y="474" width="116" height="24" rx="6" fill="none" stroke="currentColor" opacity=".35"/><text x="206" y="490">SuccessFactors</text>
+                <rect x="276" y="474" width="116" height="24" rx="6" fill="none" stroke="currentColor" opacity=".35"/><text x="334" y="490">Ariba, Concur</text>
+                <rect x="404" y="474" width="116" height="24" rx="6" fill="none" stroke="currentColor" opacity=".35"/><text x="462" y="490">Non-SAP data</text>
+              </g>
+              <g class="b-ln" stroke-dasharray="3 5"><path d="M78 474 V398"/><path d="M206 474 V398"/><path d="M334 474 V398"/><path d="M462 474 V398"/></g>
+              <g class="b-anim">
+                <circle class="b-dot" r="4"><animateMotion dur="2.2s" repeatCount="indefinite"><mpath href="#b-up1"/></animateMotion></circle>
+                <circle class="b-dot" r="4"><animateMotion dur="2.2s" begin=".6s" repeatCount="indefinite"><mpath href="#b-up2"/></animateMotion></circle>
+                <circle class="b-dot" r="4"><animateMotion dur="2.2s" begin="1.2s" repeatCount="indefinite"><mpath href="#b-up3"/></animateMotion></circle>
+                <circle class="b-dot" r="4"><animateMotion dur="2.2s" begin="1.7s" repeatCount="indefinite"><mpath href="#b-up4"/></animateMotion></circle>
+              </g>
+            </g>
+          </svg>
+          <figcaption class="caption">SAP Business Data Cloud in four layers, as SAP describes it. Simplified.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <nav class="b-sub" aria-label="On this page">
+    <div class="b-subin">
+      <a href="#overview">Overview</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#data-products">Data products</a>
+      <a href="#intelligent-apps">Intelligent apps</a>
+      <a href="#datasphere">Datasphere</a>
+      <a href="#analytics">Analytics &amp; planning</a>
+      <a href="#open">Open ecosystem</a>
+      <a href="#fit">Is it for you?</a>
+      <a href="#start">Getting started</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <span class="b-prog" aria-hidden="true"></span>
+  </nav>
+
+  <!-- 01 OVERVIEW -->
+  <section class="light" id="overview">
+    <div class="in">
+      <div class="b-grid2">
+        <div class="b-rv">
+          <span class="eyebrow">01 · Overview</span>
+          <h2>AI is only as good as the business context it gets.</h2>
+          <p class="lede">A sales order number means little on its own. It becomes useful when it is linked to its customer, its deliveries, its invoices and the posting in your general ledger. Classic data platforms lose those links when they copy SAP tables, and teams spend months rebuilding them.</p>
+          <p class="lede">Business Data Cloud keeps them. SAP extracts the data from its applications, models it once, and delivers it as data products with the business meaning attached. Your reports, your planning, your data scientists and SAP's AI agents all work from that same governed foundation.</p>
+        </div>
+        <div class="b-msg b-msgv b-rv">
+          <div><h3>Turn data into outcomes</h3><p>Reuse SAP's data products and ready-made applications across finance, supply chain and HR, instead of building each report from scratch.</p></div>
+          <div><h3>Connect all your data</h3><p>Combine SAP and non-SAP data, and share it with platforms such as Databricks, Snowflake and Google BigQuery without copying it.</p></div>
+          <div><h3>Trustworthy AI</h3><p>Joule and AI agents answer from governed, semantically rich data, so their answers are grounded in how your business actually runs.</p></div>
+        </div>
+      </div>
+      <div class="users b-rv" style="margin-top:56px">
+        <table>
+          <thead><tr><th>Question</th><th>The old way</th><th>With Business Data Cloud</th></tr></thead>
+          <tbody>
+            <tr><td>Who builds the data model?</td><td>Your team or a consultant, table by table.</td><td>SAP, as ready-made data products.</td></tr>
+            <tr><td>What happens at an upgrade?</td><td>Extracts and reports need checking and fixing.</td><td>SAP keeps its data products current.</td></tr>
+            <tr><td>How many copies of the data?</td><td>Several, often out of date.</td><td>Shared rather than copied where possible.</td></tr>
+            <tr><td>Non-SAP data?</td><td>Joined by hand in spreadsheets.</td><td>Combined with SAP data in one governed model.</td></tr>
+            <tr><td>Ready for AI?</td><td>Rarely: meaning is lost in the copy.</td><td>Yes: business context travels with the data.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 ARCHITECTURE -->
+  <section id="architecture">
+    <div class="in">
+      <div class="b-rv">
+        <span class="eyebrow">02 · Architecture</span>
+        <h2>How a Business Data Cloud landscape is put together.</h2>
+        <p class="lede">You don't install anything. SAP runs the service, and you assemble your landscape from a cockpit: which applications you use, and which source systems feed them. SAP calls that grouping a <b>formation</b>.</p>
+      </div>
+      <figure class="b-fig b-rv">
+        <svg class="b-wide" viewBox="0 0 1000 440" role="img" aria-label="Business Data Cloud landscape. SAP Cloud ERP and other SAP cloud applications connect to a formation. Inside the formation, SAP-run foundation services ingest the data and store data products in the lake. SAP Datasphere, SAP Analytics Cloud, SAP Databricks and optionally SAP Snowflake use those data products. The Business Data Cloud cockpit manages the formation. SAP BW sits alongside and connects to Datasphere, but is not part of the formation.">
+          <defs>
+            <path id="b-a1" d="M200 150 H300"/>
+            <path id="b-a2" d="M200 290 C250 290 250 200 300 200"/>
+            <path id="b-a3" d="M520 175 H600"/>
+          </defs>
+          <g font-family="inherit">
+            <rect class="b-box" x="20" y="110" width="180" height="80" rx="12"/><text class="b-t" x="110" y="144" text-anchor="middle">SAP Cloud ERP</text><text class="b-s" x="110" y="164" text-anchor="middle">Public Edition</text>
+            <text class="b-s" x="110" y="214" text-anchor="middle" font-size="11.5">Certificate trust,</text><text class="b-s" x="110" y="230" text-anchor="middle" font-size="11.5">no Cloud Connector</text>
+            <rect class="b-box" x="20" y="250" width="180" height="80" rx="12"/><text class="b-t" x="110" y="284" text-anchor="middle">Other SAP apps</text><text class="b-s" x="110" y="304" text-anchor="middle">SuccessFactors, Ariba…</text>
+
+            <rect class="b-dash" x="260" y="70" width="720" height="290" rx="18"/>
+            <text class="b-e" x="284" y="96">FORMATION</text>
+
+            <rect class="b-boxa" x="300" y="115" width="220" height="125" rx="14"/>
+            <text class="b-t" x="410" y="146" text-anchor="middle">Foundation services</text>
+            <text class="b-s" x="410" y="168" text-anchor="middle">run by SAP</text>
+            <text class="b-s" x="410" y="196" text-anchor="middle">ingest · refine · enrich</text>
+            <text class="b-s" x="410" y="216" text-anchor="middle">data lake (Delta tables)</text>
+
+            <rect class="b-box" x="300" y="262" width="220" height="74" rx="12"/><text class="b-t" x="410" y="294" text-anchor="middle">Data products</text><text class="b-s" x="410" y="314" text-anchor="middle">described, discoverable, shareable</text>
+            <path class="b-ln" d="M410 240 V262"/>
+
+            <rect class="b-box" x="600" y="115" width="170" height="62" rx="12"/><text class="b-t" x="685" y="151" text-anchor="middle">SAP Datasphere</text>
+            <rect class="b-box" x="790" y="115" width="170" height="62" rx="12"/><text class="b-t" x="875" y="143" text-anchor="middle">SAP Analytics</text><text class="b-t" x="875" y="161" text-anchor="middle">Cloud</text>
+            <rect class="b-box" x="600" y="196" width="170" height="62" rx="12"/><text class="b-t" x="685" y="232" text-anchor="middle">SAP Databricks</text>
+            <rect class="b-box" x="790" y="196" width="170" height="62" rx="12" stroke-dasharray="5 5"/><text class="b-t" x="875" y="224" text-anchor="middle">SAP Snowflake</text><text class="b-s" x="875" y="242" text-anchor="middle">optional extension</text>
+            <rect class="b-box" x="600" y="277" width="360" height="62" rx="12"/><text class="b-t" x="780" y="305" text-anchor="middle">Intelligent applications</text><text class="b-s" x="780" y="324" text-anchor="middle">installed into Datasphere and Analytics Cloud</text>
+            <path class="b-ln" d="M770 146 H790"/>
+
+            <rect class="b-box" x="330" y="10" width="520" height="44" rx="10"/><text class="b-t" x="590" y="38" text-anchor="middle" font-size="14">Business Data Cloud cockpit: formations, activation, monitoring</text>
+            <path class="b-ln" d="M590 54 V70" stroke-dasharray="3 4"/>
+
+            <rect class="b-box" x="600" y="386" width="360" height="44" rx="10" stroke-dasharray="5 5"/><text class="b-t" x="780" y="413" text-anchor="middle" font-size="14">SAP BW: alongside, not in the formation</text>
+            <path class="b-ln" d="M685 386 V362" stroke-dasharray="3 4"/>
+
+            <path class="b-flow" d="M200 150 H300"/><path class="b-flow" d="M200 290 C250 290 250 200 300 200"/>
+            <path class="b-flow" d="M520 175 C560 175 560 146 600 146"/><path class="b-flow" d="M520 195 C560 195 560 227 600 227"/><path class="b-flow" d="M520 299 C560 299 560 308 600 308"/>
+            <g class="b-anim">
+              <circle class="b-dot" r="4.5"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#b-a1"/></animateMotion></circle>
+              <circle class="b-dot" r="4.5"><animateMotion dur="1.9s" begin=".5s" repeatCount="indefinite"><mpath href="#b-a2"/></animateMotion></circle>
+            </g>
+          </g>
+        </svg>
+        <ol class="b-list">
+          <li><b>Business Data Cloud cockpit:</b> where you create formations, activate data products and monitor them.</li>
+          <li><b>Sources:</b> SAP Cloud ERP Public Edition connects with a certificate, no Cloud Connector needed. Other SAP cloud applications join the same way.</li>
+          <li><b>Foundation services:</b> run by SAP. They ingest, refine and enrich the data and store it in the data lake.</li>
+          <li><b>Data products:</b> the result, described and ready to share.</li>
+          <li><b>Applications:</b> SAP Datasphere, SAP Analytics Cloud, SAP Databricks and optionally SAP Snowflake use the data products. Intelligent applications install into Datasphere and Analytics Cloud.</li>
+          <li><b>SAP BW:</b> runs alongside and connects to Datasphere, but is not part of a formation.</li>
+        </ol>
+        <figcaption>Simplified view of a Business Data Cloud landscape. SAP manages everything inside the formation.</figcaption>
+      </figure>
+      <div class="b-cards b4">
+        <div class="b-card b-rv"><span class="b-k">Cockpit</span><h3>Provisioned first</h3><p>The control centre. Your administrator provisions it, then adds applications, connects sources and activates data products from here.</p></div>
+        <div class="b-card b-rv"><span class="b-k">Formation</span><h3>Apps plus sources</h3><p>A formation links your Business Data Cloud applications to the SAP systems that feed them. Data products from those sources then become available to activate.</p></div>
+        <div class="b-card b-rv"><span class="b-k">Public Edition</span><h3>A certificate, not a connector</h3><p>For SAP Cloud ERP Public Edition, trust is set up with a certificate exchange. No Cloud Connector, no on-premise components.</p></div>
+        <div class="b-card b-rv"><span class="b-k">Existing tenants</span><h3>Bring them along</h3><p>Already run SAP Datasphere or SAP Analytics Cloud? They can join Business Data Cloud without a migration. It's mostly a contract change.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 DATA PRODUCTS -->
+  <section class="light" id="data-products">
+    <div class="in">
+      <div class="b-rv">
+        <span class="eyebrow">03 · Data products</span>
+        <h2>From a table in SAP to a data product you can trust.</h2>
+        <p class="lede">A data product is a curated, documented data set with an owner, a meaning and a defined way to access it. SAP builds its own data products from your SAP systems and keeps them current. Step through how one is made.</p>
+      </div>
+      <div class="b-pipe b-rv">
+        <div class="b-steps" role="tablist" aria-label="How an SAP data product is made">
+          <span class="b-bar" aria-hidden="true"></span>
+          <button class="b-step on" role="tab" aria-selected="true" data-i="0"><div class="b-n">1</div><span>Source</span><small>CDS view</small></button>
+          <button class="b-step" role="tab" aria-selected="false" data-i="1"><div class="b-n">2</div><span>Ingest</span><small>push to lake</small></button>
+          <button class="b-step" role="tab" aria-selected="false" data-i="2"><div class="b-n">3</div><span>Refine</span><small>transform</small></button>
+          <button class="b-step" role="tab" aria-selected="false" data-i="3"><div class="b-n">4</div><span>Enrich</span><small>business logic</small></button>
+          <button class="b-step" role="tab" aria-selected="false" data-i="4"><div class="b-n">5</div><span>Describe</span><small>metadata</small></button>
+          <button class="b-step" role="tab" aria-selected="false" data-i="5"><div class="b-n">6</div><span>Share</span><small>zero copy</small></button>
+        </div>
+        <div class="b-detail" id="b-detail" role="tabpanel" aria-live="polite">
+          <div><span class="b-who">In SAP Cloud ERP</span><h3>It starts with a CDS view</h3><p>SAP's applications describe their data in CDS views: virtual data models that already know that a journal entry belongs to a company code and a ledger. These views are the source for SAP's data products, so the business meaning is there from the first step.</p></div>
+          <div class="b-viz"><em>// SAP Cloud ERP (simplified)</em>
+<i>define view</i> JournalEntryItem
+  key CompanyCode
+  key FiscalYear
+  key AccountingDocument
+      GLAccount
+      <u>AmountInCompanyCodeCurrency</u>
+      PostingDate</div>
+        </div>
+        <div class="b-ctrl"><button type="button" id="b-play">▶ Play the steps</button><span>or pick a step above</span></div>
+      </div>
+
+      <div class="b-grid2" style="margin-top:64px">
+        <div class="b-rv">
+          <h3 style="font-size:24px">Federate or replicate?</h3>
+          <p class="lede" style="font-size:16.5px">Once a data product is installed in SAP Datasphere, you choose how each model reads it: query it where it lives, or take a local copy. Most landscapes use both.</p>
+          <div class="b-seg" role="group" aria-label="Access mode">
+            <button type="button" aria-pressed="true" data-m="fed">Federate</button>
+            <button type="button" aria-pressed="false" data-m="rep">Replicate</button>
+          </div>
+        </div>
+        <div class="b-rv">
+          <div class="b-fr" id="b-fr">
+            <svg viewBox="0 0 260 150" aria-hidden="true">
+              <rect class="b-box" x="6" y="45" width="90" height="60" rx="10"/><text class="b-t" x="51" y="72" text-anchor="middle" font-size="12.5">Data</text><text class="b-t" x="51" y="88" text-anchor="middle" font-size="12.5">product</text>
+              <rect class="b-box" x="164" y="45" width="90" height="60" rx="10"/><text class="b-t" x="209" y="80" text-anchor="middle" font-size="11.5">Datasphere</text>
+              <rect id="b-copy" class="b-boxa" x="176" y="112" width="66" height="26" rx="6" opacity="0"/><text id="b-copyt" class="b-s" x="209" y="129" text-anchor="middle" font-size="11" opacity="0">local copy</text>
+              <path class="b-flow" d="M96 75 H164"/>
+              <text id="b-frl" class="b-s" x="130" y="64" text-anchor="middle" font-size="11">query</text>
+            </svg>
+            <dl id="b-frd">
+              <dt>How</dt><dd>Datasphere reads the data product where it lives. Nothing is copied.</dd>
+              <dt>Fresh</dt><dd>Always as current as the data product itself.</dd>
+              <dt>Best for</dt><dd>Exploring, lower volumes, and data you query occasionally.</dd>
+              <dt>Watch</dt><dd>Heavy, frequent queries can be slower and use more compute.</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <div class="b-rv" style="margin-top:64px">
+        <h3 style="font-size:24px">Governed from activation to use.</h3>
+        <p class="lede" style="font-size:16.5px">Data products are not free-for-all downloads. Activation loads the complete data set so every use case shares one version of it, and each team then requests access for a stated purpose.</p>
+        <div class="b-gov">
+          <div><span class="b-i">01</span><b>Activate</b><span>An administrator activates a data product or a whole package. Everything is loaded: no field or row filters at this stage.</span></div>
+          <div><span class="b-i">02</span><b>Request</b><span>A data engineer finds it in the catalog and requests it for a space, with a purpose and an end date.</span></div>
+          <div><span class="b-i">03</span><b>Approve</b><span>An approver accepts or rejects. The requester can't approve their own request.</span></div>
+          <div><span class="b-i">04</span><b>Install</b><span>The product is installed into the target space in SAP Datasphere.</span></div>
+          <div><span class="b-i">05</span><b>Restrict</b><span>Data access controls in Datasphere decide who sees which rows.</span></div>
+        </div>
+        <p class="b-callout"><b>Tip:</b> data products carry personal-data tags. We check them before approval, so HR and customer data only reaches the spaces that should have it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 INTELLIGENT APPS -->
+  <section id="intelligent-apps">
+    <div class="in two">
+      <div>
+        <div class="b-rv">
+          <span class="eyebrow">04 · Intelligent applications</span>
+          <h2>Ready-made analytics, built on data products.</h2>
+          <p class="lede">SAP also delivers complete analytics for a business area, now also called intelligent content. Install one and Business Data Cloud activates the data products it needs, generates the models in Datasphere and deploys the dashboards in SAP Analytics Cloud, end to end.</p>
+        </div>
+        <div class="b-ia b-rv" aria-label="What an intelligent application is made of">
+          <div><b>Story</b><span>Dashboards in SAP Analytics Cloud</span></div>
+          <div><b>Analytic models</b><span>Measures and logic in SAP Datasphere</span></div>
+          <div><b>Data products</b><span>Activated automatically from your sources</span></div>
+          <div><b>Source system</b><span>SAP Cloud ERP, SuccessFactors and others</span></div>
+        </div>
+        <div class="b-spaces b-rv">
+          <div><b>Ingestion</b><span>Where the data products land</span></div>
+          <div><b>Preparation</b><span>Where data is shaped</span></div>
+          <div><b>Application</b><span>What the stories read</span></div>
+        </div>
+        <p class="b-callout b-rv"><b>Extending them:</b> SAP's content is read-only, so you copy it and change the copy. SAP's later updates don't flow into copies, so we keep changes small and documented.</p>
+      </div>
+      <figure style="margin:0" class="b-rv">
+        <div class="screen" role="img" aria-label="Illustration of a working capital dashboard: days sales outstanding 58, days payable outstanding 42, days inventory 71, with days sales outstanding by customer group, exporters highest at 84 days">
+          <div class="shell"><span class="sap">SAP</span><span class="t">Working Capital Insights</span><span class="joule-btn"></span><span class="av">CFO</span></div>
+          <div class="body-pad">
+            <div class="b-kpi3">
+              <div class="tile"><div><div class="h">DSO</div><div class="s">Days to collect</div></div><div class="k neg">58</div></div>
+              <div class="tile"><div><div class="h">DPO</div><div class="s">Days to pay</div></div><div class="k">42</div></div>
+              <div class="tile"><div><div class="h">DIO</div><div class="s">Days in stock</div></div><div class="k">71</div></div>
+            </div>
+            <div class="card-f" style="margin-top:10px">
+              <div class="h">Days to collect by customer group</div>
+              <div class="b-bars">
+                <div class="b-br"><span>Exporters</span><span class="b-tr"><i class="hi" style="width:84%"></i></span><span>84</span></div>
+                <div class="b-br"><span>Supermarkets</span><span class="b-tr"><i style="width:61%"></i></span><span>61</span></div>
+                <div class="b-br"><span>Hotels</span><span class="b-tr"><i style="width:47%"></i></span><span>47</span></div>
+                <div class="b-br"><span>Distributors</span><span class="b-tr"><i style="width:38%"></i></span><span>38</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="caption">Illustration of an intelligent application for working capital. Sample data.</figcaption>
+        <div class="b-card" style="margin-top:22px">
+          <span class="b-k">Check before you plan</span>
+          <p style="margin-top:6px">SAP releases intelligent applications by line of business and edition, and some, such as SAP Cloud ERP Intelligence, are aimed at the Private Edition today. We confirm what's available for your edition before it goes into a plan.</p>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 05 DATASPHERE -->
+  <section class="light" id="datasphere">
+    <div class="in">
+      <div class="b-rv">
+        <span class="eyebrow">05 · SAP Datasphere</span>
+        <h2>The knowledge core where your data model lives.</h2>
+        <p class="lede">SAP Datasphere is where SAP and non-SAP data come together. Each team works in its own <b>space</b>, with its own storage, connections and users. We organise models in layers, so each step has one job and changes stay contained.</p>
+      </div>
+      <div class="b-layers b-rv">
+        <div><span class="b-i">LAYER 1</span><h3>Inbound</h3><p>Data as it arrives: installed data products, replicated or federated tables, files.</p></div>
+        <div><span class="b-i">LAYER 2</span><h3>Harmonisation</h3><p>Shared keys, currencies and master data. Data access controls are applied here.</p></div>
+        <div><span class="b-i">LAYER 3</span><h3>Propagation</h3><p>Reusable business views, combined across sources, ready for any consumer.</p></div>
+        <div><span class="b-i">LAYER 4</span><h3>Reporting</h3><p>Analytic models with measures and semantics for SAP Analytics Cloud and Excel.</p></div>
+      </div>
+      <div class="b-cards">
+        <div class="b-card b-rv"><span class="b-k">Replication flows</span><h3>Move data in</h3><p>For SAP Cloud ERP, replication reads SAP's released extraction CDS views or uses the SQL service. Classic extractors and SLT don't apply to the cloud edition.</p></div>
+        <div class="b-card b-rv"><span class="b-k">Transformation flows</span><h3>Shape it</h3><p>Graphical or SQL transformations, loaded in full or as deltas, and grouped into task chains that run on a schedule.</p></div>
+        <div class="b-card b-rv"><span class="b-k">Semantics</span><h3>Keep the meaning</h3><p>Semantic types, associations and hierarchies tell every tool what an amount, a currency or a date really is.</p></div>
+      </div>
+      <p class="b-callout b-rv"><b>Your own data products:</b> a model you build in Datasphere can be published as a data product, for example a cleansed customer view, and shared with other teams or with Databricks like SAP's own.</p>
+    </div>
+  </section>
+
+  <!-- 06 ANALYTICS -->
+  <section id="analytics">
+    <div class="in two">
+      <div class="b-rv">
+        <span class="eyebrow">06 · Analytics and planning</span>
+        <h2>Where people see, plan and ask.</h2>
+        <p class="lede">SAP Analytics Cloud is the front end of Business Data Cloud: dashboards, planning and predictive analysis in one tool, on the same models your data team maintains.</p>
+        <div class="b-cards" style="grid-template-columns:1fr 1fr;margin-top:26px">
+          <div class="b-card"><span class="b-k">Live</span><h3>Live connection</h3><p>Reads SAP models in place, so figures are current and nothing is copied.</p></div>
+          <div class="b-card"><span class="b-k">Import</span><h3>Imported data</h3><p>Copies data into Analytics Cloud. Needed for planning and many non-SAP sources.</p></div>
+          <div class="b-card"><span class="b-k">Plan</span><h3>Budgets and forecasts</h3><p>Versions, data actions and allocations, with the actuals coming straight from SAP.</p></div>
+          <div class="b-card"><span class="b-k">Ask</span><h3>AI built in</h3><p>Ask questions in plain language, explain variances and run predictive scenarios.</p></div>
+        </div>
+        <p style="margin-top:22px"><a href="#" style="color:var(--green-hi);font-weight:700;text-decoration:none">See our SAP Analytics Cloud page →</a></p>
+      </div>
+      <figure style="margin:0" class="b-rv">
+        <div class="screen" role="img" aria-label="Illustration of a sales planning screen in SAP Analytics Cloud: actuals and a forecast by month, an editable plan table for three regions, and Joule answering a question about the forecast">
+          <div class="shell"><span class="sap">SAP</span><span class="t">Analytics Cloud · Sales plan 2027</span><span class="joule-btn"></span><span class="av">FP</span></div>
+          <div class="body-pad">
+            <div class="card-f">
+              <div class="h">Net revenue, LKR m · actual and forecast</div>
+              <div class="b-chart"><i style="height:52%"></i><i style="height:58%"></i><i style="height:55%"></i><i style="height:63%"></i><i style="height:66%"></i><i style="height:61%"></i><i class="f" style="height:70%"></i><i class="f" style="height:74%"></i><i class="f" style="height:78%"></i><i class="f" style="height:83%"></i></div>
+            </div>
+            <div class="split">
+              <div class="card-f">
+                <div class="h">Plan by region</div>
+                <table class="b-plan"><thead><tr><th>Region</th><th>Q1</th><th>Q2</th></tr></thead>
+                <tbody><tr><td>Western</td><td>412</td><td class="b-ed">440</td></tr><tr><td>Central</td><td>188</td><td>196</td></tr><tr><td>Exports</td><td>305</td><td class="b-ed">330</td></tr></tbody></table>
+              </div>
+              <div class="joule">
+                <div class="jh"><i></i>Joule</div>
+                <div class="msgs">
+                  <div class="bub u">Why is the Q2 forecast up?</div>
+                  <div class="bub j">Mostly <b>Exports</b>: two new contracts and a higher price assumption.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="caption">Illustration of planning in SAP Analytics Cloud. Sample data.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 07 OPEN ECOSYSTEM -->
+  <section class="light" id="open">
+    <div class="in">
+      <div class="b-rv">
+        <span class="eyebrow">07 · Open data ecosystem</span>
+        <h2>Share SAP data with the platforms you already use.</h2>
+        <p class="lede">Business Data Cloud is open by design. Data products are stored in an open table format and shared with Delta Sharing, so data platforms can read them without copies or extraction jobs. Results can come back as data products too, which closes the loop.</p>
+      </div>
+      <figure class="b-fig b-rv">
+        <svg class="b-wide" viewBox="0 50 1000 215" role="img" aria-label="Round trip: an SAP data product is shared with zero copy to a data platform such as SAP Databricks, Snowflake or Google BigQuery. A machine learning model there combines it with external data and produces a forecast. The forecast is shared back, becomes a custom data product, is modelled in SAP Datasphere and is shown in SAP Analytics Cloud.">
+          <defs><path id="b-rt" d="M180 110 H400 M400 110 H620 M720 150 V220 H530 M530 220 H310 M210 220 H140"/>
+          <path id="b-rt1" d="M190 110 H410"/><path id="b-rt2" d="M590 110 H700 C760 110 760 220 700 220 H600"/><path id="b-rt3" d="M420 220 H340"/><path id="b-rt4" d="M230 220 H170"/></defs>
+          <g font-family="inherit">
+            <rect class="b-boxa" x="20" y="72" width="170" height="76" rx="12"/><text class="b-t" x="105" y="105" text-anchor="middle">SAP data product</text><text class="b-s" x="105" y="126" text-anchor="middle">sales, stock, prices</text>
+            <rect class="b-box" x="410" y="62" width="180" height="96" rx="12"/><text class="b-t" x="500" y="96" text-anchor="middle">Data platform</text><text class="b-s" x="500" y="117" text-anchor="middle">SAP Databricks, Snowflake,</text><text class="b-s" x="500" y="134" text-anchor="middle">Google BigQuery</text>
+            <rect class="b-box" x="760" y="62" width="220" height="96" rx="12" stroke-dasharray="5 5"/><text class="b-t" x="870" y="96" text-anchor="middle">External data</text><text class="b-s" x="870" y="117" text-anchor="middle">weather, market feeds,</text><text class="b-s" x="870" y="134" text-anchor="middle">IoT, web</text>
+            <path class="b-ln" d="M760 110 H690" stroke-dasharray="3 4"/>
+            <text class="b-e" x="300" y="98" text-anchor="middle">DELTA SHARING</text><text class="b-s" x="300" y="135" text-anchor="middle" font-size="11.5">zero copy</text>
+            <rect class="b-box" x="420" y="190" width="180" height="62" rx="12"/><text class="b-t" x="510" y="217" text-anchor="middle">Forecast</text><text class="b-s" x="510" y="236" text-anchor="middle">shared back</text>
+            <rect class="b-box" x="230" y="190" width="110" height="62" rx="12"/><text class="b-t" x="285" y="217" text-anchor="middle">Custom</text><text class="b-t" x="285" y="235" text-anchor="middle">data product</text>
+            <rect class="b-box" x="20" y="190" width="150" height="62" rx="12"/><text class="b-t" x="95" y="217" text-anchor="middle">Datasphere</text><text class="b-s" x="95" y="236" text-anchor="middle">→ Analytics Cloud</text>
+            <path class="b-flow" d="M190 110 H410"/><path class="b-flow" d="M590 110 H700 C760 110 760 220 700 220 H600"/><path class="b-flow" d="M420 220 H340"/><path class="b-flow" d="M230 220 H170"/>
+            <g class="b-anim">
+              <circle class="b-dot" r="5"><animateMotion dur="1.8s" repeatCount="indefinite"><mpath href="#b-rt1"/></animateMotion></circle>
+              <circle class="b-dot" r="5"><animateMotion dur="2.4s" begin=".6s" repeatCount="indefinite"><mpath href="#b-rt2"/></animateMotion></circle>
+              <circle class="b-dot" r="5"><animateMotion dur="1.2s" begin="1s" repeatCount="indefinite"><mpath href="#b-rt3"/></animateMotion></circle>
+              <circle class="b-dot" r="5"><animateMotion dur="1s" begin="1.4s" repeatCount="indefinite"><mpath href="#b-rt4"/></animateMotion></circle>
+            </g>
+          </g>
+        </svg>
+        <ol class="b-list">
+          <li><b>Share:</b> an SAP data product is shared with zero copy to a data platform such as SAP Databricks, Snowflake or Google BigQuery.</li>
+          <li><b>Combine:</b> data scientists add external data such as weather or auction prices and train a forecast.</li>
+          <li><b>Share back:</b> the forecast returns as a custom data product.</li>
+          <li><b>Use:</b> Datasphere models it and SAP Analytics Cloud shows it next to your actuals.</li>
+        </ol>
+        <figcaption>An illustration of the round trip, for example a tea exporter forecasting demand from SAP sales and stock plus auction and weather data.</figcaption>
+      </figure>
+      <div class="users b-rv" style="margin-top:34px">
+        <table>
+          <thead><tr><th>How you connect</th><th>What it means</th><th>Typical fit</th></tr></thead>
+          <tbody>
+            <tr><td>SAP Databricks</td><td>Built into Business Data Cloud and run by SAP.</td><td>A data science workspace with nothing extra to contract.</td></tr>
+            <tr><td>SAP Snowflake</td><td>Snowflake offered by SAP as an extension of Business Data Cloud.</td><td>Teams that prefer Snowflake as their engine.</td></tr>
+            <tr><td>BDC Connect</td><td>Zero-copy sharing with your own Databricks, Snowflake or Google BigQuery.</td><td>Companies that already run one of these platforms.</td></tr>
+            <tr><td>Partner applications</td><td>Specialist tools for data governance, catalogues and machine learning.</td><td>Specific needs such as data lineage or automated ML.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 FIT -->
+  <section id="fit">
+    <div class="in">
+      <div class="b-rv">
+        <span class="eyebrow">08 · Is it for you?</span>
+        <h2>Answer four questions. Get an honest starting point.</h2>
+        <p class="lede">Not every company needs Business Data Cloud on day one. SAP Cloud ERP already has strong real-time reporting built in. Pick your answers and see which pieces would fit.</p>
+      </div>
+      <div class="b-helper">
+        <form class="b-rv" id="b-form" onsubmit="return false">
+          <div class="b-q"><fieldset><legend>Where does the data you report on live?</legend><div class="b-opts">
+            <label><input type="radio" name="src" value="erp" checked><span>Mainly SAP Cloud ERP</span></label>
+            <label><input type="radio" name="src" value="many"><span>Several SAP and non-SAP systems</span></label></div></fieldset></div>
+          <div class="b-q"><fieldset><legend>Do you need budgeting, planning or forecasting?</legend><div class="b-opts">
+            <label><input type="radio" name="plan" value="no" checked><span>Not yet</span></label>
+            <label><input type="radio" name="plan" value="yes"><span>Yes</span></label></div></fieldset></div>
+          <div class="b-q"><fieldset><legend>Data science and custom AI?</legend><div class="b-opts">
+            <label><input type="radio" name="ds" value="no" checked><span>Not planned</span></label>
+            <label><input type="radio" name="ds" value="new"><span>Yes, we need a platform</span></label>
+            <label><input type="radio" name="ds" value="own"><span>We already run Databricks, Snowflake or BigQuery</span></label></div></fieldset></div>
+          <div class="b-q"><fieldset><legend>Do you run SAP BW today?</legend><div class="b-opts">
+            <label><input type="radio" name="bw" value="no" checked><span>No</span></label>
+            <label><input type="radio" name="bw" value="yes"><span>Yes</span></label></div></fieldset></div>
+        </form>
+        <div class="b-res b-rv" aria-live="polite">
+          <span class="eyebrow" style="margin-bottom:8px">Your starting point</span>
+          <h3 id="b-rt-h">Start with what SAP Cloud ERP includes.</h3>
+          <p class="b-sum" id="b-rt-p">Real-time embedded analytics cover day-to-day reporting for a single ERP. Revisit when you add systems, planning or AI.</p>
+          <ol>
+            <li data-k="emb" class="on"><i></i><div><b>Embedded analytics in SAP Cloud ERP</b><small>Real-time reports, KPIs and dashboards. Included.</small></div></li>
+            <li data-k="sac"><i></i><div><b>SAP Analytics Cloud</b><small>Planning and management dashboards.</small></div></li>
+            <li data-k="bdc"><i></i><div><b>Business Data Cloud with Datasphere</b><small>Data products and one model across systems.</small></div></li>
+            <li data-k="dbx"><i></i><div><b>SAP Databricks</b><small>Data science on SAP data, built in.</small></div></li>
+            <li data-k="con"><i></i><div><b>BDC Connect</b><small>Zero-copy sharing with your current platform.</small></div></li>
+            <li data-k="bw"><i></i><div><b>SAP BW alongside</b><small>Keep what works, move to data products step by step.</small></div></li>
+          </ol>
+        </div>
+      </div>
+      <p class="note b-rv">A first indication, not a recommendation. Business Data Cloud is licensed by capacity, and we size it against your data and use cases before anything is committed.</p>
+    </div>
+  </section>
+
+  <!-- 09 GETTING STARTED -->
+  <section class="light" id="start">
+    <div class="in">
+      <div class="b-grid2">
+        <div class="b-rv">
+          <span class="eyebrow">09 · Getting started</span>
+          <h2>From contract to first dashboard.</h2>
+          <p class="lede">A typical first setup, connecting SAP Cloud ERP Public Edition. SAP runs the platform, so the work is configuration, governance and modelling, not servers.</p>
+        </div>
+        <ol class="b-tl b-rv">
+          <li><span class="b-n">1</span><div><b>Provision the cockpit <span class="b-who">Admin</span></b><span>Capacity is assigned in SAP for Me once the contract starts, then the cockpit is provisioned.</span></div></li>
+          <li><span class="b-n">2</span><div><b>Add applications <span class="b-who">Admin</span></b><span>Datasphere and Analytics Cloud are added, new or brought over from existing tenants.</span></div></li>
+          <li><span class="b-n">3</span><div><b>Connect SAP Cloud ERP <span class="b-who">Basis</span></b><span>Certificate trust is set up and the formation created. SAP content then shows as available.</span></div></li>
+          <li><span class="b-n">4</span><div><b>Activate data products <span class="b-who">Admin</span></b><span>Start with one area, usually finance, and check the data against SAP.</span></div></li>
+          <li><span class="b-n">5</span><div><b>Install and govern <span class="b-who">Data team</span></b><span>Products are requested, approved and installed into spaces, with access rules.</span></div></li>
+          <li><span class="b-n">6</span><div><b>Model and report <span class="b-who">Business</span></b><span>Analytic models and the first stories, or an intelligent application switched on.</span></div></li>
+        </ol>
+      </div>
+      <div class="b-rv" style="margin-top:48px">
+        <h3 style="font-size:24px">How we run it with you.</h3>
+        <div class="b-phases">
+          <div><small>Assess</small><b>Questions first</b><p>The questions management can't answer today, and the data each one needs.</p></div>
+          <div><small>Design</small><b>Right-sized</b><p>Which components you need now, which can wait, and an estimate of capacity.</p></div>
+          <div><small>Build</small><b>One area live</b><p>Data products, models and dashboards for the first area, checked against SAP.</p></div>
+          <div><small>Scale</small><b>Area by area</b><p>Each next area reuses the same foundation, with governance and cost monitoring.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO LIBRARY -->
+  <section class="" id="watch">
+    <div class="in">
+      <span class="eyebrow">Watch and learn</span>
+      <h2>See it from SAP.</h2>
+      <p class="lede">Videos from SAP’s official YouTube channel on SAP Business Data Cloud.</p>
+      <div class="vgrid"><a class="vcard" href="https://www.youtube.com/watch?v=OkwQimWDeos" target="_blank" rel="noopener" data-yt="OkwQimWDeos" aria-label="Play on YouTube: Demo: SAP Business Data Cloud">
+      <div class="poster" data-k="start"><div class="top"><span class="ch"><b>SAP</b>YouTube</span><span class="tag">Demo</span></div><div class="big">Business Data Cloud</div><span class="play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M5 2.5v13l11-6.5z" fill="#0b2a1f"/></svg></span></div>
+      <div class="vmeta"><h3>Demo: SAP Business Data Cloud</h3><p>SAP’s launch demo: data products, intelligent applications and AI on one data foundation.</p><span class="d">SAP · February 2025</span></div></a><a class="vcard" href="https://www.youtube.com/watch?v=PhAMg7UVuE8" target="_blank" rel="noopener" data-yt="PhAMg7UVuE8" aria-label="Play on YouTube: Keynote highlights: AI, data and the autonomous enterprise">
+      <div class="poster" data-k="mod"><div class="top"><span class="ch"><b>SAP</b>YouTube</span><span class="tag">Keynote</span></div><div class="big">AI, data and the autonomous enterprise</div><span class="play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M5 2.5v13l11-6.5z" fill="#0b2a1f"/></svg></span></div>
+      <div class="vmeta"><h3>Keynote highlights: AI, data and the autonomous enterprise</h3><p>Where SAP is taking business data and AI, and the role Business Data Cloud plays in it.</p><span class="d">SAP · October 2026</span></div></a></div>
+      <p class="vnote">Published by SAP on its official YouTube channel.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="light" id="faq">
+    <div class="in">
+      <span class="eyebrow">Questions we hear</span>
+      <h2>Straight answers.</h2>
+      <div class="faq">
+        <details><summary>Does Business Data Cloud replace SAP Analytics Cloud or Datasphere?</summary><p>No, it includes them. Business Data Cloud is the managed service that brings them together with data products, SAP Databricks and SAP HANA Cloud. If you already use Datasphere or Analytics Cloud, those tenants can join without a migration.</p></details>
+        <details><summary>Do we need SAP Cloud Connector for SAP Cloud ERP Public Edition?</summary><p>No. Public Edition connects with a certificate exchange. Other SAP deployments, such as on-premise systems, need the Cloud Connector.</p></details>
+        <details><summary>Is our data copied?</summary><p>SAP's data products are stored once in the Business Data Cloud data lake. From there they are shared, not copied, with Datasphere, SAP Databricks and partner platforms. You decide per model whether to take a local copy for performance.</p></details>
+        <details><summary>Can we filter what gets activated?</summary><p>Not at activation. A data product is activated in full so every use case shares one data set. You restrict access afterwards in Datasphere, by space and with data access controls.</p></details>
+        <details><summary>Does it replace our SAP BW?</summary><p>Not overnight. SAP BW can run alongside Business Data Cloud and connect to Datasphere, so you keep what works and move to data products at your own pace.</p></details>
+        <details><summary>Which data products are available for SAP Cloud ERP Public Edition?</summary><p>SAP adds data products with each release, and availability differs by edition. We check the current catalogue for your edition before we plan anything.</p></details>
+        <details><summary>How is it licensed?</summary><p>By capacity: you buy capacity units and the services consume them. Intelligent applications are added on top. We estimate capacity from your data volumes and use cases, and check it against your SAP contract.</p></details>
+        <details><summary>We've just gone live on SAP Cloud ERP. Is it too early?</summary><p>Usually, yes. Get comfortable with the built-in reporting first. Plan Business Data Cloud when you need to combine systems, plan, or use AI across your data.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="book">
+    <div class="in">
+      <div class="cta-band">
+        <div>
+          <span class="eyebrow">Start here</span>
+          <h2>Answer the questions your data can't today.</h2>
+          <p class="lede">In one session we look at the questions your management wants answered, the systems that hold the data, and whether Business Data Cloud, SAP Analytics Cloud or SAP's built-in reporting is the right next step.</p>
+          <div style="margin-top:28px"><a href="#" class="btn pri">Book a data strategy session →</a></div>
+        </div>
+        <ul>
+          <li>Questions and sources mapped</li>
+          <li>Architecture: what you need now, and later</li>
+          <li>A first-area plan with effort and capacity</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var main = document.getElementById('top');
+  main.classList.add('b-js');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hdr = document.querySelector('header.site');
+  function setHdr() { if (hdr) document.documentElement.style.setProperty('--hdr', hdr.offsetHeight + 'px'); }
+  setHdr(); window.addEventListener('resize', setHdr);
+
+  // SVG motion off for reduced-motion users
+  if (reduce) document.querySelectorAll('.b-anim').forEach(function (g) { g.remove(); });
+
+  // reveal on scroll
+  var rv = document.querySelectorAll('.b-rv');
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    rv.forEach(function (el) { io.observe(el); });
+  } else { rv.forEach(function (el) { el.classList.add('on'); }); }
+
+  // in-page menu: scrollspy + progress
+  var nav = document.querySelector('.b-sub'), wrap = nav.querySelector('.b-subin'), prog = nav.querySelector('.b-prog');
+  var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+  var secs = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  var current = -1;
+  function spy() {
+    var y = (hdr ? hdr.offsetHeight : 72) + nav.offsetHeight + 40, idx = -1;
+    secs.forEach(function (s, i) { if (s && s.getBoundingClientRect().top <= y) idx = i; });
+    var last = secs[secs.length - 1].getBoundingClientRect();
+    if (last.bottom <= window.innerHeight + 4) idx = secs.length - 1;
+    if (idx !== current) {
+      current = idx;
+      links.forEach(function (a, i) { a.classList.toggle('on', i === idx); if (i === idx) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+      if (idx >= 0) { var a = links[idx]; var left = a.offsetLeft - (wrap.clientWidth - a.offsetWidth) / 2; wrap.scrollTo({ left: left, behavior: reduce ? 'auto' : 'smooth' }); }
+    }
+    var top = secs[0].offsetTop, end = secs[secs.length - 1].offsetTop + secs[secs.length - 1].offsetHeight - window.innerHeight;
+    var p = Math.min(1, Math.max(0, (window.scrollY - top + 200) / Math.max(1, end - top)));
+    prog.style.transform = 'scaleX(' + p + ')';
+  }
+  var tick = false;
+  window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(function () { spy(); tick = false; }); } }, { passive: true });
+  spy();
+
+  // data product pipeline
+  var S = [
+    ['In SAP Cloud ERP', 'It starts with a CDS view', 'SAP’s applications describe their data in CDS views: virtual data models that already know that a journal entry belongs to a company code and a ledger. These views are the source for SAP’s data products, so the business meaning is there from the first step.',
+     '<em>// SAP Cloud ERP (simplified)</em>\n<i>define view</i> JournalEntryItem\n  key CompanyCode\n  key FiscalYear\n  key AccountingDocument\n      GLAccount\n      <u>AmountInCompanyCodeCurrency</u>\n      PostingDate'],
+    ['Run by SAP', 'The source pushes the data', 'The source system sends its data to Business Data Cloud’s foundation services: a full load first, then changes as they happen. You don’t build or schedule extraction jobs.',
+     '<em>// ingestion (illustrative)</em>\nsource    : SAP Cloud ERP\nmode      : <u>initial load</u> → <u>delta</u>\ntarget    : data lake · ingestion zone\njobs to maintain : <i>0</i>'],
+    ['Run by SAP', 'Refined into clean tables', 'Inside the lake, SAP’s pipelines clean and standardise the raw records with Spark: consistent types, keys and history, stored as open Delta tables.',
+     '<em>// refined zone (illustrative)</em>\nformat    : <i>Delta</i> (Parquet files)\nengine    : Spark\nkeys      : CompanyCode, FiscalYear,\n            AccountingDocument, LineItem\nhistory   : <u>kept</u>'],
+    ['Run by SAP', 'Enriched with business logic', 'Related data is joined in and business rules are applied, so the result reads like the business, not like a database. This is the layer the data product exposes.',
+     '<em>// enriched (illustrative)</em>\n+ Company code name, currency\n+ G/L account text, account group\n+ Fiscal period from posting date\n<i>= Journal Entry data product</i>'],
+    ['Run by SAP', 'Described so tools understand it', 'Each data product is published with machine-readable metadata. Discovery uses SAP’s Open Resource Discovery standard, and the schema uses CSN, which carries labels and semantics, such as how a measure may be aggregated.',
+     '<em>// metadata (simplified)</em>\n"StockQuantity": {\n  "@label": "Closing stock",\n  "@Semantics.quantity": <i>true</i>,\n  "@Aggregation.default": <u>"LAST"</u>\n}\n<em>// summed across months? no: last value.</em>'],
+    ['For every consumer', 'Shared, not copied', 'Data products are shared with Delta Sharing. SAP Datasphere, SAP Databricks and partner platforms read the same files, so there is one version of the truth and no extra copies to keep in sync.',
+     '<em>// consumers of one data product</em>\nSAP Datasphere   <i>✓</i> install, federate or replicate\nSAP Databricks   <i>✓</i> zero-copy share\nSnowflake, BigQuery <i>✓</i> via BDC Connect\nJoule and agents <i>✓</i> grounded answers']
+  ];
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.b-step'));
+  var bar = document.querySelector('.b-steps .b-bar'), det = document.getElementById('b-detail'), timer = null, at = 0;
+  function show(i, user) {
+    at = i;
+    steps.forEach(function (b, j) { b.classList.toggle('on', j === i); b.classList.toggle('done', j < i); b.setAttribute('aria-selected', j === i ? 'true' : 'false'); });
+    bar.style.width = (92 * i / (steps.length - 1)) + '%';
+    var s = S[i];
+    det.innerHTML = '<div><span class="b-who">' + s[0] + '</span><h3>' + s[1] + '</h3><p>' + s[2] + '</p></div><div class="b-viz">' + s[3] + '</div>';
+    det.classList.remove('b-fade'); void det.offsetWidth; if (!reduce) det.classList.add('b-fade');
+    if (user) stop();
+  }
+  var play = document.getElementById('b-play');
+  function stop() { if (timer) { clearInterval(timer); timer = null; play.textContent = '▶ Play the steps'; } }
+  play.addEventListener('click', function () {
+    if (timer) { stop(); return; }
+    play.textContent = '❚❚ Pause';
+    if (at === steps.length - 1) show(0);
+    timer = setInterval(function () { if (at >= steps.length - 1) { stop(); return; } show(at + 1); }, 3200);
+  });
+  steps.forEach(function (b, i) {
+    b.addEventListener('click', function () { show(i, true); });
+    b.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); var n = (i + (e.key === 'ArrowRight' ? 1 : -1) + steps.length) % steps.length; show(n, true); steps[n].focus(); }
+    });
+  });
+  show(0);
+
+  // federate / replicate
+  var M = {
+    fed: { l: 'query', c: 0, d: [['How', 'Datasphere reads the data product where it lives. Nothing is copied.'], ['Fresh', 'Always as current as the data product itself.'], ['Best for', 'Exploring, lower volumes, and data you query occasionally.'], ['Watch', 'Heavy, frequent queries can be slower and use more compute.']] },
+    rep: { l: 'copy', c: 1, d: [['How', 'Datasphere keeps a local copy and refreshes it on a schedule or with each change.'], ['Fresh', 'As current as the last refresh.'], ['Best for', 'Large models, heavy dashboards and data used every day.'], ['Watch', 'Uses more storage, which counts against your capacity.']] }
+  };
+  var segs = document.querySelectorAll('.b-seg button');
+  segs.forEach(function (b) {
+    b.addEventListener('click', function () {
+      segs.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      var m = M[b.dataset.m];
+      document.getElementById('b-frl').textContent = m.l;
+      document.getElementById('b-copy').setAttribute('opacity', m.c);
+      document.getElementById('b-copyt').setAttribute('opacity', m.c);
+      var dl = document.getElementById('b-frd');
+      dl.innerHTML = m.d.map(function (r) { return '<dt>' + r[0] + '</dt><dd>' + r[1] + '</dd>'; }).join('');
+      dl.classList.remove('b-fade'); void dl.offsetWidth; if (!reduce) dl.classList.add('b-fade');
+    });
+  });
+
+  // fit helper
+  var form = document.getElementById('b-form');
+  function fit() {
+    var v = function (n) { return form.querySelector('input[name="' + n + '"]:checked').value; };
+    var src = v('src'), plan = v('plan'), ds = v('ds'), bw = v('bw');
+    var on = { emb: true, sac: plan === 'yes' || src === 'many', bdc: src === 'many' || ds !== 'no' || bw === 'yes', dbx: ds === 'new', con: ds === 'own', bw: bw === 'yes' };
+    document.querySelectorAll('.b-res li').forEach(function (li) { li.classList.toggle('on', !!on[li.dataset.k]); });
+    var h, p;
+    if (!on.bdc && !on.sac) { h = 'Start with what SAP Cloud ERP includes.'; p = 'Real-time embedded analytics cover day-to-day reporting for a single ERP. Revisit when you add systems, planning or AI.'; }
+    else if (!on.bdc) { h = 'Add SAP Analytics Cloud for planning.'; p = 'Planning and management dashboards on top of SAP Cloud ERP. Business Data Cloud can come later, on the same tools.'; }
+    else if (ds === 'own') { h = 'Business Data Cloud, connected to your platform.'; p = 'Use SAP’s data products in Datasphere, and share them with the platform your data team already runs, without copying.'; }
+    else if (ds === 'new') { h = 'Business Data Cloud with SAP Databricks.'; p = 'Data products in one governed model, with a data science workspace built in for forecasting and custom AI.'; }
+    else if (bw === 'yes' && src !== 'many' && plan === 'no') { h = 'Modernise SAP BW step by step.'; p = 'Keep BW running alongside Business Data Cloud and move reporting to data products as SAP releases them.'; }
+    else { h = 'Business Data Cloud with Datasphere.'; p = 'One model across your systems, built on SAP’s data products, with SAP Analytics Cloud on top.'; }
+    document.getElementById('b-rt-h').textContent = h;
+    document.getElementById('b-rt-p').textContent = p;
+  }
+  form.addEventListener('change', fit); fit();
+})();
+</script>

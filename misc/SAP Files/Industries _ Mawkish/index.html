@@ -1,0 +1,1075 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Industries | Mawkish</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Mawkish dark site, full-width bands; each band pairs copy with a drawn SAP Fiori-style screen */
+:root {
+  --bg: #050807;
+  --bg-2: #0a110e;
+  --line: #1c2823;
+  --fg: #eef3f0;
+  --muted: #9aaaa2;
+  --green: #1f7a5a;
+  --green-hi: #34b386;
+  --paper: #f3f6f4;
+  --ink: #142019;
+  --ink-soft: #5c6c65;
+  --fiori: #0a6ed1;
+  --fiori-bg: #f5f6f7;
+  --warn: #e9730c;
+  --display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.in { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 88px; border-top: 1px solid var(--line); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 19px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 16px; display: block; }
+.lede { color: var(--muted); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border: 1px solid transparent; }
+.btn.pri { background: var(--green); color: #fff; }
+.btn.pri:hover { background: #24906a; }
+.btn.sec { border-color: #2c3d36; color: var(--fg); }
+.btn.sec:hover { border-color: var(--green-hi); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
+
+/* header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(5,8,7,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.site .in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; flex-direction: column; align-items: center; font-weight: 800; letter-spacing: .3em; font-size: 9px; color: var(--fg); text-decoration: none; }
+.logo svg { width: 54px; height: 26px; }
+.nav { display: flex; gap: 26px; align-items: center; }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 700; font-size: 12.5px; letter-spacing: .07em; }
+.nav a.on { color: var(--green-hi); }
+.nav .btn { padding: 12px 18px; }
+@media (max-width: 900px) { .nav a:not(.btn) { display: none; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 56px 88px; background: radial-gradient(900px 420px at 80% 10%, rgba(31,122,90,.22), transparent 70%); }
+.crumbs { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 em { font-style: normal; color: var(--green-hi); }
+.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.name-note { margin-top: 28px; font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--green); padding-left: 14px; max-width: 54ch; }
+.name-note b { color: var(--fg); font-weight: 600; }
+
+/* Fiori mock screens */
+.screen { background: var(--fiori-bg); color: #32363a; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06); font-size: 12px; line-height: 1.4; min-width: 0; }
+.shell { background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; gap: 12px; padding: 9px 14px; }
+.shell .sap { background: linear-gradient(135deg,#0a6ed1,#0854a0); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 7px; border-radius: 3px; letter-spacing: .02em; }
+.shell .t { font-weight: 600; color: #32363a; flex: 1; }
+.shell .search { flex: 1.4; background: #eff1f2; border-radius: 16px; height: 24px; display: flex; align-items: center; padding: 0 10px; color: #8b9196; font-size: 11px; }
+.shell .joule-btn { width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); }
+.shell .av { width: 24px; height: 24px; border-radius: 50%; background: #d1e8ff; color: #0a6ed1; font-weight: 700; font-size: 10px; display: grid; place-items: center; }
+.body-pad { padding: 16px; }
+.greet { font-size: 15px; font-weight: 700; color: #1d2d3e; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.tile { background: #fff; border-radius: 10px; padding: 11px 12px; box-shadow: 0 0 0 1px #e5e5e5; min-height: 92px; display: flex; flex-direction: column; justify-content: space-between; }
+.tile .h { font-weight: 600; color: #1d2d3e; font-size: 11.5px; }
+.tile .s { color: #6a6d70; font-size: 10.5px; }
+.tile .k { font-size: 22px; font-weight: 300; color: #0a6ed1; font-variant-numeric: tabular-nums; }
+.tile .k.neg { color: #bb0000; } .tile .k.pos { color: #107e3e; }
+.tile .k small { font-size: 11px; color: #6a6d70; margin-left: 2px; }
+.spark { height: 26px; width: 100%; }
+.split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; margin-top: 10px; }
+.card-f { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; padding: 12px; min-width: 0; }
+.card-f .h { font-weight: 700; font-size: 11.5px; color: #1d2d3e; margin-bottom: 8px; }
+.row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid #eee; font-size: 11px; }
+.row:first-of-type { border-top: 0; }
+.pill { font-size: 9.5px; font-weight: 700; border-radius: 9px; padding: 1px 7px; white-space: nowrap; }
+.pill.ok { background: #f1fdf6; color: #107e3e; box-shadow: inset 0 0 0 1px #c6ecd3; }
+.pill.wr { background: #fef7f1; color: #e9730c; box-shadow: inset 0 0 0 1px #f8d3b0; }
+.pill.in { margin: 0; max-width: none; padding: 1px 7px; background: #eef6fe; color: #0a6ed1; box-shadow: inset 0 0 0 1px #c5def7; }
+.joule { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; display: flex; flex-direction: column; min-width: 0; }
+.joule .jh { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid #eee; font-weight: 700; font-size: 11.5px; }
+.joule .jh i { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); display: inline-block; }
+.joule .msgs { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.bub { border-radius: 10px; padding: 7px 9px; font-size: 10.8px; max-width: 92%; }
+.bub.u { align-self: flex-end; background: #0a6ed1; color: #fff; border-bottom-right-radius: 3px; }
+.bub.j { background: #f2f2f7; color: #1d2d3e; border-bottom-left-radius: 3px; }
+.bub.j b { color: #0a6ed1; }
+.typing span { display: inline-block; width: 5px; height: 5px; margin-right: 3px; border-radius: 50%; background: #8b9196; }
+@media (prefers-reduced-motion: no-preference) {
+  .typing span { animation: blink 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
+}
+.caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+/* journey explainer */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.includes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.includes div { background: var(--bg-2); padding: 22px; }
+.includes h3 { font-size: 16px; margin-bottom: 6px; }
+.includes p { color: var(--muted); font-size: 14.5px; }
+.ico { width: 30px; height: 30px; margin-bottom: 12px; color: var(--green-hi); }
+
+/* fit check */
+.fit { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 44px; align-items: start; }
+.qs { display: flex; flex-direction: column; gap: 10px; }
+.q { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.q span { font-size: 15px; min-width: 0; }
+.yn { display: flex; gap: 4px; flex: none; background: #0f1814; border-radius: 9px; padding: 3px; }
+.yn button { font: 700 12px var(--body); letter-spacing: .06em; border: 0; border-radius: 7px; padding: 7px 12px; background: transparent; color: var(--muted); cursor: pointer; }
+.yn button[aria-pressed="true"] { background: var(--green); color: #fff; }
+.yn button.no[aria-pressed="true"] { background: #6b3a12; }
+.result { position: sticky; top: 100px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 28px; }
+.result .lab { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.meter { height: 10px; background: #dde5e1; border-radius: 6px; margin: 14px 0 18px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 6px; transition: width .35s; }
+.result h3 { font-size: 24px; margin-bottom: 10px; }
+.result p { color: var(--ink-soft); font-size: 15px; }
+.result .btn { margin-top: 20px; }
+
+/* capabilities */
+.caps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.cap { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.cap ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+.cap ul li { margin-bottom: 4px; }
+.cap .tagline { color: var(--fg); font-size: 15px; }
+
+/* AI */
+.agents { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.agent { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.agent .n { width: 36px; height: 36px; border-radius: 10px; background: rgba(52,179,134,.12); color: var(--green-hi); display: grid; place-items: center; }
+.agent h3 { font-size: 16px; margin-bottom: 2px; }
+.agent p { color: var(--muted); font-size: 14.5px; }
+.prog { height: 4px; background: #e6e9eb; border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.prog i { display: block; height: 100%; background: #0a6ed1; width: 72%; }
+@media (prefers-reduced-motion: no-preference) {
+  .prog i { animation: load 3.2s ease-in-out infinite alternate; }
+  @keyframes load { from { width: 38% } to { width: 92% } }
+}
+
+/* release timeline */
+.tl { margin-top: 48px; overflow-x: auto; }
+.tl svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.fact { border-top: 2px solid var(--green); padding-top: 14px; }
+.fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 14px; }
+
+/* extensibility */
+.layers { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.layer { display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.layer .who { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--green-hi); padding-top: 3px; }
+.layer h3 { font-size: 16px; margin-bottom: 4px; }
+.layer p { color: var(--muted); font-size: 14.5px; }
+.layer.core { background: var(--paper); color: var(--ink); border-color: transparent; }
+.layer.core .who { color: var(--green); }
+.layer.core p { color: var(--ink-soft); }
+
+/* activate */
+.phases { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ph { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.ph:last-child { border-right: 0; }
+.ph .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.ph h3 { font-size: 17px; }
+.ph p { color: var(--muted); font-size: 13.5px; }
+.ph .we { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--fg); }
+.ph .we b { color: var(--green-hi); font-weight: 700; }
+
+/* users */
+.users { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+.users table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; }
+.users th, .users td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.users th { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.users td:first-child { font-weight: 700; white-space: nowrap; }
+.users td:nth-child(2) { color: var(--muted); }
+.users tr:last-child td { border-bottom: 0; }
+.note { margin-top: 16px; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+/* faq */
+.faq { margin-top: 36px; display: flex; flex-direction: column; gap: 10px; max-width: 860px; }
+details { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 16.5px; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--green-hi); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 18px; max-width: 70ch; }
+
+/* cta */
+.cta-band { background: linear-gradient(120deg, #0e3a2b, #0a1a14 60%); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.cta-band ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cta-band li { display: flex; gap: 10px; font-size: 15px; }
+.cta-band li::before { content: "✓"; color: var(--green-hi); font-weight: 800; }
+footer { padding-block: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+footer .in { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .hero-grid, .two, .fit, .cta-band { grid-template-columns: 1fr; }
+  .caps { grid-template-columns: 1fr 1fr; }
+  .phases { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .ph:nth-child(3) { border-right: 0; }
+  .ph:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .result { position: static; }
+}
+@media (max-width: 620px) {
+  section { padding-block: 64px; }
+  .caps, .includes { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: 1fr; }
+  .ph { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .tiles .tile:nth-child(3) { display: none; }
+  .split { grid-template-columns: 1fr; }
+  .layer { grid-template-columns: 1fr; gap: 6px; }
+  .cta-band { padding: 36px 24px; }
+  .q { flex-direction: column; align-items: flex-start; }
+}
+
+/* light bands: same components, re-tokened */
+section.light { --bg-2: #ffffff; --line: #d9e2dd; --fg: #142019; --muted: #55655e; --green-hi: #17694b; background: #f2f5f3; color: var(--fg); border-top-color: transparent; }
+section.light .includes { background: var(--line); }
+section.light .cap, section.light details { box-shadow: 0 1px 2px rgba(20,32,25,.05); }
+/* Video library */
+.vf { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
+.vf button { font: 600 13.5px/1 var(--body); padding: 10px 15px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
+.vf button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.vf button span { color: var(--muted); margin-left: 6px; font-weight: 500; }
+.vf button[aria-pressed="true"] span { color: inherit; opacity: .6; }
+.vgrid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; margin-top: 26px; }
+.vcard { display: flex; flex-direction: column; text-decoration: none; color: var(--fg); border-radius: 14px; background: var(--bg-2); border: 1px solid var(--line); overflow: hidden; transition: transform .25s, border-color .25s; }
+.vcard:hover { transform: translateY(-3px); border-color: var(--green); }
+.vcard.feat { grid-column: span 2; }
+.poster { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; padding: 18px 20px; display: flex; flex-direction: column; justify-content: space-between; background: radial-gradient(120% 140% at 100% 0%, #1f7a5a 0%, #0c2a1f 48%, #06110d 100%); }
+.poster[data-k="mod"] { background: radial-gradient(120% 140% at 100% 0%, #0a6ed1 0%, #0b2340 50%, #050c16 100%); }
+.poster[data-k="rel"] { background: radial-gradient(120% 140% at 100% 0%, #5d36ff 0%, #1b1446 50%, #07061a 100%); }
+.poster::after { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(200deg, #000 10%, transparent 70%); -webkit-mask-image: linear-gradient(200deg, #000 10%, transparent 70%); pointer-events: none; }
+.poster .top { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+.poster .ch { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; color: #fff; letter-spacing: .04em; }
+.poster .ch b { background: linear-gradient(135deg,#0a6ed1,#0854a0); padding: 2px 6px; border-radius: 3px; font-size: 10px; }
+.poster .tag { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+.poster .big { position: relative; z-index: 1; font-family: var(--display); font-weight: 800; color: #fff; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.08; letter-spacing: -.01em; max-width: 80%; text-wrap: balance; }
+.vcard.feat .poster .big { font-size: clamp(26px, 3.4vw, 44px); }
+.poster .play { position: absolute; right: 18px; bottom: 18px; z-index: 1; width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,.95); display: grid; place-items: center; box-shadow: 0 10px 30px rgba(0,0,0,.35); transition: transform .25s; }
+.vcard:hover .play { transform: scale(1.08); }
+.vmeta { padding: 16px 18px 18px; display: grid; gap: 6px; }
+.vmeta h3 { font-size: 16px; line-height: 1.3; }
+.vmeta p { color: var(--muted); font-size: 14px; margin: 0; }
+.vmeta .d { font-size: 12px; color: var(--muted); letter-spacing: .02em; }
+.vnote { margin-top: 22px; color: var(--muted); font-size: 13px; max-width: 80ch; }
+
+@media (max-width: 980px) { .vgrid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .vgrid { grid-template-columns: 1fr; } }
+.vcard:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 2px; }
+
+/* Industries mega menu: classes prefixed mm- */
+.mm-trig { font: inherit; background: none; border: 0; padding: 0; cursor: pointer; color: var(--fg); font-weight: 700; font-size: 12.5px; letter-spacing: .07em; display: inline-flex; align-items: center; gap: 6px; }
+.mm-trig.on { color: var(--green-hi); }
+.mm-trig svg { transition: transform .2s; }
+.mm-trig[aria-expanded="true"] svg { transform: rotate(180deg); }
+.mm-trig:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 4px; border-radius: 4px; }
+header.site { position: sticky; }
+.mm { position: absolute; left: 0; right: 0; top: 100%; padding: 10px 16px 0; display: none; z-index: 20; }
+.mm.open { display: block; }
+.mm.static { position: static; display: block; padding: 0; }
+.mm-box { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 270px minmax(0,1fr); background: #eef2f0; color: #12201a; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,.5); font-family: var(--body, "Manrope", system-ui, sans-serif); }
+.mm-rail { background: #e2e9e5; padding: 14px; display: flex; flex-direction: column; gap: 3px; }
+.mm-rail button { font: inherit; text-align: left; background: none; border: 0; cursor: pointer; display: block; width: 100%; padding: 12px 16px; border-radius: 12px; color: #12201a; }
+.mm-rail button b { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 14px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.mm-rail button small { display: block; font-size: 12.5px; color: #5b6b64; margin-top: 2px; }
+.mm-rail button[aria-selected="true"] { background: #fff; box-shadow: inset 3px 0 0 #1f7a5a, 0 4px 14px rgba(0,0,0,.06); }
+.mm-rail button:hover:not([aria-selected="true"]) { background: rgba(255,255,255,.55); }
+.mm-rail button:focus-visible { outline: 2px solid #1f7a5a; outline-offset: -2px; }
+.mm-rail button.soon { padding: 8px 16px; }
+.mm-rail button.soon small { display: none; }
+.mm-rail button.soon b { font-size: 13px; }
+.mm-rail .mm-sep { font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: #7a8a83; padding: 14px 16px 4px; }
+.mm-rail .mm-soon { font-size: 9.5px; font-weight: 800; letter-spacing: .08em; color: #7a8a83; border: 1px solid #c8d3cd; border-radius: 4px; padding: 1px 5px; }
+.mm-main { padding: 24px 26px 22px; min-width: 0; display: flex; flex-direction: column; }
+.mm-ey { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: #5b6b64; padding-bottom: 12px; border-bottom: 1px solid #cfd9d4; margin: 0 0 14px; }
+.mm-ey span { letter-spacing: 0; text-transform: none; font-weight: 500; font-size: 13.5px; }
+.mm-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 4px 18px; }
+.mm-grid a { display: flex; gap: 12px; align-items: flex-start; padding: 11px 12px; border-radius: 12px; text-decoration: none; color: #12201a; }
+.mm-grid a:hover, .mm-grid a:focus-visible { background: #fff; outline: none; box-shadow: 0 4px 14px rgba(0,0,0,.05); }
+.mm-grid a:hover .mm-n, .mm-grid a:focus-visible .mm-n { color: #17694b; }
+.mm-ic { flex: none; width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: #17694b; color: #fff; }
+.mm-ic svg { width: 19px; height: 19px; }
+.mm-n { display: block; font-size: 15px; font-weight: 700; line-height: 1.3; }
+.mm-l { display: block; font-size: 13px; color: #5b6b64; line-height: 1.4; margin-top: 2px; }
+.mm-b { display: flex; gap: 5px; margin-top: 5px; }
+.mm-b i { font-style: normal; font-size: 10.5px; font-weight: 800; letter-spacing: .04em; border-radius: 4px; padding: 1px 6px; background: rgba(23,105,75,.1); color: #17694b; }
+.mm-b i.sf { background: #e3f1fd; color: #0b5cab; }
+.mm-empty { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 18px; align-items: stretch; }
+.mm-empty > div { background: #fff; border: 1px dashed #b9c8c0; border-radius: 14px; padding: 22px; }
+.mm-empty b { display: block; font-size: 17px; }
+.mm-empty p { margin: 6px 0 14px; font-size: 14px; color: #5b6b64; line-height: 1.5; }
+.mm-empty a { font-size: 12.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #17694b; text-decoration: none; }
+.mm-foot { margin-top: auto; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; }
+.mm-foot a.all { font-size: 12.5px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: #17694b; text-decoration: none; }
+.mm-promo { display: flex; align-items: center; gap: 14px; background: #12201a; color: #e9f1ed; border-radius: 12px; padding: 12px 16px; font-size: 14px; }
+.mm-promo a { color: #7fd6b0; font-weight: 800; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
+@media (max-width: 1000px) { .mm-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 760px) {
+  .mm-box { grid-template-columns: minmax(0,1fr); border-radius: 16px; max-height: calc(100vh - 110px); overflow-y: auto; overscroll-behavior: contain; }
+  .mm-rail { flex-direction: row; overflow-x: auto; padding: 10px; scrollbar-width: none; }
+  .mm-rail button { flex: none; width: auto; padding: 9px 14px; }
+  .mm-rail button small, .mm-rail .mm-sep { display: none; }
+  .mm-main { padding: 18px 16px; }
+  .mm-grid, .mm-empty { grid-template-columns: minmax(0,1fr); }
+  .mm-promo { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) { .mm-trig svg { transition: none; } }
+</style>
+<header class="site">
+  <div class="in">
+    <a class="logo" href="#top" aria-label="Mawkish Technologies">
+      <svg viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L20 4 L32 18 L44 4 L62 28 Z" fill="none" stroke="#eef3f0" stroke-width="4" stroke-linejoin="round"/><path d="M20 28 L32 14 L44 28" fill="#eef3f0"/></svg>
+      MAWKISH
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">ABOUT US</a>
+      <a href="#">OUR SERVICES</a>
+      <button type="button" class="mm-trig on" id="mm-trig" aria-expanded="false" aria-controls="mm">INDUSTRIES <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M1.5 3.5L5 7l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+      <a href="#">INSIGHTS &amp; PERSPECTIVES</a>
+      <a href="#book" class="btn pri">Schedule a consultation</a>
+    </nav>
+  </div>
+
+<!-- DEVELOPER: Industries mega menu. Rail on the left switches platform on hover, focus or click.
+     Industry links go to the Industries page with the platform tab open: /industries/#industry-<key>/<platform>.
+     Odoo, Swyftflo, MIHCM, Databricks and Cloud Infrastructure are placeholders until their industry guides exist. -->
+<div class="mm" id="mm" role="region" aria-label="Industries menu">
+  <div class="mm-box">
+    <div class="mm-rail" role="tablist" aria-label="Platform" id="mm-rail">
+      <button type="button" role="tab" data-p="all" aria-selected="true"><b>All industries</b><small>Every platform we work with</small></button>
+      <button type="button" role="tab" data-p="sap" aria-selected="false"><b>SAP</b><small>Cloud ERP, AI and data</small></button>
+      <button type="button" role="tab" data-p="sf" aria-selected="false"><b>Salesforce</b><small>CRM and customer experience</small></button>
+      <div class="mm-sep">More platforms</div>
+      <button type="button" role="tab" class="soon" data-p="odoo" aria-selected="false"><b>Odoo <span class="mm-soon">SOON</span></b><small>ERP for growing businesses</small></button>
+      <button type="button" role="tab" class="soon" data-p="swyftflo" aria-selected="false"><b>Swyftflo <span class="mm-soon">SOON</span></b><small>Supply chain solution</small></button>
+      <button type="button" role="tab" class="soon" data-p="mihcm" aria-selected="false"><b>MIHCM <span class="mm-soon">SOON</span></b><small>HR and HCM solution</small></button>
+      <button type="button" role="tab" class="soon" data-p="databricks" aria-selected="false"><b>Databricks <span class="mm-soon">SOON</span></b><small>Enterprise data platform</small></button>
+      <button type="button" role="tab" class="soon" data-p="cloud" aria-selected="false"><b>Cloud <span class="mm-soon">SOON</span></b><small>AWS, Azure, Google Cloud</small></button>
+    </div>
+    <div class="mm-main" role="tabpanel" id="mm-main" aria-live="polite"></div>
+  </div>
+</div>
+<script>
+var MK_IND = {
+  base: '', /* DEVELOPER: set to the Industries page URL, for example '/industries/' */
+  list: [
+    ['groups','Diversified Groups',['sap']],
+    ['food','Food, Beverage and Tea',['sap','sf']],
+    ['industrial','Industrial Manufacturing',['sap']],
+    ['consumer','Consumer Brands and Wellness',['sap','sf']],
+    ['tiles','Tiles and Building Materials Retail',['sap','sf']],
+    ['auto','Automotive',['sap','sf']],
+    ['oil','Oil and Gas',['sap']],
+    ['print','Printing and Packaging',['sap']],
+    ['poultry','Poultry and Livestock',['sap']]
+  ],
+  plat: { sap:'SAP', sf:'Salesforce', odoo:'Odoo', swyftflo:'Swyftflo', mihcm:'MIHCM', databricks:'Databricks', cloud:'Cloud Infrastructure' },
+  lines: {
+    sap: { groups:'Group finance, intercompany and consolidation', food:'Recipes, batches, quality and export sales', industrial:'Planning, production, maintenance and multi-plant', consumer:'Batches, compliance, trade terms and planning', tiles:'Shade by batch, units of measure, showrooms', auto:'Vehicles, parts, workshops and warranty', oil:'Hydrocarbon stock, terminals and assets', print:'Configured jobs, production and costing', poultry:'Feed, flocks, processing and catch weight' },
+    sf: { food:'Export buyers, key accounts and retail visits', consumer:'Consumer view, loyalty, campaigns and care', tiles:'Showroom leads, projects and quotes', auto:'Drivers, test drives, dealers and service' }
+  },
+  promise: { groups:'Many businesses, one connected core', food:'Batch production and exports to global markets', industrial:'Complex plants and multi-entity operations', consumer:'From factory to customer in one view', tiles:'From kiln to customer floor', auto:'Vehicle import, parts and service', oil:'Downstream distribution and assets', print:'Make-to-order, every job different', poultry:'Breeder farm to processing on one core' },
+  icon: {
+    groups: '<path d="M4 20V8l6-3v15M10 20V4l8 4v12M2 20h20M13 10h2M13 13h2M13 16h2M6 11h2M6 14h2"/>',
+    food: '<path d="M7 3h10l-1 4H8L7 3zM8 7l1 13h6l1-13M9.5 12h5"/>',
+    industrial: '<path d="M3 20V10l5 3V10l5 3V6h4l1 14H3zM7 17h2M12 17h2"/>',
+    consumer: '<path d="M6 8h12l-1 12H7L6 8zM9 8a3 3 0 0 1 6 0"/>',
+    tiles: '<path d="M4 9h16v11H4zM3 9l2-5h14l2 5M9 20v-5h6v5M4 9a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0 2.7 2.7 0 0 0 5.3 0"/>',
+    auto: '<path d="M4 16v-4l2-5h12l2 5v4zM4 16v2h3v-2M17 16v2h3v-2M7 13h1M16 13h1"/>',
+    oil: '<path d="M5 20V5a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v15M3 20h13M7 7h5v4H7zM14 9h2l2 2v6a1.5 1.5 0 0 0 3 0V8l-3-3"/>',
+    print: '<path d="M7 8V3h10v5M7 17H4v-7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v7h-3M7 14h10v7H7z"/>',
+    poultry: '<path d="M12 3c-3.5 0-6 5-6 10a6 6 0 0 0 12 0c0-5-2.5-10-6-10z"/>'
+  }
+};
+(function () {
+  var D = MK_IND, main = document.getElementById('mm-main'), rail = document.getElementById('mm-rail');
+  if (!main) return;
+  function ic(k) { return '<span class="mm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + D.icon[k] + '</svg></span>'; }
+  function badges(ps) { return '<span class="mm-b">' + ps.map(function (p) { return '<i' + (p === 'sf' ? ' class="sf"' : '') + '>' + D.plat[p] + '</i>'; }).join('') + '</span>'; }
+  var promo = '<div class="mm-promo">Not sure which platform fits your industry? <a href="#book">Talk to an expert →</a></div>';
+  function render(p) {
+    var h;
+    if (p === 'all' || D.lines[p]) {
+      var rows = D.list.filter(function (x) { return p === 'all' || x[2].indexOf(p) > -1; });
+      var ey = p === 'all' ? 'All industries <span>' + rows.length + ' industries, badges show the platforms we use</span>'
+        : 'Industries we serve with ' + D.plat[p] + ' <span>' + rows.length + ' of ' + D.list.length + ' industries</span>';
+      h = '<p class="mm-ey">' + ey + '</p><div class="mm-grid">' + rows.map(function (x) {
+        var href = D.base + '#industry-' + x[0] + (p === 'all' ? '' : '/' + (p === 'sf' ? 'salesforce' : p));
+        var sub = p === 'all' ? D.promise[x[0]] : D.lines[p][x[0]];
+        return '<a href="' + href + '">' + ic(x[0]) + '<span><span class="mm-n">' + x[1] + '</span><span class="mm-l">' + sub + '</span>' + (p === 'all' ? badges(x[2]) : '') + '</span></a>';
+      }).join('') + '</div>' +
+      '<div class="mm-foot"><a class="all" href="' + (p === 'all' ? D.base + '#top' : '#') + '">' + (p === 'all' ? 'All industries →' : 'All ' + D.plat[p] + ' services →') + '</a>' + promo + '</div>';
+    } else {
+      h = '<p class="mm-ey">' + D.plat[p] + ' by industry <span>Coming soon</span></p><div class="mm-empty">' +
+        '<div><b>' + D.plat[p] + ' industry guides are on the way.</b><p>We are writing guides on what ' + D.plat[p] + ' does for each industry we serve. Until then, see our ' + D.plat[p] + ' services or ask us directly.</p><a href="#">' + D.plat[p] + ' services →</a></div>' +
+        '<div><b>Your industry, your platform.</b><p>Tell us how your business runs and we will show you where ' + D.plat[p] + ' fits alongside SAP and Salesforce.</p><a href="#book">Talk to an expert →</a></div></div>';
+    }
+    main.innerHTML = h;
+  }
+  function pick(b) {
+    if (!b || b.getAttribute('aria-selected') === 'true') return;
+    rail.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
+    render(b.dataset.p);
+  }
+  rail.addEventListener('mouseover', function (e) { pick(e.target.closest('button')); });
+  rail.addEventListener('focusin', function (e) { pick(e.target.closest('button')); });
+  rail.addEventListener('click', function (e) { pick(e.target.closest('button')); });
+  render('all');
+
+  /* open and close from the header trigger (skipped when the menu is shown statically) */
+  var mm = document.getElementById('mm'), trig = document.getElementById('mm-trig'), t;
+  if (!trig || mm.classList.contains('static')) return;
+  function open() { clearTimeout(t); mm.classList.add('open'); trig.setAttribute('aria-expanded', 'true'); }
+  function close() { mm.classList.remove('open'); trig.setAttribute('aria-expanded', 'false'); }
+  function later() { clearTimeout(t); t = setTimeout(close, 220); }
+  var fine = window.matchMedia('(hover: hover)').matches;
+  if (fine) { [trig, mm].forEach(function (el) { el.addEventListener('mouseenter', open); el.addEventListener('mouseleave', later); }); }
+  trig.addEventListener('click', function () { mm.classList.contains('open') ? close() : open(); });
+  mm.addEventListener('click', function (e) { if (e.target.closest('.mm-grid a, .mm-foot a, .mm-empty a')) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mm.classList.contains('open')) { close(); trig.focus(); } });
+  document.addEventListener('click', function (e) { if (!mm.contains(e.target) && e.target !== trig && !trig.contains(e.target)) close(); });
+})();
+</script>
+
+</header>
+
+<style>
+/* Industries overview: classes prefixed i- */
+.i-hero { padding-block: 56px 72px; }
+.i-hero h1 { font-size: clamp(36px, 5vw, 58px); max-width: 20ch; }
+.i-hero h1 em { font-style: normal; color: var(--green-hi); }
+.i-stats { display: flex; flex-wrap: wrap; gap: 36px; margin-top: 32px; }
+.i-stats b { display: block; font-family: var(--display); font-size: 34px; font-weight: 800; line-height: 1; }
+.i-stats span { color: var(--muted); font-size: 14px; }
+
+.i-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+.i-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.i-chips button { font: inherit; font-size: 14px; font-weight: 700; border: 1px solid var(--line); background: var(--bg-2); color: var(--muted); border-radius: 999px; padding: 8px 16px; cursor: pointer; }
+.i-chips button[aria-pressed="true"] { background: var(--green-hi); border-color: var(--green-hi); color: #fff; }
+.i-chips button:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 2px; }
+.i-note { color: var(--muted); font-size: 14px; }
+
+.i-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; margin-top: 28px; }
+.i-card { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--bg-2); text-decoration: none; color: inherit; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.i-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(20,32,25,.12); border-color: var(--green-hi); }
+.i-card:focus-visible { outline: 3px solid var(--green-hi); outline-offset: 3px; }
+.i-card[hidden] { display: none; }
+.i-head { position: relative; display: flex; align-items: center; gap: 16px; padding: 22px 22px; min-height: 96px; color: #fff; background: radial-gradient(120% 160% at 100% 0%, #2b8c66 0%, #17694b 45%, #0f4a35 100%); overflow: hidden; }
+.i-head::after { content: ""; position: absolute; right: -40px; top: -40px; width: 180px; height: 180px; border-radius: 50%; border: 1px solid rgba(255,255,255,.12); box-shadow: 0 0 0 30px rgba(255,255,255,.03), 0 0 0 60px rgba(255,255,255,.02); }
+.i-ic { flex: none; width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22); }
+.i-ic svg { width: 24px; height: 24px; }
+.i-head h2 { font-size: 20px; line-height: 1.2; color: #fff; position: relative; z-index: 1; }
+.i-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+.i-body .i-p { color: var(--muted); font-size: 14.5px; margin: 0; }
+.i-body ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.i-body li { font-size: 15px; padding-left: 18px; position: relative; color: var(--fg); }
+.i-body li::before { content: ""; position: absolute; left: 0; top: .62em; width: 9px; height: 2px; background: var(--green-hi); }
+.i-prods { display: flex; flex-wrap: wrap; gap: 6px; }
+.i-prods span { font-size: 12px; font-weight: 700; border-radius: 6px; padding: 3px 8px; background: rgba(23,105,75,.08); color: var(--green-hi); }
+.i-prods span.sf { background: #eaf5fe; color: #0b5cab; }
+.i-proof { margin-top: auto; border-top: 1px solid var(--line); padding-top: 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.i-go { font-size: 13.5px; font-weight: 700; color: var(--green-hi); white-space: nowrap; }
+.i-go i { font-style: normal; display: inline-block; transition: transform .25s; }
+.i-card:hover .i-go i { transform: translateX(4px); }
+
+/* approach band */
+.i-chain { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 0; margin-top: 36px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--bg-2); }
+.i-chain div { padding: 18px; border-left: 1px solid var(--line); position: relative; }
+.i-chain div:first-child { border-left: 0; }
+.i-chain .s { font-size: 11.5px; font-weight: 800; letter-spacing: .14em; color: var(--green-hi); text-transform: uppercase; }
+.i-chain h3 { font-size: 16.5px; margin: 6px 0 10px; }
+.i-chain .i-prods { gap: 5px; }
+.i-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 14px; font-size: 13px; color: var(--muted); align-items: center; }
+.i-legend .i-prods span { font-size: 11.5px; }
+.i-why { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.i-why div { border-top: 2px solid var(--green-hi); padding-top: 14px; }
+.i-why h3 { font-size: 18px; }
+.i-why p { color: var(--muted); font-size: 15px; margin: 8px 0 0; }
+
+/* copyright strip */
+.mk-cr { display: flex; align-items: center; gap: 12px; margin-top: 40px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); font-size: 13px; line-height: 1.5; color: var(--muted); }
+.mk-cr svg { flex: none; color: var(--green-hi); }
+.mk-cr b { color: var(--fg); }
+.mk-cr a { color: var(--green-hi); font-weight: 700; text-decoration: none; white-space: nowrap; }
+footer .mk-crf a { color: var(--green-hi); text-decoration: none; font-weight: 600; }
+
+
+.i-prods span.alt { background: rgba(23,105,75,.04); color: var(--muted); }
+.i-proof { justify-content: flex-end; }
+.i-card { cursor: pointer; text-align: left; font: inherit; padding: 0; }
+
+
+.i-plats { display: grid; gap: 8px; }
+.i-plats div { display: grid; grid-template-columns: 86px minmax(0,1fr); gap: 10px; align-items: baseline; font-size: 14.5px; }
+.i-plats i { font-style: normal; font-size: 11.5px; font-weight: 800; letter-spacing: .04em; border-radius: 6px; padding: 3px 8px; text-align: center; background: rgba(23,105,75,.1); color: var(--green-hi); }
+.i-plats i.sf { background: #e3f1fd; color: #0b5cab; }
+.i-proof { justify-content: space-between; }
+.i-n2 { font-size: 13px; color: var(--muted); }
+.i-tabs { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.i-tabs button, .i-tabs span { font: inherit; text-align: left; cursor: pointer; border: 1px solid rgba(255,255,255,.3); background: rgba(0,0,0,.16); color: #fff; border-radius: 12px; padding: 10px 16px; min-width: 200px; }
+.i-tabs.one span { cursor: default; background: rgba(255,255,255,.1); }
+.i-tabs b { display: block; font-size: 14px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.i-tabs small { display: block; font-size: 12.5px; color: #cfe6dc; margin-top: 2px; }
+.i-tabs button[aria-selected="true"] { background: #fff; color: #12201a; border-color: #fff; }
+.i-tabs button[aria-selected="true"] small { color: #5b6b64; }
+.i-tabs button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.i-sw { margin: 26px 44px 0; padding: 16px 20px; border: 1px solid var(--line); border-radius: 12px; background: #fff; font-size: 15px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; justify-content: space-between; }
+.i-sw button { font: inherit; font-weight: 800; color: var(--green-hi); background: none; border: 0; cursor: pointer; padding: 0; }
+@media (max-width: 720px) { .i-tabs button, .i-tabs span { min-width: 0; flex: 1 1 140px; } .i-sw { margin-left: 20px; margin-right: 20px; } }
+
+/* detail panel */
+.i-ov { position: fixed; inset: 0; z-index: 1000; background: rgba(5,12,9,.62); backdrop-filter: blur(3px); display: none; }
+.i-ov.open { display: block; }
+.i-pn { position: absolute; top: 0; right: 0; bottom: 0; width: min(1000px, 100%); background: #f3f5f4; color: #18241e; overflow-y: auto; overscroll-behavior: contain; box-shadow: -20px 0 60px rgba(0,0,0,.35); animation: i-in .3s ease; --fg:#18241e; --muted:#5b6b63; --line:#dfe6e2; --bg-2:#fff; --green-hi:#17694b; }
+@keyframes i-in { from { transform: translateX(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+.i-ph { position: relative; color: #fff; padding: 34px 44px 30px; background: radial-gradient(120% 160% at 100% 0%, #2b8c66 0%, #17694b 45%, #0f4a35 100%); overflow: hidden; }
+.i-ph::after { content: ""; position: absolute; right: -80px; top: -80px; width: 320px; height: 320px; border-radius: 50%; border: 1px solid rgba(255,255,255,.12); box-shadow: 0 0 0 50px rgba(255,255,255,.03), 0 0 0 100px rgba(255,255,255,.02); }
+.i-ph .i-ic { width: 58px; height: 58px; margin-bottom: 16px; }
+.i-ph .ey { font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: #bfe9d6; }
+.i-ph h2 { color: #fff; font-size: clamp(28px, 3.6vw, 40px); margin: 6px 0 8px; position: relative; z-index: 1; }
+.i-ph p { color: #d7ece2; font-size: 17px; margin: 0; max-width: 60ch; position: relative; z-index: 1; }
+.i-x { position: absolute; top: 18px; right: 18px; z-index: 2; width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255,255,255,.35); background: rgba(0,0,0,.18); color: #fff; font-size: 22px; line-height: 1; cursor: pointer; }
+.i-x:hover, .i-x:focus-visible { background: rgba(0,0,0,.35); outline: none; }
+.i-nav { position: sticky; top: 0; z-index: 3; display: flex; gap: 4px; overflow-x: auto; padding: 10px 44px; background: rgba(243,245,244,.96); border-bottom: 1px solid var(--line); scrollbar-width: none; }
+.i-nav a { flex: none; font-size: 13.5px; font-weight: 700; color: var(--muted); text-decoration: none; padding: 7px 12px; border-radius: 999px; }
+.i-nav a:hover, .i-nav a.on { background: rgba(23,105,75,.1); color: var(--green-hi); }
+.i-sec { padding: 34px 44px 6px; scroll-margin-top: 56px; }
+.i-sec h3.t { font-size: 24px; margin: 0 0 6px; }
+.i-sec .k { font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--green-hi); }
+.i-sec .lead { color: var(--muted); font-size: 16px; margin: 4px 0 0; max-width: 70ch; }
+.i-intro p { font-size: 17px; line-height: 1.65; margin: 12px 0 0; max-width: 72ch; }
+.i-ed { margin-top: 22px; display: grid; grid-template-columns: auto minmax(0,1fr); gap: 16px; align-items: start; background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--green-hi); border-radius: 12px; padding: 18px 20px; }
+.i-ed svg { color: var(--green-hi); margin-top: 2px; }
+.i-ed b { display: block; font-size: 16px; }
+.i-ed span { display: block; color: var(--muted); font-size: 15px; margin-top: 4px; }
+.i-chg { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-top: 18px; }
+.i-chg div { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+.i-chg b { display: block; font-size: 15.5px; }
+.i-chg span { display: block; color: var(--muted); font-size: 14.5px; margin-top: 5px; }
+.i-cap { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; margin-top: 18px; counter-reset: cap; }
+.i-cap div { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; counter-increment: cap; }
+.i-cap h4 { font-size: 17px; margin: 0 0 10px; display: flex; align-items: center; gap: 10px; }
+.i-cap h4::before { content: counter(cap, decimal-leading-zero); font-size: 12px; font-weight: 800; color: #fff; background: var(--green-hi); border-radius: 6px; padding: 3px 6px; }
+.i-cap ul, .i-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.i-cap li, .i-list li { font-size: 15px; padding-left: 18px; position: relative; }
+.i-cap li::before, .i-list li::before { content: ""; position: absolute; left: 0; top: .62em; width: 9px; height: 2px; background: var(--green-hi); }
+.i-prod { margin-top: 18px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #fff; }
+.i-prod div { display: grid; grid-template-columns: minmax(0,240px) minmax(0,1fr); gap: 16px; padding: 13px 20px; border-top: 1px solid var(--line); font-size: 15px; }
+.i-prod div:first-child { border-top: 0; }
+.i-prod b { color: var(--green-hi); }
+.i-prod span { color: var(--muted); }
+.i-two { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; margin-top: 18px; }
+.i-two > div { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+.i-two h4 { font-size: 17px; margin: 0 0 12px; }
+.i-two .i-dk { background: #0f2a1f; border-color: #0f2a1f; color: #e8f1ec; }
+.i-two .i-dk h4 { color: #fff; }
+.i-two .i-dk li::before { background: #34b386; }
+.i-steps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-top: 18px; counter-reset: st; }
+.i-steps div { counter-increment: st; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px; font-size: 15px; }
+.i-steps div::before { content: "Step " counter(st); display: block; font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 6px; }
+.i-pcta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin: 30px 44px 0; padding: 22px 24px; border-radius: 14px; background: #0f2a1f; color: #e8f1ec; }
+.i-pcta b { font-size: 18px; color: #fff; display: block; }
+.i-pcta span { color: #a9bab2; font-size: 14.5px; }
+.i-pcta a { flex: none; background: #1f7a5a; color: #fff; text-decoration: none; font-weight: 800; font-size: 13.5px; letter-spacing: .06em; text-transform: uppercase; padding: 13px 18px; border-radius: 8px; }
+.i-pft { margin: 18px 44px 0; padding-bottom: 40px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+.i-pft button { font: inherit; font-weight: 700; color: var(--green-hi); background: none; border: 0; cursor: pointer; padding: 0; }
+.i-pn .mk-cr { margin: 22px 44px 0; }
+body.i-lock { overflow: hidden; }
+@media (max-width: 720px) {
+  .i-ph { padding: 26px 20px 24px; } .i-nav { padding: 10px 16px; } .i-sec { padding: 28px 20px 4px; }
+  .i-chg, .i-cap, .i-two, .i-steps { grid-template-columns: minmax(0,1fr); }
+  .i-prod div { grid-template-columns: minmax(0,1fr); gap: 2px; }
+  .i-pcta, .i-pft, .i-pn .mk-cr { margin-left: 20px; margin-right: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .i-pn { animation: none; } }
+
+@media (prefers-reduced-motion: reduce) { .i-card, .i-go i { transition: none; } }
+@media (max-width: 1080px) { .i-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } .i-chain { grid-template-columns: repeat(3, minmax(0,1fr)); } .i-chain div:nth-child(4) { border-left: 0; } .i-chain div:nth-child(n+4) { border-top: 1px solid var(--line); } }
+@media (max-width: 720px) { .i-grid, .i-why { grid-template-columns: minmax(0,1fr); } .i-chain { grid-template-columns: minmax(0,1fr); } .i-chain div { border-left: 0; border-top: 1px solid var(--line); } .i-chain div:first-child { border-top: 0; } .mk-cr { align-items: flex-start; } .mk-cr a { white-space: normal; } }
+</style>
+
+<main id="top">
+  <section class="hero i-hero">
+    <div class="in">
+      <div class="crumbs"><a href="#">Home</a> / Industries</div>
+      <span class="eyebrow">Industries we serve</span>
+      <h1>We start with your industry, <em>then pick the platform.</em></h1>
+      <p class="lede">A tea exporter, a tile showroom network and a poultry integrator need very different things from their systems. SAP has deep, proven processes for each of them, and we know which ones matter in your industry. Open any industry to see what SAP does for it, step by step.</p>
+      <div class="i-stats">
+        <div><b>9</b><span>industries</span></div>
+        <div><b>14</b><span>published case studies</span></div>
+        <div><b>2</b><span>countries: Sri Lanka and India</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">Choose your industry</span>
+      <h2>What each platform does for your industry.</h2>
+      <p class="lede">Each industry has a full guide for every platform we use there. SAP runs the core of the business, Salesforce runs the customer side, and the guides show what each one does for your industry.</p>
+      <div class="i-grid" id="i-grid"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="in">
+      <span class="eyebrow">How we approach an industry</span>
+      <h2>One value chain, the right product at each step.</h2>
+      <p class="lede">Every industry page follows your business from end to end and shows which platform handles each step. Here's a tile and bathware company with a showroom network as an example.</p>
+      <div class="i-chain" aria-label="Example value chain for a tile company: buy, make, sell, deliver and account, with the products used at each step">
+        <div><span class="s">01 · Buy</span><h3>Clay, glaze and imports</h3><div class="i-prods"><span>SAP Cloud ERP</span></div></div>
+        <div><span class="s">02 · Make</span><h3>Batches and quality</h3><div class="i-prods"><span>SAP Cloud ERP</span></div></div>
+        <div><span class="s">03 · Sell</span><h3>Leads, showrooms, quotes</h3><div class="i-prods"><span class="sf">Sales Cloud</span><span class="sf">CPQ</span></div></div>
+        <div><span class="s">04 · Deliver</span><h3>Orders, stock, dispatch</h3><div class="i-prods"><span>SAP Cloud ERP</span><span class="sf">Order status</span></div></div>
+        <div><span class="s">05 · Account</span><h3>Invoices, margins, close</h3><div class="i-prods"><span>SAP Cloud ERP</span></div></div>
+      </div>
+      <div class="i-legend"><span class="i-prods"><span>SAP</span></span> core business processes <span class="i-prods"><span class="sf">Salesforce</span></span> customer-facing processes</div>
+      <div class="i-why">
+        <div><h3>We speak your industry</h3><p>Our consultants have run projects in these industries, so workshops start from your processes, not from a textbook.</p></div>
+        <div><h3>Best product per step</h3><p>We're partners of both SAP and Salesforce, so we recommend what fits each step instead of forcing one product onto everything.</p></div>
+        <div><h3>Built for Sri Lanka</h3><p>Tea auctions, export zones, local tax and banks: the local details are covered from the first workshop.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="light">
+    <div class="in">
+      <div class="cta-band" style="color:#eef3f0;--fg:#eef3f0;--muted:#a9bab2;--green-hi:#34b386">
+        <div>
+          <span class="eyebrow">Don't see your industry?</span>
+          <h2>Tell us how your business runs.</h2>
+          <p class="lede">Most of what makes an industry different is in a few key processes. In one conversation we'll show you how SAP and Salesforce handle yours, and who we've done it for.</p>
+          <div style="margin-top:28px"><a href="#book" class="btn pri">Talk to an industry expert →</a></div>
+        </div>
+        <ul><li>Your key processes, mapped</li><li>The right platform for each</li><li>Relevant client stories</li></ul>
+      </div>
+      <aside class="mk-cr" aria-label="Copyright notice">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10" cy="10" r="8"/><path d="M12.6 7.6a3.4 3.4 0 1 0 0 4.8"/></svg>
+        <span><b>© 2026 Mawkish Technologies.</b> This page and its illustrations are protected by copyright. You're welcome to learn from it and to quote it with credit and a link. Reproducing it, by hand or through AI, and publishing it as your own is not allowed. <a href="https://claude.ai/artifact/KRFaztbtc9jsgrjpkdppPX">Read our copyright notice →</a></span>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<div class="i-ov" id="i-ov" aria-hidden="true">
+  <div class="i-pn" id="i-pn" role="dialog" aria-modal="true" aria-labelledby="i-pt" tabindex="-1"></div>
+</div>
+
+
+<footer>
+  <div class="in"><span class="mk-crf">© 2026 Mawkish Technologies · Colombo, Sri Lanka. All rights reserved. <a href="https://claude.ai/artifact/KRFaztbtc9jsgrjpkdppPX">Copyright notice</a></span><span>SAP is a trademark of SAP SE. Salesforce is a trademark of Salesforce, Inc.</span></div>
+</footer>
+
+<script>
+/* DEVELOPER: cards open an in-page guide panel. Deep links work as #industry-<key>, for example #industry-food.
+   If each industry later gets its own page, point the card at that URL and reuse the panel content there. */
+(function () {
+  var ICON = {
+    groups: '<path d="M4 20V8l6-3v15M10 20V4l8 4v12M2 20h20M13 10h2M13 13h2M13 16h2M6 11h2M6 14h2"/>',
+    food: '<path d="M7 3h10l-1 4H8L7 3zM8 7l1 13h6l1-13M9.5 12h5"/>',
+    industrial: '<path d="M3 20V10l5 3V10l5 3V6h4l1 14H3zM7 17h2M12 17h2"/>',
+    consumer: '<path d="M6 8h12l-1 12H7L6 8zM9 8a3 3 0 0 1 6 0"/>',
+    tiles: '<path d="M4 9h16v11H4zM3 9l2-5h14l2 5M9 20v-5h6v5M4 9a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0 2.7 2.7 0 0 0 5.3 0"/>',
+    auto: '<path d="M4 16v-4l2-5h12l2 5v4zM4 16v2h3v-2M17 16v2h3v-2M7 13h1M16 13h1"/>',
+    oil: '<path d="M5 20V5a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v15M3 20h13M7 7h5v4H7zM14 9h2l2 2v6a1.5 1.5 0 0 0 3 0V8l-3-3"/>',
+    print: '<path d="M7 8V3h10v5M7 17H4v-7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v7h-3M7 14h10v7H7z"/>',
+    poultry: '<path d="M12 3c-3.5 0-6 5-6 10a6 6 0 0 0 12 0c0-5-2.5-10-6-10z"/>'
+  };
+  /* Industry content. Each entry: card fields (n, p, c, pr) and panel fields.
+     ed: [edition label, explanation]. ch: challenges [title, text].
+     cap: capability groups by value-chain stage. prod: [product, role].
+     ai: AI and insight. ext: where Mawkish adds to the standard. start: first steps. */
+  var I = [
+  { k:'groups', n:'Diversified Groups',
+    p:'Many businesses, one connected core.',
+    c:['Group finance and consolidation','Shared services and intercompany','Group-wide reporting and governance'],
+    pr:['SAP Cloud ERP Private','Group Reporting','SAP BTP'],
+    intro:['A diversified group runs plantations next to factories, retail next to services, and each business has its own rhythm. The board still needs one set of numbers, closed on time, with intercompany balances that agree.',
+      'SAP gives a group one financial backbone. Every company keeps the processes its industry needs, while finance, controls and reporting follow one group design. Consolidation reads directly from the same ledger, so the close stops being a spreadsheet exercise.'],
+    ed:['SAP Cloud ERP Private at the centre, SAP Cloud ERP for smaller companies','Larger groups usually run the core businesses on SAP Cloud ERP Private, which carries the industry solutions each business needs. Smaller or newly acquired companies can run SAP Cloud ERP (two-tier) and still report into the same group close.'],
+    ch:[['Slow group close','Each company closes on its own system, and consolidation waits for spreadsheets and emails.'],
+      ['Intercompany disputes','Sales, loans and recharges between companies rarely agree on both sides at month end.'],
+      ['Different charts of accounts','Every business codes its costs differently, so group reports need manual mapping.'],
+      ['Acquisitions and disposals','New companies take months to integrate, and carve-outs are hard to separate cleanly.'],
+      ['Weak central control','Treasury, procurement and approvals happen company by company, with little group visibility.'],
+      ['Board reporting by hand','Management packs take days to build and are out of date when they are presented.']],
+    cap:[['Group finance design',['One group chart of accounts with local accounts mapped to it','Company codes, segments and profit centres modelled for each business line','Parallel ledgers for local GAAP (SLFRS) and group IFRS reporting','Common master data for customers, suppliers and materials shared across companies']],
+      ['Intercompany',['Intercompany sales and stock transfers posted on both sides automatically','Intercompany matching and reconciliation with rules and auto-match','Cross-company cost recharges and management fees','Eliminations prepared from the same postings']],
+      ['Consolidation and close',['SAP S/4HANA Group Reporting for currency translation, eliminations and consolidation of investments','Data collection from non-SAP companies through templates and APIs','Validation rules that catch errors before consolidation','A close calendar with tasks, owners and status for every company']],
+      ['Shared services',['Central accounts payable and receivable for several companies','Central purchasing with group contracts that every company calls off','Payment runs and bank communication from one place','Approval workflows that follow group authority limits']],
+      ['Treasury and cash',['Cash position and liquidity forecast across all group banks','Bank account management and electronic bank statements','Intercompany loans and in-house cash where needed','Foreign exchange exposure visible by company and currency']],
+      ['Governance and control',['Role design with segregation of duties across companies','Audit trail on every posting and master data change','Policy controls in workflow, not on paper','One security model when new companies join']]],
+    prod:[['SAP Cloud ERP Private','Core ERP for the main operating companies, with industry solutions'],['SAP Cloud ERP','Two-tier ERP for smaller subsidiaries and acquisitions'],['SAP S/4HANA Group Reporting','Consolidation and the group close'],['SAP Analytics Cloud','Board packs, planning and group dashboards'],['SAP Business Data Cloud','Group data products for analytics and AI'],['SAP Integration Suite','Links group companies and non-SAP systems'],['SAP BTP','Extensions and group-specific apps without changing the core']],
+    ai:['Joule answers finance questions in plain language, such as cash by company or open intercompany items','Machine learning proposes matches for bank statements and intercompany items','Embedded analytics show results by company, segment and business line in real time','SAP Analytics Cloud runs group planning and what-if scenarios on the same data'],
+    ext:['A group design workshop that sets the chart of accounts, entities and close calendar before any build','Templates that roll new companies onto the group design in weeks','Connectors that bring non-SAP companies into Group Reporting','Sri Lankan statutory reporting, tax and bank formats in every company'],
+    start:['Map your companies, ledgers and reporting lines','Agree the group finance design and close calendar','Roll out in waves, starting with the companies that matter most to the close'] },
+
+  { k:'food', n:'Food, Beverage and Tea',
+    p:'Batch production and exports to global markets.',
+    c:['Recipe and batch management','Quality and food safety compliance','Export sales and logistics'],
+    pr:['SAP Cloud ERP','SAP Cloud ERP Private','SAP BTP'],
+    intro:['Food, beverage and tea businesses buy natural raw materials that vary from lot to lot, turn them into products with a shelf life, and sell them into markets with strict rules. Every batch has to be traceable from the field or auction to the customer.',
+      'SAP runs this as process manufacturing. Recipes, batches, quality checks and shelf-life dates are part of the core, so traceability, costing and compliance come from the same transactions the plant already records.'],
+    ed:['SAP Cloud ERP for most producers and exporters','SAP Cloud ERP covers recipes, batches, quality, export sales and costing for most food, beverage and tea businesses. Catch weight, direct store delivery and finite scheduling with tank and shelf-life constraints are SAP Cloud ERP Private features, so they decide the edition when you need them.'],
+    ch:[['Lot-to-lot variation','Raw tea, grain or fruit differs by origin and season, which changes yield, quality and cost.'],
+      ['Traceability on demand','Buyers and regulators expect a recall trace in hours, not days.'],
+      ['Shelf life and freshness','Stock must ship in date order, and best-before dates must follow the ingredients.'],
+      ['Margins by product and market','Costs move with raw material prices, and margin by blend, pack and market is hard to see.'],
+      ['Export paperwork','Certificates, packing lists and bank documents are prepared outside the system.'],
+      ['Separate blending and packing sites','Bulk is made in one place and packed in another, often by a subcontractor.']],
+    cap:[['Buy',['Purchasing of batch-managed raw and packaging materials','Each lot is a batch carrying grade, origin, estate or garden mark as characteristics','Incoming inspection with tasting or lab results recorded against the lot','Supplier rebates and contracts managed in the system']],
+      ['Make',['Process orders driven by recipes for blending, cooking or bottling','Batch derivation, so manufacturing and best-before dates flow from the ingredient lots','Co-products and by-products such as dust, fannings or trims valued correctly','Production in one plant and packing in another, including subcontract packing']],
+      ['Quality and food safety',['Quality inspections in procurement, production and stock','Results, usage decisions and certificates of analysis per batch','Full batch where-used list for a recall in minutes','First article inspection of packaging film and materials']],
+      ['Store and ship',['Embedded warehouse management with handling units for export cartons and containers','First-expiry-first-out picking and shelf-life checks','Returnable pallets and crates tracked by customer','Available-to-promise that respects stock, production and allocations']],
+      ['Sell and export',['Quotations, contracts and orders in any currency','Distributor rebates, free goods and promotions','Down payments for advance-paid exports','Customer and market pricing kept in one place']],
+      ['Cost and margin',['Standard and actual cost per recipe and pack','Event-based production costing as orders progress','Margin analysis by customer, market, blend and pack size','Raw material price changes reflected in cost quickly']]],
+    prod:[['SAP Cloud ERP','Core ERP for manufacturing, quality, sales and finance'],['SAP Cloud ERP Private','When catch weight, direct store delivery or finite scheduling is needed'],['SAP Integrated Business Planning','Demand, supply and S&OP for seasonal and export demand'],['SAP Global Trade Services','Export controls and customs where volumes justify it'],['SAP BTP','Tea auction, export documents and local extensions'],['SAP Analytics Cloud','Margin, yield and quality dashboards']],
+    ai:['Joule finds batches, orders and quality results through plain-language questions','Predictive MRP and demand sensing help plan around seasonal peaks','Embedded analytics show yield, waste and margin by product and market','Document AI reads supplier invoices and customer purchase orders into the system'],
+    ext:['Tea auction catalogues and broker purchases connected to SAP purchasing and batches','Export documents such as certificates of origin and packing lists generated from SAP data','Letters of credit and collections handled through bank integration','Sri Lankan levies, cess, VAT and SSCL built into the local design','Our tea module on SAP BTP for the parts of tea trade the standard does not cover'],
+    start:['Map your flow from purchase to export, plant by plant','Confirm the edition against catch weight, delivery and scheduling needs','Run a fit-to-standard on recipes, batches and quality before design'] },
+
+  { k:'industrial', n:'Industrial Manufacturing',
+    p:'Complex plants and multi-entity operations.',
+    c:['Production planning and MRP','Plant maintenance and asset care','Multi-entity rollouts and carve-outs'],
+    pr:['SAP Cloud ERP Private','SAP Cloud ERP','SAP Integration Suite'],
+    intro:['Industrial manufacturers juggle long bills of material, shared plants, engineered orders and machines that must keep running. Shortages and late changes ripple through every plant and every company in the group.',
+      'SAP connects planning, production, quality, maintenance and finance on one model. Planners see real constraints, the shop floor works to the same orders, and finance sees the cost of every change as it happens.'],
+    ed:['SAP Cloud ERP Private for complex plants, SAP Cloud ERP for focused operations','Advanced planning with finite scheduling, deep plant integration and large multi-plant groups usually point to SAP Cloud ERP Private. Single-plant or standard make-to-stock and make-to-order businesses run well on SAP Cloud ERP.'],
+    ch:[['Shortages and expediting','Planners chase parts by phone because MRP results are not trusted.'],
+      ['Engineering change','Late design changes are not reflected in orders, stock or cost.'],
+      ['Unplanned downtime','Breakdowns stop lines, and maintenance history sits in notebooks.'],
+      ['Many plants, many systems','Each plant or company runs its own system, so stock and capacity are invisible across the group.'],
+      ['Carve-outs and mergers','Separating or combining businesses disrupts operations and reporting.'],
+      ['Hundreds of interfaces','MES, PLM, logistics and banking links break with every change.']],
+    cap:[['Plan',['MRP Live across plants with exception-based planner apps','Demand-driven MRP to set buffers on critical parts','Capacity planning and finite scheduling (advanced planning in SAP Cloud ERP Private)','Sales and operations planning with SAP Integrated Business Planning']],
+      ['Make',['Production orders, repetitive manufacturing and Kanban','Variant configuration for configurable products','Make-to-order and engineer-to-order linked to customer projects','Integration with MES and SAP Digital Manufacturing on the shop floor']],
+      ['Quality',['Inspection plans in receiving, production and final inspection','Quality notifications and corrective actions','Certificates and batch or serial traceability','Supplier quality scores feeding purchasing decisions']],
+      ['Maintain',['Equipment, functional locations and maintenance plans','Preventive, condition-based and breakdown maintenance orders','Scheduling with Gantt views and maintenance windows','Mobile work orders with SAP Service and Asset Manager']],
+      ['Warehouse and logistics',['Embedded warehouse management with bins, waves and handling units','Stock transfers between plants and companies','Inbound and outbound deliveries with transport planning','Serial numbers and batches through the whole chain']],
+      ['Multi-entity operations',['Intercompany sales and stock transfers with automatic billing','Group templates rolled out plant by plant or country by country','India GST and e-invoicing, and Sri Lanka localisation','Selective data transformation for carve-outs and mergers']]],
+    prod:[['SAP Cloud ERP Private','Core ERP for complex, multi-plant groups'],['SAP Cloud ERP','Core ERP for focused plants and subsidiaries'],['SAP Integrated Business Planning','Demand, supply and S&OP'],['SAP Digital Manufacturing','Shop floor execution and machine data'],['SAP Service and Asset Manager','Mobile maintenance'],['SAP Integration Suite','APIs and integration to MES, PLM, logistics and banks'],['SAP Analytics Cloud','Plant and group performance']],
+    ai:['Joule and production planning agents flag shortages and propose fixes','Predictive maintenance on machine data to plan work before failure','Machine learning on quality results to spot recurring defects','Embedded analytics for OEE, schedule adherence and cost variance'],
+    ext:['Group templates that let new plants go live in waves','Carve-out and merger programmes that keep the business running','An integration layer that replaces point-to-point interfaces','Custom shop floor and dealer apps on SAP BTP, kept outside the core'],
+    start:['Map plants, companies and the main product families','Decide the planning approach and the edition','Build a group template, then roll out plant by plant'] },
+
+  { k:'consumer', n:'Consumer Brands and Wellness',
+    p:'From factory to customer in one view.',
+    c:['Trade and distributor management','Product compliance and shelf life','Demand and supply planning'],
+    pr:['SAP Cloud ERP','SAP IBP','SAP Analytics Cloud'],
+    intro:['Consumer brands in personal care, herbal and wellness products make many SKUs from natural ingredients, sell through distributors and retailers, and run constant promotions. Regulators and customers expect safe, well-labelled products.',
+      'SAP links the factory to the trade. Batches, shelf life and product compliance sit in the core, while pricing, rebates and allocation make sure the right stock reaches the right channel at the right margin.'],
+    ed:['SAP Cloud ERP for most brands','SAP Cloud ERP covers batch manufacturing, quality, rebates, allocation and finance for most consumer brands. Van sales and direct store delivery are SAP Cloud ERP Private features, or a partner solution.'],
+    ch:[['SKU proliferation','New variants and packs add planning and stock complexity faster than sales.'],
+      ['Distributor visibility','Secondary sales and stock at distributors are not visible to the brand.'],
+      ['Promotions and rebates','Trade spend is hard to track, and rebate settlement is slow and disputed.'],
+      ['Natural ingredients','Herbal and natural raw materials vary in quality and have limited shelf life.'],
+      ['Compliance and labelling','Product registrations, ingredient rules and labels differ by market.'],
+      ['Forecast accuracy','Promotions and seasonality make demand hard to predict.']],
+    cap:[['Source and make',['Batch-managed ingredients with quality inspection on receipt','Process orders driven by recipes, with batch derivation for shelf-life dates','Contract manufacturing and subcontract packing','Rework and quality holds managed in the system']],
+      ['Product compliance',['Product compliance and dangerous goods checks on materials and products','Label management connected to label printing systems','Safety data sheets for chemicals and personal care products','Regulatory status visible in sales and purchasing']],
+      ['Plan',['Demand planning with promotions and seasonality in SAP IBP','Supply planning across plants, co-packers and distributors','Advanced available-to-promise with product allocation when stock is short','Shelf-life aware stock rotation']],
+      ['Sell through the trade',['Customer hierarchies for distributors, key accounts and retailers','Condition contracts for rebates and trade terms','Free goods and promotional pricing','Returns with inspection and credit notes']],
+      ['Margin and channel insight',['Margin by brand, SKU, channel and customer','Trade spend tracked against volume','Cost of goods by batch and plant','Real-time stock by location and age']]],
+    prod:[['SAP Cloud ERP','Core ERP for manufacturing, compliance, trade and finance'],['SAP Integrated Business Planning','Demand, supply and S&OP'],['SAP Analytics Cloud','Brand, channel and margin dashboards'],['SAP BTP','Distributor portals and secondary sales capture'],['SAP Integration Suite','Links to retailers, marketplaces and label systems']],
+    ai:['Joule answers stock, order and margin questions in plain language','Demand sensing improves short-term forecasts from recent sales','Machine learning proposes rebate and pricing corrections','Document AI turns retailer purchase orders into sales orders'],
+    ext:['Distributor portals for orders, stock and secondary sales on SAP BTP','Registration tracking for products by market','Integration with e-commerce and marketplaces','Customer engagement on Salesforce, connected to SAP when you need it'],
+    start:['Map brands, channels and the plants or co-packers behind them','Review trade terms, rebates and compliance requirements','Run a fit-to-standard on the order-to-cash and batch flows'] },
+
+  { k:'tiles', n:'Tiles and Building Materials Retail',
+    p:'From kiln to customer floor, with every shade matched.',
+    c:['Shade and size managed by batch','Showroom, project and dealer sales','Delivery, credit and returns'],
+    pr:['SAP Cloud ERP','SAP Retail','SAP BTP'],
+    intro:['Tiles, sanitaryware and building materials are sold by the box but specified by the square metre. Every production run has its own shade and size, customers buy for a project, and stock sits across factories, warehouses and showrooms.',
+      'SAP manages this from kiln to customer. Shade and calibre are tracked as batch characteristics, units of measure convert automatically, and showrooms, dealers and project sales draw on one view of stock.'],
+    ed:['SAP Cloud ERP','SAP Cloud ERP covers manufacturing, batch-based selling, store operations and finance for most tile and building materials businesses. Salesforce can run the showroom and lead side when you want a richer customer experience.'],
+    ch:[['Shade mismatch','A customer receives tiles from two production runs that do not match on the floor.'],
+      ['Units of measure','Customers think in square metres, warehouses in boxes and pallets, factories in pieces.'],
+      ['Project sales','Builders and architects order in phases, with special prices and long credit.'],
+      ['Showroom stock','Showrooms cannot see what is available in the warehouse or factory.'],
+      ['Breakage and returns','Damaged and returned stock is hard to track and credit.'],
+      ['Energy and yield','Kiln energy and yield losses drive cost but are not measured by product.']],
+    cap:[['Make',['Process or repetitive production for pressing, glazing and firing','Batch characteristics for shade, calibre and grade on every run','Yield, quality grades and seconds recorded at the line','Energy and overhead allocated to products for real cost']],
+      ['Stock and units',['Alternative units: pieces, boxes, square metres and pallets','Batch-specific stock so one order ships from one shade','Stock visible across factories, warehouses and showrooms','Transfers between locations with transport planning']],
+      ['Showroom and retail',['Store apps for stock lookup, orders, transfers and receiving','POS integration and in-store sales orders with down payments','Display stock and samples managed separately from saleable stock','Price lists and promotions for retail customers']],
+      ['Project and dealer sales',['Quotations and contracts for builders and architects','Phased deliveries against one project order','Dealer pricing, rebates and credit limits','Credit management with exposure and blocked orders']],
+      ['Deliver and service',['Delivery scheduling with vehicle and route planning','Returns and breakage with inspection and credit notes','Customer-specific labelling and packing','Proof of delivery recorded against the order']],
+      ['Finance',['Margin by product, shade, channel and showroom','Instalment and down payment handling','Sri Lankan tax and bank formats','Showroom and branch profitability']]],
+    prod:[['SAP Cloud ERP','Core ERP for manufacturing, stock, sales and finance'],['SAP Retail (in SAP Cloud ERP)','Store operations, POS integration and replenishment'],['SAP Analytics Cloud','Showroom, product and project dashboards'],['SAP Integration Suite','Links to POS, e-commerce and Salesforce'],['SAP BTP','Tile calculators and dealer portals']],
+    ai:['Joule finds matching shade stock across locations','Machine learning forecasts demand by design and size','Embedded analytics on showroom conversion and margin','Document AI reads builder purchase orders into sales orders'],
+    ext:['Square-metre calculators and room planners feeding SAP quotations','Dealer portals for stock, orders and statements','Salesforce for leads, showroom visits and project pipelines, integrated with SAP','Sri Lankan instalment and finance company integration'],
+    start:['Map how a tile moves from kiln to customer floor','Decide what runs in SAP and what runs in Salesforce','Design batch, unit and pricing rules before build'] },
+
+  { k:'auto', n:'Automotive',
+    p:'Vehicle import, parts and service on one core.',
+    c:['Vehicle and parts management','Service, warranty and after-sales','Dealer and customer lifecycle'],
+    pr:['SAP Cloud ERP Private','SAP Cloud ERP','Salesforce'],
+    intro:['Vehicle importers and distributors buy vehicles in shipments, hold them in yards, sell through showrooms and dealers, and then service them for years. Parts and service often earn more than the vehicles themselves.',
+      'SAP tracks every vehicle from order to sale, runs parts logistics and service, and connects it to finance. Salesforce can run the customer and dealer journey, with SAP as the system of record behind it.'],
+    ed:['SAP Cloud ERP Private for vehicle management, SAP Cloud ERP for parts and service','Vehicle management for importers and dealers is an SAP Cloud ERP Private capability. Businesses focused on parts distribution and workshops can run on SAP Cloud ERP.'],
+    ch:[['Vehicle visibility','Vehicles in transit, at port, in the yard and at dealers are tracked in spreadsheets.'],
+      ['Landed cost','Duty, freight and clearing costs are added late, so margin per vehicle is unclear.'],
+      ['Parts availability','Fast and slow parts compete for capital, and workshops wait for parts.'],
+      ['Warranty claims','Claims to the manufacturer are slow, and rejected claims go unrecovered.'],
+      ['Service retention','Customers drift to independent garages after the free service period.'],
+      ['Dealer network','Dealer stock, orders and performance are not visible to the importer.']],
+    cap:[['Vehicles',['Vehicle management: each vehicle tracked by chassis and engine number','Ordering from the manufacturer and shipment tracking','Yard stock, accessories fitting and pre-delivery inspection','Vehicle sales with registration and finance details']],
+      ['Import and landed cost',['Import purchase orders with duty, freight and clearing as planned costs','Letters of credit through bank integration','Landed cost settled to each vehicle and part','Foreign currency exposure on shipments']],
+      ['Parts',['Parts planning with forecasts and safety stock','Supersessions and interchangeable parts','Embedded warehouse management for fast picking','Parts sales to dealers, workshops and retail customers']],
+      ['Service and warranty',['Service orders for workshop jobs with labour and parts','Service contracts and maintenance schedules','Warranty claims to the manufacturer with tracking','Recalls and campaigns by chassis number']],
+      ['Customers and dealers',['Dealer orders, stock and pricing','Customer and vehicle history in one record','Salesforce for leads, test drives and service reminders','Finance and insurance partners connected']]],
+    prod:[['SAP Cloud ERP Private','Vehicle management, parts, service and finance'],['SAP Cloud ERP','Parts distribution and workshops'],['SAP Integration Suite','Links to manufacturers, dealers and Salesforce'],['SAP Analytics Cloud','Vehicle, parts and service performance'],['Salesforce','Customer and dealer engagement on top of SAP']],
+    ai:['Joule finds vehicles, parts and service history in plain language','Parts demand forecasts from service history and vehicle population','Warranty claim analytics to spot recurring failures','Embedded analytics on margin per vehicle and per workshop'],
+    ext:['Integration with manufacturer systems for orders and warranty','Customer apps and service booking on Salesforce, linked to SAP','Sri Lankan import duty and registration handling','Dealer portals on SAP BTP'],
+    start:['Map the vehicle, parts and service flows','Decide the split between SAP and Salesforce','Confirm the edition based on vehicle management needs'] },
+
+  { k:'oil', n:'Oil and Gas',
+    p:'Downstream distribution, fuel retail and asset-heavy operations.',
+    c:['Bulk product and tank management','Plant maintenance and asset management','Dealer and station network billing'],
+    pr:['SAP Cloud ERP Private','SAP Asset Management','SAP BTP'],
+    intro:['Downstream oil and gas businesses import, store and distribute fuels, lubricants and LPG through terminals, tankers and stations. Volumes change with temperature, assets are expensive, and safety is not negotiable.',
+      'SAP has a dedicated oil and gas industry solution for hydrocarbon products. It handles quantities at standard temperature and density, bulk storage, exchanges and secondary distribution, alongside maintenance and finance on the same core.'],
+    ed:['SAP Cloud ERP Private with the oil and gas solution','Hydrocarbon product management and downstream distribution are part of the oil and gas industry solution in SAP Cloud ERP Private. Lubricant blending and packaged products can also run on SAP Cloud ERP.'],
+    ch:[['Temperature and density','Fuel volume changes with temperature, so book and physical stock never agree.'],
+      ['Tank and terminal stock','Stock across terminals, depots and tankers is reconciled by hand.'],
+      ['Asset reliability','Pumps, tanks and pipelines need inspections, and failures are costly and dangerous.'],
+      ['Station and dealer billing','Deliveries, credit and pricing for hundreds of stations are hard to control.'],
+      ['Regulated pricing','Price changes must apply on time across the whole network.'],
+      ['Safety and environment','Permits, incidents and emissions need records that stand up to audit.']],
+    cap:[['Hydrocarbon products',['Quantity conversion to standard temperature and density','Stock in litres, kilograms and barrels at the same time','Gains and losses in storage and transport','Product quality and specifications per batch']],
+      ['Terminals and storage',['Tank and silo management with dip readings','Receipts from ships and pipelines','Blending of fuels and lubricants','Bulk tank trailer loading with residual quantities']],
+      ['Distribution',['Secondary distribution planning for tanker deliveries','Station and dealer orders, deliveries and billing','Price changes applied across the network on a date','Credit management for dealers and fleet customers']],
+      ['Assets and maintenance',['Equipment and functional locations for tanks, pumps and pipelines','Preventive and inspection-based maintenance plans','Mobile work orders and inspections','Maintenance cost by asset and site']],
+      ['Safety and environment',['Incident management and investigations','Permits and work clearance for hazardous work','Emissions and waste records','Dangerous goods checks on shipments']],
+      ['Finance',['Joint venture accounting where relevant','Asset retirement obligations','Margin by product, terminal and channel','Duties and taxes on fuel products']]],
+    prod:[['SAP Cloud ERP Private','Core ERP with the oil and gas industry solution'],['SAP Asset Management','Maintenance, inspections and mobile work'],['SAP EHS','Incidents, permits and environment'],['SAP Integration Suite','Links to tank gauges, station systems and fleet cards'],['SAP Analytics Cloud','Volume, margin and asset dashboards']],
+    ai:['Predictive maintenance on pumps and rotating equipment','Loss and gain analytics to detect leaks or theft','Joule answers stock and delivery questions in plain language','Embedded analytics for volume and margin by station'],
+    ext:['Tank gauge and station automation integration','Fleet card and payment integration','Sri Lankan fuel pricing and tax handling','Dealer self-service apps on SAP BTP'],
+    start:['Map terminals, products and distribution channels','Confirm the oil and gas scope and edition','Plan integration with tank gauges and station systems'] },
+
+  { k:'print', n:'Printing and Packaging',
+    p:'Make-to-order production where every job is different.',
+    c:['Variant configuration and job estimating','Production planning and job costing','Quality and batch traceability'],
+    pr:['SAP Cloud ERP','SAP Digital Manufacturing','SAP BTP'],
+    intro:['Printers and packaging converters make cartons, labels, cans, bottles and flexible packaging to each customer\'s design. Every job has its own size, material, print and finish, and margins depend on estimating accurately and running the press efficiently.',
+      'SAP models every job through variant configuration, so one quotation drives the bill of material, routing, cost and production order. Batches link every finished pallet back to the resin, board, coil or ink it came from.'],
+    ed:['SAP Cloud ERP','SAP Cloud ERP covers configuration, make-to-order production, quality and costing for most converters. Cutting optimisation and commodity metal pricing are not standard and are added through partner solutions or extensions.'],
+    ch:[['Estimating','Quotes are built in spreadsheets, and the cost of a job is known only after it runs.'],
+      ['Artwork and approvals','Proofs and artwork versions are managed by email.'],
+      ['Changeovers','Many short runs cost hours of setup on presses and lines.'],
+      ['Waste','Setup waste, trims and rejects are not measured by job.'],
+      ['Brand owner demands','Customers want schedules, consignment stock and full traceability.'],
+      ['Material prices','Board, resin, aluminium and tinplate prices move every month.']],
+    cap:[['Quote and configure',['Variant configuration for size, material, colours, print and finish','Quotations priced from the configured product','Cost estimates from the configured bill of material and routing','Repeat orders that reuse an approved configuration']],
+      ['Plan and produce',['Make-to-order and make-to-stock production','Repetitive manufacturing for high-volume lines','Production order combination to run identical operations together','Kanban for packaging materials and components']],
+      ['Shop floor',['Integration with MES and SAP Digital Manufacturing','Machine data, downtime and waste by job','Scrap and rework recorded against the order','Labels and pallet IDs printed at the line']],
+      ['Quality and traceability',['Batches for resin, board, coil, ink and finished goods','First article and in-process inspections','Certificates of analysis for brand owners','Full forward and backward traceability']],
+      ['Customer supply',['Scheduling agreements with brand owners','Consignment stock at customer sites','Returnable pallets and layer pads tracked','Delivery schedules and dispatch']],
+      ['Cost and margin',['Actual cost per job compared to the estimate','Material price changes reflected in cost','Margin by customer, product and machine','Overhead and energy allocated by machine hours']]],
+    prod:[['SAP Cloud ERP','Core ERP with configuration, production, quality and finance'],['SAP Digital Manufacturing','Shop floor execution and machine data'],['SAP Integrated Business Planning','Capacity and S&OP'],['SAP BTP','Artwork approval workflows and customer portals'],['SAP Analytics Cloud','Job, machine and margin performance']],
+    ai:['Joule finds past jobs and quotes similar to a new enquiry','Machine learning to predict job cost and waste','Embedded analytics on OEE, changeovers and waste','Document AI reads customer orders and specifications'],
+    ext:['Artwork and proof approval workflows built with SAP Build','Cutting optimisation through a partner solution','Commodity price surcharges for metal and resin','Customer portals for orders, stock and delivery schedules'],
+    start:['Map your product families and what makes each job different','Design the configuration model and pricing rules','Plan shop floor integration with presses and lines'] },
+
+  { k:'poultry', n:'Poultry and Livestock',
+    p:'Breeder farm, hatchery, feed mill and processing on one core.',
+    c:['Flock and batch management','Feed formulation and production','Weight-based selling and cold chain'],
+    pr:['SAP Cloud ERP Private','SAP Cloud ERP','SAP BTP'],
+    intro:['Integrated poultry businesses run breeder farms, hatcheries, feed mills, contract growers and processing plants. Each step feeds the next, live animals are valued differently from products, and every bird is sold by weight.',
+      'SAP connects the chain on one core. Feed is made with process orders, flocks are tracked as batches, processing yields many products from one bird, and finance sees the real cost at every stage.'],
+    ed:['SAP Cloud ERP Private for catch weight and processing','Catch weight, where products are sold by actual weight, is an SAP Cloud ERP Private feature. Feed mills and simpler operations that sell by fixed weight can run on SAP Cloud ERP.'],
+    ch:[['Flock performance','Mortality, feed conversion and growth are recorded on paper at the farm.'],
+      ['Feed cost','Feed is the largest cost, and formulas change with raw material prices.'],
+      ['One bird, many products','Processing yields cuts, offal and by-products from one input.'],
+      ['Sold by weight','Every crate and pack has a different weight and price.'],
+      ['Cold chain','Fresh and frozen products need temperature control and short lead times.'],
+      ['Valuing livestock','Live birds and breeding stock need valuation as biological assets.']],
+    cap:[['Breeders and hatchery',['Flocks managed as batches with age, breed and source','Egg production and hatchery yield recorded','Chick placement with contract growers','Vaccination and health records']],
+      ['Feed mill',['Recipes for feed formulas by age and species','Process orders and batch production','Raw material quality checks on maize, soya and premixes','Feed cost per batch and per flock']],
+      ['Growing',['Feed, medicine and chicks issued to farms and growers','Mortality, weight and feed conversion captured on mobile','Grower settlement based on performance','Cost per kilogram live weight']],
+      ['Processing',['Disassembly of birds into cuts with co-products and by-products','Yield recording against standard','Catch weight for actual weight in pieces and kilograms','Batch traceability back to the flock and farm']],
+      ['Cold chain and selling',['Fresh and frozen stock with shelf-life control','Weight-based pricing and invoicing','Route deliveries to retailers and food service','Returns and claims with quality checks']],
+      ['Finance',['Livestock valued as biological assets under LKAS 41','Cost through the chain from feed to finished product','Margin by product, customer and channel','Grower payments and advances']]],
+    prod:[['SAP Cloud ERP Private','Core ERP with catch weight and processing'],['SAP Cloud ERP','Feed mills and focused operations'],['SAP BTP','Farm and grower apps for flock data'],['SAP Integration Suite','Links to scales, farm sensors and label printers'],['SAP Analytics Cloud','Flock, yield and margin dashboards']],
+    ai:['Machine learning on flock data to predict weights and mortality','Feed cost analytics as raw material prices move','Joule answers stock and order questions in plain language','Embedded analytics on processing yield'],
+    ext:['Mobile farm apps on SAP BTP for daily flock records','Scale and label integration at processing lines','Grower settlement and contract logic','Feed formulation tools connected to SAP recipes'],
+    start:['Map the chain from breeder to customer','Confirm catch weight needs and the edition','Design how flock data reaches SAP from the farms'] }
+  ];
+
+  /* Salesforce guides, same shape as the SAP entries in I. Only industries we serve with Salesforce have one. */
+  var SF = {
+  food: {
+    intro:['Food, beverage and tea brands win on relationships: with distributors, retailers, food service buyers and overseas importers. Those relationships live in email, phone calls and sales reps\' notebooks, so nobody sees the whole picture.',
+      'Salesforce gives every account one record, from the first enquiry to repeat orders, visits, complaints and campaigns. SAP keeps running production, stock and invoicing, and the two are connected so sales sees real availability and order status.'],
+    ed:['Sales Cloud and Consumer Goods Cloud, connected to SAP','Sales Cloud runs export and key account selling. Consumer Goods Cloud adds retail visits and store audits for brands sold through shops. MuleSoft or SAP Integration Suite connects both to your SAP system.'],
+    ch:[['Scattered buyer contacts','Importer and distributor relationships sit with individual sales staff.'],
+      ['Slow export enquiries','Samples, price quotes and specifications take days to send.'],
+      ['No view of the shelf','Brands cannot see how their products are displayed and priced in stores.'],
+      ['Complaints by email','Quality complaints are not logged, tracked or linked to batches.'],
+      ['Campaigns without results','Trade fairs and promotions are not measured against sales.'],
+      ['Sales cannot see stock','Reps call the factory to check availability and order status.']],
+    cap:[['Win new buyers',['Leads from trade fairs, websites and agents in one pipeline','Opportunity stages for samples, tasting, quotation and first order','Quotes built from SAP prices and product data','Forecasts by market, buyer and product']],
+      ['Manage key accounts',['Account plans for importers, distributors and retail chains','Contact history, visits and agreements in one record','Sales agreements with volume targets tracked against SAP orders','Account teams across countries and brands']],
+      ['Retail execution',['Store visit planning and route optimisation','Shelf audits, photos and price checks on mobile','Promotion compliance and display checks','Orders taken in store and sent to SAP']],
+      ['Service and quality',['Complaints logged as cases with batch numbers from SAP','Escalation and resolution tracking with service levels','Self-service portal for buyers to see orders and documents','Feedback loops to quality and production']],
+      ['Marketing',['Campaigns to importers, distributors and consumers','Consent and preference management','Event and trade fair follow-up','Campaign results measured against pipeline and sales']]],
+    prod:[['Sales Cloud','Pipeline, accounts, quotes and forecasts'],['Consumer Goods Cloud','Retail visits, store audits and in-store orders'],['Service Cloud','Complaints, cases and customer service'],['Marketing Cloud','Campaigns, journeys and consent'],['Experience Cloud','Buyer and distributor portals'],['MuleSoft','Integration with SAP for products, prices, stock and orders']],
+    ai:['Agentforce drafts quotes, follow-ups and visit summaries for sales reps','Einstein scores leads and predicts which buyers are ready to reorder','Image recognition checks shelf displays from store photos','Dashboards on pipeline, visits and account growth by market'],
+    ext:['SAP integration for stock, prices, orders and invoices','Sample and specification request flows for export buyers','Sri Lankan distributor and route structures in Consumer Goods Cloud','One customer view across SAP and Salesforce'],
+    start:['Map how a buyer moves from enquiry to repeat order','Decide which data comes from SAP and which lives in Salesforce','Start with Sales Cloud, then add retail execution and service'] },
+
+  consumer: {
+    intro:['Consumer brands live and die by how well they know their customers, through distributors and retailers and, more and more, directly. Loyalty, campaigns and service all need one view of the consumer.',
+      'Salesforce connects marketing, sales, service and commerce on one customer record. SAP runs the factory, stock and finance behind it, so promises to customers match what the supply chain can deliver.'],
+    ed:['Sales Cloud, Marketing Cloud and Data 360, connected to SAP','Sales Cloud runs trade and distributor selling. Marketing Cloud and Salesforce Data 360 (formerly Data Cloud) build the consumer view for campaigns and loyalty. Service Cloud handles consumer care.'],
+    ch:[['No single consumer view','Data sits in e-commerce, loyalty, social and call centres separately.'],
+      ['Generic campaigns','Every customer gets the same message, and results are not measured.'],
+      ['Distributor performance','Targets, schemes and claims are tracked in spreadsheets.'],
+      ['Loyalty with low engagement','Points programmes do not change buying behaviour.'],
+      ['Consumer care','Queries and complaints across channels are not tracked to resolution.'],
+      ['Direct-to-consumer growth','Online orders and subscriptions need a different way of selling.']],
+    cap:[['Know the consumer',['Unified consumer profiles from web, e-commerce, loyalty and service','Segments built on behaviour, purchases and preferences','Consent and privacy managed in one place','Insights shared with marketing, sales and service']],
+      ['Market and engage',['Personalised journeys across email, SMS and WhatsApp','Launch and promotion campaigns with measured results','Loyalty programmes with tiers, points and rewards','Social listening and engagement']],
+      ['Sell through the trade',['Distributor and retailer accounts with targets and schemes','Visit planning and retail execution for field teams','Claims and scheme settlement tracked','Orders flow to SAP for fulfilment']],
+      ['Sell direct',['B2C and B2B commerce storefronts','Subscriptions and repeat orders','Order status from SAP shown to customers','Returns started online']],
+      ['Consumer care',['Cases from phone, email, chat and social in one console','Knowledge base for agents and consumers','Product and batch details from SAP on each case','Service levels and satisfaction tracked']]],
+    prod:[['Sales Cloud','Trade, distributor and key account selling'],['Marketing Cloud','Personalised journeys and campaigns'],['Salesforce Data 360','Unified consumer profiles and segments'],['Loyalty Management','Tiers, points and rewards'],['Service Cloud','Consumer care across channels'],['Commerce Cloud','Direct-to-consumer and B2B storefronts'],['MuleSoft','Integration with SAP and other systems']],
+    ai:['Agentforce answers consumer questions and handles routine service requests','Einstein recommends the next best offer for each consumer','Predictive models on churn and loyalty engagement','Campaign and loyalty dashboards with revenue attribution'],
+    ext:['SAP integration for products, stock, orders and batches','WhatsApp and local messaging channels for Sri Lankan consumers','Loyalty design based on your brand and margins','Distributor scheme and claim workflows'],
+    start:['Map your consumer touchpoints and data sources','Pick the first use case: loyalty, campaigns or care','Connect SAP so every team works from the same facts'] },
+
+  tiles: {
+    intro:['A tile or bathware sale starts long before the order. Homeowners visit showrooms, architects specify products, and builders negotiate project prices. Most of that journey is lost if it is not captured.',
+      'Salesforce captures every enquiry, from showroom walk-in to architect specification, and turns it into a tracked pipeline. Quotes use SAP prices and stock, and orders flow to SAP for delivery and invoicing.'],
+    ed:['Sales Cloud and Revenue Cloud, connected to SAP','Sales Cloud runs the showroom, project and dealer pipeline. Revenue Cloud (CPQ) builds quotes with bundles and discounts. SAP stays the system of record for products, stock, pricing and invoicing.'],
+    ch:[['Lost showroom enquiries','Walk-in customers leave without their details being captured.'],
+      ['Project pipelines','Architect and builder projects take months, and follow-ups are missed.'],
+      ['Slow, inconsistent quotes','Quotes are built by hand, with different discounts by showroom.'],
+      ['Dealer visibility','Dealer orders, targets and claims are tracked outside the system.'],
+      ['After-sales issues','Breakage, shade complaints and installation issues are not tracked.'],
+      ['Marketing waste','Leads from ads and exhibitions are not followed up or measured.']],
+    cap:[['Capture every enquiry',['Showroom walk-ins captured on a tablet','Leads from web, social, ads and exhibitions in one pipeline','Automatic assignment to the right showroom or rep','Follow-up tasks and reminders']],
+      ['Project and specifier selling',['Architects, builders and contractors as linked accounts','Projects tracked from specification to final delivery','Phased opportunities for large projects','Influencer and specifier rewards']],
+      ['Quote and price',['Quotes with tiles, adhesives, grout and sanitaryware as bundles','Discount approvals by role and margin','Prices and stock from SAP on every quote','Quotes converted to SAP sales orders in one step']],
+      ['Dealers',['Dealer portal for orders, stock and statements','Targets and schemes tracked by dealer','Claims and returns raised online','Dealer performance dashboards']],
+      ['After-sales',['Complaints and breakage logged as cases','Site visits scheduled with field service','Shade and batch details from SAP on each case','Customer satisfaction measured after delivery']]],
+    prod:[['Sales Cloud','Showroom, project and dealer pipelines'],['Revenue Cloud (CPQ)','Quotes, bundles, pricing and approvals'],['Experience Cloud','Dealer and architect portals'],['Service Cloud','Complaints and after-sales'],['Field Service','Site visits and inspections'],['MuleSoft','Integration with SAP for products, prices, stock and orders']],
+    ai:['Agentforce drafts quotes and follow-ups from showroom visit notes','Einstein predicts which projects are most likely to close','Product recommendations for matching accessories','Dashboards on showroom conversion and quote win rates'],
+    ext:['SAP S/4HANA integration for stock, shade batches and pricing','Square-metre calculators inside the quote','Architect and influencer reward programmes','Showroom tablet apps for walk-in capture'],
+    start:['Map the journey from showroom visit to delivered order','Agree pricing and discount rules for quotes','Start with showroom and project pipelines, then add dealers'] },
+
+  auto: {
+    intro:['Vehicle buyers research online, visit showrooms, book test drives and expect to be remembered at every service visit. Importers and dealers that know each driver and each vehicle keep customers for years.',
+      'Salesforce Automotive Cloud brings drivers, vehicles, dealers and service history into one view. SAP handles vehicle stock, parts, workshops and finance, and the two are connected so every conversation uses real data.'],
+    ed:['Automotive Cloud, connected to SAP','Automotive Cloud covers vehicle sales, dealer performance and driver relationships. Service Cloud and Field Service run after-sales. SAP remains the system of record for vehicles, parts and finance.'],
+    ch:[['Leads from many sources','Web, social, showroom and phone leads are not tracked in one place.'],
+      ['Test drive to sale','Follow-up after test drives is inconsistent.'],
+      ['Service retention','Customers stop coming back after the warranty period.'],
+      ['Dealer performance','Importers cannot see dealer pipelines and customer satisfaction.'],
+      ['Fleet customers','Corporate fleet deals and renewals are managed by hand.'],
+      ['Vehicle history','Sales and service history are not linked to the driver.']],
+    cap:[['Sell vehicles',['Leads from web, showroom, events and phone in one pipeline','Test drive booking and follow-up','Vehicle interest matched to SAP stock and incoming shipments','Finance and insurance offers tracked on the deal']],
+      ['Know the driver',['Driver and household profiles with vehicles owned','Vehicle records with ownership, service and warranty history','Consent and communication preferences','Life events and renewal triggers']],
+      ['Dealers and fleets',['Dealer pipelines, targets and performance','Dealer portal for leads, stock and campaigns','Fleet accounts with contracts and renewal dates','Corporate pricing and approvals']],
+      ['After-sales',['Service reminders based on mileage and time','Online service booking','Service cases and complaints tracked to resolution','Recall campaigns by vehicle']],
+      ['Marketing',['Launch campaigns and events','Personalised offers for service and accessories','Trade-in and upgrade journeys','Campaign results measured against sales']]],
+    prod:[['Automotive Cloud','Drivers, vehicles, dealers and vehicle sales'],['Sales Cloud','Fleet and corporate selling'],['Service Cloud','After-sales service and complaints'],['Marketing Cloud','Launches, service offers and journeys'],['Experience Cloud','Dealer portals and customer self-service'],['MuleSoft','Integration with SAP for vehicles, parts and workshops']],
+    ai:['Agentforce books service appointments and answers routine questions','Einstein predicts which drivers are due to upgrade','Lead scoring to focus showroom teams','Dashboards on dealer performance and service retention'],
+    ext:['SAP integration for vehicle stock, parts and service orders','Manufacturer data feeds for vehicles and campaigns','Sri Lankan leasing and insurance partner integration','Dealer onboarding and portal setup'],
+    start:['Map the driver journey from first enquiry to fifth service','Agree what comes from SAP and the manufacturer','Start with leads and test drives, then add after-sales'] }
+  };
+
+
+  function esc(t) { return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+  function li(a) { return a.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join(''); }
+  function ico(k) { return '<span class="i-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[k] + '</svg></span>'; }
+  var PN = { sap: 'SAP', sf: 'Salesforce' };
+  function plats(k) { return SF[k] ? ['sap', 'sf'] : ['sap']; }
+  var L = (window.MK_IND && MK_IND.lines) || { sap: {}, sf: {} };
+  var grid = document.getElementById('i-grid');
+  grid.innerHTML = I.map(function (d) {
+    return '<button type="button" class="i-card" data-k="' + d.k + '" aria-haspopup="dialog">' +
+      '<div class="i-head">' + ico(d.k) + '<h2>' + esc(d.n) + '</h2></div>' +
+      '<div class="i-body"><p class="i-p">' + esc(d.p) + '</p>' +
+      '<div class="i-plats">' + plats(d.k).map(function (p) { return '<div><i class="' + p + '">' + PN[p] + '</i><span>' + esc(L[p][d.k] || '') + '</span></div>'; }).join('') + '</div>' +
+      '<div class="i-proof"><span class="i-n2">' + (SF[d.k] ? 'SAP and Salesforce guides' : 'SAP guide') + '</span><span class="i-go">Open <i>→</i></span></div></div></button>';
+  }).join('');
+
+  var ov = document.getElementById('i-ov'), pn = document.getElementById('i-pn'), last = null, cur = null;
+  var CR = '<aside class="mk-cr" aria-label="Copyright notice"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10" cy="10" r="8"/><path d="M12.6 7.6a3.4 3.4 0 1 0 0 4.8"/></svg><span><b>© 2026 Mawkish Technologies.</b> This guide is protected by copyright. You\'re welcome to learn from it and to quote it with credit and a link. Reproducing it, by hand or through AI, and publishing it as your own is not allowed. <a href="https://claude.ai/artifact/KRFaztbtc9jsgrjpkdppPX">Read our copyright notice →</a></span></aside>';
+  function render(d, p) {
+    var G = p === 'sf' ? SF[d.k] : d, P = PN[p], idx = I.indexOf(d), nx = I[(idx + 1) % I.length], ps = plats(d.k);
+    var tabs = ps.length > 1
+      ? '<div class="i-tabs" role="tablist" aria-label="Platform">' + ps.map(function (x) { return '<button type="button" role="tab" data-p="' + x + '" aria-selected="' + (x === p) + '"><b>' + PN[x] + '</b><small>' + esc(L[x][d.k] || '') + '</small></button>'; }).join('') + '</div>'
+      : '<div class="i-tabs one"><span><b>SAP</b><small>We serve this industry with SAP</small></span></div>';
+    return '<button type="button" class="i-x" aria-label="Close">×</button>' +
+      '<header class="i-ph">' + ico(d.k) + '<div class="ey">' + P + ' for your industry</div><h2 id="i-pt">' + esc(d.n) + '</h2><p>' + esc(d.p) + '</p>' + tabs + '</header>' +
+      '<nav class="i-nav" aria-label="Guide sections"><a href="#s-ov">Overview</a><a href="#s-ch">Challenges</a><a href="#s-cap">How ' + P + ' handles it</a><a href="#s-pr">' + P + ' products</a><a href="#s-ai">AI and our add-ons</a><a href="#s-st">Getting started</a></nav>' +
+      '<section class="i-sec i-intro" id="s-ov"><span class="k">Overview</span><h3 class="t">How ' + P + ' fits ' + esc(d.n.toLowerCase()) + '</h3>' + G.intro.map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') +
+        '<div class="i-ed"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><div><b>Recommended: ' + esc(G.ed[0]) + '</b><span>' + esc(G.ed[1]) + '</span></div></div></section>' +
+      '<section class="i-sec" id="s-ch"><span class="k">Challenges</span><h3 class="t">What we hear from businesses like yours</h3><div class="i-chg">' + G.ch.map(function (c) { return '<div><b>' + esc(c[0]) + '</b><span>' + esc(c[1]) + '</span></div>'; }).join('') + '</div></section>' +
+      '<section class="i-sec" id="s-cap"><span class="k">How ' + P + ' handles it</span><h3 class="t">' + P + ' capabilities across your ' + (p === 'sf' ? 'customer journey' : 'value chain') + '</h3><p class="lead">Standard ' + P + ' capabilities, step by step. We configure them to how you work.</p><div class="i-cap">' + G.cap.map(function (c) { return '<div><h4>' + esc(c[0]) + '</h4><ul>' + li(c[1]) + '</ul></div>'; }).join('') + '</div></section>' +
+      '<section class="i-sec" id="s-pr"><span class="k">' + P + ' products</span><h3 class="t">The ' + P + ' solution behind it</h3><div class="i-prod">' + G.prod.map(function (x) { return '<div><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></div>'; }).join('') + '</div></section>' +
+      '<section class="i-sec" id="s-ai"><span class="k">AI and our add-ons</span><h3 class="t">Insight on top, and what we add</h3><div class="i-two"><div><h4>AI and insight</h4><ul class="i-list">' + li(G.ai) + '</ul></div><div class="i-dk"><h4>Where Mawkish adds to the standard</h4><ul class="i-list">' + li(G.ext) + '</ul></div></div></section>' +
+      '<section class="i-sec" id="s-st"><span class="k">Getting started</span><h3 class="t">Three steps to a clear plan</h3><div class="i-steps">' + G.start.map(function (x) { return '<div>' + esc(x) + '</div>'; }).join('') + '</div></section>' +
+      (ps.length > 1 ? '<div class="i-sw">' + (p === 'sap' ? 'This industry also runs on Salesforce for the customer side.' : 'Salesforce works best with SAP as the core behind it.') + ' <button type="button" data-p="' + (p === 'sap' ? 'sf' : 'sap') + '">See the ' + PN[p === 'sap' ? 'sf' : 'sap'] + ' guide →</button></div>' : '') +
+      '<div class="i-pcta"><div><b>See ' + P + ' run your processes.</b><span>' + (p === 'sf' ? 'A working session on your customer journeys, with the products that fit.' : 'A working session on your industry, with the scope and the edition that fit.') + '</span></div><a href="#book">Talk to an industry expert →</a></div>' +
+      CR +
+      '<div class="i-pft"><span>' + (p === 'sf' ? 'Salesforce, Agentforce and the products named are trademarks of Salesforce, Inc.' : 'SAP and the SAP products named are trademarks of SAP SE. Edition guidance reflects SAP\'s current scope and is confirmed in assessment.') + '</span><button type="button" data-next="' + nx.k + '">Next: ' + esc(nx.n) + ' →</button></div>';
+  }
+  function open(k, p, push) {
+    var d = I.filter(function (x) { return x.k === k; })[0]; if (!d) return;
+    if (p !== 'sf' || !SF[k]) p = 'sap';
+    if (!ov.classList.contains('open')) last = document.activeElement;
+    cur = { k: k, p: p };
+    pn.innerHTML = render(d, p); pn.scrollTop = 0;
+    ov.classList.add('open'); ov.setAttribute('aria-hidden', 'false'); document.body.classList.add('i-lock');
+    pn.focus();
+    if (push) history.replaceState(null, '', '#industry-' + k + (p === 'sf' ? '/salesforce' : '/sap'));
+  }
+  function close() {
+    ov.classList.remove('open'); ov.setAttribute('aria-hidden', 'true'); document.body.classList.remove('i-lock');
+    if (location.hash.indexOf('#industry-') === 0) history.replaceState(null, '', location.pathname + location.search);
+    if (last) last.focus();
+  }
+  grid.addEventListener('click', function (e) { var c = e.target.closest('.i-card'); if (c) open(c.dataset.k, 'sap', true); });
+  ov.addEventListener('click', function (e) {
+    if (e.target === ov || e.target.closest('.i-x')) return close();
+    var n = e.target.closest('[data-next]'); if (n) return open(n.dataset.next, cur.p, true);
+    var t = e.target.closest('[data-p]'); if (t) return open(cur.k, t.dataset.p, true);
+    var a = e.target.closest('.i-nav a');
+    if (a) { e.preventDefault(); var s = pn.querySelector(a.getAttribute('href')); if (s) s.scrollIntoView({ behavior: 'smooth' }); }
+  });
+  pn.addEventListener('scroll', function () {
+    var on = null; pn.querySelectorAll('.i-sec').forEach(function (s) { if (s.offsetTop - 80 <= pn.scrollTop) on = s.id; });
+    pn.querySelectorAll('.i-nav a').forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + on); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!ov.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'Tab') {
+      var f = pn.querySelectorAll('button, a[href]'); if (!f.length) return;
+      var a = f[0], z = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+    }
+  });
+  /* deep links: #industry-food, #industry-food/sap, #industry-food/salesforce (the mega menu uses these) */
+  function fromHash() {
+    var h = location.hash.match(/^#industry-(\w+)(?:\/(\w+))?/); if (!h) return;
+    open(h[1], h[2] === 'salesforce' || h[2] === 'sf' ? 'sf' : 'sap', false);
+  }
+  window.addEventListener('hashchange', fromHash); fromHash();
+})();
+</script>
+
+
+</body></html>

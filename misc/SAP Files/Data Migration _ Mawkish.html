@@ -1,0 +1,580 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Data Migration | Mawkish</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Mawkish dark site, full-width bands; each band pairs copy with a drawn SAP Fiori-style screen */
+:root {
+  --bg: #050807;
+  --bg-2: #0a110e;
+  --line: #1c2823;
+  --fg: #eef3f0;
+  --muted: #9aaaa2;
+  --green: #1f7a5a;
+  --green-hi: #34b386;
+  --paper: #f3f6f4;
+  --ink: #142019;
+  --ink-soft: #5c6c65;
+  --fiori: #0a6ed1;
+  --fiori-bg: #f5f6f7;
+  --warn: #e9730c;
+  --display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.in { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 88px; border-top: 1px solid var(--line); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 19px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 16px; display: block; }
+.lede { color: var(--muted); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border: 1px solid transparent; }
+.btn.pri { background: var(--green); color: #fff; }
+.btn.pri:hover { background: #24906a; }
+.btn.sec { border-color: #2c3d36; color: var(--fg); }
+.btn.sec:hover { border-color: var(--green-hi); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
+
+/* header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(5,8,7,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.site .in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; flex-direction: column; align-items: center; font-weight: 800; letter-spacing: .3em; font-size: 9px; color: var(--fg); text-decoration: none; }
+.logo svg { width: 54px; height: 26px; }
+.nav { display: flex; gap: 26px; align-items: center; }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 700; font-size: 12.5px; letter-spacing: .07em; }
+.nav a.on { color: var(--green-hi); }
+.nav .btn { padding: 12px 18px; }
+@media (max-width: 900px) { .nav a:not(.btn) { display: none; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 56px 88px; background: radial-gradient(900px 420px at 80% 10%, rgba(31,122,90,.22), transparent 70%); }
+.crumbs { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 em { font-style: normal; color: var(--green-hi); }
+.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.name-note { margin-top: 28px; font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--green); padding-left: 14px; max-width: 54ch; }
+.name-note b { color: var(--fg); font-weight: 600; }
+
+/* Fiori mock screens */
+.screen { background: var(--fiori-bg); color: #32363a; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06); font-size: 12px; line-height: 1.4; min-width: 0; }
+.shell { background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; gap: 12px; padding: 9px 14px; }
+.shell .sap { background: linear-gradient(135deg,#0a6ed1,#0854a0); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 7px; border-radius: 3px; letter-spacing: .02em; }
+.shell .t { font-weight: 600; color: #32363a; flex: 1; }
+.shell .search { flex: 1.4; background: #eff1f2; border-radius: 16px; height: 24px; display: flex; align-items: center; padding: 0 10px; color: #8b9196; font-size: 11px; }
+.shell .joule-btn { width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); }
+.shell .av { width: 24px; height: 24px; border-radius: 50%; background: #d1e8ff; color: #0a6ed1; font-weight: 700; font-size: 10px; display: grid; place-items: center; }
+.body-pad { padding: 16px; }
+.greet { font-size: 15px; font-weight: 700; color: #1d2d3e; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.tile { background: #fff; border-radius: 10px; padding: 11px 12px; box-shadow: 0 0 0 1px #e5e5e5; min-height: 92px; display: flex; flex-direction: column; justify-content: space-between; }
+.tile .h { font-weight: 600; color: #1d2d3e; font-size: 11.5px; }
+.tile .s { color: #6a6d70; font-size: 10.5px; }
+.tile .k { font-size: 22px; font-weight: 300; color: #0a6ed1; font-variant-numeric: tabular-nums; }
+.tile .k.neg { color: #bb0000; } .tile .k.pos { color: #107e3e; }
+.tile .k small { font-size: 11px; color: #6a6d70; margin-left: 2px; }
+.spark { height: 26px; width: 100%; }
+.split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; margin-top: 10px; }
+.card-f { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; padding: 12px; min-width: 0; }
+.card-f .h { font-weight: 700; font-size: 11.5px; color: #1d2d3e; margin-bottom: 8px; }
+.row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid #eee; font-size: 11px; }
+.row:first-of-type { border-top: 0; }
+.pill { font-size: 9.5px; font-weight: 700; border-radius: 9px; padding: 1px 7px; white-space: nowrap; }
+.pill.ok { background: #f1fdf6; color: #107e3e; box-shadow: inset 0 0 0 1px #c6ecd3; }
+.pill.wr { background: #fef7f1; color: #e9730c; box-shadow: inset 0 0 0 1px #f8d3b0; }
+.pill.in { margin: 0; max-width: none; padding: 1px 7px; background: #eef6fe; color: #0a6ed1; box-shadow: inset 0 0 0 1px #c5def7; }
+.joule { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; display: flex; flex-direction: column; min-width: 0; }
+.joule .jh { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid #eee; font-weight: 700; font-size: 11.5px; }
+.joule .jh i { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); display: inline-block; }
+.joule .msgs { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.bub { border-radius: 10px; padding: 7px 9px; font-size: 10.8px; max-width: 92%; }
+.bub.u { align-self: flex-end; background: #0a6ed1; color: #fff; border-bottom-right-radius: 3px; }
+.bub.j { background: #f2f2f7; color: #1d2d3e; border-bottom-left-radius: 3px; }
+.bub.j b { color: #0a6ed1; }
+.typing span { display: inline-block; width: 5px; height: 5px; margin-right: 3px; border-radius: 50%; background: #8b9196; }
+@media (prefers-reduced-motion: no-preference) {
+  .typing span { animation: blink 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
+}
+.caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+/* journey explainer */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.includes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.includes div { background: var(--bg-2); padding: 22px; }
+.includes h3 { font-size: 16px; margin-bottom: 6px; }
+.includes p { color: var(--muted); font-size: 14.5px; }
+.ico { width: 30px; height: 30px; margin-bottom: 12px; color: var(--green-hi); }
+
+/* fit check */
+.fit { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 44px; align-items: start; }
+.qs { display: flex; flex-direction: column; gap: 10px; }
+.q { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.q span { font-size: 15px; min-width: 0; }
+.yn { display: flex; gap: 4px; flex: none; background: #0f1814; border-radius: 9px; padding: 3px; }
+.yn button { font: 700 12px var(--body); letter-spacing: .06em; border: 0; border-radius: 7px; padding: 7px 12px; background: transparent; color: var(--muted); cursor: pointer; }
+.yn button[aria-pressed="true"] { background: var(--green); color: #fff; }
+.yn button.no[aria-pressed="true"] { background: #6b3a12; }
+.result { position: sticky; top: 100px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 28px; }
+.result .lab { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.meter { height: 10px; background: #dde5e1; border-radius: 6px; margin: 14px 0 18px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 6px; transition: width .35s; }
+.result h3 { font-size: 24px; margin-bottom: 10px; }
+.result p { color: var(--ink-soft); font-size: 15px; }
+.result .btn { margin-top: 20px; }
+
+/* capabilities */
+.caps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.cap { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.cap ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+.cap ul li { margin-bottom: 4px; }
+.cap .tagline { color: var(--fg); font-size: 15px; }
+
+/* AI */
+.agents { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.agent { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.agent .n { width: 36px; height: 36px; border-radius: 10px; background: rgba(52,179,134,.12); color: var(--green-hi); display: grid; place-items: center; }
+.agent h3 { font-size: 16px; margin-bottom: 2px; }
+.agent p { color: var(--muted); font-size: 14.5px; }
+.prog { height: 4px; background: #e6e9eb; border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.prog i { display: block; height: 100%; background: #0a6ed1; width: 72%; }
+@media (prefers-reduced-motion: no-preference) {
+  .prog i { animation: load 3.2s ease-in-out infinite alternate; }
+  @keyframes load { from { width: 38% } to { width: 92% } }
+}
+
+/* release timeline */
+.tl { margin-top: 48px; overflow-x: auto; }
+.tl svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.fact { border-top: 2px solid var(--green); padding-top: 14px; }
+.fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 14px; }
+
+/* extensibility */
+.layers { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.layer { display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.layer .who { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--green-hi); padding-top: 3px; }
+.layer h3 { font-size: 16px; margin-bottom: 4px; }
+.layer p { color: var(--muted); font-size: 14.5px; }
+.layer.core { background: var(--paper); color: var(--ink); border-color: transparent; }
+.layer.core .who { color: var(--green); }
+.layer.core p { color: var(--ink-soft); }
+
+/* activate */
+.phases { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ph { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.ph:last-child { border-right: 0; }
+.ph .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.ph h3 { font-size: 17px; }
+.ph p { color: var(--muted); font-size: 13.5px; }
+.ph .we { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--fg); }
+.ph .we b { color: var(--green-hi); font-weight: 700; }
+
+/* users */
+.users { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+.users table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; }
+.users th, .users td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.users th { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.users td:first-child { font-weight: 700; white-space: nowrap; }
+.users td:nth-child(2) { color: var(--muted); }
+.users tr:last-child td { border-bottom: 0; }
+.note { margin-top: 16px; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+/* faq */
+.faq { margin-top: 36px; display: flex; flex-direction: column; gap: 10px; max-width: 860px; }
+details { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 16.5px; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--green-hi); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 18px; max-width: 70ch; }
+
+/* cta */
+.cta-band { background: linear-gradient(120deg, #0e3a2b, #0a1a14 60%); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.cta-band ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cta-band li { display: flex; gap: 10px; font-size: 15px; }
+.cta-band li::before { content: "✓"; color: var(--green-hi); font-weight: 800; }
+footer { padding-block: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+footer .in { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .hero-grid, .two, .fit, .cta-band { grid-template-columns: 1fr; }
+  .caps { grid-template-columns: 1fr 1fr; }
+  .phases { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .ph:nth-child(3) { border-right: 0; }
+  .ph:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .result { position: static; }
+}
+@media (max-width: 620px) {
+  section { padding-block: 64px; }
+  .caps, .includes { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: 1fr; }
+  .ph { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .tiles .tile:nth-child(3) { display: none; }
+  .split { grid-template-columns: 1fr; }
+  .layer { grid-template-columns: 1fr; gap: 6px; }
+  .cta-band { padding: 36px 24px; }
+  .q { flex-direction: column; align-items: flex-start; }
+}
+
+/* light bands: same components, re-tokened */
+section.light { --bg-2: #ffffff; --line: #d9e2dd; --fg: #142019; --muted: #55655e; --green-hi: #17694b; background: #f2f5f3; color: var(--fg); border-top-color: transparent; }
+section.light .includes { background: var(--line); }
+section.light .cap, section.light details { box-shadow: 0 1px 2px rgba(20,32,25,.05); }
+/* Video library */
+.vf { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
+.vf button { font: 600 13.5px/1 var(--body); padding: 10px 15px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
+.vf button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.vf button span { color: var(--muted); margin-left: 6px; font-weight: 500; }
+.vf button[aria-pressed="true"] span { color: inherit; opacity: .6; }
+.vgrid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; margin-top: 26px; }
+.vcard { display: flex; flex-direction: column; text-decoration: none; color: var(--fg); border-radius: 14px; background: var(--bg-2); border: 1px solid var(--line); overflow: hidden; transition: transform .25s, border-color .25s; }
+.vcard:hover { transform: translateY(-3px); border-color: var(--green); }
+.vcard.feat { grid-column: span 2; }
+.poster { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; padding: 18px 20px; display: flex; flex-direction: column; justify-content: space-between; background: radial-gradient(120% 140% at 100% 0%, #1f7a5a 0%, #0c2a1f 48%, #06110d 100%); }
+.poster[data-k="mod"] { background: radial-gradient(120% 140% at 100% 0%, #0a6ed1 0%, #0b2340 50%, #050c16 100%); }
+.poster[data-k="rel"] { background: radial-gradient(120% 140% at 100% 0%, #5d36ff 0%, #1b1446 50%, #07061a 100%); }
+.poster::after { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(200deg, #000 10%, transparent 70%); -webkit-mask-image: linear-gradient(200deg, #000 10%, transparent 70%); pointer-events: none; }
+.poster .top { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+.poster .ch { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; color: #fff; letter-spacing: .04em; }
+.poster .ch b { background: linear-gradient(135deg,#0a6ed1,#0854a0); padding: 2px 6px; border-radius: 3px; font-size: 10px; }
+.poster .tag { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+.poster .big { position: relative; z-index: 1; font-family: var(--display); font-weight: 800; color: #fff; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.08; letter-spacing: -.01em; max-width: 80%; text-wrap: balance; }
+.vcard.feat .poster .big { font-size: clamp(26px, 3.4vw, 44px); }
+.poster .play { position: absolute; right: 18px; bottom: 18px; z-index: 1; width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,.95); display: grid; place-items: center; box-shadow: 0 10px 30px rgba(0,0,0,.35); transition: transform .25s; }
+.vcard:hover .play { transform: scale(1.08); }
+.vmeta { padding: 16px 18px 18px; display: grid; gap: 6px; }
+.vmeta h3 { font-size: 16px; line-height: 1.3; }
+.vmeta p { color: var(--muted); font-size: 14px; margin: 0; }
+.vmeta .d { font-size: 12px; color: var(--muted); letter-spacing: .02em; }
+.vnote { margin-top: 22px; color: var(--muted); font-size: 13px; max-width: 80ch; }
+
+@media (max-width: 980px) { .vgrid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .vgrid { grid-template-columns: 1fr; } }
+.vcard:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 2px; }
+</style>
+<header class="site">
+  <div class="in">
+    <a class="logo" href="#top" aria-label="Mawkish Technologies">
+      <svg viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L20 4 L32 18 L44 4 L62 28 Z" fill="none" stroke="#eef3f0" stroke-width="4" stroke-linejoin="round"/><path d="M20 28 L32 14 L44 28" fill="#eef3f0"/></svg>
+      MAWKISH
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">ABOUT US</a>
+      <a href="#" class="on">OUR SERVICES</a>
+      <a href="#">INDUSTRIES</a>
+      <a href="#">INSIGHTS &amp; PERSPECTIVES</a>
+      <a href="#book" class="btn pri">Schedule a consultation</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+/* Data migration components */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 26px; }
+.chips span { font-size: 12.5px; font-weight: 600; padding: 5px 11px; border-radius: 14px; border: 1px solid #2c3d36; color: var(--muted); }
+.chips b { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--green-hi); width: 100%; margin-bottom: 4px; }
+.prog2 { height: 6px; background: #eff1f2; border-radius: 3px; overflow: hidden; width: 90px; }
+.prog2 i { display: block; height: 100%; background: #3fa45b; }
+.prog2 i.o { background: #e9730c; } .prog2 i.b { background: #0a6ed1; }
+.what { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin-top: 40px; }
+.what .cap h3 { font-size: 18px; }
+.what .cap p { color: var(--muted); font-size: 14px; }
+.what .cap ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14px; display: grid; gap: 4px; }
+.what .cap.stay { background: transparent; border-style: dashed; }
+.what .cap .k { font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--green-hi); }
+.what .cap.stay .k { color: #b5651d; }
+.seq, .mocks { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--bg-2); }
+.seq svg { min-width: 900px; width: 100%; height: auto; display: block; }
+.mocks svg { min-width: 860px; width: 100%; height: auto; display: block; }
+.ways { margin-top: 40px; }
+section.light .users td { color: var(--fg); }
+section.light .users td:nth-child(2) { color: var(--muted); }
+.recon { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 40px; }
+.rc { border: 1px solid var(--line); border-radius: 16px; padding: 22px; background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.rc h3 { font-size: 17px; }
+.rc p { color: var(--muted); font-size: 14px; }
+.rc .sig { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; display: flex; justify-content: space-between; gap: 8px; }
+.rc .sig b { color: var(--green-hi); }
+@media (max-width: 1080px) { .what { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 760px) { .recon { grid-template-columns: 1fr; } }
+@media (max-width: 620px) { .what { grid-template-columns: 1fr; } }
+</style>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="in">
+      <div class="crumbs"><a href="#">Services</a> / <a href="#">SAP Solutions</a> / Data Migration</div>
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Data Migration</span>
+          <h1>Move your data once. <em>Trust it from day one.</em></h1>
+          <p class="lede">On go-live morning, your new system is only as good as the data inside it. We plan, clean, load and reconcile your master data and open balances with SAP's own migration tools. Then we rehearse until every total matches the system you're leaving.</p>
+          <div class="ctas">
+            <a href="#book" class="btn pri">Get a migration assessment →</a>
+            <a href="#method" class="btn sec">See how we rehearse</a>
+          </div>
+          <div class="chips"><b>Sources we migrate from</b><span>SAP ECC</span><span>SAP Business One</span><span>IFS</span><span>Microsoft Dynamics</span><span>Oracle</span><span>Sage</span><span>Tally</span><span>QuickBooks</span><span>Custom systems</span><span>Spreadsheets</span></div>
+        </div>
+
+        <figure style="margin:0">
+          <div class="screen" role="img" aria-label="Illustration of the SAP Migrate Your Data app showing a migration project in its third mock load, with status by migration object">
+            <div class="shell"><span class="sap">SAP</span><span class="t">Migrate Your Data</span><span class="search">Search migration objects…</span><span class="av">DM</span></div>
+            <div class="body-pad">
+              <div class="tiles">
+                <div class="tile"><div><div class="h">Migration objects</div><div class="s">Project · Mock load 3</div></div><div class="k">38</div></div>
+                <div class="tile"><div><div class="h">Records migrated</div><div class="s">Of 186,940</div></div><div class="k pos">184,220</div></div>
+                <div class="tile"><div><div class="h">Errors to fix</div><div class="s">Down from 2,310 in mock 1</div></div><div class="k neg">12</div></div>
+              </div>
+              <div class="card-f" style="margin-top:10px">
+                <div class="h">Migration objects</div>
+                <div class="row"><span>Bank</span><span style="display:flex;gap:8px;align-items:center"><span class="prog2"><i style="width:100%"></i></span><span class="pill ok">Migrated</span></span></div>
+                <div class="row"><span>Customer · 4,312 records</span><span style="display:flex;gap:8px;align-items:center"><span class="prog2"><i style="width:100%"></i></span><span class="pill ok">Migrated</span></span></div>
+                <div class="row"><span>Supplier · 2,086 records</span><span style="display:flex;gap:8px;align-items:center"><span class="prog2"><i style="width:100%"></i></span><span class="pill ok">Migrated</span></span></div>
+                <div class="row"><span>Fixed asset (incl. balances)</span><span style="display:flex;gap:8px;align-items:center"><span class="prog2"><i class="o" style="width:94%"></i></span><span class="pill wr">12 errors</span></span></div>
+                <div class="row"><span>Accounts receivable open item</span><span style="display:flex;gap:8px;align-items:center"><span class="prog2"><i class="b" style="width:46%"></i></span><span class="pill in">Running</span></span></div>
+                <div class="row"><span>G/L account balance</span><span style="display:flex;gap:8px;align-items:center"><span class="prog2"><i style="width:0%"></i></span><span class="pill nt" style="background:#f5f6f7;color:#556b82;box-shadow:inset 0 0 0 1px #dde1e5">Waiting</span></span></div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="caption">Illustration of SAP's Migrate Your Data app (the migration cockpit). Sample data.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT MOVES -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">What actually moves</span>
+      <h2>Your data from today, not your history.</h2>
+      <p class="lede">A new SAP system starts on a clean date. You bring over what you need to keep working the next morning: the records you use, what's still open, and the balances that carry forward. Years of closed transactions stay where they are, but you can still look them up.</p>
+      <div class="what">
+        <div class="cap"><span class="k">Master data</span><h3>Who and what you deal with</h3><ul><li>Customers and suppliers, with bank and tax details</li><li>Products, bills of material and routings</li><li>Fixed assets</li><li>Prices, contracts and conditions</li></ul></div>
+        <div class="cap"><span class="k">Open items</span><h3>Work still in progress</h3><ul><li>Unpaid customer and supplier invoices</li><li>Open sales and purchase orders</li><li>Open projects and service orders</li><li>Contracts still running</li></ul></div>
+        <div class="cap"><span class="k">Balances</span><h3>What carries forward</h3><ul><li>General ledger balances</li><li>Stock quantities and values</li><li>Asset values and depreciation to date</li><li>Bank balances for reconciliation</li></ul></div>
+        <div class="cap stay"><span class="k">Usually stays behind</span><h3>Kept, not migrated</h3><ul><li>Closed transactions from past years</li><li>Duplicate and inactive records</li><li>Workarounds the new process removes</li></ul><p>We keep history readable, in the old system in read-only mode or in an archive or reporting store.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEQUENCE -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">Order matters</span>
+      <h2>Load in the right sequence, or nothing reconciles.</h2>
+      <p class="lede">An open invoice can't load before its customer exists, and a stock balance can't load before its product. SAP's migration objects depend on each other, so we plan the loads as a sequence. The general ledger goes last, because it has to agree with everything loaded before it.</p>
+      <div class="seq">
+        <svg viewBox="0 0 1000 300" role="img" aria-label="Load sequence in four stages. Stage 1, system settings: company codes, chart of accounts and organisation, set up through configuration. Stage 2, master data: banks, then customers and suppliers; products, then bills of material and routings; fixed assets. Stage 3, open items and stock: open receivables and payables, open sales and purchase orders, stock balances. Stage 4: general ledger balances, reconciled to the legacy trial balance.">
+          <g font-family="Manrope, sans-serif" font-size="10.5" font-weight="800" letter-spacing="1.4" fill="#7f938a">
+            <text x="20" y="30">1 · SYSTEM SETTINGS</text><text x="250" y="30">2 · MASTER DATA</text><text x="560" y="30">3 · OPEN ITEMS AND STOCK</text><text x="820" y="30">4 · CLOSING BALANCES</text>
+          </g>
+          <g font-family="Manrope, sans-serif">
+            <g transform="translate(20 50)"><rect width="190" height="210" rx="12" fill="#142019" stroke="#2c3d36"/><text x="16" y="32" font-size="14" font-weight="800" fill="#eef3f0">Configuration</text><text x="16" y="58" font-size="12" fill="#9aaaa2">Company codes</text><text x="16" y="80" font-size="12" fill="#9aaaa2">Chart of accounts</text><text x="16" y="102" font-size="12" fill="#9aaaa2">Plants and storage</text><text x="16" y="124" font-size="12" fill="#9aaaa2">Tax codes</text><text x="16" y="190" font-size="11" font-weight="700" fill="#34b386">Set up, not migrated</text></g>
+            <g transform="translate(250 50)"><rect width="120" height="56" rx="10" fill="#1f7a5a"/><text x="14" y="34" font-size="13" font-weight="800" fill="#fff">Banks</text></g>
+            <g transform="translate(400 50)"><rect width="130" height="56" rx="10" fill="#1f7a5a"/><text x="14" y="25" font-size="13" font-weight="800" fill="#fff">Customers,</text><text x="14" y="42" font-size="13" font-weight="800" fill="#fff">suppliers</text></g>
+            <g transform="translate(250 127)"><rect width="120" height="56" rx="10" fill="#1f7a5a"/><text x="14" y="34" font-size="13" font-weight="800" fill="#fff">Products</text></g>
+            <g transform="translate(400 127)"><rect width="130" height="56" rx="10" fill="#1f7a5a"/><text x="14" y="25" font-size="13" font-weight="800" fill="#fff">BOMs,</text><text x="14" y="42" font-size="13" font-weight="800" fill="#fff">routings</text></g>
+            <g transform="translate(250 204)"><rect width="280" height="56" rx="10" fill="#1f7a5a"/><text x="14" y="34" font-size="13" font-weight="800" fill="#fff">Fixed assets, with values to date</text></g>
+            <g transform="translate(560 50)"><rect width="220" height="56" rx="10" fill="#0a6ed1"/><text x="14" y="25" font-size="13" font-weight="800" fill="#fff">Open receivables</text><text x="14" y="42" font-size="13" font-weight="800" fill="#fff">and payables</text></g>
+            <g transform="translate(560 127)"><rect width="220" height="56" rx="10" fill="#0a6ed1"/><text x="14" y="25" font-size="13" font-weight="800" fill="#fff">Open sales and</text><text x="14" y="42" font-size="13" font-weight="800" fill="#fff">purchase orders</text></g>
+            <g transform="translate(560 204)"><rect width="220" height="56" rx="10" fill="#0a6ed1"/><text x="14" y="34" font-size="13" font-weight="800" fill="#fff">Stock balances</text></g>
+            <g transform="translate(820 50)"><rect width="160" height="210" rx="12" fill="#e9a23b"/><text x="16" y="32" font-size="14" font-weight="800" fill="#2b1a00">G/L balances</text><text x="16" y="58" font-size="12" fill="#4a3200">Loaded last</text><text x="16" y="80" font-size="12" fill="#4a3200">Must equal the</text><text x="16" y="98" font-size="12" fill="#4a3200">legacy trial balance</text><text x="16" y="190" font-size="11" font-weight="800" fill="#2b1a00">Final sign-off</text></g>
+          </g>
+          <g fill="none" stroke="#7f938a" stroke-width="1.6">
+            <path d="M210 155 H240"/><path d="M234 150 L241 155 L234 160"/>
+            <path d="M370 78 H392"/><path d="M386 73 L393 78 L386 83"/>
+            <path d="M370 155 H392"/><path d="M386 150 L393 155 L386 160"/>
+            <path d="M530 155 H552"/><path d="M546 150 L553 155 L546 160"/>
+            <path d="M780 155 H812"/><path d="M806 150 L813 155 L806 160"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">SAP's own tools</span>
+      <h2>The migration cockpit is built in, and it checks every record.</h2>
+      <p class="lede">SAP Cloud ERP includes the migration cockpit, the <i>Migrate Your Data</i> app, at no extra cost. It loads data through the same checks as the business apps, so a record that wouldn't save on screen won't load either. There are three ways to feed it, and we pick per object.</p>
+      <div class="users ways">
+        <table>
+          <thead><tr><th>Method</th><th>How it works</th><th>Best for</th></tr></thead>
+          <tbody>
+            <tr><td>Templates</td><td>We fill SAP's Excel (XML) or CSV templates from your extracts and upload them. Each file can be up to 100 MB.</td><td>Most mid-sized projects and any non-SAP source</td></tr>
+            <tr><td>Staging tables</td><td>Data is loaded into a separate SAP HANA Cloud database with an ETL tool, then the cockpit takes it from there.</td><td>High volumes and loads you'll repeat several times</td></tr>
+            <tr><td>Direct transfer</td><td>The cockpit reads selected objects straight from an SAP ECC system by company code and converts them to the new data model.</td><td>Moving from ECC. Objects it doesn't cover still use templates.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="facts">
+        <div class="fact"><b>Free</b><span>migration cockpit included in the SAP Cloud ERP subscription</span></div>
+        <div class="fact"><b>Same checks</b><span>as the business apps, so bad records are stopped at load</span></div>
+        <div class="fact"><b>Custom fields</b><span>appear in the templates automatically when they're enabled</span></div>
+        <div class="fact"><b>Statistics</b><span>record counts and values per company code, ready for reconciliation</span></div>
+      </div>
+      <p class="note">Remote staging uses SAP HANA Cloud, which is free up to a size limit and charged beyond it. We tell you up front if your volumes need it.</p>
+    </div>
+  </section>
+
+  <!-- METHOD: MOCK LOADS -->
+  <section id="method">
+    <div class="in">
+      <span class="eyebrow">How we rehearse</span>
+      <h2>Three practice loads before the one that counts.</h2>
+      <p class="lede">We never do a migration for the first time on go-live weekend. Each practice load, called a mock load, runs the full process on a test system with your real data. Errors fall with every round, and by the final rehearsal we know exactly how long cutover takes.</p>
+      <div class="mocks">
+        <svg viewBox="0 0 1000 330" role="img" aria-label="Chart of a typical migration rehearsal. Extract, clean and map comes first. Mock load 1 checks whether the data loads, with about 12 percent of records failing. Mock load 2 checks whether the totals reconcile, with about 3 percent failing. Mock load 3 is a timed dress rehearsal at full volume with under 0.5 percent failing. The go-live load then runs with no open errors. Values are illustrative.">
+          <g font-family="Manrope, sans-serif" font-size="11" style="fill:var(--muted)">
+            <line x1="80" y1="250" x2="960" y2="250" stroke="#2c3d36"/>
+            <line x1="80" y1="70" x2="960" y2="70" stroke="#1c2823" stroke-dasharray="3 5"/><text x="24" y="74">12%</text>
+            <line x1="80" y1="160" x2="960" y2="160" stroke="#1c2823" stroke-dasharray="3 5"/><text x="30" y="164">6%</text>
+            <text x="34" y="254">0%</text>
+            <text x="24" y="40" font-weight="800" letter-spacing="1.2" font-size="10">RECORDS FAILING</text>
+          </g>
+          <rect x="110" y="220" width="150" height="30" rx="6" fill="#2a3a33"/>
+          <text x="185" y="240" text-anchor="middle" font-family="Manrope, sans-serif" font-size="11.5" font-weight="700" fill="#cfe9dd">Extract, clean, map</text>
+          <rect x="315" y="70" width="110" height="180" rx="6" fill="#e9730c"/>
+          <rect x="495" y="205" width="110" height="45" rx="6" fill="#e9a23b"/>
+          <rect x="675" y="243" width="110" height="7" rx="3" fill="#34b386"/>
+          <rect x="855" y="246" width="80" height="4" rx="2" fill="#34b386"/>
+          <g font-family="Plus Jakarta Sans, sans-serif" font-weight="800" font-size="18" style="fill:var(--fg)">
+            <text x="370" y="60" text-anchor="middle">~12%</text><text x="550" y="195" text-anchor="middle">~3%</text><text x="730" y="233" text-anchor="middle">&lt;0.5%</text><text x="895" y="236" text-anchor="middle">0</text>
+          </g>
+          <g font-family="Manrope, sans-serif" font-size="12.5" font-weight="800" style="fill:var(--fg)">
+            <text x="185" y="280" text-anchor="middle">Prepare</text><text x="370" y="280" text-anchor="middle">Mock load 1</text><text x="550" y="280" text-anchor="middle">Mock load 2</text><text x="730" y="280" text-anchor="middle">Mock load 3</text><text x="895" y="280" text-anchor="middle">Go-live load</text>
+          </g>
+          <g font-family="Manrope, sans-serif" font-size="11.5" style="fill:var(--muted)">
+            <text x="185" y="300" text-anchor="middle">Owners clean the source</text><text x="370" y="300" text-anchor="middle">Does it load?</text><text x="550" y="300" text-anchor="middle">Do the totals match?</text><text x="730" y="300" text-anchor="middle">Timed, full volume</text><text x="895" y="300" text-anchor="middle">Cutover weekend</text>
+          </g>
+        </svg>
+      </div>
+      <p class="note">Illustrative values. Your error rates depend on the source system and how much cleaning happens up front.</p>
+    </div>
+  </section>
+
+  <!-- DATA QUALITY -->
+  <section class="light">
+    <div class="in two">
+      <div>
+        <span class="eyebrow">Clean before you load</span>
+        <h2>Fix the data where it lives, before it moves.</h2>
+        <p class="lede">Most migration problems are data problems: the same customer entered three times, suppliers without bank details, products without weights. We profile your source data early and give each problem to the person in your business who owns it.</p>
+        <p class="lede">In Sri Lanka this now matters more than ever. With RAMIS e-invoicing, invoices go to the Inland Revenue Department in real time, so a missing or wrong customer TIN is a rejected invoice on day one, not a correction at month-end.</p>
+      </div>
+      <figure style="margin:0">
+        <div class="screen" role="img" aria-label="Illustration of a data quality report listing duplicate customers, missing tax numbers, suppliers without bank details and products without units, each with an owner and status">
+          <div class="shell"><span class="sap" style="background:#1f7a5a">MK</span><span class="t">Data quality · Customer and supplier master</span><span class="av">DQ</span></div>
+          <div class="body-pad">
+            <div class="tiles">
+              <div class="tile"><div><div class="h">Records profiled</div><div class="s">From legacy extract</div></div><div class="k">6,398</div></div>
+              <div class="tile"><div><div class="h">Issues found</div><div class="s">Week 3 of 10</div></div><div class="k neg">571</div></div>
+              <div class="tile"><div><div class="h">Fixed at source</div><div class="s">By business owners</div></div><div class="k pos">62<small>%</small></div></div>
+            </div>
+            <div class="card-f" style="margin-top:10px">
+              <div class="h">Issues by rule</div>
+              <div class="row"><span>Possible duplicate customers · 214</span><span class="pill wr">Sales ops</span></div>
+              <div class="row"><span>Missing or invalid TIN / VAT number · 96</span><span class="pill wr">Finance</span></div>
+              <div class="row"><span>Supplier without bank details · 58</span><span class="pill in">Procurement</span></div>
+              <div class="row"><span>Inactive more than 3 years · 187</span><span class="pill ok">Agreed: don't migrate</span></div>
+              <div class="row"><span>Product without base unit or weight · 16</span><span class="pill in">Supply chain</span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="caption">Illustration of a Mawkish data quality report. Sample data.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- RECONCILIATION -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">Reconcile and sign off</span>
+      <h2>Every total checked, by the people who own it.</h2>
+      <p class="lede">Loading data is half the job. The other half is proving it arrived complete and correct. After each load we compare the new system with the old one, and the business owner of each area signs it off.</p>
+      <div class="recon">
+        <div class="rc"><h3>Record counts</h3><p>Customers, suppliers, products and assets: what we extracted, what we excluded on purpose, and what loaded.</p><div class="sig"><span>Signed by</span><b>Data owners</b></div></div>
+        <div class="rc"><h3>Receivables and payables</h3><p>Open items by customer and supplier match the legacy ageing reports, invoice by invoice.</p><div class="sig"><span>Signed by</span><b>Credit and AP leads</b></div></div>
+        <div class="rc"><h3>Stock</h3><p>Quantities by product, plant and storage location, and the total stock value.</p><div class="sig"><span>Signed by</span><b>Supply chain</b></div></div>
+        <div class="rc"><h3>Fixed assets</h3><p>Acquisition values, depreciation to date and net book value, asset by asset.</p><div class="sig"><span>Signed by</span><b>Asset accountant</b></div></div>
+        <div class="rc"><h3>General ledger</h3><p>The opening trial balance in SAP equals the closing trial balance in the legacy system, account by account.</p><div class="sig"><span>Signed by</span><b>Financial controller</b></div></div>
+        <div class="rc"><h3>Go-live decision</h3><p>All sign-offs collected, open errors at zero, and the cutover timing proven in the dress rehearsal.</p><div class="sig"><span>Signed by</span><b>Steering committee</b></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO LIBRARY -->
+  <section class="light" id="watch">
+    <div class="in">
+      <span class="eyebrow">Watch and learn</span>
+      <h2>See the tools from SAP.</h2>
+      <p class="lede">Videos from SAP’s official YouTube channels on the migration cockpit and how it fits into a Cloud ERP project.</p>
+      <div class="vgrid"><a class="vcard" href="https://www.youtube.com/watch?v=4t4IuWRr5LU" target="_blank" rel="noopener" data-yt="4t4IuWRr5LU" aria-label="Play on YouTube: Data Migration Cockpit fundamentals for SAP S/4HANA Cloud Public Edition">
+      <div class="poster" data-k="start"><div class="top"><span class="ch"><b>SAP</b>Community</span><span class="tag">Fundamentals</span></div><div class="big">Migration Cockpit basics</div><span class="play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M5 2.5v13l11-6.5z" fill="#0b2a1f"/></svg></span></div>
+      <div class="vmeta"><h3>Data Migration Cockpit fundamentals for SAP S/4HANA Cloud Public Edition</h3><p>SAP’s data migration team explains the cockpit, its migration approaches and direct transfer from ECC, with a demo.</p><span class="d">SAP Community · August 2024</span></div></a><a class="vcard" href="https://www.youtube.com/watch?v=caZiL3DsAWA" target="_blank" rel="noopener" data-yt="caZiL3DsAWA" aria-label="Play on YouTube: What’s new in Cloud ERP Public: SAP Data Migration Cockpit">
+      <div class="poster" data-k="rel"><div class="top"><span class="ch"><b>SAP</b>Community</span><span class="tag">What's new</span></div><div class="big">What's new in the cockpit</div><span class="play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M5 2.5v13l11-6.5z" fill="#0b2a1f"/></svg></span></div>
+      <div class="vmeta"><h3>What’s new in Cloud ERP Public: SAP Data Migration Cockpit</h3><p>The latest features of the migration cockpit for SAP Cloud ERP, presented by SAP.</p><span class="d">SAP Community · January 2026</span></div></a><a class="vcard" href="https://www.youtube.com/watch?v=_3PHMlne5cA" target="_blank" rel="noopener" data-yt="_3PHMlne5cA" aria-label="Play on YouTube: How SAP makes implementing the public cloud easier">
+      <div class="poster" data-k="mod"><div class="top"><span class="ch"><b>SAP</b>YouTube</span><span class="tag">Demo</span></div><div class="big">Implementing made easy</div><span class="play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M5 2.5v13l11-6.5z" fill="#0b2a1f"/></svg></span></div>
+      <div class="vmeta"><h3>How SAP makes implementing the public cloud easier</h3><p>Guided configuration, best practices and data migration tools that keep projects short.</p><span class="d">SAP · April 2023</span></div></a></div>
+      <p class="vnote">Published by SAP on its official SAP and SAP Community YouTube channels. Older videos use the earlier product name, SAP S/4HANA Cloud Public Edition.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">Questions we hear</span>
+      <h2>Straight answers.</h2>
+      <div class="faq">
+        <details><summary>Do we lose our history?</summary><p>No. History isn't loaded into the new system, but you can still see it. The usual options are to keep the old system available in read-only mode for a period, or to move history into an archive or a reporting store. We agree the option and how long you keep it, with your auditors' requirements in mind.</p></details>
+        <details><summary>We aren't on SAP today. Can you still migrate us?</summary><p>Yes. Most of our sources are non-SAP systems, such as IFS, Microsoft Dynamics, Oracle, Sage, Tally or custom-built software. We extract the data, map it to SAP's templates and load it with the migration cockpit. Only moves from SAP ECC can also use the direct transfer option.</p></details>
+        <details><summary>Who cleans the data, you or us?</summary><p>Both. We profile the data, find the problems and build the rules and mappings. Your people decide what's correct, because they know which of three customer records is the real one. Fixing data at the source is always cheaper than fixing it after go-live.</p></details>
+        <details><summary>How long is the business frozen at cutover?</summary><p>Usually a weekend, sometimes a little longer for large volumes. The final mock load is timed, so the cutover plan is based on a measured run, not an estimate. We agree beforehand which transactions stop, and when.</p></details>
+        <details><summary>Can we load data again later, for example after an acquisition?</summary><p>Yes. The migration cockpit stays available after go-live, so a new company or a new business can be loaded the same way.</p></details>
+        <details><summary>How is personal data handled?</summary><p>Migration files contain personal data such as employee and customer contacts. We agree secure storage and transfer, limit access to named people, and delete working files when the project closes. The cockpit also deletes its migration data after a retention period you choose.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="book">
+    <div class="in">
+      <div class="cta-band">
+        <div>
+          <span class="eyebrow">Start here</span>
+          <h2>Know your data before you plan the project.</h2>
+          <p class="lede">A migration assessment looks at your source systems and data quality early, so the migration is planned properly, not discovered late.</p>
+          <div style="margin-top:28px"><a href="#" class="btn pri">Book a migration assessment →</a></div>
+        </div>
+        <ul>
+          <li>Source systems and extraction approach</li>
+          <li>Data quality profile of key objects</li>
+          <li>Objects in scope and load sequence</li>
+          <li>Method per object: template, staging or direct</li>
+          <li>Mock load and cutover plan</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="in"><span>© Mawkish Technologies · Colombo, Sri Lanka</span><span>SAP, SAP S/4HANA and SAP Cloud ERP are trademarks of SAP SE. Screens and charts shown are illustrations.</span></div>
+</footer>
+
+</body></html>
