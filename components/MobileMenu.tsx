@@ -105,12 +105,7 @@ function CategoryBody({ c }: { c: MenuCategory }) {
           <div className="grid grid-cols-2 gap-2.5 pt-1">
             {c.featured.map((f) => (
               <Link key={f.href} href={f.href} className="flex flex-col gap-2 rounded-xl border border-white/10 bg-white/[0.04] p-3 active:bg-white/10">
-                {f.mark && <img src={f.mark} alt="" className="h-11 w-11 rounded-[9px] bg-[#ebf8ff] object-cover" />}
-                {!f.mark && f.badge && (
-                  <span aria-hidden="true" className="grid h-11 w-11 place-items-center rounded-[9px] bg-white/10 text-[11px] font-extrabold tracking-[0.06em] text-mw-mint">
-                    {f.badge}
-                  </span>
-                )}
+                {f.mark && <img src={f.mark} alt="" className={`h-11 w-11 rounded-[9px] ${f.markFit === "contain" ? "bg-white object-contain p-1" : "bg-[#ebf8ff] object-cover"}`} />}
                 <span className="text-[14px] font-bold leading-tight text-white">{f.label}</span>
                 <span className="-mt-1 text-[12px] leading-snug text-white/55">{f.sub}</span>
               </Link>

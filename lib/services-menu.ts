@@ -11,8 +11,6 @@ export type MenuFeatured = {
   href: string;
   /** A logo image. Without one, the card shows a cloud in `accent`. */
   mark?: string;
-  /** Plain text badge shown in place of a logo (used where the logos are not ours to use). */
-  badge?: string;
   /** "contain" shows a wide logo whole on white, instead of cropping it to fill the square (MiHCM's product logos). */
   markFit?: "contain";
   accent?: string;
@@ -473,15 +471,22 @@ export const servicesMenu: MenuCategory[] = [
   {
     id: "cloud",
     mark: "/images/solutions/cloud-infrastructure.svg",
-    label: "Cloud Infrastructure",
+    label: "Hyperscalers",
     href: "/services/cloud-infrastructure",
-    descriptor: "AWS, Azure, Google Cloud",
+    descriptor: "Cloud Infrastructure Provider",
     featuredTitle: "Cloud platforms",
     featuredCols: 3,
+    // One line each, so this band is exactly as tall as the SAP one. The logos are the vendors' own marks, as on the home page.
     featured: [
-      { label: "AWS", sub: "SAP and workloads on Amazon Web Services", href: "/services/cloud-infrastructure/aws", badge: "AWS" },
-      { label: "Microsoft Azure", sub: "SAP, Microsoft 365 and Azure together", href: "/services/cloud-infrastructure/microsoft-azure", badge: "AZURE" },
-      { label: "Google Cloud", sub: "SAP, data and AI on Google Cloud", href: "/services/cloud-infrastructure/google-cloud", badge: "GCP" },
+      { label: "AWS", sub: "Amazon Web Services", href: "/services/cloud-infrastructure/aws", mark: "/images/solutions/AWS.png", markFit: "contain" },
+      { label: "Microsoft Azure", sub: "SAP and Microsoft 365", href: "/services/cloud-infrastructure/microsoft-azure", mark: "/images/solutions/Microsoft.png", markFit: "contain" },
+      {
+        label: "Google Cloud",
+        sub: "SAP, data and AI",
+        href: "/services/cloud-infrastructure/google-cloud",
+        mark: "https://zql0rfjwszzixew9.public.blob.vercel-storage.com/solutions/Google%20Cloud.png",
+        markFit: "contain",
+      },
     ],
     groups: [
       {

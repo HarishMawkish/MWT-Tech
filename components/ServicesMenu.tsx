@@ -147,7 +147,7 @@ function FeaturedCard({
       <Link
         href={f.href}
         aria-current={current ? "page" : undefined}
-        className={`group relative flex h-full items-center rounded-[14px] border border-[#cfd9d4] bg-white py-[11px] group-data-[tight=true]/menu:py-2 text-[#12201a] transition-colors duration-200 hover:border-[#1f7a5a] ${compact ? "gap-3 px-3.5" : "gap-4 px-[18px]"}`}
+        className={`group relative flex h-full items-center rounded-[14px] border border-[#cfd9d4] bg-white py-[11px] group-data-[tight=true]/menu:py-2 text-[#12201a] transition-colors duration-200 hover:border-[#1f7a5a] ${compact ? "gap-2.5 px-3" : "gap-4 px-[18px]"}`}
       >
         {f.mark ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -156,21 +156,14 @@ function FeaturedCard({
             alt=""
             className={`h-[52px] w-[52px] shrink-0 rounded-[10px] border border-[#e0e8e4] ${f.markFit === "contain" ? "bg-white object-contain p-1.5" : "bg-[#ebf8ff] object-cover"}`}
           />
-        ) : f.badge ? (
-          <span
-            aria-hidden="true"
-            className="grid h-[52px] w-[52px] shrink-0 place-items-center rounded-[10px] border border-[#e0e8e4] bg-[#eef2f0] text-[12px] font-extrabold tracking-[0.06em] text-[#1f7a5a]"
-          >
-            {f.badge}
-          </span>
         ) : null}
         <span className="min-w-0 flex-1">
-          <span className={`block font-extrabold uppercase leading-[1.25] tracking-[0.03em] ${compact ? "text-[15px]" : "text-[18px]"}`}>{f.label}</span>
-          <span className="block text-[13.5px] leading-[1.3] text-[#5b6b64]">{f.sub}</span>
+          <span className={`block font-extrabold uppercase leading-[1.25] ${compact ? "whitespace-nowrap text-[14px] tracking-[0.01em]" : "text-[18px] tracking-[0.03em]"}`}>{f.label}</span>
+          <span className={`block leading-[1.3] text-[#5b6b64] ${compact ? "whitespace-nowrap text-[13px]" : "text-[13.5px]"}`}>{f.sub}</span>
         </span>
         <span
           aria-hidden="true"
-          className="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-full bg-[#eef2f0] text-[#1f7a5a] transition-colors duration-200 group-hover:bg-[#1f7a5a] group-hover:text-white"
+          className={`grid shrink-0 place-items-center rounded-full bg-[#eef2f0] text-[#1f7a5a] transition-colors duration-200 group-hover:bg-[#1f7a5a] group-hover:text-white ${compact ? "h-[30px] w-[30px]" : "h-[34px] w-[34px]"}`}
         >
           &rarr;
         </span>
