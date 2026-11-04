@@ -218,12 +218,19 @@ function ServicesRow({ label, href, active, pathname }: { label: string; href: s
   );
 }
 
-/** "Industries" unfolds into the same nine industries the desktop panel lists, each linking to its guide. */
+/** "Industries" unfolds into three rows: all industries, the SAP ones and the Salesforce ones. Not every industry is listed. */
 function IndustriesRow({ label, href, active, pathname }: { label: string; href: string; active: boolean; pathname: string }) {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  const count = (p: "sap" | "sf") => industriesMenu.filter((x) => x.p.includes(p)).length;
+  const rows = [
+    { name: "All industries", sub: `Every platform we work with · ${industriesMenu.length}`, to: href },
+    { name: "SAP industries", sub: `Cloud ERP, AI and data · ${count("sap")}`, to: `${href}#i-grid` },
+    { name: "Salesforce industries", sub: `CRM and customer experience · ${count("sf")}`, to: `${href}#i-grid` },
+  ];
 
   return (
     <div>
@@ -238,29 +245,13 @@ function IndustriesRow({ label, href, active, pathname }: { label: string; href:
       </button>
       <Fold open={open}>
         <div className="pb-2 pl-3">
-          <Link href={href} className="flex min-h-12 items-center justify-between border-b border-white/[0.07] px-1 text-[15px] font-semibold text-white/85 active:bg-white/5">
-            All Industries
-            <span aria-hidden="true" className="text-mw-mint">→</span>
-          </Link>
-          {industriesMenu.map((x) => (
-            <Link
-              key={x.k}
-              href={`/industries#industry-${x.k}`}
-              className="flex min-h-12 items-center gap-3 border-b border-white/[0.07] px-1 py-2 active:bg-white/5"
-            >
-              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-[9px] bg-white/10 text-mw-mint">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="h-[18px] w-[18px]" dangerouslySetInnerHTML={{ __html: x.icon }} />
+          {rows.map((r) => (
+            <Link key={r.name} href={r.to} className="flex min-h-14 items-center justify-between gap-3 border-b border-white/[0.07] px-1 py-2 active:bg-white/5">
+              <span className="min-w-0">
+                <span className="block text-[15px] font-semibold leading-tight text-white">{r.name}</span>
+                <span className="mt-0.5 block text-[12px] leading-snug text-white/50">{r.sub}</span>
               </span>
-              <span className="min-w-0 flex-1">
-                <span className="block text-[15px] font-semibold leading-tight text-white">{x.n}</span>
-                <span className="mt-1 flex gap-1.5">
-                  {x.p.map((p) => (
-                    <i key={p} className={`rounded px-1.5 py-px text-[10.5px] font-bold not-italic tracking-[0.04em] ${p === "sf" ? "bg-[#0b5cab]/30 text-[#9fd0ff]" : "bg-white/10 text-white/80"}`}>
-                      {p === "sf" ? "Salesforce" : "SAP"}
-                    </i>
-                  ))}
-                </span>
-              </span>
+              <span aria-hidden="true" className="text-mw-mint">→</span>
             </Link>
           ))}
         </div>
