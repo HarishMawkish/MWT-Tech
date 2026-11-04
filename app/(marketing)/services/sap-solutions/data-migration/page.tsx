@@ -14,7 +14,7 @@ export default function DataMigrationPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <DataMigPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

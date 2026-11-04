@@ -14,7 +14,7 @@ export default function FitToStandardWorkshopsPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <FitPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

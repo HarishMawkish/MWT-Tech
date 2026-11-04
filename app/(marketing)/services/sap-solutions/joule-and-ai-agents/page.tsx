@@ -14,7 +14,7 @@ export default function JouleAndAiAgentsPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <JoulePage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

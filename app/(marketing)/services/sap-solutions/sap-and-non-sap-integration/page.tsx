@@ -14,7 +14,7 @@ export default function SapAndNonSapIntegrationPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <IntegrationPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

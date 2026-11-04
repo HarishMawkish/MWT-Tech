@@ -272,3 +272,6 @@
 .cx .cs-rel { position: relative; }
 .cx .cs-rel-line { font-style: normal; font-size: 14.5px; color: var(--muted); padding-right: 24px; }
 @media (max-width: 760px) { .cx .cs-rels-four { grid-template-columns: minmax(0,1fr); } }
+
+/* The page note is centred like on every other page (this stylesheet resets paragraph margins). */
+.cx [data-canary] { margin-left: auto; margin-right: auto; }

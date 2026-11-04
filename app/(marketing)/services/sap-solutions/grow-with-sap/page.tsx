@@ -14,7 +14,7 @@ export default function GrowWithSapPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <GrowPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

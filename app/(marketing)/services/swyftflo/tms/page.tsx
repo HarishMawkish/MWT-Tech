@@ -16,7 +16,7 @@ export default function TmsPage() {
       <SwPage>
         <TmsBody />
       </SwPage>
-    <CanaryNote id="swyftflo" />
+    <CanaryNote />
     </>
   );
 }

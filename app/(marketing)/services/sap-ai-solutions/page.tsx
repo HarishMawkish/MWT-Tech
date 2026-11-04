@@ -469,7 +469,7 @@ export default function SapBusinessAiPage() {
       </section>
 
       <CtaBand />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

@@ -20,11 +20,11 @@ the Google Alert queries and the findings log). These are the steps that still n
 
 ## 4. Set up the Google Alerts
 - Sign in at google.com/alerts with a shared company Google account, not a personal one.
-- Paste one query from the list in `docs/content-monitoring.md` and click Show options.
+- Paste one query in the form `"<term>" -site:mawkishtechnologies.com` and click Show options.
 - Set How often to "As-it-happens", Sources to "Automatic", Language to "Any language",
   Region to "Any region", and How many to "All results".
 - Set Deliver to an inbox that several people read, then click Create Alert.
-- Repeat for all 17 queries.
+- Repeat for every term in `docs/canary-terms-report.xlsx` (one alert per term).
 
 ## 5. Run Copyscape
 - Open copyscape.com and sign up for Premium. Pay-per-search credits are enough.

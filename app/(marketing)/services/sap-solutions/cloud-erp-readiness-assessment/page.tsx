@@ -14,7 +14,7 @@ export default function CloudErpReadinessAssessmentPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <ReadinessPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

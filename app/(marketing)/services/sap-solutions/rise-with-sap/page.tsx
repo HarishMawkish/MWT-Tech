@@ -14,7 +14,7 @@ export default function RiseWithSapPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <RisePage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

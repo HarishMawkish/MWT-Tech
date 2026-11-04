@@ -26,7 +26,7 @@ export default async function DatabricksProductPage({ params }: { params: Promis
       <DbPage accent={bySlug(product)!.accent}>
         <Body slug={product} />
       </DbPage>
-    <CanaryNote id="databricks" />
+    <CanaryNote />
     </>
   );
 }

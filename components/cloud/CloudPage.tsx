@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
+import { CanaryNote } from "@/components/CanaryNote";
 import "./cloud.css";
 
 // The page's own two typefaces, loaded the Next way and handed to its stylesheet as variables.
@@ -14,6 +15,7 @@ export function CloudPage({ children }: { children: ReactNode }) {
   return (
     <div className={`cx ${jakarta.variable} ${manrope.variable}`}>
       <main id="top">{children}</main>
+      <CanaryNote />
       {/* The standalone pages carried this line in their own footer; the site footer is left alone, so it sits here. */}
       <div className="legal">
         <div className="in">

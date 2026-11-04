@@ -25,7 +25,7 @@ export default function CareersRoute() {
   return (
     <>
       <CareersPage />
-      <CanaryNote id="careers" />
+      <CanaryNote />
     </>
   );
 }

@@ -14,7 +14,7 @@ export default function OdooHubPage() {
       <OdPage>
         <HubBody />
       </OdPage>
-    <CanaryNote id="odoo" />
+    <CanaryNote />
     </>
   );
 }

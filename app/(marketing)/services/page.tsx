@@ -47,7 +47,7 @@ export default function ServicesPage() {
       <PageHero
         eyebrow="Our Services"
         title="Enterprise platforms, applied with a business-first lens."
-        description="We help organizations plan, implement, and get lasting value from the platforms that run their business — and the emerging capabilities that will shape its next stage. Every engagement runs under One-Signature Delivery, so one partner answers for the whole delivery."
+        description="We help organizations plan, implement, and get lasting value from the platforms that run their business — and the emerging capabilities that will shape its next stage."
       >
         <a
           href="#core"
@@ -149,7 +149,7 @@ export default function ServicesPage() {
       </section>
 
       <CtaBand />
-    <CanaryNote id="services" />
+    <CanaryNote />
     </>
   );
 }

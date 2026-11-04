@@ -150,7 +150,7 @@ export default async function InsightsPage() {
       </section>
 
       <CtaBand />
-    <CanaryNote id="insights" />
+    <CanaryNote />
     </>
   );
 }

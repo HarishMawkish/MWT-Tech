@@ -292,7 +292,7 @@ export default async function InsightDetailPage({
       )}
 
       <CtaBand />
-    <CanaryNote id="insights" />
+    <CanaryNote />
     </>
   );
 }

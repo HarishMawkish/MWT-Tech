@@ -14,7 +14,7 @@ export default function LicensingAndCommercialAdvisoryPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <LicensingPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

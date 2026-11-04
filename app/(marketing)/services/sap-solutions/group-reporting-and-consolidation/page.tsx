@@ -14,7 +14,7 @@ export default function GroupReportingAndConsolidationPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <GroupRepPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

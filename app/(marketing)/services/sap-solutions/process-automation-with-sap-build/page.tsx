@@ -14,7 +14,7 @@ export default function ProcessAutomationWithSapBuildPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <AutomationPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

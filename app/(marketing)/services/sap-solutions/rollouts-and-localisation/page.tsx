@@ -14,7 +14,7 @@ export default function RolloutsAndLocalisationPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <RolloutPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }
