@@ -14,7 +14,7 @@ export default function ApplicationManagementSupportPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <SupportPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

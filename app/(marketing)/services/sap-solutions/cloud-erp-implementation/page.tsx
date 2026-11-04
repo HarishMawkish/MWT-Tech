@@ -14,7 +14,7 @@ export default function CloudErpImplementationPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <ImplementationPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

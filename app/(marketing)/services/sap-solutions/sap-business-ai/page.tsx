@@ -14,7 +14,7 @@ export default function SapBusinessAiPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <BaiPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

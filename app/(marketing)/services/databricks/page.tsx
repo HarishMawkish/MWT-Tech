@@ -14,7 +14,7 @@ export default function DatabricksHubPage() {
       <DbPage accent="#ff3621">
         <HubBody />
       </DbPage>
-    <CanaryNote id="databricks" />
+    <CanaryNote />
     </>
   );
 }

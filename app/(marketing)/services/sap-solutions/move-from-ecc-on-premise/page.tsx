@@ -14,7 +14,7 @@ export default function MoveFromEccOnPremisePage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <MovePage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

@@ -23,9 +23,9 @@ export const salesforcePages: SfPageMeta[] = [
   {
     slug: "",
     name: "Salesforce",
-    title: "Salesforce: Sales, Data, Marketing, Loyalty and Service",
+    title: "Salesforce: Products and Where to Start",
     description:
-      "Salesforce explained from its own published material: the five main products, how the platform fits together, where to start, how it sits beside your ERP, and what a project involves.",
+      "Salesforce explained from its own published material: the five main products, how the platform fits together and where to start.",
     updated: UPDATED,
   },
   {
@@ -33,7 +33,7 @@ export const salesforcePages: SfPageMeta[] = [
     name: "Salesforce Sales Cloud",
     title: "Salesforce Sales Cloud",
     description:
-      "Sales Cloud explained: leads, accounts and opportunities in one place, automatic activity capture, forecasting, quotes and approvals, and the AI and agents Salesforce adds.",
+      "Sales Cloud explained: leads, accounts and opportunities in one place, activity capture, forecasting, quotes and approvals, and the AI Salesforce adds.",
     updated: UPDATED,
   },
   {
@@ -41,7 +41,7 @@ export const salesforcePages: SfPageMeta[] = [
     name: "Salesforce Data 360",
     title: "Salesforce Data 360 (formerly Data Cloud)",
     description:
-      "Data 360 explained: connecting data in place or by ingestion, mapping it to a shared model, unifying profiles, and putting segments and agents to work, with how it is priced.",
+      "Data 360 explained: connecting data, mapping it to a shared model, unifying profiles, and putting segments and agents to work, with how it is priced.",
     updated: UPDATED,
   },
   {
@@ -73,7 +73,7 @@ export const salesforcePages: SfPageMeta[] = [
     name: "Salesforce Agentforce",
     title: "Salesforce Agentforce",
     description:
-      "Agentforce explained: how agents are built from topics and actions, how they reason, the development lifecycle, the trust layer and guardrails, and how it is paid for.",
+      "Agentforce explained: how agents are built from topics and actions, how they reason, the trust layer and guardrails, and how it is paid for.",
     updated: UPDATED,
   },
   {

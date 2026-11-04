@@ -14,7 +14,7 @@ export default function SecurityRolesAndAuthorisationsPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <SecurityPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

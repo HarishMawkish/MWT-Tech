@@ -16,7 +16,7 @@ export default function InvoiceHubPage() {
       <SwPage>
         <InvoiceHubBody />
       </SwPage>
-    <CanaryNote id="swyftflo" />
+    <CanaryNote />
     </>
   );
 }

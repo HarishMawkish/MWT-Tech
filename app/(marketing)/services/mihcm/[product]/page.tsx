@@ -29,7 +29,7 @@ export default async function MihcmProductPage({ params }: { params: Promise<{ p
       <MhPage>
         <ProductBody c={contents[product]} />
       </MhPage>
-    <CanaryNote id="mihcm" />
+    <CanaryNote />
     </>
   );
 }

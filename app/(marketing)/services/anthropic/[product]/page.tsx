@@ -29,7 +29,7 @@ export default async function AnthropicProductPage({ params }: { params: Promise
       <AnPage>
         <ProductBody c={contents[product]} />
       </AnPage>
-    <CanaryNote id="anthropic" />
+    <CanaryNote />
     </>
   );
 }

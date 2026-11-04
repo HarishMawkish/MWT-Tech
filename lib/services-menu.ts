@@ -537,7 +537,7 @@ export const servicesMenu: MenuCategory[] = [
     ],
     cta: {
       title: "Still running SAP in your own data centre?",
-      body: "A cloud readiness assessment compares RISE with SAP and a move to the cloud, with the cost, risk and timeline of each.",
+      body: "A readiness assessment compares RISE with SAP and a cloud move: cost, risk and timeline.",
       label: "Book an assessment",
       href: "/contact",
     },

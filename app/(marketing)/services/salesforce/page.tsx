@@ -14,7 +14,7 @@ export default function SalesforceHubPage() {
       <SfPage>
         <HubBody />
       </SfPage>
-    <CanaryNote id="salesforce" />
+    <CanaryNote />
     </>
   );
 }

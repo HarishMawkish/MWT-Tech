@@ -14,7 +14,7 @@ export default function MihcmHubPage() {
       <MhPage>
         <HubBody />
       </MhPage>
-    <CanaryNote id="mihcm" />
+    <CanaryNote />
     </>
   );
 }

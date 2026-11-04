@@ -29,7 +29,7 @@ export default function ClientsRoute() {
   return (
     <>
       <ClientsPage fontClass={`${jakarta.variable} ${manrope.variable}`} />
-      <CanaryNote id="clients" />
+      <CanaryNote />
     </>
   );
 }

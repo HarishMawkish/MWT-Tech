@@ -14,7 +14,7 @@ export default function TestAutomationPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <TestingPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

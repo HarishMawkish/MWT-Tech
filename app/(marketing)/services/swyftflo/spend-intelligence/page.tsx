@@ -16,7 +16,7 @@ export default function SpendIntelligencePage() {
       <SwPage>
         <SpendBody />
       </SwPage>
-    <CanaryNote id="swyftflo" />
+    <CanaryNote />
     </>
   );
 }

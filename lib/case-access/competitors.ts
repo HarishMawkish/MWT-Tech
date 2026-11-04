@@ -10,7 +10,7 @@
 // A wrongly blocked prospect costs more than a competitor reading a marketing case study, so anything that could
 // not be verified was left out rather than guessed. This is a starting list, not a complete census: there are
 // hundreds of SAP and Salesforce partners across the two countries. To add a company, add one entry below; matching
-// covers the domain and every subdomain of it (so "deloitte.com" also covers "x@in.deloitte.com").
+// covers the domain and every subdomain of it (so "yash.com" also covers "x@in.yash.com").
 //
 // KNOWN LIMITS
 //  - Group-wide domains are deliberately not listed, because they would also block people who are not
@@ -42,6 +42,15 @@ export const competitors: Competitor[] = [
   // Sri Lanka
   { name: "Altria Consulting", markets: ["LK"], offers: ["SAP", "Salesforce"], domains: ["thealtria.com", "altriaconsulting.com"], evidence: `${SF_LK_RELEASE}; ${SELF} (GROW and RISE with SAP); altriaconsulting.com redirects to thealtria.com` },
   { name: "John Keells IT", markets: ["LK", "IN"], offers: ["SAP", "Salesforce"], domains: ["johnkeellsit.com"], evidence: `${SAP_ORG} (Gold, sells SAP cloud in Sri Lanka and India); ${SF_LK_RELEASE}` },
+  { name: "Acentura", markets: ["LK"], offers: ["SAP"], domains: ["acentura.com"], evidence: `${SELF} (SAP professional services, delivery centres in Sri Lanka); listed as an SAP registered partner for SAP Business One and S/4HANA Public Cloud on ERPResearch` },
+  { name: "Tech Pacific Lanka", markets: ["LK"], offers: ["SAP"], domains: ["techpac.lk"], evidence: "SAP Gold partner in Sri Lanka (Daily FT / Daily Mirror 2015, SAP implementation through vCentric); domain confirmed by the info@techpac.lk contact address found on its site" },
+  { name: "Pristine Solutions", markets: ["LK"], offers: ["SAP"], domains: ["pristineworldwide.com"], evidence: "SAP Gold partner and Master Value-Added Reseller in Sri Lanka (Daily FT); domain taken from a company profile page, not confirmed against the company's own site" },
+  // Added at Mawkish's request. Each domain is the company's own sales, support or careers address, found on its site by Mawkish.
+  { name: "PBSS (Perfect Business Solution Services)", markets: ["LK"], offers: ["SAP"], domains: ["perfectbss.com"], evidence: "SAP Business One partner in Sri Lanka (Daily FT, Daily Mirror); domain from sales@perfectbss.com" },
+  { name: "Cognivian", markets: ["LK"], offers: [], domains: ["cognion.lk", "cognivana.com"], evidence: "Added at Mawkish's request; domains from hello@cognion.lk and info@cognivana.com. Offer not independently verified, and the two domains were not matched to one company name" },
+  { name: "Blueprint", markets: ["LK"], offers: ["SAP"], domains: ["blueprint.ctx.lk"], evidence: "Blueprint Technologies is listed as an SAP Gold partner on sap.com; domain from hello@blueprint.ctx.lk. Matches that exact host and its subdomains only, not ctx.lk" },
+  { name: "Neovatic", markets: ["LK"], offers: ["SAP"], domains: ["neovatic.com"], evidence: "Neovatic Technologies is listed as an SAP Gold partner (ERPResearch, G2); domain from info@neovatic.com" },
+  { name: "Pentagon IT", markets: ["LK"], offers: [], domains: ["pentagonit.net"], evidence: "Added at Mawkish's request; domain from sales@pentagonit.net and career@pentagonit.net. Offer not independently verified" },
   { name: "Teardrop AI", markets: ["LK"], offers: ["Salesforce"], domains: ["teardropai.com"], evidence: `${SF_LK_RELEASE}; ${SELF} (Salesforce implementation partner)` },
   { name: "MillenniumIT ESP", markets: ["LK"], offers: ["Salesforce"], domains: ["mitesp.com", "millenniumitesp.com"], evidence: `${SF_LK_PRESS}; millenniumitesp.com redirects to mitesp.com` },
   { name: "Cybersoft", markets: ["LK"], offers: ["Salesforce"], domains: ["cybersoft.lk"], evidence: `${SF_LK_PRESS}; homepage is CyberSoft (Pvt) Ltd, Sri Lanka` },
@@ -63,19 +72,7 @@ export const competitors: Competitor[] = [
   { name: "Birlasoft", markets: ["IN"], offers: ["SAP", "Salesforce"], domains: ["birlasoft.com"], evidence: SELF },
   { name: "LTIMindtree (LTM)", markets: ["IN"], offers: ["SAP", "Salesforce"], domains: ["ltimindtree.com", "ltm.com"], evidence: `${SELF}; ltimindtree.com redirects to ltm.com` },
 
-  // Global firms that deliver SAP or Salesforce in both countries
-  { name: "Deloitte", markets: ["LK", "IN"], offers: ["SAP", "Salesforce"], domains: ["deloitte.com"], evidence: `${SF_LK_RELEASE}; ${SF_LK_PRESS}` },
-  { name: "Tata Consultancy Services", markets: ["LK", "IN"], offers: ["SAP", "Salesforce"], domains: ["tcs.com"], evidence: `${SF_LK_PRESS}; listed as an SAP Platinum partner in India by SAVIC` },
-  { name: "Wipro", markets: ["LK", "IN"], offers: ["SAP", "Salesforce"], domains: ["wipro.com"], evidence: `${SF_LK_PRESS}; listed as an SAP Platinum partner in India by SAVIC` },
-  { name: "HCLTech", markets: ["LK", "IN"], offers: ["SAP", "Salesforce"], domains: ["hcltech.com"], evidence: `${SF_LK_PRESS}; listed as an SAP Platinum partner in India by SAVIC` },
-  { name: "Tech Mahindra", markets: ["LK", "IN"], offers: ["SAP", "Salesforce"], domains: ["techmahindra.com"], evidence: `${SF_LK_PRESS}; listed as an SAP Platinum partner in India by SAVIC` },
-  { name: "Infosys", markets: ["IN"], offers: ["SAP", "Salesforce"], domains: ["infosys.com"], evidence: "Listed as an SAP Platinum partner in India by SAVIC; named in India Salesforce partner lists" },
-  { name: "Capgemini", markets: ["IN"], offers: ["SAP", "Salesforce"], domains: ["capgemini.com"], evidence: "Listed as an SAP Platinum partner in India by SAVIC; named in India Salesforce partner lists" },
-  { name: "Accenture", markets: ["IN"], offers: ["SAP", "Salesforce"], domains: ["accenture.com"], evidence: "Named as a top Salesforce partner in India partner lists" },
-  { name: "Cognizant", markets: ["IN"], offers: ["SAP"], domains: ["cognizant.com"], evidence: SELF },
-  { name: "NTT DATA", markets: ["IN"], offers: ["SAP", "Salesforce"], domains: ["nttdata.com"], evidence: SELF },
-  { name: "EY", markets: ["LK", "IN"], offers: ["SAP"], domains: ["ey.com"], evidence: SELF },
-  { name: "KPMG", markets: ["LK", "IN"], offers: ["SAP", "Salesforce"], domains: ["kpmg.com"], evidence: SELF },
+  // Global firms that deliver SAP in India
   { name: "IBM", markets: ["IN"], offers: ["SAP"], domains: ["ibm.com"], evidence: SELF },
 ];
 

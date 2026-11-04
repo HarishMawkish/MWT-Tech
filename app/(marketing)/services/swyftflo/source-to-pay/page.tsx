@@ -16,7 +16,7 @@ export default function SourceToPayPage() {
       <SwPage>
         <S2PBody />
       </SwPage>
-    <CanaryNote id="swyftflo" />
+    <CanaryNote />
     </>
   );
 }

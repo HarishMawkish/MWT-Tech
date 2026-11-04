@@ -16,7 +16,7 @@ export default function AuthentikPage() {
       <SwPage>
         <AuthentikBody />
       </SwPage>
-    <CanaryNote id="swyftflo" />
+    <CanaryNote />
     </>
   );
 }

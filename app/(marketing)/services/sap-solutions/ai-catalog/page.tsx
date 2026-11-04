@@ -14,7 +14,7 @@ export default function AiCatalogRoutePage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <AiCatalogPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

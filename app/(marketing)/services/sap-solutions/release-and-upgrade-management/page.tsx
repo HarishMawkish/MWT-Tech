@@ -14,7 +14,7 @@ export default function ReleaseAndUpgradeManagementPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <ReleasePage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

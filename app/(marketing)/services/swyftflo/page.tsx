@@ -15,7 +15,7 @@ export default function SwyftfloPage() {
       <SwPage>
         <HubBody />
       </SwPage>
-    <CanaryNote id="swyftflo" />
+    <CanaryNote />
     </>
   );
 }

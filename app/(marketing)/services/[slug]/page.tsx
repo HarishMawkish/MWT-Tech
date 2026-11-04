@@ -222,7 +222,7 @@ export default async function ServiceDetailPage({
       )}
 
       <CtaBand />
-    <CanaryNote id="services" />
+    <CanaryNote />
     </>
   );
 }

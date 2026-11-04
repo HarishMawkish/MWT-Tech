@@ -14,7 +14,7 @@ export default function TwoTierErpForSubsidiariesPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <TwoTierPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

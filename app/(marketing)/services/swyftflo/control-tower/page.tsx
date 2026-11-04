@@ -16,7 +16,7 @@ export default function ControlTowerPage() {
       <SwPage>
         <ControlTowerBody />
       </SwPage>
-    <CanaryNote id="swyftflo" />
+    <CanaryNote />
     </>
   );
 }

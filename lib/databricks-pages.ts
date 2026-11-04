@@ -25,7 +25,7 @@ export const databricksPages: DbPageMeta[] = [
     name: "Databricks",
     title: "Databricks: The Data + AI Platform, Explained",
     description:
-      "Databricks explained from its own material: the eight parts of the platform, what a lakehouse actually changes, how it sits beside SAP and Salesforce, what is generally available and what is still in beta.",
+      "Databricks explained from its own material: the eight parts of the platform, what a lakehouse changes, and how it sits beside SAP and Salesforce.",
     updated: UPDATED,
   },
   {
@@ -33,71 +33,71 @@ export const databricksPages: DbPageMeta[] = [
     name: "Databricks Lakehouse",
     title: "Databricks Lakehouse: SQL on Open Tables",
     description:
-      "Data warehousing on Delta Lake and Apache Iceberg files you own: serverless compute, liquid clustering, predictive optimisation, federation, AI functions in SQL and the Lakehouse//RT real-time tier.",
+      "Data warehousing on Delta Lake and Apache Iceberg files you own: serverless compute, liquid clustering, federation and AI functions in SQL.",
     updated: UPDATED,
   },
   {
     slug: "lakeflow",
     name: "Databricks Lakeflow",
-    title: "Databricks Lakeflow: Ingestion, Pipelines and Jobs",
+    title: "Databricks Lakeflow: Pipelines and Jobs",
     description:
-      "How Lakeflow Connect captures change from your source systems, what a managed connector actually sets up, how declarative pipelines enforce quality, and what happens when a pipeline fails overnight.",
+      "How Lakeflow Connect captures change from source systems, what a managed connector sets up, how pipelines enforce quality, and what happens when one fails.",
     updated: UPDATED,
   },
   {
     slug: "unity-catalog",
     name: "Databricks Unity Catalog",
-    title: "Databricks Unity Catalog: Governing Data and AI",
+    title: "Databricks Unity Catalog: Governing Data, AI",
     description:
-      "One catalogue for tables, files, models, dashboards and agents: column-level lineage, attribute-based policies, shared metric definitions, and the Unity Gateway controls that govern what AI can reach.",
+      "One catalogue for tables, files, models, dashboards and agents: lineage, attribute-based policies, shared metrics and controls on what AI can reach.",
     updated: UPDATED,
   },
   {
     slug: "genie",
     name: "Databricks Genie",
-    title: "Databricks Genie and AI/BI: Questions and Dashboards",
+    title: "Databricks Genie and AI/BI Dashboards",
     description:
-      "Genie One, Genie Agents, AI/BI dashboards and Genie Code explained: how an answer is produced, what curation has to be in place first, where it can be used, and what it costs per person.",
+      "Genie and AI/BI dashboards explained: how an answer is produced, what curation has to be in place first, where it can be used, and what it costs.",
     updated: UPDATED,
   },
   {
     slug: "agent-bricks",
     name: "Databricks Agent Bricks",
-    title: "Databricks Agent Bricks: Agents That Reach Production",
+    title: "Databricks Agent Bricks: Agents in Production",
     description:
-      "Agent Runtime, AgentKit, sandboxed execution, memory, MCP tools, AI Search, MLflow tracing and evaluation — and an honest view of when a SQL AI function is the better answer than an agent.",
+      "Agent Bricks explained: Agent Runtime, AgentKit, sandboxed execution, memory, MCP tools and MLflow tracing, and when a SQL AI function is the better answer.",
     updated: UPDATED,
   },
   {
     slug: "lakebase",
     name: "Databricks Lakebase",
-    title: "Databricks Lakebase: Serverless Postgres That Branches",
+    title: "Databricks Lakebase: Serverless Postgres",
     description:
-      "Open-source Postgres with storage and compute separated: instant branches from production data, scale to zero, pgvector and PostGIS, a change feed into the lakehouse, and the published SLA.",
+      "Open-source Postgres with storage and compute separated: instant branches from production data, scale to zero, pgvector, PostGIS and a change feed.",
     updated: UPDATED,
   },
   {
     slug: "apps",
     name: "Databricks Apps",
-    title: "Databricks Apps: Internal Tools Without the Server",
+    title: "Databricks Apps: Internal Tools, No Servers",
     description:
-      "Streamlit, Dash and Gradio apps on serverless compute with single sign-on, per-app permissions, managed service principals and Unity Catalog data access — and where the line is against customer-facing products.",
+      "Streamlit, Dash and Gradio apps on serverless compute with single sign-on, per-app permissions and Unity Catalog data access, and where the line is.",
     updated: UPDATED,
   },
   {
     slug: "sharing",
     name: "Databricks OpenSharing",
-    title: "Databricks OpenSharing, Clean Rooms and Marketplace",
+    title: "Databricks OpenSharing and Clean Rooms",
     description:
-      "Share live data without copying it, on an open protocol recipients can read from any platform. Clean rooms for collaboration neither side may see, a marketplace for distribution, and one register of who has what.",
+      "Share live data without copying it on an open protocol, clean rooms for joint analysis, a marketplace, and one register of who has what.",
     updated: UPDATED,
   },
   {
     slug: "sap-business-data-cloud",
     name: "SAP Business Data Cloud and Databricks",
-    title: "SAP Business Data Cloud and Databricks: The Connector",
+    title: "SAP Business Data Cloud and Databricks",
     description:
-      "Zero-copy sharing both ways between SAP Business Data Cloud and Databricks: SAP data products mounted in Unity Catalog with comments, keys and tags intact — plus the usage disclosure clause to read first.",
+      "Zero-copy sharing both ways between SAP Business Data Cloud and Databricks: SAP data products in Unity Catalog, and the usage clause to read first.",
     updated: UPDATED,
   },
   {
@@ -105,7 +105,7 @@ export const databricksPages: DbPageMeta[] = [
     name: "Databricks Security and Architecture",
     title: "Databricks Security and Architecture",
     description:
-      "Control plane and compute plane, serverless versus classic, the certifications Databricks holds, customer-managed keys, Private Link, egress controls, and which regions near Sri Lanka are supported.",
+      "Control and compute planes, serverless versus classic, certifications, customer-managed keys, Private Link, egress controls and regions near Sri Lanka.",
     updated: UPDATED,
   },
   {
@@ -113,7 +113,7 @@ export const databricksPages: DbPageMeta[] = [
     name: "Migrating to Databricks",
     title: "Migrating to Databricks: What the Tooling Does",
     description:
-      "What Lakebridge and the agentic code converter genuinely convert, where they stop, how to sequence a move off Snowflake, Teradata, Oracle or Hadoop, and why reconciliation decides whether it finishes.",
+      "What Lakebridge and the agentic code converter convert, where they stop, and how to sequence a move off Snowflake, Teradata, Oracle or Hadoop.",
     updated: UPDATED,
   },
   {
@@ -121,7 +121,7 @@ export const databricksPages: DbPageMeta[] = [
     name: "Databricks Pricing and Cost",
     title: "Databricks Pricing and Cost Control",
     description:
-      "How consumption pricing works, what DBUs and DSUs are, which features bill on top of compute, the six settings where money leaks, and what Free Edition actually allows.",
+      "How consumption pricing works, what DBUs and DSUs are, which features bill on top of compute, where money leaks, and what Free Edition allows.",
     updated: UPDATED,
   },
 ];

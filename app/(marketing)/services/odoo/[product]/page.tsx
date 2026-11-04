@@ -29,7 +29,7 @@ export default async function OdooProductPage({ params }: { params: Promise<{ pr
       <OdPage>
         <ProductBody c={contents[product]} />
       </OdPage>
-    <CanaryNote id="odoo" />
+    <CanaryNote />
     </>
   );
 }

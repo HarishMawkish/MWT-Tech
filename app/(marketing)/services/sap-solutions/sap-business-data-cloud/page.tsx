@@ -14,7 +14,7 @@ export default function SapBusinessDataCloudPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <BdcPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

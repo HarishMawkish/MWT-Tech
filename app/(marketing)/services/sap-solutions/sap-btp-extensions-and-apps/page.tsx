@@ -14,7 +14,7 @@ export default function SapBtpExtensionsAndAppsPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <BtpPage />
-    <CanaryNote id="sap" />
+    <CanaryNote />
     </>
   );
 }

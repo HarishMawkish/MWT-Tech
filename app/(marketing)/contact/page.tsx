@@ -92,7 +92,7 @@ export default async function ContactPage({
           </div>
         </div>
       </section>
-      <CanaryNote id="contact" />
+      <CanaryNote />
     </div>
   );
 }

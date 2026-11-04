@@ -741,12 +741,16 @@ export function ServicesMenu({
                 aria-hidden="true"
                 className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#1c6b51]/[0.07] blur-3xl"
               />
-              {/* Every category sits in the same cell as an invisible copy of SAP's content, so the
-                  panel is always as tall as SAP's, whichever category is showing. */}
+              {/* Every category sits in the same cell as invisible copies of the two longest panels (SAP and
+                  Hyperscalers), so the panel is the same height whichever category is showing, at any window width. */}
               <div className="grid">
-                <div aria-hidden="true" inert className="invisible pointer-events-none col-start-1 row-start-1 select-none">
-                  <Panel cat={servicesMenu[0]} pathname={pathname} />
-                </div>
+                {servicesMenu
+                  .filter((c) => c.id === "sap" || c.id === "cloud")
+                  .map((c) => (
+                    <div key={c.id} aria-hidden="true" inert className="invisible pointer-events-none col-start-1 row-start-1 select-none">
+                      <Panel cat={c} pathname={pathname} />
+                    </div>
+                  ))}
                 <div key={cat.id} className="sap-rise relative col-start-1 row-start-1" style={{ animationDuration: "0.45s" }}>
                   <Panel cat={cat} pathname={pathname} />
                 </div>

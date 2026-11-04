@@ -18,7 +18,7 @@ export const brand = {
   logo: "/images/brand/logo-mark.png",
   locality: "Colombo",
   country: "LK",
-  sameAs: ["https://www.instagram.com/mawkish.technologies/"],
+  sameAs: ["https://lk.linkedin.com/company/mawkishtech", "https://www.instagram.com/mawkish.technologies/"],
 };
 
 /** Social-share and search-result defaults every page inherits. */
@@ -51,7 +51,22 @@ export const organizationLd = {
   url: siteUrl,
   logo: absoluteUrl(brand.logo),
   sameAs: brand.sameAs,
-  address: { "@type": "PostalAddress", addressLocality: brand.locality, addressCountry: brand.country },
+  description:
+    "Mawkish Technologies is an enterprise technology consulting firm in Colombo, Sri Lanka: one accountable partner for enterprise applications, from advice and selection to implementation and support.",
+  slogan: "Architecting Transformation",
+  email: "info@mawkishtechnologies.com",
+  areaServed: ["Sri Lanka", "India"],
+  knowsAbout: [
+    "SAP S/4HANA Cloud", "GROW with SAP", "RISE with SAP", "SAP Business AI", "SAP Business Data Cloud",
+    "Salesforce", "Odoo", "Swyftflo AI", "MiHCM", "Databricks", "Claude", "AWS", "Microsoft Azure", "Google Cloud",
+    "Enterprise architecture", "ERP implementation", "Cloud migration", "AI and automation",
+  ],
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "2nd Floor, Oceanica Tower, 490 Galle Road",
+    addressLocality: "Colombo 03",
+    addressCountry: brand.country,
+  },
 };
 
 export const websiteLd = {

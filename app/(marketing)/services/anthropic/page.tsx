@@ -14,7 +14,7 @@ export default function AnthropicHubPage() {
       <AnPage>
         <HubBody />
       </AnPage>
-    <CanaryNote id="anthropic" />
+    <CanaryNote />
     </>
   );
 }

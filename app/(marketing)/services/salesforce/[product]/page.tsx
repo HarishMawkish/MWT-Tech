@@ -33,6 +33,7 @@ export default async function SalesforceProductPage({ params }: { params: Promis
         <SfPage accent={cloudAccent[product]}>
           <CloudBody slug={product} />
         </SfPage>
+        <CanaryNote />
       </>
     );
   }
@@ -43,7 +44,7 @@ export default async function SalesforceProductPage({ params }: { params: Promis
       <SfPage>
         <ProductBody c={contents[product]} />
       </SfPage>
-    <CanaryNote id="salesforce" />
+    <CanaryNote />
     </>
   );
 }
