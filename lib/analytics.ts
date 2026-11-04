@@ -2,7 +2,7 @@
  * Google Analytics 4 Measurement ID. It is public: it appears in the page source of every site that uses analytics.
  * NEXT_PUBLIC_GA_ID overrides it. Set it to nothing and no analytics is loaded.
  */
-export const DEFAULT_GA_ID = "G-WT7HGZLT03";
+export const DEFAULT_GA_ID = "G-DEQF672XWJ";
 
 export const GA_ID = (process.env.NEXT_PUBLIC_GA_ID?.trim() || DEFAULT_GA_ID).trim();
 
