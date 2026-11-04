@@ -104,3 +104,6 @@
   .ct .t-map { position: relative; min-height: 138px; }
   .ct .t-map iframe { position: absolute; inset: 0; height: 100%; }
 }
+
+/* Phone: the RFP email link is a tap target. */
+@media (max-width: 640px) { .ct .t-rfp article a { display: inline-flex; align-items: center; min-height: 44px; overflow-wrap: anywhere; } }

@@ -28,8 +28,8 @@
 .ca .cta-band ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .ca .cta-band li { display: flex; gap: 10px; font-size: 15px; }
 .ca .cta-band li::before { content: "✓"; color: var(--green-hi); font-weight: 800; }
-@media (max-width: 980px) { .ca .cta-band { grid-template-columns: 1fr; } }
-@media (max-width: 620px) { .ca section { padding-block: 64px; } .ca .cta-band { padding: 36px 24px; } }
+@media (max-width: 980px) { .ca .cta-band { grid-template-columns: minmax(0,1fr); } .ca .cta-band > * { min-width: 0; } }
+@media (max-width: 620px) { .ca .btn { max-width: 100%; white-space: normal; overflow-wrap: anywhere; text-align: center; justify-content: center; line-height: 1.4; } .ca section { padding-block: 64px; } .ca .cta-band { padding: 36px 24px; } }
 
 .ca .k-hero {padding-block: 64px 88px;}
 .ca .k-hero h1 {font-size: clamp(38px, 5.4vw, 66px); max-width: 18ch;}

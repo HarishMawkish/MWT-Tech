@@ -42,7 +42,7 @@ export function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-full border border-white/15 px-3 py-1.5 text-xs font-medium transition hover:border-mw-mint hover:text-mw-mint"
+                  className="inline-flex min-h-11 items-center rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium transition hover:border-mw-mint hover:text-mw-mint lg:min-h-0 lg:px-3"
                 >
                   {s.label}
                 </a>

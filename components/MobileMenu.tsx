@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { navLinks, siteConfig } from "@/lib/site-data";
 import { servicesMenu, type MenuCategory, type MenuLink } from "@/lib/services-menu";
+import { industriesMenu } from "@/lib/industries-menu";
 
 // The phone menu: a full-height sheet under the header, in the way LeverX's is. Each top-level
 // entry is a row that unfolds; "Our Services" unfolds into the categories, and a category
@@ -217,6 +218,57 @@ function ServicesRow({ label, href, active, pathname }: { label: string; href: s
   );
 }
 
+/** "Industries" unfolds into the same nine industries the desktop panel lists, each linking to its guide. */
+function IndustriesRow({ label, href, active, pathname }: { label: string; href: string; active: boolean; pathname: string }) {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className={`flex min-h-14 w-full items-center justify-between border-b border-white/10 px-1 text-left text-[13px] font-semibold uppercase tracking-wider active:bg-white/5 ${active ? "text-mw-mint" : "text-white"}`}
+      >
+        {label}
+        <Plus open={open} />
+      </button>
+      <Fold open={open}>
+        <div className="pb-2 pl-3">
+          <Link href={href} className="flex min-h-12 items-center justify-between border-b border-white/[0.07] px-1 text-[15px] font-semibold text-white/85 active:bg-white/5">
+            All Industries
+            <span aria-hidden="true" className="text-mw-mint">→</span>
+          </Link>
+          {industriesMenu.map((x) => (
+            <Link
+              key={x.k}
+              href={`/industries#industry-${x.k}`}
+              className="flex min-h-12 items-center gap-3 border-b border-white/[0.07] px-1 py-2 active:bg-white/5"
+            >
+              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-[9px] bg-white/10 text-mw-mint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="h-[18px] w-[18px]" dangerouslySetInnerHTML={{ __html: x.icon }} />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-[15px] font-semibold leading-tight text-white">{x.n}</span>
+                <span className="mt-1 flex gap-1.5">
+                  {x.p.map((p) => (
+                    <i key={p} className={`rounded px-1.5 py-px text-[10.5px] font-bold not-italic tracking-[0.04em] ${p === "sf" ? "bg-[#0b5cab]/30 text-[#9fd0ff]" : "bg-white/10 text-white/80"}`}>
+                      {p === "sf" ? "Salesforce" : "SAP"}
+                    </i>
+                  ))}
+                </span>
+              </span>
+            </Link>
+          ))}
+        </div>
+      </Fold>
+    </div>
+  );
+}
+
 export function MobileMenu({
   open,
   onClose,
@@ -271,6 +323,8 @@ export function MobileMenu({
         {navLinks.map((link) =>
           "children" in link && link.children ? (
             <ServicesRow key={link.href} label={link.label} href={link.href} active={isActive(link.href)} pathname={pathname} />
+          ) : link.href === "/industries" ? (
+            <IndustriesRow key={link.href} label={link.label} href={link.href} active={isActive(link.href)} pathname={pathname} />
           ) : (
             <Link
               key={link.href}
