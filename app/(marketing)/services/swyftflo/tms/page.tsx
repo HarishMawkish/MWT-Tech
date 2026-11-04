@@ -3,6 +3,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { SwPage } from "@/components/swyftflo/SwPage";
 import { TmsBody } from "@/components/swyftflo/pages/TmsBody";
 import { swyftfloLd, swyftfloMetadata } from "@/lib/swyftflo-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "tms";
 
@@ -15,6 +16,7 @@ export default function TmsPage() {
       <SwPage>
         <TmsBody />
       </SwPage>
+    <CanaryNote id="swyftflo" />
     </>
   );
 }

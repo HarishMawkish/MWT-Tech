@@ -7,6 +7,7 @@ import { CloudBody, cloudAccent, isCloudSlug } from "@/components/salesforce/clo
 import { contents } from "@/components/salesforce/content";
 import { products, type ProductSlug } from "@/components/salesforce/data";
 import { salesforceLd, salesforceMetadata } from "@/lib/salesforce-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 // One route for every Salesforce product page. Only the slugs in the product list exist; anything else is a 404.
 export function generateStaticParams() {
@@ -42,6 +43,7 @@ export default async function SalesforceProductPage({ params }: { params: Promis
       <SfPage>
         <ProductBody c={contents[product]} />
       </SfPage>
+    <CanaryNote id="salesforce" />
     </>
   );
 }

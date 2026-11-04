@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { BaiPage } from "@/components/sap-bai/BaiPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "sap-business-ai";
 
@@ -13,6 +14,7 @@ export default function SapBusinessAiPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <BaiPage />
+    <CanaryNote id="sap" />
     </>
   );
 }

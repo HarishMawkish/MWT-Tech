@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { SecurityPage } from "@/components/sap-security/SecurityPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "security-roles-and-authorisations";
 
@@ -13,6 +14,7 @@ export default function SecurityRolesAndAuthorisationsPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <SecurityPage />
+    <CanaryNote id="sap" />
     </>
   );
 }

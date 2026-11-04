@@ -1,0 +1,573 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>SAP Business AI | Mawkish</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Mawkish dark site, full-width bands; each band pairs copy with a drawn SAP Fiori-style screen */
+:root {
+  --bg: #050807;
+  --bg-2: #0a110e;
+  --line: #1c2823;
+  --fg: #eef3f0;
+  --muted: #9aaaa2;
+  --green: #1f7a5a;
+  --green-hi: #34b386;
+  --paper: #f3f6f4;
+  --ink: #142019;
+  --ink-soft: #5c6c65;
+  --fiori: #0a6ed1;
+  --fiori-bg: #f5f6f7;
+  --warn: #e9730c;
+  --display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.in { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 88px; border-top: 1px solid var(--line); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 19px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 16px; display: block; }
+.lede { color: var(--muted); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border: 1px solid transparent; }
+.btn.pri { background: var(--green); color: #fff; }
+.btn.pri:hover { background: #24906a; }
+.btn.sec { border-color: #2c3d36; color: var(--fg); }
+.btn.sec:hover { border-color: var(--green-hi); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
+
+/* header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(5,8,7,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.site .in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; flex-direction: column; align-items: center; font-weight: 800; letter-spacing: .3em; font-size: 9px; color: var(--fg); text-decoration: none; }
+.logo svg { width: 54px; height: 26px; }
+.nav { display: flex; gap: 26px; align-items: center; }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 700; font-size: 12.5px; letter-spacing: .07em; }
+.nav a.on { color: var(--green-hi); }
+.nav .btn { padding: 12px 18px; }
+@media (max-width: 900px) { .nav a:not(.btn) { display: none; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 56px 88px; background: radial-gradient(900px 420px at 80% 10%, rgba(31,122,90,.22), transparent 70%); }
+.crumbs { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 em { font-style: normal; color: var(--green-hi); }
+.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.name-note { margin-top: 28px; font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--green); padding-left: 14px; max-width: 54ch; }
+.name-note b { color: var(--fg); font-weight: 600; }
+
+/* Fiori mock screens */
+.screen { background: var(--fiori-bg); color: #32363a; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06); font-size: 12px; line-height: 1.4; min-width: 0; }
+.shell { background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; gap: 12px; padding: 9px 14px; }
+.shell .sap { background: linear-gradient(135deg,#0a6ed1,#0854a0); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 7px; border-radius: 3px; letter-spacing: .02em; }
+.shell .t { font-weight: 600; color: #32363a; flex: 1; }
+.shell .search { flex: 1.4; background: #eff1f2; border-radius: 16px; height: 24px; display: flex; align-items: center; padding: 0 10px; color: #8b9196; font-size: 11px; }
+.shell .joule-btn { width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); }
+.shell .av { width: 24px; height: 24px; border-radius: 50%; background: #d1e8ff; color: #0a6ed1; font-weight: 700; font-size: 10px; display: grid; place-items: center; }
+.body-pad { padding: 16px; }
+.greet { font-size: 15px; font-weight: 700; color: #1d2d3e; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.tile { background: #fff; border-radius: 10px; padding: 11px 12px; box-shadow: 0 0 0 1px #e5e5e5; min-height: 92px; display: flex; flex-direction: column; justify-content: space-between; }
+.tile .h { font-weight: 600; color: #1d2d3e; font-size: 11.5px; }
+.tile .s { color: #6a6d70; font-size: 10.5px; }
+.tile .k { font-size: 22px; font-weight: 300; color: #0a6ed1; font-variant-numeric: tabular-nums; }
+.tile .k.neg { color: #bb0000; } .tile .k.pos { color: #107e3e; }
+.tile .k small { font-size: 11px; color: #6a6d70; margin-left: 2px; }
+.spark { height: 26px; width: 100%; }
+.split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; margin-top: 10px; }
+.card-f { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; padding: 12px; min-width: 0; }
+.card-f .h { font-weight: 700; font-size: 11.5px; color: #1d2d3e; margin-bottom: 8px; }
+.row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid #eee; font-size: 11px; }
+.row:first-of-type { border-top: 0; }
+.pill { font-size: 9.5px; font-weight: 700; border-radius: 9px; padding: 1px 7px; white-space: nowrap; }
+.pill.ok { background: #f1fdf6; color: #107e3e; box-shadow: inset 0 0 0 1px #c6ecd3; }
+.pill.wr { background: #fef7f1; color: #e9730c; box-shadow: inset 0 0 0 1px #f8d3b0; }
+.pill.in { margin: 0; max-width: none; padding: 1px 7px; background: #eef6fe; color: #0a6ed1; box-shadow: inset 0 0 0 1px #c5def7; }
+.joule { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; display: flex; flex-direction: column; min-width: 0; }
+.joule .jh { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid #eee; font-weight: 700; font-size: 11.5px; }
+.joule .jh i { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); display: inline-block; }
+.joule .msgs { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.bub { border-radius: 10px; padding: 7px 9px; font-size: 10.8px; max-width: 92%; }
+.bub.u { align-self: flex-end; background: #0a6ed1; color: #fff; border-bottom-right-radius: 3px; }
+.bub.j { background: #f2f2f7; color: #1d2d3e; border-bottom-left-radius: 3px; }
+.bub.j b { color: #0a6ed1; }
+.typing span { display: inline-block; width: 5px; height: 5px; margin-right: 3px; border-radius: 50%; background: #8b9196; }
+@media (prefers-reduced-motion: no-preference) {
+  .typing span { animation: blink 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
+}
+.caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+/* journey explainer */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.includes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.includes div { background: var(--bg-2); padding: 22px; }
+.includes h3 { font-size: 16px; margin-bottom: 6px; }
+.includes p { color: var(--muted); font-size: 14.5px; }
+.ico { width: 30px; height: 30px; margin-bottom: 12px; color: var(--green-hi); }
+
+/* fit check */
+.fit { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 44px; align-items: start; }
+.qs { display: flex; flex-direction: column; gap: 10px; }
+.q { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.q span { font-size: 15px; min-width: 0; }
+.yn { display: flex; gap: 4px; flex: none; background: #0f1814; border-radius: 9px; padding: 3px; }
+.yn button { font: 700 12px var(--body); letter-spacing: .06em; border: 0; border-radius: 7px; padding: 7px 12px; background: transparent; color: var(--muted); cursor: pointer; }
+.yn button[aria-pressed="true"] { background: var(--green); color: #fff; }
+.yn button.no[aria-pressed="true"] { background: #6b3a12; }
+.result { position: sticky; top: 100px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 28px; }
+.result .lab { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.meter { height: 10px; background: #dde5e1; border-radius: 6px; margin: 14px 0 18px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 6px; transition: width .35s; }
+.result h3 { font-size: 24px; margin-bottom: 10px; }
+.result p { color: var(--ink-soft); font-size: 15px; }
+.result .btn { margin-top: 20px; }
+
+/* capabilities */
+.caps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.cap { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.cap ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+.cap ul li { margin-bottom: 4px; }
+.cap .tagline { color: var(--fg); font-size: 15px; }
+
+/* AI */
+.agents { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.agent { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.agent .n { width: 36px; height: 36px; border-radius: 10px; background: rgba(52,179,134,.12); color: var(--green-hi); display: grid; place-items: center; }
+.agent h3 { font-size: 16px; margin-bottom: 2px; }
+.agent p { color: var(--muted); font-size: 14.5px; }
+.prog { height: 4px; background: #e6e9eb; border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.prog i { display: block; height: 100%; background: #0a6ed1; width: 72%; }
+@media (prefers-reduced-motion: no-preference) {
+  .prog i { animation: load 3.2s ease-in-out infinite alternate; }
+  @keyframes load { from { width: 38% } to { width: 92% } }
+}
+
+/* release timeline */
+.tl { margin-top: 48px; overflow-x: auto; }
+.tl svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.fact { border-top: 2px solid var(--green); padding-top: 14px; }
+.fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 14px; }
+
+/* extensibility */
+.layers { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.layer { display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.layer .who { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--green-hi); padding-top: 3px; }
+.layer h3 { font-size: 16px; margin-bottom: 4px; }
+.layer p { color: var(--muted); font-size: 14.5px; }
+.layer.core { background: var(--paper); color: var(--ink); border-color: transparent; }
+.layer.core .who { color: var(--green); }
+.layer.core p { color: var(--ink-soft); }
+
+/* activate */
+.phases { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ph { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.ph:last-child { border-right: 0; }
+.ph .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.ph h3 { font-size: 17px; }
+.ph p { color: var(--muted); font-size: 13.5px; }
+.ph .we { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--fg); }
+.ph .we b { color: var(--green-hi); font-weight: 700; }
+
+/* users */
+.users { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+.users table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; }
+.users th, .users td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.users th { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.users td:first-child { font-weight: 700; white-space: nowrap; }
+.users td:nth-child(2) { color: var(--muted); }
+.users tr:last-child td { border-bottom: 0; }
+.note { margin-top: 16px; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+/* faq */
+.faq { margin-top: 36px; display: flex; flex-direction: column; gap: 10px; max-width: 860px; }
+details { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 16.5px; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--green-hi); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 18px; max-width: 70ch; }
+
+/* cta */
+.cta-band { background: linear-gradient(120deg, #0e3a2b, #0a1a14 60%); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.cta-band ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cta-band li { display: flex; gap: 10px; font-size: 15px; }
+.cta-band li::before { content: "✓"; color: var(--green-hi); font-weight: 800; }
+footer { padding-block: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+footer .in { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .hero-grid, .two, .fit, .cta-band { grid-template-columns: 1fr; }
+  .caps { grid-template-columns: 1fr 1fr; }
+  .phases { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .ph:nth-child(3) { border-right: 0; }
+  .ph:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .result { position: static; }
+}
+@media (max-width: 620px) {
+  section { padding-block: 64px; }
+  .caps, .includes { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: 1fr; }
+  .ph { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .tiles .tile:nth-child(3) { display: none; }
+  .split { grid-template-columns: 1fr; }
+  .layer { grid-template-columns: 1fr; gap: 6px; }
+  .cta-band { padding: 36px 24px; }
+  .q { flex-direction: column; align-items: flex-start; }
+}
+
+/* light bands: same components, re-tokened */
+section.light { --bg-2: #ffffff; --line: #d9e2dd; --fg: #142019; --muted: #55655e; --green-hi: #17694b; background: #f2f5f3; color: var(--fg); border-top-color: transparent; }
+section.light .includes { background: var(--line); }
+section.light .cap, section.light details { box-shadow: 0 1px 2px rgba(20,32,25,.05); }
+/* Video library */
+.vf { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
+.vf button { font: 600 13.5px/1 var(--body); padding: 10px 15px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
+.vf button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.vf button span { color: var(--muted); margin-left: 6px; font-weight: 500; }
+.vf button[aria-pressed="true"] span { color: inherit; opacity: .6; }
+.vgrid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; margin-top: 26px; }
+.vcard { display: flex; flex-direction: column; text-decoration: none; color: var(--fg); border-radius: 14px; background: var(--bg-2); border: 1px solid var(--line); overflow: hidden; transition: transform .25s, border-color .25s; }
+.vcard:hover { transform: translateY(-3px); border-color: var(--green); }
+.vcard.feat { grid-column: span 2; }
+.poster { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; padding: 18px 20px; display: flex; flex-direction: column; justify-content: space-between; background: radial-gradient(120% 140% at 100% 0%, #1f7a5a 0%, #0c2a1f 48%, #06110d 100%); }
+.poster[data-k="mod"] { background: radial-gradient(120% 140% at 100% 0%, #0a6ed1 0%, #0b2340 50%, #050c16 100%); }
+.poster[data-k="rel"] { background: radial-gradient(120% 140% at 100% 0%, #5d36ff 0%, #1b1446 50%, #07061a 100%); }
+.poster::after { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(200deg, #000 10%, transparent 70%); -webkit-mask-image: linear-gradient(200deg, #000 10%, transparent 70%); pointer-events: none; }
+.poster .top { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+.poster .ch { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; color: #fff; letter-spacing: .04em; }
+.poster .ch b { background: linear-gradient(135deg,#0a6ed1,#0854a0); padding: 2px 6px; border-radius: 3px; font-size: 10px; }
+.poster .tag { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+.poster .big { position: relative; z-index: 1; font-family: var(--display); font-weight: 800; color: #fff; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.08; letter-spacing: -.01em; max-width: 80%; text-wrap: balance; }
+.vcard.feat .poster .big { font-size: clamp(26px, 3.4vw, 44px); }
+.poster .play { position: absolute; right: 18px; bottom: 18px; z-index: 1; width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,.95); display: grid; place-items: center; box-shadow: 0 10px 30px rgba(0,0,0,.35); transition: transform .25s; }
+.vcard:hover .play { transform: scale(1.08); }
+.vmeta { padding: 16px 18px 18px; display: grid; gap: 6px; }
+.vmeta h3 { font-size: 16px; line-height: 1.3; }
+.vmeta p { color: var(--muted); font-size: 14px; margin: 0; }
+.vmeta .d { font-size: 12px; color: var(--muted); letter-spacing: .02em; }
+.vnote { margin-top: 22px; color: var(--muted); font-size: 13px; max-width: 80ch; }
+
+@media (max-width: 980px) { .vgrid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .vgrid { grid-template-columns: 1fr; } }
+.vcard:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 2px; }
+</style>
+<header class="site">
+  <div class="in">
+    <a class="logo" href="#top" aria-label="Mawkish Technologies">
+      <svg viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L20 4 L32 18 L44 4 L62 28 Z" fill="none" stroke="#eef3f0" stroke-width="4" stroke-linejoin="round"/><path d="M20 28 L32 14 L44 28" fill="#eef3f0"/></svg>
+      MAWKISH
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">ABOUT US</a>
+      <a href="#" class="on">OUR SERVICES</a>
+      <a href="#">INDUSTRIES</a>
+      <a href="#">INSIGHTS &amp; PERSPECTIVES</a>
+      <a href="#book" class="btn pri">Schedule a consultation</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+/* Business AI components */
+section.light .users td { color: var(--fg); } section.light .users td:nth-child(2) { color: var(--muted); }
+.two .facts .fact b { font-size: 23px; white-space: nowrap; }
+#watch .vgrid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.uses { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 40px; }
+.use { border: 1px solid var(--line); border-radius: 16px; padding: 22px; background: var(--bg-2); display: flex; flex-direction: column; gap: 10px; }
+.use .n { font-family: var(--display); font-size: 13px; font-weight: 800; letter-spacing: .12em; color: var(--green-hi); text-transform: uppercase; }
+.use ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 9px; }
+.use li { font-size: 14px; color: var(--muted); padding-left: 16px; position: relative; }
+.use li::before { content: ""; position: absolute; left: 0; top: 8px; width: 6px; height: 6px; border-radius: 50%; background: var(--green-hi); }
+.use li b { color: var(--fg); font-weight: 700; }
+.use li a { color: var(--green-hi); font-weight: 700; text-decoration: none; }
+.doc { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 10px; }
+.pdf { background: #fff; border-radius: 8px; box-shadow: 0 0 0 1px #e5e5e5; padding: 10px; font-size: 9.5px; color: #32363a; line-height: 1.5; }
+.pdf .pdfh { font-weight: 800; font-size: 11px; color: #1d2d3e; margin-bottom: 4px; }
+.pdf mark { background: #fff3b8; color: inherit; padding: 0 2px; border-radius: 2px; }
+.pdf .ln { height: 5px; background: #eff1f2; border-radius: 3px; margin: 5px 0; }
+.xf { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 6px; align-items: center; font-size: 10.5px; padding: 5px 0; border-top: 1px solid #eee; color: #32363a; }
+.xf:first-of-type { border-top: 0; }
+.xf small { display: block; color: #6a6d70; font-size: 9.5px; }
+.conf { font-size: 9px; font-weight: 800; border-radius: 4px; padding: 1px 6px; background: #f1fdf6; color: #107e3e; }
+.conf.lo { background: #fef7f1; color: #e9730c; }
+.vt { display: grid; grid-template-columns: minmax(0,1fr) 70px 64px; gap: 8px; align-items: center; font-size: 11px; padding: 7px 0; border-top: 1px solid #eee; color: #32363a; }
+.vt:first-of-type { border-top: 0; }
+.vt.hd { font-size: 9.5px; color: #6a6d70; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+.vt span:nth-child(2), .vt span:nth-child(3) { text-align: right; font-variant-numeric: tabular-nums; }
+.vt small { display: block; color: #6a6d70; font-size: 9.5px; }
+@media (max-width: 1080px) { .uses { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .uses, #watch .vgrid { grid-template-columns: 1fr; } .doc { grid-template-columns: 1fr; } .vt { grid-template-columns: minmax(0,1fr) 58px 54px; } }
+</style>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="in">
+      <div class="crumbs"><a href="#">Services</a> / <a href="#">SAP Solutions</a> / SAP Business AI</div>
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">SAP Business AI</span>
+          <h1>AI that works inside your processes, <em>not beside them.</em></h1>
+          <p class="lede">SAP builds AI straight into SAP Cloud ERP: it reads purchase orders and payment advices, predicts late deliveries, explains errors in plain language and summarises your reports. Because it runs on your own processes and data, it gives useful answers, not generic ones. We help you find where AI pays off for your business, switch it on, and prove the result.</p>
+          <div class="ctas">
+            <a href="#book" class="btn pri">Find your AI quick wins →</a>
+            <a href="#where" class="btn sec">Where AI already works</a>
+          </div>
+        </div>
+
+        <figure style="margin:0">
+          <div class="screen" role="img" aria-label="Illustration of AI-assisted sales order creation: a customer's purchase order PDF on the left with highlighted fields, and on the right the fields SAP extracted, such as customer, customer reference, three items, requested delivery date and total in LKR, each with a confidence label, ready to create the sales order">
+            <div class="shell"><span class="sap">SAP</span><span class="t">Create Sales Orders · from document</span><span class="joule-btn"></span><span class="av">SO</span></div>
+            <div class="body-pad">
+              <div class="doc">
+                <div class="pdf">
+                  <div class="pdfh">PURCHASE ORDER</div>
+                  <div>Ceylon Leaf Exports (Pvt) Ltd</div>
+                  <div>PO no. <mark>CLE-PO-4471</mark></div>
+                  <div class="ln" style="width:80%"></div>
+                  <div><mark>BOPF 1 kg × 400</mark></div>
+                  <div><mark>Green tea 500 g × 250</mark></div>
+                  <div><mark>Gift tin × 120</mark></div>
+                  <div class="ln" style="width:60%"></div>
+                  <div>Deliver by <mark>14 Nov 2026</mark></div>
+                  <div class="ln" style="width:70%"></div>
+                  <div>Total <mark>LKR 2,184,000</mark></div>
+                </div>
+                <div class="card-f">
+                  <div class="h">Extracted by AI · check and create</div>
+                  <div class="xf"><span>Customer<small>Ceylon Leaf Exports</small></span><span class="conf">High</span></div>
+                  <div class="xf"><span>Customer reference<small>CLE-PO-4471</small></span><span class="conf">High</span></div>
+                  <div class="xf"><span>Items<small>3 lines matched to products</small></span><span class="conf">High</span></div>
+                  <div class="xf"><span>Gift tin<small>2 possible products</small></span><span class="conf lo">Check</span></div>
+                  <div class="xf"><span>Delivery date<small>14.11.2026</small></span><span class="conf">High</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="caption">Illustration of AI-assisted sales order creation in SAP Cloud ERP. Sample data.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHERE -->
+  <section class="light" id="where">
+    <div class="in">
+      <span class="eyebrow">Where AI already works</span>
+      <h2>Already in your system, waiting to be switched on.</h2>
+      <p class="lede">You don't need a data science team to start. SAP adds AI features to SAP Cloud ERP with every release, built for specific jobs. Most of them work on your data from the first day. A few examples from the current release:</p>
+      <div class="uses">
+        <div class="use"><span class="n">Finance</span><ul>
+          <li><b>Payment advices</b> read automatically, whatever the customer's format.</li>
+          <li><b>Report summaries</b> that explain trends and outliers in plain language.</li>
+          <li><b>Predictive accounting</b> shows expected margins before invoices are posted.</li>
+        </ul></div>
+        <div class="use"><span class="n">Sales</span><ul>
+          <li><b>Sales orders from PDFs</b>, emails and images, ready for review.</li>
+          <li><b>Delivery delays</b> predicted before your customer calls.</li>
+          <li><b>Returns</b> pre-filled with likely reasons from similar past returns.</li>
+        </ul></div>
+        <div class="use"><span class="n">Procurement and supply chain</span><ul>
+          <li><b>Supplier details</b> captured from quotes and invoices into master data.</li>
+          <li><b>Delivery dates</b> predicted for open purchase orders.</li>
+          <li><b>Predictive MRP</b> to test demand and capacity before you commit.</li>
+        </ul></div>
+        <div class="use"><span class="n">Everyone</span><ul>
+          <li><b>Error messages</b> explained in plain language, with how to fix them.</li>
+          <li><b>Easy Fill</b>: describe a change in words and SAP fills in the fields.</li>
+          <li><b>Joule</b>, SAP's AI assistant, to find, ask and act across the system.</li>
+        </ul></div>
+        <div class="use"><span class="n">Compliance</span><ul>
+          <li><b>Environmental permits</b> read from PDFs, with compliance tasks proposed.</li>
+          <li><b>Trade classification</b> of products for customs, with an agent.</li>
+          <li><b>E-invoicing errors</b> analysed and resolved with an agent.</li>
+        </ul></div>
+        <div class="use"><span class="n">Your own AI</span><ul>
+          <li><b>Custom predictions</b> on your own data, such as payment risk.</li>
+          <li><b>Your documents</b> read with SAP Document AI.</li>
+          <li><b>Your own agents</b> built in Joule Studio. <a href="#">See Joule &amp; AI Agents →</a></li>
+        </ul></div>
+      </div>
+      <p class="note">Availability depends on your SAP release, country and licence. We check what's live for your system before we promise anything.</p>
+    </div>
+  </section>
+
+  <!-- DOCUMENT AI -->
+  <section>
+    <div class="in two">
+      <div>
+        <span class="eyebrow">The quickest win</span>
+        <h2>Stop retyping documents.</h2>
+        <p class="lede">Every company we meet has people copying data from PDFs into SAP: customer orders, supplier invoices, bank payment advices, delivery notes. SAP Document AI reads them, fills in SAP, and flags only what it's unsure about. Your team checks the exceptions instead of typing everything.</p>
+        <p class="lede">We start with the documents that cost you the most time, measure how much is read correctly with your real documents, and set up the review step so nothing reaches your books unchecked.</p>
+        <div class="facts">
+          <div class="fact"><b>Any format</b><span>PDFs, scans, images and emails</span></div>
+          <div class="fact"><b>Checked</b><span>low-confidence fields go to a person</span></div>
+          <div class="fact"><b>Measured</b><span>accuracy tested on your own documents</span></div>
+        </div>
+      </div>
+      <figure style="margin:0">
+        <div class="screen" role="img" aria-label="Illustration of payment advice processing: 46 advices received this week, 41 processed automatically, 5 for review, with a list of advices from customers showing amount in LKR, invoices matched, and status">
+          <div class="shell"><span class="sap">SAP</span><span class="t">Process Payment Advices</span><span class="joule-btn"></span><span class="av">AR</span></div>
+          <div class="body-pad">
+            <div class="tiles">
+              <div class="tile"><div><div class="h">Received</div><div class="s">This week</div></div><div class="k">46</div></div>
+              <div class="tile"><div><div class="h">Automatic</div><div class="s">No touch</div></div><div class="k pos">41</div></div>
+              <div class="tile"><div><div class="h">For review</div><div class="s">Low confidence</div></div><div class="k neg">5</div></div>
+            </div>
+            <div class="card-f" style="margin-top:10px">
+              <div class="h">Latest payment advices</div>
+              <div class="row"><span>Lanka Retail Holdings · LKR 4.2m · 12 invoices</span><span class="pill ok">Cleared</span></div>
+              <div class="row"><span>Harbour Foods · LKR 865k · 3 invoices</span><span class="pill ok">Cleared</span></div>
+              <div class="row"><span>Kandy Hotels Group · LKR 1.1m · 1 unmatched</span><span class="pill wr">Review</span></div>
+              <div class="row"><span>Southern Traders · scanned image</span><span class="pill in">Reading</span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="caption">Illustration of payment advice processing with SAP Document AI. Sample data.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- LICENSING -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">What's included</span>
+      <h2>Some AI comes with your subscription. Some you pay for as you use it.</h2>
+      <p class="lede">SAP splits its AI into two groups. Base AI is included in your SAP Cloud ERP subscription. Premium AI, such as assistants, agents and some document processing, is licensed separately and charged by use. We tell you which group each use case falls into before you start, so there are no surprises on your bill.</p>
+      <div class="users">
+        <table>
+          <thead><tr><th>Group</th><th>What it covers</th><th>How it's paid</th></tr></thead>
+          <tbody>
+            <tr><td>Base AI</td><td>Joule's basic features and many AI features built into SAP Cloud ERP apps.</td><td>Included in your subscription</td></tr>
+            <tr><td>Premium AI</td><td>Assistants and agents that do work for you, and higher-volume AI services.</td><td>Licensed separately, by use</td></tr>
+            <tr><td>Your own AI</td><td>Custom models, agents and document reading built on SAP's AI platform.</td><td>Platform services, by use</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">SAP's AI licensing changes often. We check every use case against your current SAP contract and SAP's latest terms.</p>
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section>
+    <div class="in two">
+      <div>
+        <span class="eyebrow">How we work</span>
+        <h2>Start small, measure, then scale.</h2>
+        <p class="lede">AI projects fail when they start with the technology. Ours start with a list of tasks that take your people the most time, and a number for each one: hours spent, errors made, days lost. We pick two or three where SAP's AI fits, try them in your test system with your real data, and only move to production when the numbers prove it.</p>
+        <p class="lede">After go-live we keep measuring, so you can see what AI saves you every month, and decide where to go next.</p>
+      </div>
+      <figure style="margin:0">
+        <div class="screen" role="img" aria-label="Illustration of a Mawkish AI value tracker showing three use cases with monthly hours before and after: sales orders from PDFs from 120 to 30 hours, payment advices from 80 to 14 hours, and supplier invoice capture in pilot">
+          <div class="shell"><span class="sap" style="background:#1f7a5a">MT</span><span class="t">AI value tracker</span><span class="av">CFO</span></div>
+          <div class="body-pad">
+            <div class="tiles">
+              <div class="tile"><div><div class="h">Use cases</div><div class="s">Live</div></div><div class="k">2</div></div>
+              <div class="tile"><div><div class="h">Hours saved</div><div class="s">Per month</div></div><div class="k pos">156</div></div>
+              <div class="tile"><div><div class="h">In pilot</div><div class="s">Test system</div></div><div class="k">1</div></div>
+            </div>
+            <div class="card-f" style="margin-top:10px">
+              <div class="vt hd"><span>Use case</span><span>Before</span><span>After</span></div>
+              <div class="vt"><span>Sales orders from PDFs<small>Customer service</small></span><span>120 h</span><span>30 h</span></div>
+              <div class="vt"><span>Payment advices<small>Accounts receivable</small></span><span>80 h</span><span>14 h</span></div>
+              <div class="vt"><span>Supplier invoice capture<small>Accounts payable</small></span><span>95 h</span><span>Pilot</span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="caption">Illustration of a Mawkish AI value report. Sample data.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="light">
+    <div class="in two">
+      <div>
+        <span class="eyebrow">Trust and control</span>
+        <h2>AI you can explain to your auditors.</h2>
+        <p class="lede">SAP's AI runs inside your SAP Cloud ERP system, under the same roles and authorisations as your people. It can only see and do what the user's roles allow. People keep the final say on anything that matters, and every action is recorded.</p>
+        <p class="lede">AI is only as good as the data and processes underneath it. A clean, standard SAP system is the best foundation for it, which is one more reason we keep your core clean.</p>
+      </div>
+      <div class="includes">
+        <div><h3>Your authorisations</h3><p>AI respects the same business roles as the user it works for.</p></div>
+        <div><h3>A person decides</h3><p>Proposals are reviewed before they're posted, until you choose otherwise.</p></div>
+        <div><h3>Traceable</h3><p>What the AI proposed and who accepted it are recorded.</p></div>
+        <div><h3>SAP's AI ethics</h3><p>SAP's AI features follow its published AI ethics policy.</p></div>
+        <div><h3>Clean data</h3><p>We fix the master data AI depends on before switching it on.</p></div>
+        <div><h3>Clear costs</h3><p>Premium AI usage tracked so spend never surprises you.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO LIBRARY -->
+  <section class="" id="watch">
+    <div class="in">
+      <span class="eyebrow">Watch and learn</span>
+      <h2>See it from SAP.</h2>
+      <p class="lede">Videos from SAP’s official YouTube channel on SAP Business AI.</p>
+      <div class="vgrid"><a class="vcard" href="https://www.youtube.com/watch?v=IPja2VtzcEo" target="_blank" rel="noopener" data-yt="IPja2VtzcEo" aria-label="Play on YouTube: SAP Business AI Platform: build AI with business context">
+      <div class="poster" data-k="start"><div class="top"><span class="ch"><b>SAP</b>YouTube</span><span class="tag">Start here</span></div><div class="big">Business AI Platform</div><span class="play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M5 2.5v13l11-6.5z" fill="#0b2a1f"/></svg></span></div>
+      <div class="vmeta"><h3>SAP Business AI Platform: build AI with business context</h3><p>A short overview of the platform behind SAP Business AI: business data, models and governance in one place.</p><span class="d">SAP · May 2026</span></div></a><a class="vcard" href="https://www.youtube.com/watch?v=PhAMg7UVuE8" target="_blank" rel="noopener" data-yt="PhAMg7UVuE8" aria-label="Play on YouTube: AI, data and the autonomous enterprise">
+      <div class="poster" data-k="rel"><div class="top"><span class="ch"><b>SAP</b>YouTube</span><span class="tag">SAP Connect 2026</span></div><div class="big">Keynote in 17 minutes</div><span class="play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M5 2.5v13l11-6.5z" fill="#0b2a1f"/></svg></span></div>
+      <div class="vmeta"><h3>AI, data and the autonomous enterprise</h3><p>Highlights from the SAP Connect keynote in October 2026: Joule, assistants, agents and SAP’s AI roadmap.</p><span class="d">SAP · October 2026</span></div></a></div>
+      <p class="vnote">Published by SAP on its official YouTube channel.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">Questions we hear</span>
+      <h2>Straight answers.</h2>
+      <div class="faq">
+        <details><summary>Do we have to pay extra for AI?</summary><p>Not for everything. Many AI features and Joule's basic features are included in SAP Cloud ERP. Assistants, agents and some document processing are premium and charged by use. We tell you which is which before you start.</p></details>
+        <details><summary>Is our data used to train public AI models?</summary><p>SAP's AI runs under your SAP contract and SAP's AI ethics and data protection commitments. We walk you through what those terms say for your subscription before you switch anything on.</p></details>
+        <details><summary>Do we need a data science team?</summary><p>No. Most of SAP's AI is built into the apps and works on your data as it is. You need people who know the process and can judge the results, which you already have.</p></details>
+        <details><summary>We're still implementing SAP. Is it too early for AI?</summary><p>No, it's the best time. Some AI features can be part of your design from the start, such as reading sales orders or payment advices, so you never build the manual process at all.</p></details>
+        <details><summary>Does AI work with Sri Lankan documents and formats?</summary><p>SAP's document reading handles many languages and layouts. We test it on your real documents first, including local bank advices, before we rely on it.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="book">
+    <div class="in">
+      <div class="cta-band">
+        <div>
+          <span class="eyebrow">Start here</span>
+          <h2>Find the hours AI can give back.</h2>
+          <p class="lede">In one session, we look at where your team spends time on manual work, show which SAP AI features fit, what's included and what costs extra, and pick a first use case to prove.</p>
+          <div style="margin-top:28px"><a href="#" class="btn pri">Book an AI discovery session →</a></div>
+        </div>
+        <ul>
+          <li>AI already in your system</li>
+          <li>Document reading quick wins</li>
+          <li>Base versus premium AI</li>
+          <li>A pilot with your own data</li>
+          <li>Savings measured monthly</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="in"><span>© Mawkish Technologies · Colombo, Sri Lanka</span><span>SAP, SAP Business AI, SAP Cloud ERP, Joule and SAP Document AI are trademarks of SAP SE. Screens shown are illustrations.</span></div>
+</footer>
+
+</body></html>

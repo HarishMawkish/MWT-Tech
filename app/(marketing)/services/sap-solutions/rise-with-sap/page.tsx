@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { RisePage } from "@/components/sap-rise/RisePage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "rise-with-sap";
 
@@ -13,6 +14,7 @@ export default function RiseWithSapPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <RisePage />
+    <CanaryNote id="sap" />
     </>
   );
 }

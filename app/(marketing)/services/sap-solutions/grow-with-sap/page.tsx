@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { GrowPage } from "@/components/sap-grow/GrowPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "grow-with-sap";
 
@@ -13,6 +14,7 @@ export default function GrowWithSapPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <GrowPage />
+    <CanaryNote id="sap" />
     </>
   );
 }

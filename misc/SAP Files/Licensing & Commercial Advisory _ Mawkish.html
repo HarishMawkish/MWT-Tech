@@ -1,0 +1,540 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Licensing &amp; Commercial Advisory | Mawkish</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Mawkish dark site, full-width bands; each band pairs copy with a drawn SAP Fiori-style screen */
+:root {
+  --bg: #050807;
+  --bg-2: #0a110e;
+  --line: #1c2823;
+  --fg: #eef3f0;
+  --muted: #9aaaa2;
+  --green: #1f7a5a;
+  --green-hi: #34b386;
+  --paper: #f3f6f4;
+  --ink: #142019;
+  --ink-soft: #5c6c65;
+  --fiori: #0a6ed1;
+  --fiori-bg: #f5f6f7;
+  --warn: #e9730c;
+  --display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.in { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 88px; border-top: 1px solid var(--line); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 19px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 16px; display: block; }
+.lede { color: var(--muted); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border: 1px solid transparent; }
+.btn.pri { background: var(--green); color: #fff; }
+.btn.pri:hover { background: #24906a; }
+.btn.sec { border-color: #2c3d36; color: var(--fg); }
+.btn.sec:hover { border-color: var(--green-hi); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
+
+/* header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(5,8,7,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.site .in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; flex-direction: column; align-items: center; font-weight: 800; letter-spacing: .3em; font-size: 9px; color: var(--fg); text-decoration: none; }
+.logo svg { width: 54px; height: 26px; }
+.nav { display: flex; gap: 26px; align-items: center; }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 700; font-size: 12.5px; letter-spacing: .07em; }
+.nav a.on { color: var(--green-hi); }
+.nav .btn { padding: 12px 18px; }
+@media (max-width: 900px) { .nav a:not(.btn) { display: none; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 56px 88px; background: radial-gradient(900px 420px at 80% 10%, rgba(31,122,90,.22), transparent 70%); }
+.crumbs { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 em { font-style: normal; color: var(--green-hi); }
+.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.name-note { margin-top: 28px; font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--green); padding-left: 14px; max-width: 54ch; }
+.name-note b { color: var(--fg); font-weight: 600; }
+
+/* Fiori mock screens */
+.screen { background: var(--fiori-bg); color: #32363a; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06); font-size: 12px; line-height: 1.4; min-width: 0; }
+.shell { background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; gap: 12px; padding: 9px 14px; }
+.shell .sap { background: linear-gradient(135deg,#0a6ed1,#0854a0); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 7px; border-radius: 3px; letter-spacing: .02em; }
+.shell .t { font-weight: 600; color: #32363a; flex: 1; }
+.shell .search { flex: 1.4; background: #eff1f2; border-radius: 16px; height: 24px; display: flex; align-items: center; padding: 0 10px; color: #8b9196; font-size: 11px; }
+.shell .joule-btn { width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); }
+.shell .av { width: 24px; height: 24px; border-radius: 50%; background: #d1e8ff; color: #0a6ed1; font-weight: 700; font-size: 10px; display: grid; place-items: center; }
+.body-pad { padding: 16px; }
+.greet { font-size: 15px; font-weight: 700; color: #1d2d3e; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.tile { background: #fff; border-radius: 10px; padding: 11px 12px; box-shadow: 0 0 0 1px #e5e5e5; min-height: 92px; display: flex; flex-direction: column; justify-content: space-between; }
+.tile .h { font-weight: 600; color: #1d2d3e; font-size: 11.5px; }
+.tile .s { color: #6a6d70; font-size: 10.5px; }
+.tile .k { font-size: 22px; font-weight: 300; color: #0a6ed1; font-variant-numeric: tabular-nums; }
+.tile .k.neg { color: #bb0000; } .tile .k.pos { color: #107e3e; }
+.tile .k small { font-size: 11px; color: #6a6d70; margin-left: 2px; }
+.spark { height: 26px; width: 100%; }
+.split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; margin-top: 10px; }
+.card-f { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; padding: 12px; min-width: 0; }
+.card-f .h { font-weight: 700; font-size: 11.5px; color: #1d2d3e; margin-bottom: 8px; }
+.row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid #eee; font-size: 11px; }
+.row:first-of-type { border-top: 0; }
+.pill { font-size: 9.5px; font-weight: 700; border-radius: 9px; padding: 1px 7px; white-space: nowrap; }
+.pill.ok { background: #f1fdf6; color: #107e3e; box-shadow: inset 0 0 0 1px #c6ecd3; }
+.pill.wr { background: #fef7f1; color: #e9730c; box-shadow: inset 0 0 0 1px #f8d3b0; }
+.pill.in { background: #eef6fe; color: #0a6ed1; box-shadow: inset 0 0 0 1px #c5def7; }
+.joule { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; display: flex; flex-direction: column; min-width: 0; }
+.joule .jh { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid #eee; font-weight: 700; font-size: 11.5px; }
+.joule .jh i { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); display: inline-block; }
+.joule .msgs { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.bub { border-radius: 10px; padding: 7px 9px; font-size: 10.8px; max-width: 92%; }
+.bub.u { align-self: flex-end; background: #0a6ed1; color: #fff; border-bottom-right-radius: 3px; }
+.bub.j { background: #f2f2f7; color: #1d2d3e; border-bottom-left-radius: 3px; }
+.bub.j b { color: #0a6ed1; }
+.typing span { display: inline-block; width: 5px; height: 5px; margin-right: 3px; border-radius: 50%; background: #8b9196; }
+@media (prefers-reduced-motion: no-preference) {
+  .typing span { animation: blink 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
+}
+.caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+/* journey explainer */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.includes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.includes div { background: var(--bg-2); padding: 22px; }
+.includes h3 { font-size: 16px; margin-bottom: 6px; }
+.includes p { color: var(--muted); font-size: 14.5px; }
+.ico { width: 30px; height: 30px; margin-bottom: 12px; color: var(--green-hi); }
+
+/* fit check */
+.fit { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 44px; align-items: start; }
+.qs { display: flex; flex-direction: column; gap: 10px; }
+.q { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.q span { font-size: 15px; min-width: 0; }
+.yn { display: flex; gap: 4px; flex: none; background: #0f1814; border-radius: 9px; padding: 3px; }
+.yn button { font: 700 12px var(--body); letter-spacing: .06em; border: 0; border-radius: 7px; padding: 7px 12px; background: transparent; color: var(--muted); cursor: pointer; }
+.yn button[aria-pressed="true"] { background: var(--green); color: #fff; }
+.yn button.no[aria-pressed="true"] { background: #6b3a12; }
+.result { position: sticky; top: 100px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 28px; }
+.result .lab { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.meter { height: 10px; background: #dde5e1; border-radius: 6px; margin: 14px 0 18px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 6px; transition: width .35s; }
+.result h3 { font-size: 24px; margin-bottom: 10px; }
+.result p { color: var(--ink-soft); font-size: 15px; }
+.result .btn { margin-top: 20px; }
+
+/* capabilities */
+.caps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.cap { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.cap ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+.cap ul li { margin-bottom: 4px; }
+.cap .tagline { color: var(--fg); font-size: 15px; }
+
+/* AI */
+.agents { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.agent { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.agent .n { width: 36px; height: 36px; border-radius: 10px; background: rgba(52,179,134,.12); color: var(--green-hi); display: grid; place-items: center; }
+.agent h3 { font-size: 16px; margin-bottom: 2px; }
+.agent p { color: var(--muted); font-size: 14.5px; }
+.prog { height: 4px; background: #e6e9eb; border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.prog i { display: block; height: 100%; background: #0a6ed1; width: 72%; }
+@media (prefers-reduced-motion: no-preference) {
+  .prog i { animation: load 3.2s ease-in-out infinite alternate; }
+  @keyframes load { from { width: 38% } to { width: 92% } }
+}
+
+/* release timeline */
+.tl { margin-top: 48px; overflow-x: auto; }
+.tl svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.fact { border-top: 2px solid var(--green); padding-top: 14px; }
+.fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 14px; }
+
+/* extensibility */
+.layers { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.layer { display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.layer .who { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--green-hi); padding-top: 3px; }
+.layer h3 { font-size: 16px; margin-bottom: 4px; }
+.layer p { color: var(--muted); font-size: 14.5px; }
+.layer.core { background: var(--paper); color: var(--ink); border-color: transparent; }
+.layer.core .who { color: var(--green); }
+.layer.core p { color: var(--ink-soft); }
+
+/* activate */
+.phases { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ph { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.ph:last-child { border-right: 0; }
+.ph .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.ph h3 { font-size: 17px; }
+.ph p { color: var(--muted); font-size: 13.5px; }
+.ph .we { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--fg); }
+.ph .we b { color: var(--green-hi); font-weight: 700; }
+
+/* users */
+.users { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+.users table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; }
+.users th, .users td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.users th { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.users td:first-child { font-weight: 700; white-space: nowrap; }
+.users td:nth-child(2) { color: var(--muted); }
+.users tr:last-child td { border-bottom: 0; }
+.note { margin-top: 16px; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+/* faq */
+.faq { margin-top: 36px; display: flex; flex-direction: column; gap: 10px; max-width: 860px; }
+details { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 16.5px; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--green-hi); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 18px; max-width: 70ch; }
+
+/* cta */
+.cta-band { background: linear-gradient(120deg, #0e3a2b, #0a1a14 60%); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.cta-band ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cta-band li { display: flex; gap: 10px; font-size: 15px; }
+.cta-band li::before { content: "✓"; color: var(--green-hi); font-weight: 800; }
+footer { padding-block: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+footer .in { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .hero-grid, .two, .fit, .cta-band { grid-template-columns: 1fr; }
+  .caps { grid-template-columns: 1fr 1fr; }
+  .phases { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .ph:nth-child(3) { border-right: 0; }
+  .ph:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .result { position: static; }
+}
+@media (max-width: 620px) {
+  section { padding-block: 64px; }
+  .caps, .includes { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: 1fr; }
+  .ph { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .tiles .tile:nth-child(3) { display: none; }
+  .split { grid-template-columns: 1fr; }
+  .layer { grid-template-columns: 1fr; gap: 6px; }
+  .cta-band { padding: 36px 24px; }
+  .q { flex-direction: column; align-items: flex-start; }
+}
+
+/* light bands: same components, re-tokened */
+section.light { --bg-2: #ffffff; --line: #d9e2dd; --fg: #142019; --muted: #55655e; --green-hi: #17694b; background: #f2f5f3; color: var(--fg); border-top-color: transparent; }
+section.light .includes { background: var(--line); }
+section.light .cap, section.light details { box-shadow: 0 1px 2px rgba(20,32,25,.05); }
+</style>
+<header class="site">
+  <div class="in">
+    <a class="logo" href="#top" aria-label="Mawkish Technologies">
+      <svg viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L20 4 L32 18 L44 4 L62 28 Z" fill="none" stroke="#eef3f0" stroke-width="4" stroke-linejoin="round"/><path d="M20 28 L32 14 L44 28" fill="#eef3f0"/></svg>
+      MAWKISH
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">ABOUT US</a>
+      <a href="#" class="on">OUR SERVICES</a>
+      <a href="#">INDUSTRIES</a>
+      <a href="#">INSIGHTS &amp; PERSPECTIVES</a>
+      <a href="#book" class="btn pri">Schedule a consultation</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+/* Licensing components */
+.nest { position: relative; display: flex; flex-direction: column; gap: 0; }
+.nb { border-radius: 16px; padding: 18px 20px 20px; border: 1.5px solid; }
+.nb .lbl { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+.nb h3 { font-size: 17px; }
+.nb .for { font-size: 12.5px; color: var(--muted); }
+.nb p { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
+.n1 { border-color: #17694b; background: rgba(31,122,90,.06); }
+.n2 { border-color: #2f9e76; background: rgba(31,122,90,.06); margin-top: 14px; }
+.n3 { border-color: #6cc19e; background: rgba(255,255,255,.7); margin-top: 14px; }
+.n4 { border-color: #b7e1cf; background: #fff; margin-top: 14px; }
+.ex { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.ex span { font-size: 12px; font-weight: 600; border: 1px solid var(--line); border-radius: 20px; padding: 3px 10px; background: var(--bg-2); }
+.flow { margin-top: 36px; overflow-x: auto; }
+.flow svg { min-width: 780px; width: 100%; height: auto; display: block; }
+.ents { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.ents .cap h3 { font-size: 16.5px; }
+.ents .cap p { color: var(--muted); font-size: 14.5px; }
+.ents .tag2 { font-size: 10.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--green-hi); }
+.drivers { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+.drv { border: 1px solid var(--line); border-radius: 12px; padding: 18px; background: var(--bg-2); }
+.drv h3 { font-size: 16px; margin-bottom: 4px; display: flex; gap: 10px; align-items: center; }
+.drv h3 i { width: 8px; height: 8px; border-radius: 50%; background: #e9a23b; flex: none; }
+.drv p { color: var(--muted); font-size: 14px; }
+.svc { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 0; margin-top: 44px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.svc > div { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.svc > div:last-child { border-right: 0; }
+.svc .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.svc h3 { font-size: 16.5px; }
+.svc p { color: var(--muted); font-size: 13.5px; }
+.example { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+.panel { border: 1px solid var(--line); border-radius: 16px; padding: 24px; background: var(--bg-2); }
+.panel h3 { font-size: 17px; margin-bottom: 4px; }
+.panel .sub { color: var(--muted); font-size: 13.5px; margin-bottom: 18px; }
+.stackbar { display: flex; height: 42px; border-radius: 8px; overflow: hidden; }
+.stackbar span { display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #fff; min-width: 0; overflow: hidden; white-space: nowrap; }
+.key { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; margin-top: 18px; font-size: 14px; }
+.key span:nth-child(odd) { display: flex; align-items: center; gap: 8px; color: var(--muted); }
+.key span:nth-child(even) { font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+.key i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.big { font-family: var(--display); font-size: 44px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.big small { font-size: 15px; color: var(--muted); font-weight: 600; margin-left: 6px; }
+@media (max-width: 980px) { .ents { grid-template-columns: 1fr 1fr; } .svc { grid-template-columns: 1fr 1fr; } .svc > div { border-bottom: 1px solid var(--line); } .example { grid-template-columns: 1fr; } }
+@media (max-width: 620px) { .ents, .drivers, .svc { grid-template-columns: 1fr; } .svc > div { border-right: 0; } }
+</style>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="in">
+      <div class="crumbs"><a href="#">Services</a> / <a href="#">SAP Solutions</a> / Licensing &amp; Commercial Advisory</div>
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Licensing &amp; Commercial Advisory</span>
+          <h1>Get your SAP licence right <em>the first time.</em></h1>
+          <p class="lede">SAP Cloud ERP is licensed per user, per month, by what each person does in the system. Get the mix right and you pay for what you use. Get it wrong and you either overpay for years or face a true-up later. We size your licence from your actual roles and check every entitlement, so the contract fits the business you are and the one you're becoming.</p>
+          <div class="ctas">
+            <a href="#book" class="btn pri">Request a licence review →</a>
+            <a href="#how" class="btn sec">How SAP licensing works</a>
+          </div>
+          <p class="name-note"><b>Based on SAP's current model.</b> This page reflects SAP's per-user licensing for SAP Cloud ERP, which replaced the older FUE model for new contracts in 2025.</p>
+        </div>
+
+        <figure style="margin:0">
+          <div class="screen" role="img" aria-label="Illustration of a licence sizing workbench showing users by role mapped to SAP user types, with flags for over-licensed roles">
+            <div class="shell"><span class="sap" style="background:#1f7a5a">MK</span><span class="t">Licence sizing · 162 users</span><span class="av">MK</span></div>
+            <div class="body-pad">
+              <div class="tiles">
+                <div class="tile"><div><div class="h">Roles mapped</div><div class="s">From your org chart</div></div><div class="k">27</div></div>
+                <div class="tile"><div><div class="h">Full-access users</div><div class="s">Base or Premium</div></div><div class="k pos">34</div></div>
+                <div class="tile"><div><div class="h">Roles to fix</div><div class="s">Over-licensed</div></div><div class="k" style="color:#e9730c">3</div></div>
+              </div>
+              <div class="card-f" style="margin-top:10px">
+                <div class="h">Role → user type</div>
+                <div class="row"><span>Financial controller · 4</span><span class="pill ok">Finance Base</span></div>
+                <div class="row"><span>Production planner · 6</span><span class="pill ok">Supply Chain Base</span></div>
+                <div class="row"><span>AP clerk · 5</span><span class="pill wr">Base → Operational</span></div>
+                <div class="row"><span>Sales coordinator · 14</span><span class="pill in">Operational</span></div>
+                <div class="row"><span>Line managers · 58</span><span class="pill in">Self-Service</span></div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="caption">Illustration of a licence sizing exercise. Sample data.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="light" id="how">
+    <div class="in two">
+      <div>
+        <span class="eyebrow">How SAP licenses Cloud ERP</span>
+        <h2>Four levels of user, each one including the level below.</h2>
+        <p class="lede">You buy SAP Cloud ERP as a package, mainly Finance or Supply Chain, with a mix of user types. Each user type includes everything below it, so a Finance Base user can also do everything an Operational or Self-Service user can.</p>
+        <p class="lede">The skill is in giving each person the lowest level that covers their actual work. Most companies have far fewer full-access users than they assume.</p>
+      </div>
+      <div class="nest">
+        <div class="nb n1"><div class="lbl"><h3>Premium</h3><span class="for">Finance Premium · Supply Chain Premium</span></div><p>Everything in Base, plus wider scope such as projects, subscription billing, sustainability and compliance, and premium AI.</p></div>
+        <div class="nb n2"><div class="lbl"><h3>Base</h3><span class="for">Finance Base · Supply Chain Base · Combo Base</span></div><p>Full finance or full supply chain processes. Combo Base covers both for cross-functional power users.</p></div>
+        <div class="nb n3"><div class="lbl"><h3>Operational</h3><span class="for">Day-to-day transaction users</span></div><p>Sales orders, purchasing, deliveries, service and project tasks.</p></div>
+        <div class="nb n4"><div class="lbl"><h3>Self-Service</h3><span class="for">Everyone else</span></div><p>Approvals, requests, timesheets, confirmations and display.</p></div>
+        <div class="ex"><span>Joule and embedded AI included at every level</span><span>Developer users licensed separately</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROLES DECIDE -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">The detail most people miss</span>
+      <h2>Your security roles decide your bill.</h2>
+      <p class="lede">In SAP Cloud ERP, each person's user type is set by the highest-level app they can access. Give an accounts payable clerk one advanced finance app "just in case", and they're licensed as Finance Base instead of Operational, for every month of the contract. That's why licence sizing and role design have to be done together.</p>
+      <div class="flow">
+        <svg viewBox="0 0 1000 220" role="img" aria-label="How a user type is set: a person holds business roles, each role contains app catalogs with a price level, and the highest level across all catalogs sets the person's user type. Example: an AP clerk with one advanced catalog becomes Finance Base; after removing it they are Operational.">
+          <g font-family="Manrope, sans-serif">
+            <text x="20" y="22" font-size="11" font-weight="800" letter-spacing="1.6" fill="#9aaaa2">PERSON</text>
+            <text x="250" y="22" font-size="11" font-weight="800" letter-spacing="1.6" fill="#9aaaa2">ROLES AND APP CATALOGS</text>
+            <text x="640" y="22" font-size="11" font-weight="800" letter-spacing="1.6" fill="#9aaaa2">HIGHEST LEVEL</text>
+            <text x="830" y="22" font-size="11" font-weight="800" letter-spacing="1.6" fill="#9aaaa2">USER TYPE</text>
+
+            <rect x="20" y="40" width="190" height="70" rx="12" fill="#0a110e" stroke="#1c2823"/>
+            <text x="38" y="70" font-size="15" font-weight="700" fill="#eef3f0">AP clerk</text>
+            <text x="38" y="92" font-size="12.5" fill="#9aaaa2">Standard role, as delivered</text>
+            <path d="M210 75 H240" stroke="#5c6c65" stroke-width="2"/>
+            <rect x="250" y="40" width="110" height="30" rx="7" fill="#2a3a33"/><text x="262" y="60" font-size="12" fill="#eef3f0">Invoices · Ops</text>
+            <rect x="370" y="40" width="110" height="30" rx="7" fill="#2a3a33"/><text x="382" y="60" font-size="12" fill="#eef3f0">Payments · Ops</text>
+            <rect x="490" y="40" width="120" height="30" rx="7" fill="#7a3d12"/><text x="502" y="60" font-size="12" fill="#ffe3cc">GL posting · Adv.</text>
+            <rect x="250" y="78" width="110" height="30" rx="7" fill="#2a3a33"/><text x="262" y="98" font-size="12" fill="#eef3f0">Suppliers · Ops</text>
+            <path d="M615 75 H630" stroke="#5c6c65" stroke-width="2"/>
+            <rect x="640" y="56" width="150" height="38" rx="9" fill="#7a3d12"/><text x="715" y="80" text-anchor="middle" font-size="13" font-weight="700" fill="#ffe3cc">Advanced</text>
+            <path d="M795 75 H820" stroke="#5c6c65" stroke-width="2"/>
+            <rect x="830" y="56" width="150" height="38" rx="9" fill="#e9a23b"/><text x="905" y="80" text-anchor="middle" font-size="13" font-weight="800" fill="#2b1a00">Finance Base</text>
+
+            <rect x="20" y="130" width="190" height="70" rx="12" fill="#0a110e" stroke="#34b386"/>
+            <text x="38" y="160" font-size="15" font-weight="700" fill="#eef3f0">AP clerk</text>
+            <text x="38" y="182" font-size="12.5" fill="#34b386">Custom role, right-sized</text>
+            <path d="M210 165 H240" stroke="#5c6c65" stroke-width="2"/>
+            <rect x="250" y="130" width="110" height="30" rx="7" fill="#2a3a33"/><text x="262" y="150" font-size="12" fill="#eef3f0">Invoices · Ops</text>
+            <rect x="370" y="130" width="110" height="30" rx="7" fill="#2a3a33"/><text x="382" y="150" font-size="12" fill="#eef3f0">Payments · Ops</text>
+            <rect x="250" y="168" width="110" height="30" rx="7" fill="#2a3a33"/><text x="262" y="188" font-size="12" fill="#eef3f0">Suppliers · Ops</text>
+            <rect x="490" y="130" width="120" height="30" rx="7" fill="none" stroke="#5c6c65" stroke-dasharray="4 4"/><text x="502" y="150" font-size="12" fill="#5c6c65">removed</text>
+            <path d="M615 165 H630" stroke="#5c6c65" stroke-width="2"/>
+            <rect x="640" y="146" width="150" height="38" rx="9" fill="#2a3a33"/><text x="715" y="170" text-anchor="middle" font-size="13" font-weight="700" fill="#eef3f0">Operational</text>
+            <path d="M795 165 H820" stroke="#5c6c65" stroke-width="2"/>
+            <rect x="830" y="146" width="150" height="38" rx="9" fill="#1f7a5a"/><text x="905" y="170" text-anchor="middle" font-size="13" font-weight="800" fill="#ffffff">Operational</text>
+          </g>
+        </svg>
+      </div>
+      <p class="note">SAP's standard roles are designed for demos and give people more access than they need. They should never go to production unchanged, for security reasons as well as cost.</p>
+    </div>
+  </section>
+
+  <!-- ENTITLEMENTS -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">Already in the package</span>
+      <h2>Know what you've bought before you buy more.</h2>
+      <p class="lede">SAP's Cloud ERP packages include far more than user access. We often find customers planning to buy, or build, something their package already covers. Here's what comes with a Finance package today.</p>
+      <div class="ents">
+        <div class="cap"><span class="tag2">Banking</span><h3>Bank connectivity</h3><p>A connection to your banks for payments and statements, with a yearly transaction allowance.</p></div>
+        <div class="cap"><span class="tag2">Compliance</span><h3>E-documents and tax reporting</h3><p>SAP Document and Reporting Compliance, with an allowance of documents per year.</p></div>
+        <div class="cap"><span class="tag2">Working capital</span><h3>Supplier and receivables finance</h3><p>Taulia solutions up to a spend threshold, which is higher with Premium.</p></div>
+        <div class="cap"><span class="tag2">Extend</span><h3>SAP Build and developers</h3><p>SAP Build access for every user, plus developer seats in each system for upgrade-safe extensions.</p></div>
+        <div class="cap"><span class="tag2">Integrate</span><h3>Digital access</h3><p>20,000 documents a year per full-access user for third-party systems that create documents in SAP.</p></div>
+        <div class="cap"><span class="tag2">Run</span><h3>Systems and AI</h3><p>Development, test and production systems, a parallel project line, a memory allowance that grows with users, and Joule.</p></div>
+      </div>
+      <p class="note">Entitlements and allowances change with SAP's packages. We check them against SAP's current terms for your quote.</p>
+    </div>
+  </section>
+
+  <!-- COST DRIVERS -->
+  <section>
+    <div class="in two">
+      <div>
+        <span class="eyebrow">Beyond the user count</span>
+        <h2>Six things that change the total.</h2>
+        <p class="lede">The user mix is the biggest number, but it isn't the only one. These are the items we check on every quote, because they're the ones that surprise people in year two.</p>
+      </div>
+      <div class="drivers">
+        <div class="drv"><h3><i></i>Premium AI</h3><p>Premium packages come with a required purchase of SAP AI Units, which pay for AI agents and assistants. Budget for it from the start.</p></div>
+        <div class="drv"><h3><i></i>Integrations</h3><p>Documents created in SAP by other systems, such as an e-commerce site, count against your digital access allowance.</p></div>
+        <div class="drv"><h3><i></i>Data growth</h3><p>System memory grows with users. High transaction volumes may need extra memory blocks, or archiving.</p></div>
+        <div class="drv"><h3><i></i>Add-ons</h3><p>Some capabilities, such as advanced planning, group consolidation or extra industry scope, are licensed separately. We confirm which ones you need.</p></div>
+        <div class="drv"><h3><i></i>Growth and phases</h3><p>If you roll out in phases or are adding entities, we plan when users join, so you don't pay for users before they go live.</p></div>
+        <div class="drv"><h3><i></i>Existing contracts</h3><p>Customers on older GROW (FUE-based) contracts, or with SAP products like Concur, have specific rules on what they're entitled to.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXAMPLE -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">A worked example</span>
+      <h2>A 160-person distributor, sized two ways.</h2>
+      <p class="lede">A common first estimate is "everyone who logs in needs a full licence". Here's what changes when each role is mapped to the work it actually does.</p>
+      <div class="example">
+        <div class="panel">
+          <h3>First estimate</h3>
+          <p class="sub">Every system user treated as a full-access user</p>
+          <div class="stackbar"><span style="flex:160;background:#7a3d12">160 full access</span></div>
+          <div class="key"><span><i style="background:#7a3d12"></i>Base or Premium</span><span>160</span></div>
+          <div style="margin-top:22px"><div class="big">100%<small>of users on full access</small></div></div>
+        </div>
+        <div class="panel" style="border-color:var(--green-hi)">
+          <h3>After role mapping</h3>
+          <p class="sub">Each role given the lowest user type that covers its work</p>
+          <div class="stackbar">
+            <span style="flex:14;background:#17694b">14</span>
+            <span style="flex:12;background:#2f9e76">12</span>
+            <span style="flex:4;background:#4fb38a"></span>
+            <span style="flex:52;background:#6cc19e;color:#0f2a1f">52</span>
+            <span style="flex:78;background:#b7e1cf;color:#0f2a1f">78</span>
+          </div>
+          <div class="key">
+            <span><i style="background:#17694b"></i>Finance Base</span><span>14</span>
+            <span><i style="background:#2f9e76"></i>Supply Chain Base</span><span>12</span>
+            <span><i style="background:#4fb38a"></i>Combo Base</span><span>4</span>
+            <span><i style="background:#6cc19e"></i>Operational</span><span>52</span>
+            <span><i style="background:#b7e1cf"></i>Self-Service</span><span>78</span>
+          </div>
+          <div style="margin-top:22px"><div class="big">19%<small>of users on full access</small></div></div>
+        </div>
+      </div>
+      <p class="note">Illustrative example, not a quote. Actual results depend on your roles, SAP's minimum user counts, and current SAP terms.</p>
+    </div>
+  </section>
+
+  <!-- SERVICE -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">How we work</span>
+      <h2>From org chart to signed contract, and every renewal after.</h2>
+      <p class="lede">Licensing advice isn't a one-off. Your licence should change as your business does. We stay involved from the first estimate through to every renewal.</p>
+      <div class="svc">
+        <div><span class="st">Step 1</span><h3>Role inventory</h3><p>Who does what today, by department, entity and location.</p></div>
+        <div><span class="st">Step 2</span><h3>User-type mapping</h3><p>Each role mapped to SAP app catalogs and the lowest user type that fits.</p></div>
+        <div><span class="st">Step 3</span><h3>Entitlement check</h3><p>What the package covers, which add-ons you need, and digital access and AI requirements.</p></div>
+        <div><span class="st">Step 4</span><h3>Scenarios</h3><p>Phased go-lives, growth and new entities, modelled over the contract term.</p></div>
+        <div><span class="st">Step 5</span><h3>Contract and renewals</h3><p>Review of the quote, then a usage check before each renewal.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">Questions we hear</span>
+      <h2>Straight answers.</h2>
+      <div class="faq">
+        <details><summary>What happened to FUEs?</summary><p>For new contracts, SAP replaced Full Use Equivalents with named user types priced per user per month in 2025. Existing GROW customers on FUE contracts can stay on them. Whether to move to the new model is a case-by-case decision, and we can model both for you.</p></details>
+        <details><summary>What are SAP AI Units?</summary><p>They're the currency for SAP's premium AI: agents and assistants that carry out work for you. Basic AI, including Joule and embedded AI features, is included with every user. Premium packages come with a required purchase of AI Units.</p></details>
+        <details><summary>What is digital access?</summary><p>When another system creates documents in SAP, such as sales orders from a web shop or invoices from a portal, those documents are counted. Finance and Supply Chain users come with a yearly allowance that covers most mid-sized companies. We size it from your integration list.</p></details>
+        <details><summary>Can we change our user mix later?</summary><p>You can add users and user types during the contract as you grow. Reducing them usually has to wait until renewal, which is why getting the starting mix right matters.</p></details>
+        <details><summary>Does this apply to RISE with SAP too?</summary><p>SAP Cloud ERP Private has its own packages, but the same principle applies: licence by role, check entitlements, and plan for growth. We advise on both.</p></details>
+        <details><summary>You're an SAP partner. Is your advice independent?</summary><p>We're an SAP partner, and we say so. Our interest is a customer who stays with us for years, and over-selling licences on day one is the fastest way to lose that customer. Every number we give you is backed by your own roles and SAP's published user-type definitions.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="book">
+    <div class="in">
+      <div class="cta-band">
+        <div>
+          <span class="eyebrow">Start here</span>
+          <h2>Bring us your org chart. We'll bring you a licence that fits.</h2>
+          <p class="lede">Whether it's a first quote, a renewal or a move from an older GROW contract, we'll give you a role-based view of what you need and why.</p>
+          <div style="margin-top:28px"><a href="#" class="btn pri">Request a licence review →</a></div>
+        </div>
+        <ul>
+          <li>User mix mapped from your real roles</li>
+          <li>Package entitlements checked line by line</li>
+          <li>AI, integration and data costs planned up front</li>
+          <li>Phasing and growth scenarios</li>
+          <li>Renewal check-ins for the life of the contract</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="in"><span>© Mawkish Technologies · Colombo, Sri Lanka</span><span>SAP, SAP Cloud ERP, SAP Build and Joule are trademarks of SAP SE. Screens shown are illustrations.</span></div>
+</footer>
+
+</body></html>

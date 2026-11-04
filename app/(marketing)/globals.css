@@ -1123,3 +1123,126 @@ section.light + .cr-notice { margin-top: -88px; }
 .cr-notice { z-index: 1; }
 .cr-notice + section.light { margin-top: -48px; }
 .cr-notice + section.light > * { position: relative; }
+
+/* ---- Phone-width safety net ----
+   Many page stylesheets collapse a grid to `1fr`, which cannot shrink below its content, so a
+   long word, email address or button pushes the column wider than the screen and the edge is
+   clipped. On phones, force a shrinkable single column and let buttons wrap instead of overflow. */
+@media (max-width: 640px) {
+  .cta-band,
+  .hero-grid,
+  .two {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .cta-band > *,
+  .hero-grid > *,
+  .two > * {
+    min-width: 0;
+  }
+  .cta-band .btn,
+  .cta-band a[class*="btn"],
+  .cta-band .ctas a {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+    justify-content: center;
+    line-height: 1.4;
+  }
+  /* Small text links: give a finger a 44px-tall target without changing how they read. */
+  .tlink {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+/* ---- Product index rows (Odoo, Salesforce, MiHCM, Swyftflo, Anthropic) ----
+   Desktop lays each row out as five columns (number, stage, name, description, arrow). On a phone that
+   squeezes the text into slivers, so stack it: number and stage on top, then name, then description. */
+@media (max-width: 760px) {
+  .pindex:not(.compact) .pi-row {
+    grid-template-columns: 34px minmax(0, 1fr) 28px;
+    gap: 6px 12px;
+    padding: 22px 6px;
+    align-items: start;
+  }
+  .pindex:not(.compact) .pi-n {
+    grid-column: 1;
+    grid-row: 1;
+    padding-top: 0;
+  }
+  .pindex:not(.compact) .pi-stage {
+    grid-column: 2;
+    grid-row: 1;
+    padding-top: 0;
+  }
+  .pindex:not(.compact) .pi-main {
+    grid-column: 2;
+    grid-row: 2;
+    min-width: 0;
+  }
+  .pindex:not(.compact) .pi-desc {
+    grid-column: 2;
+    grid-row: 3;
+    padding-top: 0;
+    min-width: 0;
+  }
+  .pindex:not(.compact) .pi-go {
+    grid-column: 3;
+    grid-row: 1 / span 3;
+    align-self: center;
+    padding-top: 0;
+  }
+  .pindex:not(.compact) .pi-here {
+    grid-column: 2;
+    grid-row: 4;
+    justify-self: start;
+    margin-top: 4px;
+  }
+}
+
+/* ---- Wide tables and diagrams on phones ----
+   Comparison tables were a fixed 640px wide inside a scroll box, so on a phone a whole column sat off-screen
+   with nothing to say it was there. Let them shrink to the screen and wrap their text instead.
+   (A table that still cannot fit keeps its scroll box as a fallback.) */
+@media (max-width: 640px) {
+  .users table,
+  .tbl table {
+    min-width: 0 !important;
+    font-size: 13.5px !important;
+  }
+  .users th,
+  .users td,
+  .tbl th,
+  .tbl td {
+    padding: 10px 10px !important;
+    overflow-wrap: break-word;
+  }
+  .users th,
+  .tbl th {
+    letter-spacing: 0.08em !important;
+  }
+  .users td:first-child,
+  .tbl td:first-child {
+    white-space: normal !important;
+  }
+
+  /* Wide diagrams keep their size and scroll sideways, so say so. The hint stays put while you swipe. */
+  .tl:has(> svg)::before,
+  .seq:has(> svg)::before,
+  .plan:has(> svg)::before,
+  .dia .scroll:has(> svg)::before {
+    content: "Swipe sideways to see the whole diagram \2192";
+    display: block;
+    position: sticky;
+    left: 0;
+    width: max-content;
+    max-width: 100%;
+    padding: 0 4px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    opacity: 0.65;
+  }
+}

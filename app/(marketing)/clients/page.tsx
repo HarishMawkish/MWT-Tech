@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
 import { ClientsPage } from "@/components/clients/ClientsPage";
 import { brand, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const jakarta = Plus_Jakarta_Sans({ variable: "--font-pjs", subsets: ["latin"], weight: ["500", "600", "700", "800"] });
 const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
@@ -25,5 +26,10 @@ export const metadata: Metadata = {
 };
 
 export default function ClientsRoute() {
-  return <ClientsPage fontClass={`${jakarta.variable} ${manrope.variable}`} />;
+  return (
+    <>
+      <ClientsPage fontClass={`${jakarta.variable} ${manrope.variable}`} />
+      <CanaryNote id="clients" />
+    </>
+  );
 }

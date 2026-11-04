@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { ReadinessPage } from "@/components/sap-readiness/ReadinessPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "cloud-erp-readiness-assessment";
 
@@ -13,6 +14,7 @@ export default function CloudErpReadinessAssessmentPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <ReadinessPage />
+    <CanaryNote id="sap" />
     </>
   );
 }

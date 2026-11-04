@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI &amp; Data on SAP Data | Mawkish</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Mawkish dark site, full-width bands; each band pairs copy with a drawn SAP Fiori-style screen */
+:root {
+  --bg: #050807;
+  --bg-2: #0a110e;
+  --line: #1c2823;
+  --fg: #eef3f0;
+  --muted: #9aaaa2;
+  --green: #1f7a5a;
+  --green-hi: #34b386;
+  --paper: #f3f6f4;
+  --ink: #142019;
+  --ink-soft: #5c6c65;
+  --fiori: #0a6ed1;
+  --fiori-bg: #f5f6f7;
+  --warn: #e9730c;
+  --display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.in { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 88px; border-top: 1px solid var(--line); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 19px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 16px; display: block; }
+.lede { color: var(--muted); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border: 1px solid transparent; }
+.btn.pri { background: var(--green); color: #fff; }
+.btn.pri:hover { background: #24906a; }
+.btn.sec { border-color: #2c3d36; color: var(--fg); }
+.btn.sec:hover { border-color: var(--green-hi); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
+
+/* header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(5,8,7,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.site .in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; flex-direction: column; align-items: center; font-weight: 800; letter-spacing: .3em; font-size: 9px; color: var(--fg); text-decoration: none; }
+.logo svg { width: 54px; height: 26px; }
+.nav { display: flex; gap: 26px; align-items: center; }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 700; font-size: 12.5px; letter-spacing: .07em; }
+.nav a.on { color: var(--green-hi); }
+.nav .btn { padding: 12px 18px; }
+@media (max-width: 900px) { .nav a:not(.btn) { display: none; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 56px 88px; background: radial-gradient(900px 420px at 80% 10%, rgba(31,122,90,.22), transparent 70%); }
+.crumbs { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 em { font-style: normal; color: var(--green-hi); }
+.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.name-note { margin-top: 28px; font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--green); padding-left: 14px; max-width: 54ch; }
+.name-note b { color: var(--fg); font-weight: 600; }
+
+/* Fiori mock screens */
+.screen { background: var(--fiori-bg); color: #32363a; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06); font-size: 12px; line-height: 1.4; min-width: 0; }
+.shell { background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; gap: 12px; padding: 9px 14px; }
+.shell .sap { background: linear-gradient(135deg,#0a6ed1,#0854a0); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 7px; border-radius: 3px; letter-spacing: .02em; }
+.shell .t { font-weight: 600; color: #32363a; flex: 1; }
+.shell .search { flex: 1.4; background: #eff1f2; border-radius: 16px; height: 24px; display: flex; align-items: center; padding: 0 10px; color: #8b9196; font-size: 11px; }
+.shell .joule-btn { width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); }
+.shell .av { width: 24px; height: 24px; border-radius: 50%; background: #d1e8ff; color: #0a6ed1; font-weight: 700; font-size: 10px; display: grid; place-items: center; }
+.body-pad { padding: 16px; }
+.greet { font-size: 15px; font-weight: 700; color: #1d2d3e; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.tile { background: #fff; border-radius: 10px; padding: 11px 12px; box-shadow: 0 0 0 1px #e5e5e5; min-height: 92px; display: flex; flex-direction: column; justify-content: space-between; }
+.tile .h { font-weight: 600; color: #1d2d3e; font-size: 11.5px; }
+.tile .s { color: #6a6d70; font-size: 10.5px; }
+.tile .k { font-size: 22px; font-weight: 300; color: #0a6ed1; font-variant-numeric: tabular-nums; }
+.tile .k.neg { color: #bb0000; } .tile .k.pos { color: #107e3e; }
+.tile .k small { font-size: 11px; color: #6a6d70; margin-left: 2px; }
+.spark { height: 26px; width: 100%; }
+.split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; margin-top: 10px; }
+.card-f { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; padding: 12px; min-width: 0; }
+.card-f .h { font-weight: 700; font-size: 11.5px; color: #1d2d3e; margin-bottom: 8px; }
+.row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid #eee; font-size: 11px; }
+.row:first-of-type { border-top: 0; }
+.pill { font-size: 9.5px; font-weight: 700; border-radius: 9px; padding: 1px 7px; white-space: nowrap; }
+.pill.ok { background: #f1fdf6; color: #107e3e; box-shadow: inset 0 0 0 1px #c6ecd3; }
+.pill.wr { background: #fef7f1; color: #e9730c; box-shadow: inset 0 0 0 1px #f8d3b0; }
+.pill.in { margin: 0; max-width: none; padding: 1px 7px; background: #eef6fe; color: #0a6ed1; box-shadow: inset 0 0 0 1px #c5def7; }
+.joule { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; display: flex; flex-direction: column; min-width: 0; }
+.joule .jh { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid #eee; font-weight: 700; font-size: 11.5px; }
+.joule .jh i { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); display: inline-block; }
+.joule .msgs { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.bub { border-radius: 10px; padding: 7px 9px; font-size: 10.8px; max-width: 92%; }
+.bub.u { align-self: flex-end; background: #0a6ed1; color: #fff; border-bottom-right-radius: 3px; }
+.bub.j { background: #f2f2f7; color: #1d2d3e; border-bottom-left-radius: 3px; }
+.bub.j b { color: #0a6ed1; }
+.typing span { display: inline-block; width: 5px; height: 5px; margin-right: 3px; border-radius: 50%; background: #8b9196; }
+@media (prefers-reduced-motion: no-preference) {
+  .typing span { animation: blink 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
+}
+.caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+/* journey explainer */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.includes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.includes div { background: var(--bg-2); padding: 22px; }
+.includes h3 { font-size: 16px; margin-bottom: 6px; }
+.includes p { color: var(--muted); font-size: 14.5px; }
+.ico { width: 30px; height: 30px; margin-bottom: 12px; color: var(--green-hi); }
+
+/* fit check */
+.fit { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 44px; align-items: start; }
+.qs { display: flex; flex-direction: column; gap: 10px; }
+.q { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.q span { font-size: 15px; min-width: 0; }
+.yn { display: flex; gap: 4px; flex: none; background: #0f1814; border-radius: 9px; padding: 3px; }
+.yn button { font: 700 12px var(--body); letter-spacing: .06em; border: 0; border-radius: 7px; padding: 7px 12px; background: transparent; color: var(--muted); cursor: pointer; }
+.yn button[aria-pressed="true"] { background: var(--green); color: #fff; }
+.yn button.no[aria-pressed="true"] { background: #6b3a12; }
+.result { position: sticky; top: 100px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 28px; }
+.result .lab { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.meter { height: 10px; background: #dde5e1; border-radius: 6px; margin: 14px 0 18px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 6px; transition: width .35s; }
+.result h3 { font-size: 24px; margin-bottom: 10px; }
+.result p { color: var(--ink-soft); font-size: 15px; }
+.result .btn { margin-top: 20px; }
+
+/* capabilities */
+.caps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.cap { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.cap ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+.cap ul li { margin-bottom: 4px; }
+.cap .tagline { color: var(--fg); font-size: 15px; }
+
+/* AI */
+.agents { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.agent { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.agent .n { width: 36px; height: 36px; border-radius: 10px; background: rgba(52,179,134,.12); color: var(--green-hi); display: grid; place-items: center; }
+.agent h3 { font-size: 16px; margin-bottom: 2px; }
+.agent p { color: var(--muted); font-size: 14.5px; }
+.prog { height: 4px; background: #e6e9eb; border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.prog i { display: block; height: 100%; background: #0a6ed1; width: 72%; }
+@media (prefers-reduced-motion: no-preference) {
+  .prog i { animation: load 3.2s ease-in-out infinite alternate; }
+  @keyframes load { from { width: 38% } to { width: 92% } }
+}
+
+/* release timeline */
+.tl { margin-top: 48px; overflow-x: auto; }
+.tl svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.fact { border-top: 2px solid var(--green); padding-top: 14px; }
+.fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 14px; }
+
+/* extensibility */
+.layers { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.layer { display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.layer .who { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--green-hi); padding-top: 3px; }
+.layer h3 { font-size: 16px; margin-bottom: 4px; }
+.layer p { color: var(--muted); font-size: 14.5px; }
+.layer.core { background: var(--paper); color: var(--ink); border-color: transparent; }
+.layer.core .who { color: var(--green); }
+.layer.core p { color: var(--ink-soft); }
+
+/* activate */
+.phases { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ph { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.ph:last-child { border-right: 0; }
+.ph .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.ph h3 { font-size: 17px; }
+.ph p { color: var(--muted); font-size: 13.5px; }
+.ph .we { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--fg); }
+.ph .we b { color: var(--green-hi); font-weight: 700; }
+
+/* users */
+.users { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+.users table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; }
+.users th, .users td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.users th { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.users td:first-child { font-weight: 700; white-space: nowrap; }
+.users td:nth-child(2) { color: var(--muted); }
+.users tr:last-child td { border-bottom: 0; }
+.note { margin-top: 16px; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+/* faq */
+.faq { margin-top: 36px; display: flex; flex-direction: column; gap: 10px; max-width: 860px; }
+details { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 16.5px; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--green-hi); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 18px; max-width: 70ch; }
+
+/* cta */
+.cta-band { background: linear-gradient(120deg, #0e3a2b, #0a1a14 60%); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.cta-band ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cta-band li { display: flex; gap: 10px; font-size: 15px; }
+.cta-band li::before { content: "✓"; color: var(--green-hi); font-weight: 800; }
+footer { padding-block: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+footer .in { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .hero-grid, .two, .fit, .cta-band { grid-template-columns: 1fr; }
+  .caps { grid-template-columns: 1fr 1fr; }
+  .phases { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .ph:nth-child(3) { border-right: 0; }
+  .ph:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .result { position: static; }
+}
+@media (max-width: 620px) {
+  section { padding-block: 64px; }
+  .caps, .includes { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: 1fr; }
+  .ph { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .tiles .tile:nth-child(3) { display: none; }
+  .split { grid-template-columns: 1fr; }
+  .layer { grid-template-columns: 1fr; gap: 6px; }
+  .cta-band { padding: 36px 24px; }
+  .q { flex-direction: column; align-items: flex-start; }
+}
+
+/* light bands: same components, re-tokened */
+section.light { --bg-2: #ffffff; --line: #d9e2dd; --fg: #142019; --muted: #55655e; --green-hi: #17694b; background: #f2f5f3; color: var(--fg); border-top-color: transparent; }
+section.light .includes { background: var(--line); }
+section.light .cap, section.light details { box-shadow: 0 1px 2px rgba(20,32,25,.05); }
+
+html, body { margin: 0; }
+*, *::before, *::after { box-sizing: border-box; }
+/* Cloud service pages: classes prefixed cs- */
+.cs-hero h1 { max-width: 22ch; }
+.cs-facts { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; max-width: 980px; }
+.cs-facts div { border-top: 2px solid var(--green-hi); padding-top: 14px; }
+.cs-facts b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; line-height: 1.1; }
+.cs-facts span { display: block; color: var(--muted); font-size: 14.5px; margin-top: 6px; }
+.cs-why { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.cs-why div, .cs-str div { background: var(--bg-2); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+.cs-why h3, .cs-str h3 { font-size: 17px; }
+.cs-why p, .cs-str p { color: var(--muted); font-size: 15px; margin: 8px 0 0; }
+.cs-str { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; margin-top: 32px; }
+.cs-what { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.cs-what div { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+.cs-what .n { font-size: 12px; font-weight: 800; color: var(--green-hi); letter-spacing: .1em; }
+.cs-what h3 { font-size: 18px; margin-top: 8px; }
+.cs-what p { color: var(--muted); font-size: 15px; margin: 8px 0 0; }
+.cs-steps { list-style: none; margin: 36px 0 0; padding: 0; display: grid; grid-template-columns: repeat(var(--n), minmax(0,1fr)); gap: 0; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--bg-2); }
+.cs-steps li { padding: 22px 20px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 8px; }
+.cs-steps li:first-child { border-left: 0; }
+.cs-steps .n { width: 30px; height: 30px; border-radius: 50%; background: var(--green-hi); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 14px; }
+.cs-steps h3 { font-size: 16.5px; }
+.cs-steps p { color: var(--muted); font-size: 14.5px; margin: 0; }
+.cs-steps .d { margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--line); font-size: 13px; font-weight: 700; color: var(--green-hi); }
+.cs-tbl { margin-top: 30px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.cs-tbl table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+.cs-tbl th, .cs-tbl td { text-align: left; padding: 13px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.cs-tbl thead th { font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.cs-tbl tbody th { font-weight: 700; }
+.cs-tbl td { color: var(--muted); }
+.cs-tbl tr:last-child th, .cs-tbl tr:last-child td { border-bottom: 0; }
+.cs-sap { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); gap: 40px; align-items: start; }
+.cs-sapl { list-style: none; margin: 0; padding: 26px; border-radius: 18px; background: #0f2a1f; color: #e8f1ec; display: grid; gap: 12px; }
+.cs-sapl li { padding-left: 26px; position: relative; font-size: 15.5px; }
+.cs-sapl li::before { content: ""; position: absolute; left: 0; top: .45em; width: 12px; height: 12px; border-radius: 3px; background: #34b386; }
+.cs-two { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.3fr); gap: 48px; align-items: start; }
+.cs-del { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 10px; }
+.cs-del li { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px 14px 44px; position: relative; font-size: 15px; }
+.cs-del li::before { content: "✓"; position: absolute; left: 16px; top: 13px; color: var(--green-hi); font-weight: 800; }
+.cs-faq { display: grid; gap: 10px; margin-top: 24px; }
+.cs-rels { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin: 24px 0 44px; }
+.cs-rel { display: flex; flex-direction: column; gap: 4px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; text-decoration: none; color: var(--fg); position: relative; transition: border-color .2s, transform .2s; }
+.cs-rel:hover { border-color: var(--green-hi); transform: translateY(-2px); }
+.cs-rel span { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.cs-rel b { font-size: 17px; padding-right: 24px; }
+.cs-rel i { position: absolute; right: 18px; bottom: 18px; font-style: normal; color: var(--green-hi); font-weight: 800; }
+.cs-src { margin-top: 16px; }
+.cs-src ul { margin: 0 0 18px; padding-left: 18px; font-size: 13.5px; color: var(--muted); display: grid; gap: 4px; }
+.cs-src a { color: var(--green-hi); word-break: break-word; }
+.mk-cr { display: flex; align-items: center; gap: 12px; margin-top: 40px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); font-size: 13px; line-height: 1.5; color: var(--muted); }
+.mk-cr svg { flex: none; color: var(--green-hi); }
+.mk-cr b { color: var(--fg); }
+.mk-cr a { color: var(--green-hi); font-weight: 700; text-decoration: none; white-space: nowrap; }
+footer .mk-crf a { color: var(--green-hi); text-decoration: none; font-weight: 600; }
+@media (max-width: 1080px) {
+  .cs-why { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .cs-what { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .cs-steps { grid-template-columns: minmax(0,1fr); }
+  .cs-steps li { border-left: 0; border-top: 1px solid var(--line); }
+  .cs-steps li:first-child { border-top: 0; }
+}
+@media (max-width: 760px) {
+  .cs-facts, .cs-why, .cs-what, .cs-str, .cs-sap, .cs-two, .cs-rels { grid-template-columns: minmax(0,1fr); }
+  .cs-facts { gap: 18px; }
+  .cs-tbl { border: 0; overflow: visible; }
+  .cs-tbl thead { display: none; }
+  .cs-tbl table, .cs-tbl tbody, .cs-tbl tr, .cs-tbl th, .cs-tbl td { display: block; width: 100%; }
+  .cs-tbl tr { border: 1px solid var(--line); border-radius: 12px; margin-bottom: 12px; background: var(--bg-2); overflow: hidden; }
+  .cs-tbl tbody th { background: rgba(52,179,134,.08); }
+  .cs-tbl td::before { content: attr(data-c); display: block; font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 2px; }
+  .mk-cr { align-items: flex-start; } .mk-cr a { white-space: normal; }
+}
+@media (prefers-reduced-motion: reduce) { .cs-rel { transition: none; } }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="in">
+    <a class="logo" href="../index.html" aria-label="Mawkish Technologies">
+      <svg viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L20 4 L32 18 L44 4 L62 28 Z" fill="none" stroke="#eef3f0" stroke-width="4" stroke-linejoin="round"/><path d="M20 28 L32 14 L44 28" fill="#eef3f0"/></svg>
+      MAWKISH
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">ABOUT US</a>
+      <a href="../index.html" class="on">OUR SERVICES</a>
+      <a href="#">INDUSTRIES</a>
+      <a href="#">INSIGHTS &amp; PERSPECTIVES</a>
+      <a href="#book" class="btn pri">Schedule a consultation</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero cs-hero"><div class="in">
+  <div class="crumbs"><a href="../index.html">Services</a> / <a href="../index.html">Cloud Infrastructure</a> / Data, AI &amp; Skills</div>
+  <span class="eyebrow">Cloud Infrastructure · Data, AI &amp; Skills</span>
+  <h1>Put your SAP data to work, <em>in analytics and AI you can trust.</em></h1>
+  <p class="lede">We connect SAP business data with the data and AI services of AWS, Microsoft Azure and Google Cloud, using SAP Business Data Cloud, SAP Databricks, SAP Datasphere and the generative AI hub on SAP BTP. You get governed, business-ready data and AI use cases that keep SAP context, without building a tangle of copies and custom extracts.</p>
+  <div class="ctas"><a href="#book" class="btn pri">Talk to a cloud architect →</a><a href="#how" class="btn sec">See how it works</a></div>
+  <div class="cs-facts"><div><b>Apr 2025</b><span>SAP Databricks generally available inside SAP Business Data Cloud</span></div><div><b>Jul 2026</b><span>SAP BDC Connect for BigQuery generally available, zero-copy sharing</span></div><div><b>Mumbai</b><span>Google Cloud region in India that hosts SAP Business Data Cloud</span></div></div>
+</div></section>
+<section class="light"><div class="in">
+  <span class="eyebrow">Why it matters</span><h2>Why SAP data needs a plan for AI</h2><p class="lede">SAP holds your most valuable data: orders, stock, finance, suppliers and people. It is also hard to use outside SAP, because tables are complex, business meaning sits in the application layer and every extract creates another copy to secure and reconcile. AI makes this worse if models are fed partial or stale data. A clear data architecture, with SAP semantics kept intact and governance in place, is the difference between a useful AI assistant and a risky one.</p>
+  <div class="cs-why"><div><h3>Business meaning gets lost</h3><p>Raw table extracts drop the semantics that SAP applications add. SAP Business Data Cloud data products keep that context, so analysts and models work with recognisable business objects.</p></div><div><h3>Too many copies</h3><p>Every replicated copy adds storage, security and reconciliation work. Zero-copy sharing through SAP BDC Connect with Databricks, Google BigQuery and Microsoft Fabric reduces the need to duplicate data.</p></div><div><h3>AI without guardrails</h3><p>Generative AI on business data needs access control, grounding and monitoring. The generative AI hub in SAP AI Core gives governed access to models from providers including Amazon, Anthropic, Google, Meta, Mistral AI and OpenAI.</p></div><div><h3>Names and offerings change fast</h3><p>Vertex AI is now Gemini Enterprise Agent Platform and Azure AI Foundry is now Microsoft Foundry. We track these changes so your architecture uses what is current and supported.</p></div></div>
+</div></section>
+<section><div class="in">
+  <span class="eyebrow">What we do</span><h2>What we do</h2><p class="lede">We design and build the data and AI layer around your SAP landscape, on the cloud you already use.</p>
+  <div class="cs-what"><div><span class="n">01</span><h3>Data and AI strategy</h3><p>We map your SAP sources, business questions and AI ideas to a target architecture. We pick the first use cases by value and data readiness, not by hype.</p></div><div><span class="n">02</span><h3>SAP Business Data Cloud setup</h3><p>We plan and configure SAP Business Data Cloud, including SAP Datasphere and SAP Analytics Cloud. We activate the data products and intelligent applications that fit your processes.</p></div><div><span class="n">03</span><h3>SAP Databricks and BDC Connect</h3><p>We use SAP Databricks for data engineering and machine learning on SAP data products through Delta Sharing. Where you already run Databricks, Google BigQuery or Microsoft Fabric, we set up SAP BDC Connect for zero-copy sharing in both directions.</p></div><div><span class="n">04</span><h3>Replication to hyperscaler data lakes</h3><p>Where a copy is the right answer, we build SAP Datasphere replication flows to Amazon S3, Azure Data Lake Storage or Google Cloud Storage and BigQuery. We design for change data capture, volumes and outbound integration licensing.</p></div><div><span class="n">05</span><h3>Generative AI on SAP data</h3><p>We build assistants and agents with the generative AI hub on SAP BTP, Amazon Bedrock, Microsoft Foundry or Gemini Enterprise Agent Platform. We ground answers in SAP data and keep humans in the loop for actions.</p></div><div><span class="n">06</span><h3>Governance and security</h3><p>We set up catalogues, access policies, lineage and data quality checks across SAP and cloud tools. Sensitive fields such as personal data are masked or excluded before they reach a model.</p></div></div>
+</div></section>
+<section class="light" id="how"><div class="in">
+  <span class="eyebrow">How it works</span><h2>How it works</h2>
+  <ol class="cs-steps" style="--n:5"><li><span class="n">1</span><h3>Discover</h3><p>We review your SAP systems, existing data platforms and reporting pain points. We agree three to five use cases with owners and success measures.</p><span class="d">2 to 3 weeks</span></li><li><span class="n">2</span><h3>Design</h3><p>We define the target architecture: which data stays in SAP Business Data Cloud, what is shared zero-copy and what is replicated. We document security, identity and network design.</p><span class="d">2 to 4 weeks</span></li><li><span class="n">3</span><h3>Build the foundation</h3><p>We provision the platform, connect SAP sources and publish the first data products. We automate deployments and set up monitoring from the start.</p><span class="d">4 to 8 weeks</span></li><li><span class="n">4</span><h3>Deliver use cases</h3><p>We build dashboards, models and AI assistants for the agreed use cases, testing them with business users. Each one goes live with clear ownership and support.</p><span class="d">4 to 6 weeks per use case</span></li><li><span class="n">5</span><h3>Scale and improve</h3><p>We add data products, tune performance and track adoption. Your team takes on more of the work as skills grow.</p><span class="d">Ongoing</span></li></ol>
+</div></section>
+<section><div class="in">
+  <span class="eyebrow">Across AWS, Azure and Google Cloud</span><h2>Native data and AI services per cloud</h2><p class="lede">We combine SAP data services with the native data and AI services of your chosen cloud.</p>
+  <div class="cs-tbl"><table><thead><tr><th scope="col">Need</th><th scope="col">AWS</th><th scope="col">Microsoft Azure</th><th scope="col">Google Cloud</th></tr></thead><tbody><tr><th scope="row">Data lake storage</th><td data-c="AWS">Amazon S3</td><td data-c="Microsoft Azure">Azure Data Lake Storage, Microsoft Fabric OneLake</td><td data-c="Google Cloud">Cloud Storage</td></tr><tr><th scope="row">Analytics warehouse</th><td data-c="AWS">Amazon Redshift</td><td data-c="Microsoft Azure">Microsoft Fabric</td><td data-c="Google Cloud">BigQuery</td></tr><tr><th scope="row">SAP data ingestion</th><td data-c="AWS">AWS Glue, Amazon AppFlow</td><td data-c="Microsoft Azure">Azure Data Factory, Fabric Data Factory</td><td data-c="Google Cloud">BigQuery Connector for SAP</td></tr><tr><th scope="row">Zero-copy sharing with SAP BDC</th><td data-c="AWS">SAP Business Data Cloud on AWS with SAP Databricks</td><td data-c="Microsoft Azure">SAP BDC Connect for Microsoft Fabric</td><td data-c="Google Cloud">SAP BDC Connect for BigQuery</td></tr><tr><th scope="row">Generative AI models</th><td data-c="AWS">Amazon Bedrock</td><td data-c="Microsoft Azure">Microsoft Foundry (formerly Azure AI Foundry)</td><td data-c="Google Cloud">Gemini Enterprise Agent Platform (formerly Vertex AI)</td></tr><tr><th scope="row">Agents</th><td data-c="AWS">Amazon Bedrock AgentCore</td><td data-c="Microsoft Azure">Microsoft Copilot Studio, Foundry Agent Service</td><td data-c="Google Cloud">Gemini Enterprise</td></tr><tr><th scope="row">Data governance</th><td data-c="AWS">AWS Lake Formation</td><td data-c="Microsoft Azure">Microsoft Purview</td><td data-c="Google Cloud">Knowledge Catalog (formerly Dataplex)</td></tr></tbody></table></div>
+</div></section>
+<section class="light"><div class="in cs-sap">
+  <div><span class="eyebrow">For SAP landscapes</span><h2>The SAP angle</h2><p class="lede">SAP Business Data Cloud is SAP&#x27;s answer to the data problem: it brings SAP Datasphere, SAP Analytics Cloud, SAP Business Warehouse and SAP Databricks together around managed data products that keep business context. The generative AI hub in SAP AI Core gives governed access to large language models, and Joule uses SAP data to answer questions and act within SAP applications. SAP now positions SAP BTP, SAP Business Data Cloud and its AI services together as the SAP Business AI Platform, announced at SAP Sapphire 2026. Our job is to fit these SAP services together with the hyperscaler platform you already run, so you do not pay twice for the same capability or end up with two versions of the truth.</p></div>
+  <ul class="cs-sapl"><li>SAP Business Data Cloud data products are shared to SAP Databricks through Delta Sharing, without physical copies.</li><li>SAP BDC Connect links SAP Business Data Cloud with Databricks, Google BigQuery, Microsoft Fabric and Snowflake.</li><li>SAP Datasphere replication flows can send SAP data to Amazon S3, Azure Data Lake Storage and Google BigQuery.</li><li>The generative AI hub on SAP BTP offers models from Amazon, Anthropic, Google, Meta, Mistral AI and OpenAI under one governance layer.</li></ul>
+</div></section>
+<section><div class="in cs-two">
+  <div><span class="eyebrow">What you get</span><h2>Deliverables</h2><ul class="cs-del"><li>SAP data and AI target architecture with a decision on share, replicate or keep in place</li><li>Configured SAP Business Data Cloud or hyperscaler data platform with SAP sources connected</li><li>Prioritised use case backlog with owners and success measures</li><li>Working dashboards, models or AI assistants for the first use cases</li><li>Data governance model covering access, lineage, quality and personal data</li><li>Runbooks and handover sessions for your data and SAP teams</li></ul></div>
+  <div><span class="eyebrow">Questions</span><h2>Frequently asked</h2><div class="cs-faq"><details><summary>Do we need SAP Business Data Cloud to use AI on SAP data?</summary><p>No, but it helps. SAP Business Data Cloud gives you managed data products with SAP semantics and zero-copy sharing to Databricks, BigQuery and Microsoft Fabric. Without it, we can still replicate SAP data with SAP Datasphere or hyperscaler connectors, but more of the modelling and governance work sits with you.</p></details><details><summary>What is the difference between SAP Databricks and our own Databricks?</summary><p>SAP Databricks is a managed version of Databricks included as a service in SAP Business Data Cloud, with SAP data products available through Delta Sharing. If you already run Databricks on AWS, Azure or Google Cloud, SAP BDC Connect for Databricks can share SAP data products with that workspace instead. We help you decide which fits your team and existing investments.</p></details><details><summary>Which AI models can we use with SAP data?</summary><p>The generative AI hub in SAP AI Core offers models from providers including Amazon, Anthropic, Google, Meta, Mistral AI and OpenAI. You can also use Amazon Bedrock, Microsoft Foundry or Gemini Enterprise Agent Platform directly. We choose based on the use case, data residency and the cloud you already use.</p></details><details><summary>Does our SAP data leave Sri Lanka or India?</summary><p>There is no AWS, Azure or Google Cloud region in Sri Lanka, so cloud data services run in a nearby region such as Mumbai or Singapore. SAP Business Data Cloud on Google Cloud is available in Mumbai, for example. We document where each dataset is stored and processed so you can check it against your obligations, including Sri Lanka&#x27;s Personal Data Protection Act.</p></details><details><summary>We run ECC, not S/4HANA. Can we still do this?</summary><p>Yes. SAP Datasphere can connect to SAP ECC through ABAP connections, and hyperscaler connectors such as AWS Glue, Azure Data Factory and the BigQuery Connector for SAP also support ECC. Some SAP Business Data Cloud data products and intelligent applications are built for newer SAP systems, so we check fit source by source.</p></details></div></div>
+</div></section>
+<section class="light"><div class="in">
+  <span class="eyebrow">Related services</span><h2>Often paired with this</h2><div class="cs-rels"><a class="cs-rel" href="microsoft-365-copilot-sap.html"><span>Data, AI &amp; Skills</span><b>Microsoft 365 &amp; Copilot with SAP</b><i>→</i></a><a class="cs-rel" href="network-connectivity-rise-btp.html"><span>Build &amp; Connect</span><b>Network &amp; Connectivity to RISE and BTP</b><i>→</i></a><a class="cs-rel" href="cloud-security-compliance.html"><span>Run &amp; Optimise</span><b>Cloud Security &amp; Compliance</b><i>→</i></a></div>
+  <div class="cta-band" style="color:#eef3f0;--fg:#eef3f0;--muted:#a9bab2;--green-hi:#34b386">
+    <div><span class="eyebrow">Next step</span><h2>Plan your move with people who know SAP.</h2>
+    <p class="lede">One working session with our cloud and SAP architects. You leave with the options, the risks and a first plan.</p>
+    <div style="margin-top:28px"><a href="#book" class="btn pri">Talk to a cloud architect →</a></div></div>
+    <ul><li>Your landscape reviewed</li><li>The right cloud and region</li><li>A first roadmap</li></ul>
+  </div>
+  <aside class="mk-cr" aria-label="Copyright notice"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10" cy="10" r="8"/><path d="M12.6 7.6a3.4 3.4 0 1 0 0 4.8"/></svg><span><b>© 2026 Mawkish Technologies.</b> This guide is protected by copyright. You're welcome to learn from it and to quote it with credit and a link. Reproducing it, by hand or through AI, and publishing it as your own is not allowed. <a href="https://claude.ai/artifact/KRFaztbtc9jsgrjpkdppPX">Read our copyright notice →</a></span></aside>
+  <details class="cs-src"><summary>Sources</summary><ul><li><a href="https://databricks.com/blog/announcing-general-availability-sap-databricks-sap-business-data-cloud" target="_blank" rel="noopener">Databricks: SAP Databricks GA in SAP Business Data Cloud</a></li><li><a href="https://cloud.google.com/blog/products/sap-google-cloud/sap-and-google-cloud-launch-bdc-connect-for-bigquery/" target="_blank" rel="noopener">Google Cloud: SAP BDC Connect for BigQuery GA</a></li><li><a href="https://blog.fabric.microsoft.com/en-GB/blog/29410/" target="_blank" rel="noopener">Microsoft Fabric: SAP BDC Connect for Microsoft Fabric</a></li><li><a href="https://news.sap.com/2025/11/sap-snowflake-new-data-fabric-innovations-sap-bdc-sap-hana-cloud/" target="_blank" rel="noopener">SAP News: SAP Snowflake and BDC Connect</a></li><li><a href="https://help.sap.com/doc/generative-ai-hub-sdk/CLOUD/en-US/_reference/README_sphynx.html" target="_blank" rel="noopener">SAP Help: generative AI hub SDK, supported providers</a></li><li><a href="https://docs.amazonaws.cn/en_us/sap/latest/general/rise-data-replication-sap.html" target="_blank" rel="noopener">AWS: replicating SAP data with SAP Datasphere</a></li><li><a href="https://www.hpcwire.com/aiwire/2026/04/23/google-unveils-gemini-enterprise-agent-platform/" target="_blank" rel="noopener">HPCwire: Gemini Enterprise Agent Platform, evolution of Vertex AI</a></li><li><a href="https://www.directionsonmicrosoft.com/reports/foundry-gets-new-name-anthropic-models/" target="_blank" rel="noopener">Directions on Microsoft: Azure AI Foundry renamed Microsoft Foundry</a></li><li><a href="https://www.sap.com/blogs/top-5-sapphire-2026-ai-announcements" target="_blank" rel="noopener">SAP: Top 5 SAP Sapphire 2026 AI announcements</a></li></ul></details>
+</div></section>
+</main>
+<footer><div class="in"><span class="mk-crf">© 2026 Mawkish Technologies · Colombo, Sri Lanka. All rights reserved. <a href="https://claude.ai/artifact/KRFaztbtc9jsgrjpkdppPX">Copyright notice</a></span><span>AWS, Microsoft Azure, Google Cloud and SAP are trademarks of their respective owners.</span></div></footer>
+</body>
+</html>

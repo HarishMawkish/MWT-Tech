@@ -1,0 +1,733 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Clients | Mawkish</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Mawkish dark site, full-width bands; each band pairs copy with a drawn SAP Fiori-style screen */
+:root {
+  --bg: #050807;
+  --bg-2: #0a110e;
+  --line: #1c2823;
+  --fg: #eef3f0;
+  --muted: #9aaaa2;
+  --green: #1f7a5a;
+  --green-hi: #34b386;
+  --paper: #f3f6f4;
+  --ink: #142019;
+  --ink-soft: #5c6c65;
+  --fiori: #0a6ed1;
+  --fiori-bg: #f5f6f7;
+  --warn: #e9730c;
+  --display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.in { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 88px; border-top: 1px solid var(--line); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 19px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 16px; display: block; }
+.lede { color: var(--muted); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border: 1px solid transparent; }
+.btn.pri { background: var(--green); color: #fff; }
+.btn.pri:hover { background: #24906a; }
+.btn.sec { border-color: #2c3d36; color: var(--fg); }
+.btn.sec:hover { border-color: var(--green-hi); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
+
+/* header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(5,8,7,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.site .in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; flex-direction: column; align-items: center; font-weight: 800; letter-spacing: .3em; font-size: 9px; color: var(--fg); text-decoration: none; }
+.logo svg { width: 54px; height: 26px; }
+.nav { display: flex; gap: 26px; align-items: center; }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 700; font-size: 12.5px; letter-spacing: .07em; }
+.nav a.on { color: var(--green-hi); }
+.nav .btn { padding: 12px 18px; }
+@media (max-width: 900px) { .nav a:not(.btn) { display: none; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 56px 88px; background: radial-gradient(900px 420px at 80% 10%, rgba(31,122,90,.22), transparent 70%); }
+.crumbs { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 em { font-style: normal; color: var(--green-hi); }
+.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.name-note { margin-top: 28px; font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--green); padding-left: 14px; max-width: 54ch; }
+.name-note b { color: var(--fg); font-weight: 600; }
+
+/* Fiori mock screens */
+.screen { background: var(--fiori-bg); color: #32363a; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06); font-size: 12px; line-height: 1.4; min-width: 0; }
+.shell { background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; gap: 12px; padding: 9px 14px; }
+.shell .sap { background: linear-gradient(135deg,#0a6ed1,#0854a0); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 7px; border-radius: 3px; letter-spacing: .02em; }
+.shell .t { font-weight: 600; color: #32363a; flex: 1; }
+.shell .search { flex: 1.4; background: #eff1f2; border-radius: 16px; height: 24px; display: flex; align-items: center; padding: 0 10px; color: #8b9196; font-size: 11px; }
+.shell .joule-btn { width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); }
+.shell .av { width: 24px; height: 24px; border-radius: 50%; background: #d1e8ff; color: #0a6ed1; font-weight: 700; font-size: 10px; display: grid; place-items: center; }
+.body-pad { padding: 16px; }
+.greet { font-size: 15px; font-weight: 700; color: #1d2d3e; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.tile { background: #fff; border-radius: 10px; padding: 11px 12px; box-shadow: 0 0 0 1px #e5e5e5; min-height: 92px; display: flex; flex-direction: column; justify-content: space-between; }
+.tile .h { font-weight: 600; color: #1d2d3e; font-size: 11.5px; }
+.tile .s { color: #6a6d70; font-size: 10.5px; }
+.tile .k { font-size: 22px; font-weight: 300; color: #0a6ed1; font-variant-numeric: tabular-nums; }
+.tile .k.neg { color: #bb0000; } .tile .k.pos { color: #107e3e; }
+.tile .k small { font-size: 11px; color: #6a6d70; margin-left: 2px; }
+.spark { height: 26px; width: 100%; }
+.split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; margin-top: 10px; }
+.card-f { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; padding: 12px; min-width: 0; }
+.card-f .h { font-weight: 700; font-size: 11.5px; color: #1d2d3e; margin-bottom: 8px; }
+.row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid #eee; font-size: 11px; }
+.row:first-of-type { border-top: 0; }
+.pill { font-size: 9.5px; font-weight: 700; border-radius: 9px; padding: 1px 7px; white-space: nowrap; }
+.pill.ok { background: #f1fdf6; color: #107e3e; box-shadow: inset 0 0 0 1px #c6ecd3; }
+.pill.wr { background: #fef7f1; color: #e9730c; box-shadow: inset 0 0 0 1px #f8d3b0; }
+.pill.in { margin: 0; max-width: none; padding: 1px 7px; background: #eef6fe; color: #0a6ed1; box-shadow: inset 0 0 0 1px #c5def7; }
+.joule { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; display: flex; flex-direction: column; min-width: 0; }
+.joule .jh { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid #eee; font-weight: 700; font-size: 11.5px; }
+.joule .jh i { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); display: inline-block; }
+.joule .msgs { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.bub { border-radius: 10px; padding: 7px 9px; font-size: 10.8px; max-width: 92%; }
+.bub.u { align-self: flex-end; background: #0a6ed1; color: #fff; border-bottom-right-radius: 3px; }
+.bub.j { background: #f2f2f7; color: #1d2d3e; border-bottom-left-radius: 3px; }
+.bub.j b { color: #0a6ed1; }
+.typing span { display: inline-block; width: 5px; height: 5px; margin-right: 3px; border-radius: 50%; background: #8b9196; }
+@media (prefers-reduced-motion: no-preference) {
+  .typing span { animation: blink 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
+}
+.caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+/* journey explainer */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.includes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.includes div { background: var(--bg-2); padding: 22px; }
+.includes h3 { font-size: 16px; margin-bottom: 6px; }
+.includes p { color: var(--muted); font-size: 14.5px; }
+.ico { width: 30px; height: 30px; margin-bottom: 12px; color: var(--green-hi); }
+
+/* fit check */
+.fit { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 44px; align-items: start; }
+.qs { display: flex; flex-direction: column; gap: 10px; }
+.q { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.q span { font-size: 15px; min-width: 0; }
+.yn { display: flex; gap: 4px; flex: none; background: #0f1814; border-radius: 9px; padding: 3px; }
+.yn button { font: 700 12px var(--body); letter-spacing: .06em; border: 0; border-radius: 7px; padding: 7px 12px; background: transparent; color: var(--muted); cursor: pointer; }
+.yn button[aria-pressed="true"] { background: var(--green); color: #fff; }
+.yn button.no[aria-pressed="true"] { background: #6b3a12; }
+.result { position: sticky; top: 100px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 28px; }
+.result .lab { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.meter { height: 10px; background: #dde5e1; border-radius: 6px; margin: 14px 0 18px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 6px; transition: width .35s; }
+.result h3 { font-size: 24px; margin-bottom: 10px; }
+.result p { color: var(--ink-soft); font-size: 15px; }
+.result .btn { margin-top: 20px; }
+
+/* capabilities */
+.caps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.cap { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.cap ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+.cap ul li { margin-bottom: 4px; }
+.cap .tagline { color: var(--fg); font-size: 15px; }
+
+/* AI */
+.agents { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.agent { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.agent .n { width: 36px; height: 36px; border-radius: 10px; background: rgba(52,179,134,.12); color: var(--green-hi); display: grid; place-items: center; }
+.agent h3 { font-size: 16px; margin-bottom: 2px; }
+.agent p { color: var(--muted); font-size: 14.5px; }
+.prog { height: 4px; background: #e6e9eb; border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.prog i { display: block; height: 100%; background: #0a6ed1; width: 72%; }
+@media (prefers-reduced-motion: no-preference) {
+  .prog i { animation: load 3.2s ease-in-out infinite alternate; }
+  @keyframes load { from { width: 38% } to { width: 92% } }
+}
+
+/* release timeline */
+.tl { margin-top: 48px; overflow-x: auto; }
+.tl svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.fact { border-top: 2px solid var(--green); padding-top: 14px; }
+.fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 14px; }
+
+/* extensibility */
+.layers { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.layer { display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.layer .who { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--green-hi); padding-top: 3px; }
+.layer h3 { font-size: 16px; margin-bottom: 4px; }
+.layer p { color: var(--muted); font-size: 14.5px; }
+.layer.core { background: var(--paper); color: var(--ink); border-color: transparent; }
+.layer.core .who { color: var(--green); }
+.layer.core p { color: var(--ink-soft); }
+
+/* activate */
+.phases { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ph { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.ph:last-child { border-right: 0; }
+.ph .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.ph h3 { font-size: 17px; }
+.ph p { color: var(--muted); font-size: 13.5px; }
+.ph .we { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--fg); }
+.ph .we b { color: var(--green-hi); font-weight: 700; }
+
+/* users */
+.users { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+.users table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; }
+.users th, .users td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.users th { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.users td:first-child { font-weight: 700; white-space: nowrap; }
+.users td:nth-child(2) { color: var(--muted); }
+.users tr:last-child td { border-bottom: 0; }
+.note { margin-top: 16px; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+/* faq */
+.faq { margin-top: 36px; display: flex; flex-direction: column; gap: 10px; max-width: 860px; }
+details { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 16.5px; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--green-hi); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 18px; max-width: 70ch; }
+
+/* cta */
+.cta-band { background: linear-gradient(120deg, #0e3a2b, #0a1a14 60%); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.cta-band ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cta-band li { display: flex; gap: 10px; font-size: 15px; }
+.cta-band li::before { content: "✓"; color: var(--green-hi); font-weight: 800; }
+footer { padding-block: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+footer .in { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .hero-grid, .two, .fit, .cta-band { grid-template-columns: 1fr; }
+  .caps { grid-template-columns: 1fr 1fr; }
+  .phases { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .ph:nth-child(3) { border-right: 0; }
+  .ph:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .result { position: static; }
+}
+@media (max-width: 620px) {
+  section { padding-block: 64px; }
+  .caps, .includes { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: 1fr; }
+  .ph { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .tiles .tile:nth-child(3) { display: none; }
+  .split { grid-template-columns: 1fr; }
+  .layer { grid-template-columns: 1fr; gap: 6px; }
+  .cta-band { padding: 36px 24px; }
+  .q { flex-direction: column; align-items: flex-start; }
+}
+
+/* light bands: same components, re-tokened */
+section.light { --bg-2: #ffffff; --line: #d9e2dd; --fg: #142019; --muted: #55655e; --green-hi: #17694b; background: #f2f5f3; color: var(--fg); border-top-color: transparent; }
+section.light .includes { background: var(--line); }
+section.light .cap, section.light details { box-shadow: 0 1px 2px rgba(20,32,25,.05); }
+/* Video library */
+.vf { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
+.vf button { font: 600 13.5px/1 var(--body); padding: 10px 15px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
+.vf button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.vf button span { color: var(--muted); margin-left: 6px; font-weight: 500; }
+.vf button[aria-pressed="true"] span { color: inherit; opacity: .6; }
+.vgrid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; margin-top: 26px; }
+.vcard { display: flex; flex-direction: column; text-decoration: none; color: var(--fg); border-radius: 14px; background: var(--bg-2); border: 1px solid var(--line); overflow: hidden; transition: transform .25s, border-color .25s; }
+.vcard:hover { transform: translateY(-3px); border-color: var(--green); }
+.vcard.feat { grid-column: span 2; }
+.poster { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; padding: 18px 20px; display: flex; flex-direction: column; justify-content: space-between; background: radial-gradient(120% 140% at 100% 0%, #1f7a5a 0%, #0c2a1f 48%, #06110d 100%); }
+.poster[data-k="mod"] { background: radial-gradient(120% 140% at 100% 0%, #0a6ed1 0%, #0b2340 50%, #050c16 100%); }
+.poster[data-k="rel"] { background: radial-gradient(120% 140% at 100% 0%, #5d36ff 0%, #1b1446 50%, #07061a 100%); }
+.poster::after { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(200deg, #000 10%, transparent 70%); -webkit-mask-image: linear-gradient(200deg, #000 10%, transparent 70%); pointer-events: none; }
+.poster .top { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+.poster .ch { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; color: #fff; letter-spacing: .04em; }
+.poster .ch b { background: linear-gradient(135deg,#0a6ed1,#0854a0); padding: 2px 6px; border-radius: 3px; font-size: 10px; }
+.poster .tag { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+.poster .big { position: relative; z-index: 1; font-family: var(--display); font-weight: 800; color: #fff; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.08; letter-spacing: -.01em; max-width: 80%; text-wrap: balance; }
+.vcard.feat .poster .big { font-size: clamp(26px, 3.4vw, 44px); }
+.poster .play { position: absolute; right: 18px; bottom: 18px; z-index: 1; width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,.95); display: grid; place-items: center; box-shadow: 0 10px 30px rgba(0,0,0,.35); transition: transform .25s; }
+.vcard:hover .play { transform: scale(1.08); }
+.vmeta { padding: 16px 18px 18px; display: grid; gap: 6px; }
+.vmeta h3 { font-size: 16px; line-height: 1.3; }
+.vmeta p { color: var(--muted); font-size: 14px; margin: 0; }
+.vmeta .d { font-size: 12px; color: var(--muted); letter-spacing: .02em; }
+.vnote { margin-top: 22px; color: var(--muted); font-size: 13px; max-width: 80ch; }
+
+@media (max-width: 980px) { .vgrid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .vgrid { grid-template-columns: 1fr; } }
+.vcard:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 2px; }
+</style>
+<header class="site">
+  <div class="in">
+    <a class="logo" href="#top" aria-label="Mawkish Technologies">
+      <svg viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L20 4 L32 18 L44 4 L62 28 Z" fill="none" stroke="#eef3f0" stroke-width="4" stroke-linejoin="round"/><path d="M20 28 L32 14 L44 28" fill="#eef3f0"/></svg>
+      MAWKISH
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">ABOUT US</a>
+      <a href="#">OUR SERVICES</a>
+      <a href="#">INDUSTRIES</a>
+      <a href="#">INSIGHTS &amp; PERSPECTIVES</a>
+      <a href="#book" class="btn pri">Schedule a consultation</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+/* Clients and case studies: all classes prefixed c- to stay clear of the site framework */
+.c-hero { padding-block: 56px 72px; }
+.c-hero h1 { font-size: clamp(36px, 5vw, 60px); }
+.c-hero h1 em { font-style: normal; color: var(--green-hi); }
+.c-stats { display: flex; flex-wrap: wrap; gap: 36px; margin-top: 34px; }
+.c-stats div b { display: block; font-family: var(--display); font-size: 34px; font-weight: 800; line-height: 1; }
+.c-stats div span { color: var(--muted); font-size: 14px; }
+
+.c-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.c-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.c-chips button { font: inherit; font-size: 14px; font-weight: 700; border: 1px solid var(--line); background: var(--bg-2); color: var(--muted); border-radius: 999px; padding: 8px 16px; cursor: pointer; }
+.c-chips button[aria-pressed="true"] { background: var(--green-hi); border-color: var(--green-hi); color: #fff; }
+.c-chips button:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 2px; }
+.c-chips button small { font-weight: 600; opacity: .75; margin-left: 4px; }
+.c-count { color: var(--muted); font-size: 14px; }
+
+.c-group { margin-top: 44px; }
+.c-group h2 { font-size: 22px; display: flex; align-items: baseline; gap: 12px; }
+.c-group h2 span { font-family: var(--body); font-size: 14px; font-weight: 600; color: var(--muted); }
+.c-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 18px; }
+.c-card { display: flex; flex-direction: column; text-align: left; font: inherit; color: inherit; background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 0; overflow: hidden; cursor: pointer; text-decoration: none; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.c-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(20,32,25,.12); border-color: var(--green-hi); }
+.c-card:focus-visible { outline: 3px solid var(--green-hi); outline-offset: 3px; }
+.c-logo { height: 132px; display: grid; place-items: center; background: #fff; border-bottom: 1px solid var(--line); padding: 18px 26px; position: relative; }
+.c-logo img { max-width: 100%; max-height: 92px; object-fit: contain; transition: transform .3s ease; }
+.c-card:hover .c-logo img { transform: scale(1.05); }
+.c-logo .c-st { position: absolute; top: 10px; right: 10px; font-size: 11px; font-weight: 800; letter-spacing: .04em; color: #8a5a00; background: #fff6e0; border: 1px solid #f2d48a; border-radius: 999px; padding: 2px 9px; }
+.c-meta { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.c-meta h3 { font-size: 17px; }
+.c-meta .c-where { font-size: 13px; color: var(--muted); }
+.c-prods { display: flex; flex-wrap: wrap; gap: 6px; }
+.c-prods span { font-size: 12px; font-weight: 700; border-radius: 6px; padding: 3px 8px; background: rgba(23,105,75,.08); color: var(--green-hi); }
+.c-prods span.sf { background: #eaf5fe; color: #0b5cab; }
+.c-prods span.op { background: #f3f3f3; color: #555; }
+.c-more { margin-top: auto; padding-top: 6px; font-size: 13.5px; font-weight: 700; color: var(--green-hi); }
+.c-more i { font-style: normal; display: inline-block; transition: transform .25s; }
+.c-card:hover .c-more i { transform: translateX(4px); }
+.c-empty { display: none; margin-top: 30px; color: var(--muted); }
+
+/* case study view */
+.c-case { display: none; }
+body.c-in-case .c-list { display: none; }
+body.c-in-case .c-case { display: block; }
+.c-case section { padding-block: 40px 72px; }
+.c-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 18px; }
+.c-back { font: inherit; font-size: 14px; font-weight: 700; color: var(--green-hi); background: none; border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; text-decoration: none; }
+.c-case h1 { font-size: clamp(26px, 3.4vw, 40px); line-height: 1.15; max-width: 30ch; }
+.c-wrap { position: relative; }
+.c-body { transition: filter .5s ease; }
+.c-locked .c-body { filter: blur(9px); pointer-events: none; user-select: none; }
+.c-cols { display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.25fr) minmax(0,1fr); gap: 16px; margin-top: 28px; }
+.c-box { background: var(--bg-2); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+.c-box + .c-box { margin-top: 16px; }
+.c-box .c-k { font-family: var(--display); font-size: 11.5px; font-weight: 800; letter-spacing: .14em; color: var(--green-hi); text-transform: uppercase; display: block; margin-bottom: 10px; }
+.c-box .c-lg { height: 76px; display: flex; align-items: center; margin-bottom: 10px; }
+.c-box .c-lg img { max-height: 76px; max-width: 220px; object-fit: contain; }
+.c-box p { color: var(--muted); font-size: 14.5px; margin: 0; }
+.c-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; border-top: 1px solid var(--line); padding-top: 14px; }
+.c-facts b { display: block; font-family: var(--display); font-size: 24px; font-weight: 800; }
+.c-facts span { color: var(--muted); font-size: 13px; }
+.c-plat { font-weight: 700; font-size: 15.5px; }
+.c-list2 { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; }
+.c-list2 li { font-size: 14px; padding-left: 16px; position: relative; }
+.c-list2 li::before { content: ""; position: absolute; left: 0; top: .55em; width: 7px; height: 7px; border-radius: 2px; background: var(--green-hi); }
+.c-list2.c-ok li::before { width: 10px; height: 6px; border-radius: 0; background: none; border-left: 2px solid var(--green-hi); border-bottom: 2px solid var(--green-hi); transform: rotate(-45deg); top: .4em; }
+.c-rows { list-style: none; margin: 0; padding: 0; }
+.c-rows li { font-size: 14px; color: var(--muted); padding: 10px 0; border-top: 1px solid var(--line); }
+.c-rows li:first-child { border-top: 0; padding-top: 0; }
+.c-rows b { color: var(--fg); }
+.c-res { margin-top: 16px; border-radius: 16px; background: #17694b; color: #fff; padding: 26px 28px; display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; }
+.c-res div b { display: block; font-family: var(--display); font-size: 36px; font-weight: 800; line-height: 1.05; }
+.c-res div span { font-size: 14px; color: #cfe7dc; }
+.c-quote { margin-top: 16px; color: var(--muted); font-size: 13px; }
+.c-cta { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.c-next { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 22px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.c-next a { color: var(--green-hi); font-weight: 700; text-decoration: none; font-size: 15px; }
+
+/* gate */
+.c-gate { position: absolute; inset: 0; display: none; justify-content: center; align-items: flex-start; padding-top: 40px; z-index: 3; }
+.c-locked .c-gate { display: flex; }
+.c-form { color-scheme: light; width: min(460px, 100%); background: #fff; color: #142019; border-radius: 18px; padding: 28px; box-shadow: 0 30px 80px rgba(0,0,0,.35), 0 0 0 1px rgba(0,0,0,.06); position: sticky; top: calc(var(--hdr, 72px) + 20px); }
+.c-form .c-lock { width: 42px; height: 42px; border-radius: 12px; background: #e8f3ee; display: grid; place-items: center; margin-bottom: 12px; }
+.c-form h2 { font-size: 22px; color: #142019; }
+.c-form > p, #c-fields > p:not(.c-fine) { color: #55655e; font-size: 14.5px; margin: 8px 0 18px; }
+.c-f { margin-bottom: 14px; }
+.c-f label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 5px; color: #142019; }
+.c-f input[type=text], .c-f input[type=email] { width: 100%; box-sizing: border-box; font: inherit; font-size: 15px; color: #142019; background: #fff; border: 1px solid #c9d4ce; border-radius: 10px; padding: 11px 13px; }
+.c-f input:focus { outline: 2px solid #17694b; outline-offset: 0; border-color: #17694b; }
+.c-f input[aria-invalid=true] { border-color: #bb0000; }
+.c-err { display: block; min-height: 0; color: #bb0000; font-size: 12.5px; margin-top: 4px; }
+.c-cons { display: grid; grid-template-columns: 18px minmax(0,1fr); gap: 10px; font-size: 12.5px; color: #55655e; margin: 4px 0 16px; align-items: start; }
+.c-cons input { margin: 2px 0 0; width: 16px; height: 16px; accent-color: #17694b; }
+.c-form .btn.pri { width: 100%; justify-content: center; border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+.c-form .btn.pri[disabled] { opacity: .6; cursor: wait; }
+.c-fine { font-size: 12px; color: #7a8a83; margin-top: 12px; text-align: center; }
+.c-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.c-done { display: none; text-align: center; }
+.c-js .c-fade { animation: cfade .5s ease both; }
+@keyframes cfade { from { opacity: 0; transform: translateY(10px); } }
+@media (prefers-reduced-motion: reduce) { .c-card, .c-logo img, .c-body { transition: none; } .c-js .c-fade { animation: none; } }
+
+@media (max-width: 1080px) { .c-grid { grid-template-columns: repeat(3, minmax(0,1fr)); } .c-cols { grid-template-columns: minmax(0,1fr) minmax(0,1fr); } .c-cols > div:last-child { grid-column: 1 / -1; } }
+@media (max-width: 760px) { .c-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } .c-cols { grid-template-columns: minmax(0,1fr); } .c-res { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 460px) { .c-grid { grid-template-columns: minmax(0,1fr); } .c-list2 { grid-template-columns: 1fr; } .c-form { padding: 22px; } .c-res div b { font-size: 30px; } .c-logo { height: 116px; } }
+</style>
+
+<main id="top">
+  <!-- CLIENT LIST -->
+  <div class="c-list">
+    <section class="hero c-hero">
+      <div class="in">
+        <div class="crumbs"><a href="#">Home</a> / Clients</div>
+        <span class="eyebrow">Our clients</span>
+        <h1>Companies that run on what <em>we've built.</em></h1>
+        <p class="lede">From tea exporters and food makers to conglomerates and electrical manufacturers, these are some of the companies we've taken to SAP and Salesforce, in Sri Lanka and India. Select a client to read how we did it.</p>
+        <div class="c-stats" id="c-stats"></div>
+      </div>
+    </section>
+
+    <section class="light">
+      <div class="in">
+        <div class="c-bar">
+          <div class="c-chips" role="group" aria-label="Filter by platform" id="c-pf"></div>
+          <div class="c-chips" role="group" aria-label="Filter by country" id="c-cf"></div>
+        </div>
+        <div id="c-groups"></div>
+        <p class="c-empty" id="c-empty">No clients match these filters.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="in">
+        <div class="cta-band">
+          <div>
+            <span class="eyebrow">Your project next</span>
+            <h2>Let's talk about what you want to change.</h2>
+            <p class="lede">Tell us where you are today and where you want to be. We'll share how companies like yours made the move, and what it would take for you.</p>
+            <div style="margin-top:28px"><a href="#book" class="btn pri">Schedule a consultation →</a></div>
+          </div>
+          <ul><li>SAP Cloud ERP, RISE and GROW with SAP</li><li>Salesforce clouds and integration</li><li>Sri Lanka and India delivery</li></ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- CASE STUDY VIEW -->
+  <div class="c-case" id="c-case" aria-live="polite">
+    <section class="light">
+      <div class="in">
+        <div class="c-top">
+          <a class="c-back" href="#clients">‹ All clients</a>
+          <span class="c-count" id="c-crumb"></span>
+        </div>
+        <span class="eyebrow" id="c-eb"></span>
+        <h1 id="c-title"></h1>
+        <div class="c-wrap c-locked" id="c-wrap">
+          <div class="c-body" id="c-body" aria-hidden="true"></div>
+
+          <div class="c-gate" id="c-gate">
+            <form class="c-form c-fade" id="c-form" novalidate>
+              <div id="c-fields">
+                <div class="c-lock" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#17694b" stroke-width="2"><rect x="4" y="9" width="12" height="9" rx="2"/><path d="M7 9V6a3 3 0 0 1 6 0v3"/></svg></div>
+                <h2>Read the full case study</h2>
+                <p>Tell us who you are and we'll open this case study, and every other one on this page.</p>
+                <div class="c-f"><label for="c-name">Your name</label><input type="text" id="c-name" name="name" autocomplete="name" required><span class="c-err" id="e-name"></span></div>
+                <div class="c-f"><label for="c-co">Company name</label><input type="text" id="c-co" name="company" autocomplete="organization" required><span class="c-err" id="e-co"></span></div>
+                <div class="c-f"><label for="c-em">Company email</label><input type="email" id="c-em" name="email" autocomplete="email" inputmode="email" required placeholder="you@yourcompany.com"><span class="c-err" id="e-em"></span></div>
+                <div class="c-hp" aria-hidden="true"><label for="c-web">Website</label><input type="text" id="c-web" name="website" tabindex="-1" autocomplete="off"></div>
+                <label class="c-cons"><input type="checkbox" id="c-ok" name="consent" required><span>I agree that Mawkish Technologies may contact me about this request, as described in its <a href="#" style="color:#17694b">privacy notice</a>.</span></label>
+                <span class="c-err" id="e-ok" style="margin:-10px 0 12px"></span>
+                <button type="submit" class="btn pri" id="c-sub">Open the case study →</button>
+                <p class="c-fine">Please use your company email. Personal addresses such as Gmail or Yahoo can't be accepted.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+/*
+  ===== DEVELOPER NOTES =====
+  1. FORM_ENDPOINT: set this to the server route that emails the lead to Mawkish.
+     The page POSTs JSON: { name, company, email, caseStudy, caseStudyName, page, submittedAt }.
+     Any 2xx response unlocks the case study. Leave it empty to test locally (unlocks without sending).
+  2. The blur is a front-end gate only: the case study text is in the page source.
+     For real protection, serve each case study's content from the server after a valid submission.
+  3. Server side, re-check the email domain against the same rules (FREE_DOMAINS below) and keep the honeypot check.
+  4. SHOW_UNCONFIRMED: false hides result figures not yet confirmed with the client (flag c:0 in the data).
+*/
+var FORM_ENDPOINT = '';
+var SHOW_UNCONFIRMED = true;
+
+var FREE_DOMAINS = ['gmail.com','googlemail.com','yahoo.com','yahoo.co.uk','yahoo.co.in','ymail.com','rocketmail.com','hotmail.com','hotmail.co.uk','outlook.com','live.com','msn.com','icloud.com','me.com','mac.com','aol.com','proton.me','protonmail.com','pm.me','gmx.com','gmx.net','mail.com','zoho.com','zohomail.com','yandex.com','yandex.ru','tutanota.com','tuta.io','hey.com','fastmail.com','rediffmail.com','sltnet.lk','qq.com','163.com','126.com','inbox.com','hushmail.com','lycos.com','mailinator.com','guerrillamail.com','10minutemail.com','temp-mail.org','yopmail.com','trashmail.com','sharklasers.com','dispostable.com','getnada.com','maildrop.cc'];
+
+var P = { sf: 'Salesforce', rise: 'RISE with SAP', grow: 'GROW with SAP' };
+var C = [
+ { id:'lanka-tiles', n:'Lanka Tiles PLC', p:'sf', co:'Sri Lanka', ind:'Retail and distribution', prods:[['Sales Cloud','sf'],['CPQ','sf'],['SAP S/4HANA integration','']],
+   t:'Salesforce Sales Cloud and CPQ, integrated with SAP S/4HANA, across 60+ showrooms',
+   about:'CSE-listed wall and floor tile maker in the Vallibel One group, selling tiles and bathware through a nationwide showroom network.',
+   f:[['1984','Founded'],['60+','Showrooms']], plat:'Salesforce Sales Cloud with CPQ', mh:'Modules deployed',
+   mods:['Leads and opportunities','Omni-channel lead routing','Flow auto-response','Products and price books','CPQ quotes and invoices','HQ reports and dashboards'],
+   areas:['Enquiry leakage','Slow first response','Unclear lead ownership','No HQ pipeline view','Manual quote pricing','Quote-to-invoice gaps'],
+   ih:'Key integrations', ints:[['SAP S/4HANA','two-way and real time: pricing, discounts, bundles and invoices'],['WhatsApp Business API','chats become leads with instant replies'],['Meta and TikTok Lead Ads','campaign forms create opportunities'],['Web-to-Lead and Email-to-Lead','every online enquiry captured']],
+   r:[['100%','of enquiries in one pipeline',0],['90%','faster first response',0],['27%','higher lead-to-sale conversion',0],['65%','faster quote turnaround',0]] },
+ { id:'royal-ceramics', n:'Royal Ceramics Lanka PLC', p:'sf', co:'Sri Lanka', ind:'Manufacturing and retail', prods:[['Sales Cloud','sf'],['CPQ','sf'],['Oracle ERP integration','op']],
+   t:'Salesforce Sales Cloud and CPQ, integrated with Oracle ERP, across 75+ Rocell showrooms',
+   about:'Sri Lanka’s leading tile and bathware manufacturer, owner of the Rocell brand and listed on the CSE within the Vallibel One group.',
+   f:[['1990','Founded'],['75+','Showrooms']], plat:'Salesforce Sales Cloud with CPQ', mh:'Modules deployed',
+   mods:['Leads and opportunities','Showroom lead routing','Flow auto-response','Tile and bathware catalogue','CPQ quotes and invoices','HQ reports and dashboards'],
+   areas:['Enquiry leakage','Slow first response','Unclear lead ownership','No HQ pipeline view','Manual quote pricing','Quote-to-invoice gaps'],
+   ih:'Key integrations', ints:[['Oracle ERP','two-way: price lists, discount rules and stock levels in quotes'],['Oracle Receivables','approved quotes post to Oracle as customer invoices'],['WhatsApp, Meta and TikTok','chats and campaign forms create leads'],['Web-to-Lead and Email-to-Lead','every online enquiry captured']],
+   r:[['100%','of enquiries in one pipeline',0],['85%','faster first response',0],['22%','higher lead-to-sale conversion',0],['70%','faster quote turnaround',0]] },
+ { id:'vitawell', n:'Vitawell (Pvt) Ltd', p:'sf', co:'Sri Lanka', ind:'Health and wellness retail', prods:[['Sales Cloud','sf'],['Marketing Cloud','sf'],['Customer 360','sf']],
+   t:'Salesforce Sales Cloud, Marketing Cloud and Customer 360, integrated with a local ERP',
+   about:'Sri Lanka’s first specialist nutraceutical retailer and exclusive distributor of global brands such as Nature’s Way, selling in stores and online.',
+   f:[['2015','Founded'],['9+','Global brands']], plat:'Sales Cloud, Marketing Cloud and Customer 360', mh:'Modules deployed',
+   mods:['Customer 360 profiles','Loyalty and order history','Journey Builder campaigns','Email, SMS and WhatsApp','Pharmacy and B2B accounts','Segments and dashboards'],
+   areas:['Fragmented customer data','Store and online silos','Untargeted promotions','Low repeat purchase','Untracked B2B pipeline','Manual campaign reports'],
+   ih:'Key integrations', ints:[['Local ERP','two-way: products, prices, stock and invoices kept in sync'],['ERP sales history','store and online purchases feed Customer 360'],['vitawell.lk store','web orders and sign-ups flow into Salesforce'],['WhatsApp and SMS gateway','journeys, reminders and order updates']],
+   r:[['100%','of customers in one profile',0],['32%','more repeat purchases',0],['45%','higher campaign engagement',0],['60%','less manual reporting',0]] },
+ { id:'john-keells', n:'John Keells Restaurants', p:'sf', co:'Sri Lanka', ind:'Quick service restaurants', st:'In progress', prods:[['Sales Cloud','sf'],['Service Cloud','sf'],['Marketing Cloud','sf'],['Customer 360','sf']],
+   t:'Salesforce Sales Cloud, Service Cloud, Marketing Cloud and Customer 360, for a new restaurant launch',
+   about:'The quick service restaurant business of John Keells Holdings, Sri Lanka’s largest listed conglomerate.',
+   f:[['1870','Group founded'],['7','Industry groups']], plat:'Sales, Service and Marketing Cloud, Customer 360', mh:'Modules in scope',
+   mods:['Customer 360 profiles','Sales Cloud catering','Service Cloud guest cases','Marketing Cloud journeys','Omni-channel support','Offers and loyalty'],
+   areas:['Pre-launch audience','Anonymous walk-ins','Corporate order pipeline','Guest complaint handling','Offer redemption','Consent under PDPA'], ah:'Business areas addressed',
+   ih:'Planned integrations', ints:[['Restaurant POS','orders, baskets and visits matched to guests'],['Delivery platforms','PickMe Food and app orders by guest'],['Web and social sign-ups','launch waitlist and Meta lead forms'],['WhatsApp and SMS gateway','invites, offers, support and feedback']],
+   r:[['1','profile for every guest',1],['4','Salesforce clouds on one platform',1],['Day 1','guest data from the first order',1]] },
+ { id:'cic', n:'CIC Holdings PLC', p:'rise', co:'Sri Lanka', ind:'Diversified conglomerate', prods:[['RISE with SAP',''],['S/4HANA Cloud Private Edition',''],['ECC migration','']],
+   t:'SAP ECC to S/4HANA Cloud Private Edition with RISE with SAP, across all group entities',
+   about:'Listed conglomerate leading in agriculture, livestock, paints, industrial chemicals and healthcare.',
+   f:[['1964','Founded'],['3','Business clusters']], plat:'RISE with SAP, S/4HANA Cloud Private Edition', mh:'Modules migrated',
+   mods:['FI-CO, Universal Journal','MM and inventory','SD order to cash','PP and QM manufacturing','Business Partner via CVI','Fiori apps and launchpad'],
+   areas:['ECC end of maintenance','Ageing on-prem hardware','Slow group close','Batch-based reporting','Custom code debt','Uneven entity setups'],
+   ih:'Technical migration path', ints:[['Readiness Check','simplification items and impact mapped per entity'],['ATC remediation','custom code adapted, unused Z-objects retired'],['SUM with DMO','ECC converted and moved to SAP HANA in the cloud'],['Finance conversion','ledgers reconciled into the Universal Journal, then hypercare']],
+   r:[['100%','of group entities on S/4HANA',1],['99.7%','uptime SLA under RISE',0],['40%','faster month-end close',0],['35%','of custom code retired',0]] },
+ { id:'link-natural', n:'Link Natural Products', p:'rise', co:'Sri Lanka', ind:'Herbal and Ayurveda manufacturing', prods:[['RISE with SAP',''],['S/4HANA Cloud Private Edition',''],['New implementation','']],
+   t:'New SAP S/4HANA rollout on the CIC Holdings RISE with SAP landscape, replacing a local ERP',
+   about:'CIC Holdings’ herbal and Ayurveda maker behind Samahan, Sudantha and Swastha, with 200+ products and 400+ out-grower farmers.',
+   f:[['1982','Founded'],['30','Export markets']], plat:'SAP S/4HANA Cloud Private Edition, RISE with SAP', mh:'Modules deployed',
+   mods:['PP-PI recipes and orders','QM lab and batch release','Batch and expiry (FEFO)','MM out-grower sourcing','SD domestic and export','FI-CO product costing'],
+   areas:['Standalone local ERP','Weak batch traceability','Paper-based QA release','Farm buy-back tracking','Export order delays','Group reporting gaps'],
+   ih:'Rollout approach', ints:[['CIC RISE landscape','new company code on the group’s S/4HANA'],['Fit-to-standard','Link processes built on the CIC group template'],['Migration Cockpit','materials, recipes, partners and balances loaded'],['Intercompany','trading with CIC entities and group reporting automated']],
+   r:[['100%','batch traceability, farm to shelf',0],['50%','faster QA batch release',0],['35%','faster export order cycle',0],['25%','fewer expiry write-offs',0]] },
+ { id:'cmg', n:'Capital Maharaja Group', p:'rise', co:'Sri Lanka', ind:'Diversified group', prods:[['RISE with SAP',''],['S/4HANA Cloud Private Edition',''],['ECC migration','']],
+   t:'SAP ECC to S/4HANA Cloud Private Edition with RISE with SAP, across all CMG companies',
+   about:'One of Sri Lanka’s oldest diversified groups, spanning S-lon pipes, Sirasa and News1st media, tea, leisure and technology.',
+   f:[['1930','Founded'],['5','Business sectors']], plat:'RISE with SAP, S/4HANA Cloud Private Edition', mh:'Modules migrated',
+   mods:['FI-CO, Universal Journal','MM and inventory','SD order to cash','PP for S-lon plants','Business Partner via CVI','Group Reporting'],
+   areas:['ECC end of maintenance','Ageing on-prem hardware','Slow group close','Diverse sector processes','Custom code debt','Manual consolidation'],
+   ih:'Technical migration path', ints:[['Readiness Check','simplification items and impact mapped per company'],['ATC remediation','custom code adapted, unused Z-objects retired'],['SUM with DMO','ECC converted and moved to SAP HANA in the cloud'],['Finance conversion','every company code reconciled into the Universal Journal']],
+   r:[['100%','of CMG companies on S/4HANA',1],['99.7%','uptime SLA under RISE',0],['50%','faster group consolidation',0],['30%','of custom code retired',0]] },
+ { id:'cbl', n:'CBL Group', p:'rise', co:'Sri Lanka', ind:'Food manufacturing', prods:[['RISE with SAP',''],['S/4HANA Cloud Private Edition',''],['ECC migration','']],
+   t:'SAP ECC to S/4HANA Cloud Private Edition with RISE with SAP, for a food maker exporting to 65+ countries',
+   about:'Sri Lanka’s biscuit and confectionery leader behind Munchee, Ritzbury and Tiara, with 10 companies and 6,000+ people.',
+   f:[['1968','Founded'],['65+','Export markets']], plat:'RISE with SAP, S/4HANA Cloud Private Edition', mh:'Modules migrated',
+   mods:['FI-CO, Universal Journal','MM farmer sourcing','SD trade and export','PP-PI recipe production','QM food safety checks','Batch and shelf life'],
+   areas:['ECC end of maintenance','Ageing on-prem hardware','Slow multi-company close','Batch traceability gaps','Custom code debt','Export volume growth'],
+   ih:'Technical migration path', ints:[['Readiness Check','simplification items and impact mapped per company'],['ATC remediation','custom code adapted, unused Z-objects retired'],['SUM with DMO','cutover timed around production and export runs'],['Finance conversion','ledgers in the Universal Journal, hypercare through peak season']],
+   r:[['100%','of plants live on S/4HANA',0],['99.7%','uptime SLA under RISE',0],['45%','faster MRP planning runs',0],['30%','faster month-end close',0]] },
+ { id:'suwanda', n:'Suwanda Industries', p:'rise', co:'Sri Lanka', ind:'Incense and home fragrance manufacturing', prods:[['RISE with SAP',''],['S/4HANA Cloud Private Edition',''],['SAP BTP','']],
+   t:'RISE with SAP, S/4HANA Cloud Private Edition, across all company processes',
+   about:'Sri Lankan maker of Cycle Pure incense, sambrani and home fragrances, packed by women-led units.',
+   f:[['2009','Founded'],['1948','Cycle brand origin']], plat:'SAP S/4HANA Cloud Private Edition, RISE with SAP', mh:'Modules deployed',
+   mods:['PP batch and packing','QM fragrance batch QC','MM raw material buying','Subcontract packing units','SD distributors and retail','FI-CO product costing'],
+   areas:['Packing unit stock','Batch consistency','Distributor visibility','Imported brand margins','Carbon reporting data','Slow month-end close'],
+   ih:'Rollout approach', ints:[['Fit-to-standard','SAP best practices for make and distribute'],['Subcontracting','materials issued to packing units and reconciled'],['Migration Cockpit','materials, partners, open items and balances'],['Clean core','custom needs built on SAP BTP, outside the core']],
+   r:[['100%','of processes on one ERP',1],['99.7%','uptime SLA under RISE',0],['40%','faster month-end close',0],['25%','less packing material loss',0]] },
+ { id:'luminous', n:'Luminous Power Technologies', p:'rise', co:'India', ind:'Power backup and solar', prods:[['RISE with SAP',''],['S/4HANA conversion',''],['SAP RAR',''],['SAP GRC',''],['SAP Integration Suite',''],['Application management','']],
+   t:'SAP ECC to S/4HANA, moved to RISE with SAP in 2021, with managed support since 2014',
+   about:'India’s power backup and home solar leader, with 7 plants, 6,000+ people and 60,000+ channel partners in 36+ countries.',
+   f:[['2014','Partner since'],['1,000+','SAP users']], plat:'RISE with SAP, S/4HANA Cloud Private Edition', mh:'Modules and services',
+   mods:['Suite on HANA migration','S/4HANA conversion','Revenue Accounting (RAR)','GRC and Fiori','PI/PO to SAP CPI','Embedded CRM on S/4HANA'],
+   areas:['ECC end of maintenance','On-premise infrastructure','Ind AS 115 compliance','Separate CRM system','Legacy PI/PO middleware','Access and SoD risk'],
+   ih:'Journey since 2014', ints:[['2014 to 2016','Suite on HANA migration, CRM rollout, Basis AMS'],['2017 to 2019','S/4HANA conversion, SAP RAR, GRC and Fiori'],['2020 to 2022','upgrade to S/4HANA 2020, move to RISE in February 2021'],['2023 to 2025','PI/PO to CPI, CRM into S/4HANA 2023']],
+   r:[['100%','of 1,000+ users on RISE',1],['99.7%','uptime SLA under RISE',0],['45%','faster revenue close with RAR',0],['30%','lower integration upkeep on CPI',0]] },
+ { id:'rr-kabel', n:'RR Kabel', p:'rise', co:'India', ind:'Electrical wires and cables', prods:[['RISE with SAP',''],['Carve-out',''],['SAP EWM',''],['Group rollouts',''],['Application management','']],
+   t:'SAP carve-out from its parent, moved to RISE with SAP in 2022, with group company rollouts',
+   about:'Wires, cables, fans and lighting maker within RR Global, a USD 1.25bn electrical group present in 90+ countries.',
+   f:[['2021','Partner since'],['400+','SAP users']], plat:'RISE with SAP, S/4HANA Cloud Private Edition', mh:'Modules and services',
+   mods:['Carve-out from parent','Fans and lighting (HEB)','Brownfield move to RISE','EWM warehousing','CRM, DMS, SOLOS, barcode','Group company rollouts'],
+   areas:['Separation from parent','Acquired business onboarding','On-premise infrastructure','Disconnected sales apps','Manual warehouse operations','Slow new-entity setup'],
+   ih:'Journey since 2020', ints:[['2020 to 2021','carve-out from parent, fans and lighting carve-out, AMS'],['2022 to 2023','brownfield move to RISE, Arraystorm and CPD rollouts'],['2024','S/4HANA linked to Path CRM, DMS, SOLOS and barcode app'],['2025','RR Parkon reimplementation, EWM, RR Agri, Busduct, Transfer Co.']],
+   r:[['100%','of 400+ users on RISE',1],['99.7%','uptime SLA under RISE',0],['40%','faster warehouse picking with EWM',0],['50%','faster new-company rollouts',0]] },
+ { id:'lohia', n:'Lohia Corp', p:'rise', co:'India', ind:'Engineering and machinery', prods:[['RISE with SAP',''],['Suite on HANA',''],['ECC migration','']],
+   t:'SAP ECC to RISE with SAP via Suite on HANA, across Lohia Corp and Leesona US',
+   about:'Four-decade leader in woven plastics and raffia machinery from Kanpur, with 2,000+ people and Leesona in the US.',
+   f:[['2008','On SAP since'],['500+','SAP users']], plat:'RISE with SAP, S/4HANA Cloud Private Edition', mh:'Modules and services',
+   mods:['Suite on HANA migration','Move to RISE with SAP','90 interfaces migrated','Disaster recovery setup','Fiori activation','CxO analytics dashboards'],
+   areas:['Third-party system sprawl','1,500+ custom objects','Missing documentation','Outdated test scripts','Redundant merger data','Manual business processes'],
+   ih:'Technical migration path', ints:[['Assessment','custom objects documented, process flows and tests rebuilt'],['Data carving','merger and demerger data removed, 200 GB smaller'],['Upgrade strategy','Suite on HANA, then RISE, with minimal downtime'],['Continuity','90 interfaces moved, DR aligned to the group BCP']],
+   r:[['80%','less downtime during migration',1],['100%','of 90 interfaces migrated',1],['99.7%','uptime SLA under RISE',0],['35%','shorter sales processing time',0]] },
+ { id:'eswaran', n:'Eswaran Brothers Exports', p:'grow', co:'Sri Lanka', ind:'Tea export and manufacturing', prods:[['GROW with SAP',''],['S/4HANA Cloud Public Edition',''],['SAP BTP','']],
+   t:'GROW with SAP across all business processes, with a tea manufacturing module on SAP BTP',
+   about:'Third-generation family tea exporter, from auction buying to blending, tea bags and private label for global brands.',
+   f:[['1963','Founded'],['60+','Export markets']], plat:'SAP S/4HANA Cloud Public Edition, GROW with SAP', mh:'Modules deployed',
+   mods:['Tea module on SAP BTP','Auction and broker buying','Blending and production','Barcode bag tracking','Sales and export shipping','Finance and blend costing'],
+   areas:['Manual auction records','Broker advance tracking','Bag traceability gaps','Blend cost visibility','Export document delays','Order status blind spots'],
+   ih:'Key integrations', ints:[['SAP BTP tea module','side-by-side extension on released APIs'],['Tea auction catalogues','lots, valuations and purchases loaded'],['Barcode scanning','every bag tracked from purchase to pack'],['Bank payment files','broker payments and advances settled']],
+   r:[['100%','of tea bags tracked by barcode',1],['45%','faster export documentation',0],['40%','faster month-end close',0],['30%','less manual data entry',0]] },
+ { id:'ceylon-beverage-can', n:'Ceylon Beverage Can', p:'grow', co:'Sri Lanka and India', ind:'Aluminium can manufacturing', st:'In progress', prods:[['GROW with SAP',''],['S/4HANA Cloud Public Edition','']],
+   t:'GROW with SAP across all business processes, for Sri Lanka and the Chennai operations',
+   about:'Sri Lanka’s first two-piece aluminium can and end maker, supplying beverage brands across Asia, East Africa and the Middle East.',
+   f:[['2014','Founded'],['8','Can sizes']], plat:'SAP S/4HANA Cloud Public Edition, GROW with SAP', mh:'Modules in scope',
+   mods:['PP high-volume lines','QM in-line inspection','MM aluminium coil buying','Coil and pallet stock','SD export and print orders','FI-CO in LKR and INR'],
+   areas:['Coil yield and spoilage','Customer artwork control','Line downtime visibility','Export zone compliance','Intercompany trading','India GST and SL VAT'], ah:'Business areas addressed',
+   ih:'Rollout approach', ints:[['Fit-to-standard','one template for Sri Lanka and India'],['Country versions','Sri Lanka and India, with GST e-invoicing'],['Intercompany','cans, ends and coil traded across entities'],['Migration Cockpit','materials, partners and balances staged']],
+   r:[['2','countries on one cloud ERP',1],['720M','cans a year, Horana plant',1],['2B','can ends a year',1],['E2E','business processes in scope',1]] }
+];
+
+(function () {
+  var main = document.getElementById('top'); main.classList.add('c-js');
+  var hdr = document.querySelector('header.site');
+  function setHdr() { if (hdr) document.documentElement.style.setProperty('--hdr', hdr.offsetHeight + 'px'); }
+  setHdr(); window.addEventListener('resize', setHdr);
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function logo(c) { return 'logos/' + c.id + '.png'; }
+
+  // stats
+  var countries = {}; C.forEach(function (c) { c.co.split(' and ').forEach(function (x) { countries[x] = 1; }); });
+  document.getElementById('c-stats').innerHTML =
+    '<div><b>' + C.length + '</b><span>clients featured</span></div>' +
+    '<div><b>3</b><span>platforms: RISE, GROW and Salesforce</span></div>' +
+    '<div><b>' + Object.keys(countries).length + '</b><span>countries: Sri Lanka and India</span></div>';
+
+  // filters
+  var fp = 'all', fc = 'all';
+  var pf = document.getElementById('c-pf'), cf = document.getElementById('c-cf');
+  function chip(v, label, n, on) { return '<button type="button" data-v="' + v + '" aria-pressed="' + on + '">' + label + (n != null ? '<small>' + n + '</small>' : '') + '</button>'; }
+  pf.innerHTML = chip('all', 'All', C.length, true) + Object.keys(P).map(function (k) { return chip(k, P[k], C.filter(function (c) { return c.p === k; }).length, false); }).join('');
+  cf.innerHTML = chip('all', 'All countries', null, true) + chip('Sri Lanka', 'Sri Lanka', null, false) + chip('India', 'India', null, false);
+  function bindChips(el, set) {
+    el.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      el.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      set(b.dataset.v); renderList();
+    });
+  }
+  bindChips(pf, function (v) { fp = v; }); bindChips(cf, function (v) { fc = v; });
+
+  function card(c) {
+    return '<a class="c-card c-fade" href="#case/' + c.id + '" aria-label="' + esc(c.n) + ': read the case study">' +
+      '<div class="c-logo"><img src="' + logo(c) + '" alt="' + esc(c.n) + ' logo" loading="lazy">' + (c.st ? '<span class="c-st">' + c.st + '</span>' : '') + '</div>' +
+      '<div class="c-meta"><h3>' + esc(c.n) + '</h3><span class="c-where">' + esc(c.ind) + ' · ' + esc(c.co) + '</span>' +
+      '<div class="c-prods">' + c.prods.map(function (p) { return '<span class="' + p[1] + '">' + esc(p[0]) + '</span>'; }).join('') + '</div>' +
+      '<span class="c-more">Read the case study <i>→</i></span></div></a>';
+  }
+  function renderList() {
+    var html = '', total = 0;
+    Object.keys(P).forEach(function (k) {
+      if (fp !== 'all' && fp !== k) return;
+      var list = C.filter(function (c) { return c.p === k && (fc === 'all' || c.co.indexOf(fc) > -1); });
+      if (!list.length) return; total += list.length;
+      html += '<div class="c-group"><h2>' + P[k] + '<span>' + list.length + (list.length === 1 ? ' client' : ' clients') + '</span></h2><div class="c-grid">' + list.map(card).join('') + '</div></div>';
+    });
+    document.getElementById('c-groups').innerHTML = html;
+    document.getElementById('c-empty').style.display = total ? 'none' : 'block';
+  }
+  renderList();
+
+  // access state
+  var KEY = 'mk-case-access';
+  function hasAccess() { try { return !!localStorage.getItem(KEY); } catch (e) { return unlocked; } }
+  var unlocked = false;
+  function grant(data) { unlocked = true; try { localStorage.setItem(KEY, JSON.stringify({ email: data.email, at: data.submittedAt })); } catch (e) {} }
+
+  // case study view
+  var wrap = document.getElementById('c-wrap'), body = document.getElementById('c-body'), cur = null;
+  function renderCase(c) {
+    cur = c;
+    document.title = c.n + ' case study | Mawkish';
+    document.getElementById('c-crumb').textContent = P[c.p] + ' · ' + c.co;
+    document.getElementById('c-eb').textContent = (c.st ? 'Implementation in progress' : 'Client case study') + ' · ' + c.ind;
+    document.getElementById('c-title').textContent = c.n + ': ' + c.t;
+    var res = c.r.filter(function (r) { return SHOW_UNCONFIRMED || r[2]; });
+    var facts = res.length ? res : c.f.map(function (f) { return [f[0], f[1]]; });
+    var idx = C.indexOf(c), prev = C[(idx - 1 + C.length) % C.length], next = C[(idx + 1) % C.length];
+    body.innerHTML =
+      '<div class="c-cols">' +
+        '<div><div class="c-box"><div class="c-lg"><img src="' + logo(c) + '" alt="' + esc(c.n) + ' logo"></div><p>' + esc(c.about) + '</p>' +
+          '<div class="c-facts">' + c.f.map(function (f) { return '<div><b>' + f[0] + '</b><span>' + f[1] + '</span></div>'; }).join('') + '</div></div>' +
+          '<div class="c-box"><span class="c-k">Platform</span><div class="c-plat">' + esc(c.plat) + '</div></div></div>' +
+        '<div><div class="c-box"><span class="c-k">' + c.mh + '</span><ul class="c-list2">' + c.mods.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul></div>' +
+          '<div class="c-box"><span class="c-k">' + (c.ah || 'Business areas resolved') + '</span><ul class="c-list2 c-ok">' + c.areas.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul></div></div>' +
+        '<div><div class="c-box"><span class="c-k">' + c.ih + '</span><ul class="c-rows">' + c.ints.map(function (i) { return '<li><b>' + esc(i[0]) + '</b>: ' + esc(i[1]) + '</li>'; }).join('') + '</ul></div></div>' +
+      '</div>' +
+      '<div class="c-res" style="grid-template-columns:repeat(' + Math.min(4, facts.length) + ',minmax(0,1fr))">' + facts.map(function (r) { return '<div><b>' + esc(r[0]) + '</b><span>' + esc(r[1]) + '</span></div>'; }).join('') + '</div>' +
+      '<div class="c-cta"><a href="#book" class="btn pri">Talk to us about a similar project →</a><a href="#clients" class="btn sec">All clients</a></div>' +
+      '<div class="c-next"><a href="#case/' + prev.id + '">‹ ' + esc(prev.n) + '</a><a href="#case/' + next.id + '">' + esc(next.n) + ' ›</a></div>';
+    var open = hasAccess();
+    wrap.classList.toggle('c-locked', !open);
+    body.setAttribute('aria-hidden', open ? 'false' : 'true');
+    if ('inert' in body) body.inert = !open;
+  }
+
+  function route() {
+    var m = location.hash.match(/^#case\/([\w-]+)/);
+    var c = m && C.filter(function (x) { return x.id === m[1]; })[0];
+    if (c) { renderCase(c); document.body.classList.add('c-in-case'); window.scrollTo(0, 0); }
+    else {
+      var was = document.body.classList.contains('c-in-case');
+      document.body.classList.remove('c-in-case'); document.title = 'Clients | Mawkish';
+      if (was && location.hash === '#clients') { var g = document.getElementById('c-groups'); window.scrollTo(0, g.getBoundingClientRect().top + window.scrollY - 140); }
+    }
+  }
+  window.addEventListener('hashchange', route); route();
+
+  // form
+  function $(id) { return document.getElementById(id); }
+  var form = $('c-form');
+  function err(id, msg, input) { document.getElementById(id).textContent = msg || ''; if (input) input.setAttribute('aria-invalid', msg ? 'true' : 'false'); return !msg; }
+  function emailMsg(v) {
+    v = v.trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/.test(v)) return 'Please enter a valid email address.';
+    var d = v.split('@')[1];
+    if (FREE_DOMAINS.indexOf(d) > -1 || /^(gmail|googlemail|yahoo|ymail|hotmail|outlook|live|msn|aol|icloud|proton|protonmail|gmx|yandex|zoho|zohomail|mail|rediffmail|tutanota|fastmail)\./.test(d))
+      return 'Please use your company email. Personal addresses can’t be accepted.';
+    return '';
+  }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var F = { name: $('c-name'), company: $('c-co'), email: $('c-em'), consent: $('c-ok'), website: $('c-web') };
+    var n = F.name.value.trim(), co = F.company.value.trim(), em = F.email.value.trim();
+    var ok = err('e-name', n.length < 2 ? 'Please enter your name.' : '', F.name);
+    ok = err('e-co', co.length < 2 ? 'Please enter your company name.' : '', F.company) && ok;
+    ok = err('e-em', emailMsg(em), F.email) && ok;
+    ok = err('e-ok', F.consent.checked ? '' : 'Please tick the box to continue.') && ok;
+    if (!ok) { var bad = form.querySelector('[aria-invalid=true]'); if (bad) bad.focus(); return; }
+    if (F.website.value) return; // honeypot: bots fill hidden fields
+    var data = { name: n, company: co, email: em.toLowerCase(), caseStudy: cur ? cur.id : '', caseStudyName: cur ? cur.n : '', page: location.href, submittedAt: new Date().toISOString() };
+    var btn = document.getElementById('c-sub'); btn.disabled = true; btn.textContent = 'Opening…';
+    function done() { grant(data); renderCase(cur); btn.disabled = false; btn.textContent = 'Open the case study →'; }
+    if (!FORM_ENDPOINT) { done(); return; }
+    fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); done(); })
+      .catch(function () { btn.disabled = false; btn.textContent = 'Open the case study →'; err('e-ok', 'Something went wrong. Please try again, or email us directly.'); });
+  });
+  // clear errors while typing, so the button never jumps under the pointer
+  [['c-name', 'e-name'], ['c-co', 'e-co'], ['c-em', 'e-em']].forEach(function (p) {
+    $(p[0]).addEventListener('input', function () { if ($(p[0]).getAttribute('aria-invalid') === 'true') err(p[1], '', $(p[0])); });
+  });
+  $('c-ok').addEventListener('change', function () { if ($('c-ok').checked) err('e-ok', ''); });
+})();
+</script>
+
+</body></html>

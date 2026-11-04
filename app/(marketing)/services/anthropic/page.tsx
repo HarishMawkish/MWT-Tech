@@ -3,6 +3,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { AnPage } from "@/components/anthropic/AnPage";
 import { HubBody } from "@/components/anthropic/HubBody";
 import { anthropicLd, anthropicMetadata } from "@/lib/anthropic-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 export const metadata: Metadata = anthropicMetadata("");
 
@@ -13,6 +14,7 @@ export default function AnthropicHubPage() {
       <AnPage>
         <HubBody />
       </AnPage>
+    <CanaryNote id="anthropic" />
     </>
   );
 }

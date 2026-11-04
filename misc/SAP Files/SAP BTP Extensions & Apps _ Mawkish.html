@@ -1,0 +1,602 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>SAP BTP Extensions &amp; Apps | Mawkish</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Mawkish dark site, full-width bands; each band pairs copy with a drawn SAP Fiori-style screen */
+:root {
+  --bg: #050807;
+  --bg-2: #0a110e;
+  --line: #1c2823;
+  --fg: #eef3f0;
+  --muted: #9aaaa2;
+  --green: #1f7a5a;
+  --green-hi: #34b386;
+  --paper: #f3f6f4;
+  --ink: #142019;
+  --ink-soft: #5c6c65;
+  --fiori: #0a6ed1;
+  --fiori-bg: #f5f6f7;
+  --warn: #e9730c;
+  --display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.in { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 88px; border-top: 1px solid var(--line); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 19px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 16px; display: block; }
+.lede { color: var(--muted); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border: 1px solid transparent; }
+.btn.pri { background: var(--green); color: #fff; }
+.btn.pri:hover { background: #24906a; }
+.btn.sec { border-color: #2c3d36; color: var(--fg); }
+.btn.sec:hover { border-color: var(--green-hi); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
+
+/* header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(5,8,7,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.site .in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; flex-direction: column; align-items: center; font-weight: 800; letter-spacing: .3em; font-size: 9px; color: var(--fg); text-decoration: none; }
+.logo svg { width: 54px; height: 26px; }
+.nav { display: flex; gap: 26px; align-items: center; }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 700; font-size: 12.5px; letter-spacing: .07em; }
+.nav a.on { color: var(--green-hi); }
+.nav .btn { padding: 12px 18px; }
+@media (max-width: 900px) { .nav a:not(.btn) { display: none; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 56px 88px; background: radial-gradient(900px 420px at 80% 10%, rgba(31,122,90,.22), transparent 70%); }
+.crumbs { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 em { font-style: normal; color: var(--green-hi); }
+.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.name-note { margin-top: 28px; font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--green); padding-left: 14px; max-width: 54ch; }
+.name-note b { color: var(--fg); font-weight: 600; }
+
+/* Fiori mock screens */
+.screen { background: var(--fiori-bg); color: #32363a; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06); font-size: 12px; line-height: 1.4; min-width: 0; }
+.shell { background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; gap: 12px; padding: 9px 14px; }
+.shell .sap { background: linear-gradient(135deg,#0a6ed1,#0854a0); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 7px; border-radius: 3px; letter-spacing: .02em; }
+.shell .t { font-weight: 600; color: #32363a; flex: 1; }
+.shell .search { flex: 1.4; background: #eff1f2; border-radius: 16px; height: 24px; display: flex; align-items: center; padding: 0 10px; color: #8b9196; font-size: 11px; }
+.shell .joule-btn { width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); }
+.shell .av { width: 24px; height: 24px; border-radius: 50%; background: #d1e8ff; color: #0a6ed1; font-weight: 700; font-size: 10px; display: grid; place-items: center; }
+.body-pad { padding: 16px; }
+.greet { font-size: 15px; font-weight: 700; color: #1d2d3e; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.tile { background: #fff; border-radius: 10px; padding: 11px 12px; box-shadow: 0 0 0 1px #e5e5e5; min-height: 92px; display: flex; flex-direction: column; justify-content: space-between; }
+.tile .h { font-weight: 600; color: #1d2d3e; font-size: 11.5px; }
+.tile .s { color: #6a6d70; font-size: 10.5px; }
+.tile .k { font-size: 22px; font-weight: 300; color: #0a6ed1; font-variant-numeric: tabular-nums; }
+.tile .k.neg { color: #bb0000; } .tile .k.pos { color: #107e3e; }
+.tile .k small { font-size: 11px; color: #6a6d70; margin-left: 2px; }
+.spark { height: 26px; width: 100%; }
+.split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; margin-top: 10px; }
+.card-f { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; padding: 12px; min-width: 0; }
+.card-f .h { font-weight: 700; font-size: 11.5px; color: #1d2d3e; margin-bottom: 8px; }
+.row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid #eee; font-size: 11px; }
+.row:first-of-type { border-top: 0; }
+.pill { font-size: 9.5px; font-weight: 700; border-radius: 9px; padding: 1px 7px; white-space: nowrap; }
+.pill.ok { background: #f1fdf6; color: #107e3e; box-shadow: inset 0 0 0 1px #c6ecd3; }
+.pill.wr { background: #fef7f1; color: #e9730c; box-shadow: inset 0 0 0 1px #f8d3b0; }
+.pill.in { background: #eef6fe; color: #0a6ed1; box-shadow: inset 0 0 0 1px #c5def7; }
+.joule { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; display: flex; flex-direction: column; min-width: 0; }
+.joule .jh { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid #eee; font-weight: 700; font-size: 11.5px; }
+.joule .jh i { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); display: inline-block; }
+.joule .msgs { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.bub { border-radius: 10px; padding: 7px 9px; font-size: 10.8px; max-width: 92%; }
+.bub.u { align-self: flex-end; background: #0a6ed1; color: #fff; border-bottom-right-radius: 3px; }
+.bub.j { background: #f2f2f7; color: #1d2d3e; border-bottom-left-radius: 3px; }
+.bub.j b { color: #0a6ed1; }
+.typing span { display: inline-block; width: 5px; height: 5px; margin-right: 3px; border-radius: 50%; background: #8b9196; }
+@media (prefers-reduced-motion: no-preference) {
+  .typing span { animation: blink 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
+}
+.caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+/* journey explainer */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.includes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.includes div { background: var(--bg-2); padding: 22px; }
+.includes h3 { font-size: 16px; margin-bottom: 6px; }
+.includes p { color: var(--muted); font-size: 14.5px; }
+.ico { width: 30px; height: 30px; margin-bottom: 12px; color: var(--green-hi); }
+
+/* fit check */
+.fit { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 44px; align-items: start; }
+.qs { display: flex; flex-direction: column; gap: 10px; }
+.q { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.q span { font-size: 15px; min-width: 0; }
+.yn { display: flex; gap: 4px; flex: none; background: #0f1814; border-radius: 9px; padding: 3px; }
+.yn button { font: 700 12px var(--body); letter-spacing: .06em; border: 0; border-radius: 7px; padding: 7px 12px; background: transparent; color: var(--muted); cursor: pointer; }
+.yn button[aria-pressed="true"] { background: var(--green); color: #fff; }
+.yn button.no[aria-pressed="true"] { background: #6b3a12; }
+.result { position: sticky; top: 100px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 28px; }
+.result .lab { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.meter { height: 10px; background: #dde5e1; border-radius: 6px; margin: 14px 0 18px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 6px; transition: width .35s; }
+.result h3 { font-size: 24px; margin-bottom: 10px; }
+.result p { color: var(--ink-soft); font-size: 15px; }
+.result .btn { margin-top: 20px; }
+
+/* capabilities */
+.caps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.cap { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.cap ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+.cap ul li { margin-bottom: 4px; }
+.cap .tagline { color: var(--fg); font-size: 15px; }
+
+/* AI */
+.agents { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.agent { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.agent .n { width: 36px; height: 36px; border-radius: 10px; background: rgba(52,179,134,.12); color: var(--green-hi); display: grid; place-items: center; }
+.agent h3 { font-size: 16px; margin-bottom: 2px; }
+.agent p { color: var(--muted); font-size: 14.5px; }
+.prog { height: 4px; background: #e6e9eb; border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.prog i { display: block; height: 100%; background: #0a6ed1; width: 72%; }
+@media (prefers-reduced-motion: no-preference) {
+  .prog i { animation: load 3.2s ease-in-out infinite alternate; }
+  @keyframes load { from { width: 38% } to { width: 92% } }
+}
+
+/* release timeline */
+.tl { margin-top: 48px; overflow-x: auto; }
+.tl svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.fact { border-top: 2px solid var(--green); padding-top: 14px; }
+.fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 14px; }
+
+/* extensibility */
+.layers { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.layer { display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.layer .who { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--green-hi); padding-top: 3px; }
+.layer h3 { font-size: 16px; margin-bottom: 4px; }
+.layer p { color: var(--muted); font-size: 14.5px; }
+.layer.core { background: var(--paper); color: var(--ink); border-color: transparent; }
+.layer.core .who { color: var(--green); }
+.layer.core p { color: var(--ink-soft); }
+
+/* activate */
+.phases { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ph { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.ph:last-child { border-right: 0; }
+.ph .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.ph h3 { font-size: 17px; }
+.ph p { color: var(--muted); font-size: 13.5px; }
+.ph .we { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--fg); }
+.ph .we b { color: var(--green-hi); font-weight: 700; }
+
+/* users */
+.users { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+.users table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; }
+.users th, .users td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.users th { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.users td:first-child { font-weight: 700; white-space: nowrap; }
+.users td:nth-child(2) { color: var(--muted); }
+.users tr:last-child td { border-bottom: 0; }
+.note { margin-top: 16px; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+/* faq */
+.faq { margin-top: 36px; display: flex; flex-direction: column; gap: 10px; max-width: 860px; }
+details { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 16.5px; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--green-hi); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 18px; max-width: 70ch; }
+
+/* cta */
+.cta-band { background: linear-gradient(120deg, #0e3a2b, #0a1a14 60%); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.cta-band ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cta-band li { display: flex; gap: 10px; font-size: 15px; }
+.cta-band li::before { content: "✓"; color: var(--green-hi); font-weight: 800; }
+footer { padding-block: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+footer .in { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .hero-grid, .two, .fit, .cta-band { grid-template-columns: 1fr; }
+  .caps { grid-template-columns: 1fr 1fr; }
+  .phases { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .ph:nth-child(3) { border-right: 0; }
+  .ph:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .result { position: static; }
+}
+@media (max-width: 620px) {
+  section { padding-block: 64px; }
+  .caps, .includes { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: 1fr; }
+  .ph { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .tiles .tile:nth-child(3) { display: none; }
+  .split { grid-template-columns: 1fr; }
+  .layer { grid-template-columns: 1fr; gap: 6px; }
+  .cta-band { padding: 36px 24px; }
+  .q { flex-direction: column; align-items: flex-start; }
+}
+
+/* light bands: same components, re-tokened */
+section.light { --bg-2: #ffffff; --line: #d9e2dd; --fg: #142019; --muted: #55655e; --green-hi: #17694b; background: #f2f5f3; color: var(--fg); border-top-color: transparent; }
+section.light .includes { background: var(--line); }
+section.light .cap, section.light details { box-shadow: 0 1px 2px rgba(20,32,25,.05); }
+/* Video library */
+.vf { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
+.vf button { font: 600 13.5px/1 var(--body); padding: 10px 15px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
+.vf button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.vf button span { color: var(--muted); margin-left: 6px; font-weight: 500; }
+.vf button[aria-pressed="true"] span { color: inherit; opacity: .6; }
+.vgrid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; margin-top: 26px; }
+.vcard { display: flex; flex-direction: column; text-decoration: none; color: var(--fg); border-radius: 14px; background: var(--bg-2); border: 1px solid var(--line); overflow: hidden; transition: transform .25s, border-color .25s; }
+.vcard:hover { transform: translateY(-3px); border-color: var(--green); }
+.vcard.feat { grid-column: span 2; }
+.poster { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; padding: 18px 20px; display: flex; flex-direction: column; justify-content: space-between; background: radial-gradient(120% 140% at 100% 0%, #1f7a5a 0%, #0c2a1f 48%, #06110d 100%); }
+.poster[data-k="mod"] { background: radial-gradient(120% 140% at 100% 0%, #0a6ed1 0%, #0b2340 50%, #050c16 100%); }
+.poster[data-k="rel"] { background: radial-gradient(120% 140% at 100% 0%, #5d36ff 0%, #1b1446 50%, #07061a 100%); }
+.poster::after { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(200deg, #000 10%, transparent 70%); -webkit-mask-image: linear-gradient(200deg, #000 10%, transparent 70%); pointer-events: none; }
+.poster .top { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+.poster .ch { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; color: #fff; letter-spacing: .04em; }
+.poster .ch b { background: linear-gradient(135deg,#0a6ed1,#0854a0); padding: 2px 6px; border-radius: 3px; font-size: 10px; }
+.poster .tag { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+.poster .big { position: relative; z-index: 1; font-family: var(--display); font-weight: 800; color: #fff; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.08; letter-spacing: -.01em; max-width: 80%; text-wrap: balance; }
+.vcard.feat .poster .big { font-size: clamp(26px, 3.4vw, 44px); }
+.poster .play { position: absolute; right: 18px; bottom: 18px; z-index: 1; width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,.95); display: grid; place-items: center; box-shadow: 0 10px 30px rgba(0,0,0,.35); transition: transform .25s; }
+.vcard:hover .play { transform: scale(1.08); }
+.vmeta { padding: 16px 18px 18px; display: grid; gap: 6px; }
+.vmeta h3 { font-size: 16px; line-height: 1.3; }
+.vmeta p { color: var(--muted); font-size: 14px; margin: 0; }
+.vmeta .d { font-size: 12px; color: var(--muted); letter-spacing: .02em; }
+.vnote { margin-top: 22px; color: var(--muted); font-size: 13px; max-width: 80ch; }
+
+@media (max-width: 980px) { .vgrid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .vgrid { grid-template-columns: 1fr; } }
+.vcard:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 2px; }
+</style>
+<header class="site">
+  <div class="in">
+    <a class="logo" href="#top" aria-label="Mawkish Technologies">
+      <svg viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L20 4 L32 18 L44 4 L62 28 Z" fill="none" stroke="#eef3f0" stroke-width="4" stroke-linejoin="round"/><path d="M20 28 L32 14 L44 28" fill="#eef3f0"/></svg>
+      MAWKISH
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">ABOUT US</a>
+      <a href="#" class="on">OUR SERVICES</a>
+      <a href="#">INDUSTRIES</a>
+      <a href="#">INSIGHTS &amp; PERSPECTIVES</a>
+      <a href="#book" class="btn pri">Schedule a consultation</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+/* Extensions components */
+.badge-c { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 800; letter-spacing: .06em; background: #e8f6ef; color: #17694b; padding: 3px 8px; border-radius: 10px; }
+.thennow { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+.tn { border-radius: 16px; padding: 22px; border: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 10px; }
+.tn .k { font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.tn.then .k { color: #b5651d; } .tn.now .k { color: var(--green-hi); }
+.tn h3 { font-size: 18px; }
+.tn p { color: var(--muted); font-size: 14px; }
+.tn svg { width: 100%; height: auto; display: block; }
+.ladder { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 0; margin-top: 40px; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+.rung { padding: 26px 24px; background: var(--bg-2); border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 12px; position: relative; }
+.rung:last-child { border-right: 0; }
+.rung .n { font-family: var(--display); font-size: 44px; font-weight: 800; color: var(--green-hi); line-height: 1; }
+.rung h3 { font-size: 20px; }
+.rung .who { font-size: 12px; font-weight: 700; color: var(--fg); }
+.rung p { color: var(--muted); font-size: 14px; }
+.rung ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 13.5px; display: grid; gap: 4px; }
+.rung .when { margin-top: auto; border-top: 1px dashed var(--line); padding-top: 12px; font-size: 13.5px; }
+.rung .when b { color: var(--green-hi); }
+.rung .tools { display: flex; flex-wrap: wrap; gap: 6px; }
+.rung .tools span { font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 12px; border: 1px solid var(--line); color: var(--muted); }
+.ladder-note { margin-top: 18px; display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 14px; }
+.ladder-note svg { flex: none; }
+.apps2 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 40px; }
+.app2 { border: 1px solid var(--line); border-radius: 16px; padding: 22px; background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.app2 .ic { width: 38px; height: 38px; border-radius: 10px; background: rgba(52,179,134,.14); color: var(--green-hi); display: grid; place-items: center; }
+.app2 h3 { font-size: 17px; }
+.app2 p { color: var(--muted); font-size: 14px; }
+.app2 .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: auto; padding-top: 6px; }
+.app2 .tags span { font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 12px; border: 1px solid var(--line); color: var(--muted); }
+.leaf { display: grid; grid-template-columns: 300px minmax(0,1fr); gap: 40px; align-items: center; margin-top: 40px; }
+.phone { width: 280px; max-width: 100%; border-radius: 34px; background: #0b0f0d; padding: 12px; box-shadow: 0 30px 70px rgba(10,30,20,.25); margin: 0 auto; }
+.phone .scr { background: #f5f6f7; border-radius: 24px; overflow: hidden; font-size: 12px; color: #32363a; }
+.phone .bar { background: #fff; padding: 14px 16px 10px; border-bottom: 1px solid #e5e5e5; }
+.phone .bar small { display: block; color: #6a6d70; font-size: 10.5px; }
+.phone .bar b { font-size: 14px; color: #1d2d3e; }
+.phone .pbody { padding: 12px; display: grid; gap: 10px; }
+.phone .big { background: #fff; border-radius: 12px; padding: 14px; box-shadow: 0 0 0 1px #e5e5e5; text-align: center; }
+.phone .big .kg { font-size: 34px; font-weight: 300; color: #0a6ed1; font-variant-numeric: tabular-nums; }
+.phone .big small { color: #6a6d70; }
+.phone .f { background: #fff; border-radius: 12px; box-shadow: 0 0 0 1px #e5e5e5; padding: 4px 12px; }
+.phone .f div { display: flex; justify-content: space-between; padding: 8px 0; border-top: 1px solid #f0f0f0; font-size: 11.5px; }
+.phone .f div:first-child { border-top: 0; }
+.phone .f b { color: #1d2d3e; }
+.phone .go { background: #0a6ed1; color: #fff; text-align: center; border-radius: 10px; padding: 11px; font-weight: 700; }
+.phone .off { font-size: 10.5px; color: #107e3e; text-align: center; }
+.steps4 { display: grid; gap: 0; border-left: 2px solid var(--line); margin-left: 8px; }
+.steps4 > div { position: relative; padding: 0 0 22px 26px; }
+.steps4 > div::before { content: ""; position: absolute; left: -7px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px #f2f5f3; }
+.steps4 h3 { font-size: 16.5px; }
+.steps4 p { color: var(--muted); font-size: 14.5px; }
+.steps4 .where { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--green-hi); }
+@media (max-width: 1080px) { .apps2 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 860px) { .ladder { grid-template-columns: 1fr; } .rung { border-right: 0; border-bottom: 1px solid var(--line); } .rung:last-child { border-bottom: 0; } .leaf { grid-template-columns: 1fr; } }
+@media (max-width: 620px) { .apps2, .thennow { grid-template-columns: 1fr; } }
+</style>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="in">
+      <div class="crumbs"><a href="#">Services</a> / <a href="#">SAP Solutions</a> / SAP BTP Extensions &amp; Apps</div>
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">SAP BTP Extensions &amp; Apps</span>
+          <h1>Build what makes you different. <em>Keep the core clean.</em></h1>
+          <p class="lede">SAP Cloud ERP runs your standard processes. The things that set your business apart, such as a field app, a dealer portal or a special approval, are built around it: small changes inside the system, and complete apps on SAP's Business Technology Platform. Every extension uses SAP's released interfaces, so the twice-yearly upgrades never break what you've built.</p>
+          <div class="ctas">
+            <a href="#book" class="btn pri">Discuss your requirements →</a>
+            <a href="#ladder" class="btn sec">Where should a change go?</a>
+          </div>
+          <p class="name-note"><b>About the names.</b> At SAP Sapphire 2026, SAP brought its Business Technology Platform (BTP), Business Data Cloud and Business AI together as the <b>SAP Business AI Platform</b>. You'll see both names for a while.</p>
+        </div>
+
+        <figure style="margin:0">
+          <div class="screen" role="img" aria-label="Illustration of a custom app built on SAP BTP called Bought Leaf Intake, styled like SAP Fiori, showing today's green leaf collection by route and supplier settlements posted to SAP Cloud ERP">
+            <div class="shell"><span class="sap">SAP</span><span class="t">Bought Leaf Intake</span><span class="badge-c">CUSTOM APP · SAP BTP</span><span class="av">FM</span></div>
+            <div class="body-pad">
+              <div class="tiles">
+                <div class="tile"><div><div class="h">Green leaf today</div><div class="s">All collection routes</div></div><div class="k">18,420<small>kg</small></div></div>
+                <div class="tile"><div><div class="h">Smallholders</div><div class="s">Delivered today</div></div><div class="k pos">1,236</div></div>
+                <div class="tile"><div><div class="h">Rejected leaf</div><div class="s">Quality below standard</div></div><div class="k neg">2.4<small>%</small></div></div>
+              </div>
+              <div class="card-f" style="margin-top:10px">
+                <div class="h">Collection routes · Factory 02</div>
+                <div class="row"><span>Route 4 · Deniyaya · 214 suppliers</span><span class="pill ok">Synced to SAP</span></div>
+                <div class="row"><span>Route 7 · Kotapola · 188 suppliers</span><span class="pill ok">Synced to SAP</span></div>
+                <div class="row"><span>Route 9 · Morawaka · 162 suppliers</span><span class="pill in">Uploading · offline</span></div>
+                <div class="row"><span>Fortnight 2 · supplier settlement</span><span class="pill wr">Ready for payment run</span></div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="caption">Illustration of a side-by-side app for a tea factory. Sample data.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLEAN CORE -->
+  <section class="light">
+    <div class="in two">
+      <div>
+        <span class="eyebrow">Clean core, in plain words</span>
+        <h2>Don't change SAP. Build next to it.</h2>
+        <p class="lede">In older ERP systems, companies changed SAP's own code to fit their needs. Every upgrade then became a project, because someone had to check and repair every change. Many companies simply stopped upgrading.</p>
+        <p class="lede">Clean core means SAP's standard stays untouched. Your extensions connect only through interfaces SAP has released and promised to keep stable. SAP upgrades the core, and your extensions carry on working.</p>
+      </div>
+      <div class="thennow">
+        <div class="tn then"><span class="k">The old way</span><h3>Modified core</h3>
+          <svg viewBox="0 0 240 120" aria-hidden="true"><rect x="70" y="20" width="100" height="80" rx="10" fill="#b5651d" opacity=".18"/><rect x="70" y="20" width="100" height="80" rx="10" fill="none" stroke="#b5651d" stroke-width="2"/><path d="M90 40l20 20M130 35l-15 30M95 85l30-15M140 60l15 25" stroke="#b5651d" stroke-width="3" stroke-linecap="round"/><text x="120" y="116" text-anchor="middle" font-family="Manrope, sans-serif" font-size="11" font-weight="700" fill="#b5651d">changes inside the core</text></svg>
+          <p>Every upgrade means retesting and repairing custom code. Projects take months, so upgrades get delayed for years.</p></div>
+        <div class="tn now"><span class="k">Clean core</span><h3>Extended core</h3>
+          <svg viewBox="0 0 240 120" aria-hidden="true"><rect x="80" y="30" width="80" height="60" rx="10" fill="#1f7a5a"/><text x="120" y="65" text-anchor="middle" font-family="Manrope, sans-serif" font-size="11" font-weight="800" fill="#fff">SAP standard</text><g fill="none" stroke="#17694b" stroke-width="2"><rect x="10" y="40" width="50" height="40" rx="8"/><rect x="180" y="40" width="50" height="40" rx="8"/><rect x="95" y="0" width="50" height="20" rx="6"/><path d="M60 60h20M160 60h20M120 20v10" stroke-dasharray="3 3"/></g><text x="120" y="116" text-anchor="middle" font-family="Manrope, sans-serif" font-size="11" font-weight="700" fill="#17694b">extensions through released interfaces</text></svg>
+          <p>SAP upgrades twice a year on a fixed schedule. Extensions keep working, and you get new features without a project.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LADDER -->
+  <section id="ladder">
+    <div class="in">
+      <span class="eyebrow">Three places to put a change</span>
+      <h2>Always start with the simplest option that does the job.</h2>
+      <p class="lede">SAP gives you three ways to extend SAP Cloud ERP. Each step to the right gives more freedom, and also more to build, test and own. We only move right when the requirement really needs it.</p>
+      <div class="ladder">
+        <div class="rung"><span class="n">1</span><h3>Key-user changes</h3><span class="who">Business experts, in the browser, no code</span>
+          <ul><li>Custom fields on screens, forms, reports and APIs</li><li>Screen layouts by country, unit or role</li><li>Simple rules, such as checks and defaults</li><li>Form and email layouts with your branding</li><li>Custom reports and analytical queries</li></ul>
+          <div class="tools"><span>Custom Fields</span><span>Custom Logic</span><span>Adapt UI</span><span>Custom CDS Views</span></div>
+          <p class="when"><b>Choose when:</b> the change is a field, a rule, a layout or a report.</p></div>
+        <div class="rung"><span class="n">2</span><h3>Developer extensions</h3><span class="who">ABAP developers, inside the system</span>
+          <ul><li>Logic too complex for key-user tools</li><li>Custom business objects tightly tied to SAP data</li><li>Custom SAP Fiori apps on SAP data</li><li>Only released APIs and extension points</li></ul>
+          <div class="tools"><span>ABAP Cloud</span><span>RAP</span><span>ABAP Development Tools</span></div>
+          <p class="when"><b>Choose when:</b> it must run inside SAP's transactions. Needs the three-system landscape.</p></div>
+        <div class="rung"><span class="n">3</span><h3>Side-by-side apps</h3><span class="who">Developers and low-code builders, on SAP BTP</span>
+          <ul><li>Apps with their own users, such as suppliers, dealers or field staff</li><li>Mobile and offline apps</li><li>Logic that spans several systems</li><li>AI agents and automations</li></ul>
+          <div class="tools"><span>SAP Build</span><span>Joule Studio</span><span>CAP</span><span>Work Zone</span></div>
+          <p class="when"><b>Choose when:</b> it has its own life cycle, its own users or reaches beyond SAP.</p></div>
+      </div>
+      <p class="ladder-note"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="9"/><path d="M11 7v5M11 15v.5"/></svg>Before any of the three, we ask whether a standard process or setting already covers the need. Often it does.</p>
+    </div>
+  </section>
+
+  <!-- KEY USER SCREEN -->
+  <section class="light">
+    <div class="in two">
+      <div>
+        <span class="eyebrow">Option 1 in practice</span>
+        <h2>A new field in minutes, everywhere it's needed.</h2>
+        <p class="lede">Say your sales team needs to record the tea grade on every sales order. A key user adds one custom field in the browser and chooses where it appears: the order screen, the invoice form, the sales report and the API that feeds your CRM.</p>
+        <p class="lede">Before promising any change, we check SAP's Extensibility Cockpit, which shows what each app and process allows. That way the answer is "yes, here's how" or "no, here's the alternative", not a surprise halfway through the project.</p>
+      </div>
+      <figure style="margin:0">
+        <div class="screen" role="img" aria-label="Illustration of the SAP Custom Fields app: a new field Tea Grade on the Sales Document business context, enabled for the sales order screen, invoice form, analytics and the sales order API">
+          <div class="shell"><span class="sap">SAP</span><span class="t">Custom Fields</span><span class="joule-btn"></span><span class="av">KU</span></div>
+          <div class="body-pad">
+            <div class="card-f">
+              <div class="h">New field · Tea Grade</div>
+              <div class="row"><span>Business context</span><b>Sales Document: Item</b></div>
+              <div class="row"><span>Type</span><b>Code list · 12 values</b></div>
+              <div class="row"><span>Values</span><span>BOP · BOPF · FBOP · OP · Pekoe · Dust 1 …</span></div>
+              <div class="row"><span>Status</span><span class="pill ok">Published</span></div>
+            </div>
+            <div class="card-f" style="margin-top:10px">
+              <div class="h">Where the field is used</div>
+              <div class="row"><span>Sales order screen</span><span class="pill ok">Enabled</span></div>
+              <div class="row"><span>Customer invoice form</span><span class="pill ok">Enabled</span></div>
+              <div class="row"><span>Sales analytics</span><span class="pill ok">Enabled</span></div>
+              <div class="row"><span>Sales order API</span><span class="pill ok">Enabled</span></div>
+              <div class="row"><span>Delivery note form</span><span class="pill in">Not enabled</span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="caption">Illustration of SAP's Custom Fields app. Sample data.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- APPS -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">Option 3 in practice</span>
+      <h2>Apps we build next to SAP.</h2>
+      <p class="lede">Side-by-side apps reach the people and places your ERP doesn't: smallholders, dealers, field teams and suppliers. Each one reads and writes SAP data through released APIs, and signs users in with the same identity service as SAP.</p>
+      <div class="apps2">
+        <div class="app2"><span class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 18c-4-3-6-6-6-9a6 6 0 0 1 12 0c0 3-2 6-6 9z"/><path d="M10 6v6"/></svg></span><h3>Bought leaf and collection</h3><p>Weigh-in at collection points, offline on a phone, with supplier settlements and payments run in SAP.</p><div class="tags"><span>Mobile · offline</span><span>SAP Build Apps</span></div></div>
+        <div class="app2"><span class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M3 8h14"/></svg></span><h3>Dealer and distributor portal</h3><p>Dealers place orders, check stock and prices, download invoices and see what they owe, from their own login.</p><div class="tags"><span>External users</span><span>CAP · Fiori</span></div></div>
+        <div class="app2"><span class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="7" r="3"/><path d="M4 17c1-3 3.5-4.5 6-4.5s5 1.5 6 4.5"/></svg></span><h3>Supplier onboarding</h3><p>New suppliers submit their company, tax and bank details and documents. Checks and approval run before the record reaches SAP.</p><div class="tags"><span>Workflow</span><span>SAP Build</span></div></div>
+        <div class="app2"><span class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16V6l6-3 6 3v10"/><path d="M8 16v-5h4v5"/></svg></span><h3>Field sales and van sales</h3><p>Route plans, orders and collections on a tablet, synced to SAP when the van is back in coverage.</p><div class="tags"><span>Mobile · offline</span><span>SAP Build Apps</span></div></div>
+        <div class="app2"><span class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h12v12H4z"/><path d="M7 8h6M7 11h6M7 14h3"/></svg></span><h3>Style costing for apparel</h3><p>Merchandisers build cost sheets for a style from SAP prices and rates, compare scenarios and send the agreed cost back to SAP.</p><div class="tags"><span>Pro-code</span><span>CAP</span></div></div>
+        <div class="app2"><span class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="7"/><path d="M7 10l2 2 4-4"/></svg></span><h3>One inbox for approvals</h3><p>Approvals from SAP and other systems in one place, on the web and on SAP's mobile app, with Joule to explain each request.</p><div class="tags"><span>Work Zone</span><span>Joule</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEEP DIVE: LEAF APP -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">Deep dive · a tea factory</span>
+      <h2>From a smallholder's leaf to a bank transfer.</h2>
+      <p class="lede">Tea factories in the low country buy green leaf from hundreds of smallholders every day, often in places with weak mobile coverage. Here's how a side-by-side app and SAP Cloud ERP share the work.</p>
+      <div class="leaf">
+        <div class="phone" role="img" aria-label="Illustration of a mobile weigh-in screen: supplier S-04417, 42.6 kilograms net of 1.2 kilograms deducted for water and coarse leaf, route 9, saved offline and waiting to sync">
+          <div class="scr">
+            <div class="bar"><small>Route 9 · Collection point 3</small><b>Weigh-in</b></div>
+            <div class="pbody">
+              <div class="big"><small>Net green leaf</small><div class="kg">42.6 kg</div><small>Gross 43.8 · deduction 1.2</small></div>
+              <div class="f"><div><span>Supplier</span><b>S-04417 · R. Kumari</b></div><div><span>Leaf quality</span><b>Good · 2 leaves + bud</b></div><div><span>Fortnight to date</span><b>486.0 kg</b></div></div>
+              <div class="go">Save and print receipt</div>
+              <div class="off">● Saved offline · syncs when connected</div>
+            </div>
+          </div>
+        </div>
+        <div class="steps4">
+          <div><span class="where">Mobile app · offline</span><h3>Weigh and record at the collection point</h3><p>The collector records weight, deductions and quality for each supplier and prints a receipt. It works without a signal.</p></div>
+          <div><span class="where">SAP BTP</span><h3>Sync, check and combine</h3><p>When the lorry reaches coverage, the app syncs. The BTP service checks for duplicates and combines the day's intake by supplier.</p></div>
+          <div><span class="where">SAP Cloud ERP</span><h3>Goods receipts and supplier liabilities</h3><p>Through released APIs, the service posts goods receipts and builds the fortnight's supplier invoices at the agreed leaf price.</p></div>
+          <div><span class="where">SAP Cloud ERP</span><h3>Pay smallholders by bank transfer</h3><p>SAP's payment run creates a bank file for the fortnight, and the settlement statement goes to each supplier.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI AGENTS -->
+  <section>
+    <div class="in two">
+      <div>
+        <span class="eyebrow">Agents are extensions too</span>
+        <h2>Build your own AI agents, inside the same guardrails.</h2>
+        <p class="lede">SAP's AI agents cover common tasks such as accruals and cash management. For tasks specific to your business, Joule Studio lets teams build custom agents by describing the outcome they want. SAP launched it at Sapphire 2026.</p>
+        <p class="lede">Custom agents run on SAP's managed platform, use the same business context as SAP's own agents, and act only within each user's existing permissions.</p>
+      </div>
+      <div class="agents" style="margin-top:8px">
+        <div class="agent"><span class="n"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h12M9 3v12"/></svg></span><div><h3>Describe, then refine</h3><p>Joule Studio drafts requirements, logic and tests from a plain-language description. Developers can also work in Python or TypeScript.</p></div></div>
+        <div class="agent"><span class="n"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="M9 6v3l2 2"/></svg></span><div><h3>Grounded in your SAP data</h3><p>Agents use SAP's Knowledge Graph and business data, so they understand what an order, a supplier or a cost centre means.</p></div></div>
+        <div class="agent"><span class="n"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9l3 3 7-7"/></svg></span><div><h3>Governed like any extension</h3><p>Each agent has an owner, a clear scope, human approval where it matters, and a place in the regression tests.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOVERNANCE -->
+  <section class="light">
+    <div class="in two">
+      <div>
+        <span class="eyebrow">What you get from us</span>
+        <h2>Every extension documented, owned and tested.</h2>
+        <p class="lede">An extension is a small product. It needs an owner, documentation and tests, or it becomes the next system nobody dares to touch. Every extension we build comes with the following.</p>
+      </div>
+      <div class="includes">
+        <div><h3>Extension register</h3><p>What exists, why, who owns it, and which SAP interfaces it uses.</p></div>
+        <div><h3>Your code, your repository</h3><p>Source code in your Git repository, not on a consultant's laptop.</p></div>
+        <div><h3>Tests in every release</h3><p>Automated tests added to the regression pack that runs before each SAP upgrade.</p></div>
+        <div><h3>Roles and security</h3><p>Access by role, sign-on through SAP's identity service, and no personal data in custom fields.</p></div>
+        <div><h3>Handover and training</h3><p>Your team can maintain key-user changes and simple apps themselves.</p></div>
+        <div><h3>Clean-core check</h3><p>Every extension uses released interfaces only, checked before it goes live.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO LIBRARY -->
+  <section class="" id="watch">
+    <div class="in">
+      <span class="eyebrow">Watch and learn</span>
+      <h2>See it from SAP.</h2>
+      <p class="lede">Videos from SAP’s official YouTube channel on clean core and building your own apps and agents.</p>
+      <div class="vgrid"><a class="vcard" href="https://www.youtube.com/watch?v=WK1U0BVexLE" target="_blank" rel="noopener" data-yt="WK1U0BVexLE" aria-label="Play on YouTube: Simplify and accelerate ERP with a clean core">
+      <div class="poster" data-k="start"><div class="top"><span class="ch"><b>SAP</b>YouTube</span><span class="tag">Clean core</span></div><div class="big">Why a clean core</div><span class="play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M5 2.5v13l11-6.5z" fill="#0b2a1f"/></svg></span></div>
+      <div class="vmeta"><h3>Simplify and accelerate ERP with a clean core</h3><p>How a clean core cuts technical debt and keeps SAP Cloud ERP ready for continuous change and AI.</p><span class="d">SAP · February 2026</span></div></a><a class="vcard" href="https://www.youtube.com/watch?v=3dJeQu7sxk4" target="_blank" rel="noopener" data-yt="3dJeQu7sxk4" aria-label="Play on YouTube: Build AI agents with Joule Studio">
+      <div class="poster" data-k="rel"><div class="top"><span class="ch"><b>SAP</b>YouTube</span><span class="tag">Sapphire 2026</span></div><div class="big">Agents in Joule Studio</div><span class="play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M5 2.5v13l11-6.5z" fill="#0b2a1f"/></svg></span></div>
+      <div class="vmeta"><h3>Build AI agents with Joule Studio</h3><p>A Sapphire demo: a pricing validation agent built by describing the outcome, tested and connected to other agents.</p><span class="d">SAP · May 2026</span></div></a><a class="vcard" href="https://www.youtube.com/watch?v=6rtdMi-rv7g" target="_blank" rel="noopener" data-yt="6rtdMi-rv7g" aria-label="Play on YouTube: SAP Business AI Platform: build and govern AI agents">
+      <div class="poster" data-k="mod"><div class="top"><span class="ch"><b>SAP</b>YouTube</span><span class="tag">SAP Connect 2026</span></div><div class="big">Business AI Platform</div><span class="play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M5 2.5v13l11-6.5z" fill="#0b2a1f"/></svg></span></div>
+      <div class="vmeta"><h3>SAP Business AI Platform: build and govern AI agents</h3><p>How Joule Studio, the Knowledge Graph and Business Data Cloud give custom agents business context and governance.</p><span class="d">SAP · October 2026</span></div></a></div>
+      <p class="vnote">Published by SAP on its official YouTube channel.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">Questions we hear</span>
+      <h2>Straight answers.</h2>
+      <div class="faq">
+        <details><summary>Do we need to pay for SAP BTP?</summary><p>Key-user changes and developer extensions inside SAP Cloud ERP come with your subscription, although developer extensions need the three-system landscape. Side-by-side apps run on SAP BTP services, which are subscribed separately and sized by use. We size this with you before you commit.</p></details>
+        <details><summary>Will our extensions break when SAP upgrades?</summary><p>Not if they're built on released interfaces, which is the only way SAP Cloud ERP allows. We also run each extension's tests on the upgraded test system before SAP upgrades production.</p></details>
+        <details><summary>Our old ERP has hundreds of customisations. Do we rebuild them all?</summary><p>Usually not. When we go through them, many turn out to be reports that standard analytics now covers, or workarounds for processes SAP now handles. The rest become key-user changes, developer extensions or side-by-side apps, and only where they still add value.</p></details>
+        <details><summary>Low-code or pro-code?</summary><p>Both have a place. Low-code with SAP Build is fast for forms, approvals and simple mobile apps. Pro-code with CAP or ABAP Cloud suits complex logic, high volumes and apps you'll grow over years. We choose per app and tell you why.</p></details>
+        <details><summary>Can our own developers build extensions?</summary><p>Yes, and we encourage it. Many clients have us build the first extensions together with their team, set the standards, and review what the team builds after that.</p></details>
+        <details><summary>Who owns what we build?</summary><p>You do. The code lives in your repository and runs in your SAP accounts, and the documentation is handed over with it.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="book">
+    <div class="in">
+      <div class="cta-band">
+        <div>
+          <span class="eyebrow">Start here</span>
+          <h2>Bring us your list of "SAP doesn't do this".</h2>
+          <p class="lede">In one workshop, we take each requirement and tell you whether standard SAP covers it, which of the three options fits, and roughly what it takes.</p>
+          <div style="margin-top:28px"><a href="#" class="btn pri">Book an extensions workshop →</a></div>
+        </div>
+        <ul>
+          <li>Standard first, then the simplest option</li>
+          <li>Key-user, developer or side-by-side</li>
+          <li>Low-code or pro-code, per app</li>
+          <li>BTP services and sizing</li>
+          <li>Ownership and support model</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="in"><span>© Mawkish Technologies · Colombo, Sri Lanka</span><span>SAP, SAP BTP, SAP Build, Joule and SAP Cloud ERP are trademarks of SAP SE. Screens shown are illustrations.</span></div>
+</footer>
+
+</body></html>

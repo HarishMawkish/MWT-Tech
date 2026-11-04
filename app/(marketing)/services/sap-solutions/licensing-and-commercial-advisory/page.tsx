@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { LicensingPage } from "@/components/sap-licensing/LicensingPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "licensing-and-commercial-advisory";
 
@@ -13,6 +14,7 @@ export default function LicensingAndCommercialAdvisoryPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <LicensingPage />
+    <CanaryNote id="sap" />
     </>
   );
 }

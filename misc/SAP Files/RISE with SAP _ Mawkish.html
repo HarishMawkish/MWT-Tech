@@ -1,0 +1,573 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>RISE with SAP | Mawkish</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Mawkish dark site, full-width bands; each band pairs copy with a drawn SAP Fiori-style screen */
+:root {
+  --bg: #050807;
+  --bg-2: #0a110e;
+  --line: #1c2823;
+  --fg: #eef3f0;
+  --muted: #9aaaa2;
+  --green: #1f7a5a;
+  --green-hi: #34b386;
+  --paper: #f3f6f4;
+  --ink: #142019;
+  --ink-soft: #5c6c65;
+  --fiori: #0a6ed1;
+  --fiori-bg: #f5f6f7;
+  --warn: #e9730c;
+  --display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.in { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 88px; border-top: 1px solid var(--line); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 19px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 16px; display: block; }
+.lede { color: var(--muted); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border: 1px solid transparent; }
+.btn.pri { background: var(--green); color: #fff; }
+.btn.pri:hover { background: #24906a; }
+.btn.sec { border-color: #2c3d36; color: var(--fg); }
+.btn.sec:hover { border-color: var(--green-hi); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
+
+/* header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(5,8,7,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.site .in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; flex-direction: column; align-items: center; font-weight: 800; letter-spacing: .3em; font-size: 9px; color: var(--fg); text-decoration: none; }
+.logo svg { width: 54px; height: 26px; }
+.nav { display: flex; gap: 26px; align-items: center; }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 700; font-size: 12.5px; letter-spacing: .07em; }
+.nav a.on { color: var(--green-hi); }
+.nav .btn { padding: 12px 18px; }
+@media (max-width: 900px) { .nav a:not(.btn) { display: none; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 56px 88px; background: radial-gradient(900px 420px at 80% 10%, rgba(31,122,90,.22), transparent 70%); }
+.crumbs { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 em { font-style: normal; color: var(--green-hi); }
+.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.name-note { margin-top: 28px; font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--green); padding-left: 14px; max-width: 54ch; }
+.name-note b { color: var(--fg); font-weight: 600; }
+
+/* Fiori mock screens */
+.screen { background: var(--fiori-bg); color: #32363a; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06); font-size: 12px; line-height: 1.4; min-width: 0; }
+.shell { background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; gap: 12px; padding: 9px 14px; }
+.shell .sap { background: linear-gradient(135deg,#0a6ed1,#0854a0); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 7px; border-radius: 3px; letter-spacing: .02em; }
+.shell .t { font-weight: 600; color: #32363a; flex: 1; }
+.shell .search { flex: 1.4; background: #eff1f2; border-radius: 16px; height: 24px; display: flex; align-items: center; padding: 0 10px; color: #8b9196; font-size: 11px; }
+.shell .joule-btn { width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); }
+.shell .av { width: 24px; height: 24px; border-radius: 50%; background: #d1e8ff; color: #0a6ed1; font-weight: 700; font-size: 10px; display: grid; place-items: center; }
+.body-pad { padding: 16px; }
+.greet { font-size: 15px; font-weight: 700; color: #1d2d3e; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.tile { background: #fff; border-radius: 10px; padding: 11px 12px; box-shadow: 0 0 0 1px #e5e5e5; min-height: 92px; display: flex; flex-direction: column; justify-content: space-between; }
+.tile .h { font-weight: 600; color: #1d2d3e; font-size: 11.5px; }
+.tile .s { color: #6a6d70; font-size: 10.5px; }
+.tile .k { font-size: 22px; font-weight: 300; color: #0a6ed1; font-variant-numeric: tabular-nums; }
+.tile .k.neg { color: #bb0000; } .tile .k.pos { color: #107e3e; }
+.tile .k small { font-size: 11px; color: #6a6d70; margin-left: 2px; }
+.spark { height: 26px; width: 100%; }
+.split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; margin-top: 10px; }
+.card-f { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; padding: 12px; min-width: 0; }
+.card-f .h { font-weight: 700; font-size: 11.5px; color: #1d2d3e; margin-bottom: 8px; }
+.row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid #eee; font-size: 11px; }
+.row:first-of-type { border-top: 0; }
+.pill { font-size: 9.5px; font-weight: 700; border-radius: 9px; padding: 1px 7px; white-space: nowrap; }
+.pill.ok { background: #f1fdf6; color: #107e3e; box-shadow: inset 0 0 0 1px #c6ecd3; }
+.pill.wr { background: #fef7f1; color: #e9730c; box-shadow: inset 0 0 0 1px #f8d3b0; }
+.pill.in { background: #eef6fe; color: #0a6ed1; box-shadow: inset 0 0 0 1px #c5def7; }
+.joule { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; display: flex; flex-direction: column; min-width: 0; }
+.joule .jh { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid #eee; font-weight: 700; font-size: 11.5px; }
+.joule .jh i { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); display: inline-block; }
+.joule .msgs { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.bub { border-radius: 10px; padding: 7px 9px; font-size: 10.8px; max-width: 92%; }
+.bub.u { align-self: flex-end; background: #0a6ed1; color: #fff; border-bottom-right-radius: 3px; }
+.bub.j { background: #f2f2f7; color: #1d2d3e; border-bottom-left-radius: 3px; }
+.bub.j b { color: #0a6ed1; }
+.typing span { display: inline-block; width: 5px; height: 5px; margin-right: 3px; border-radius: 50%; background: #8b9196; }
+@media (prefers-reduced-motion: no-preference) {
+  .typing span { animation: blink 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
+}
+.caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+/* journey explainer */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.includes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.includes div { background: var(--bg-2); padding: 22px; }
+.includes h3 { font-size: 16px; margin-bottom: 6px; }
+.includes p { color: var(--muted); font-size: 14.5px; }
+.ico { width: 30px; height: 30px; margin-bottom: 12px; color: var(--green-hi); }
+
+/* fit check */
+.fit { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 44px; align-items: start; }
+.qs { display: flex; flex-direction: column; gap: 10px; }
+.q { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.q span { font-size: 15px; min-width: 0; }
+.yn { display: flex; gap: 4px; flex: none; background: #0f1814; border-radius: 9px; padding: 3px; }
+.yn button { font: 700 12px var(--body); letter-spacing: .06em; border: 0; border-radius: 7px; padding: 7px 12px; background: transparent; color: var(--muted); cursor: pointer; }
+.yn button[aria-pressed="true"] { background: var(--green); color: #fff; }
+.yn button.no[aria-pressed="true"] { background: #6b3a12; }
+.result { position: sticky; top: 100px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 28px; }
+.result .lab { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.meter { height: 10px; background: #dde5e1; border-radius: 6px; margin: 14px 0 18px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 6px; transition: width .35s; }
+.result h3 { font-size: 24px; margin-bottom: 10px; }
+.result p { color: var(--ink-soft); font-size: 15px; }
+.result .btn { margin-top: 20px; }
+
+/* capabilities */
+.caps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.cap { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.cap ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+.cap ul li { margin-bottom: 4px; }
+.cap .tagline { color: var(--fg); font-size: 15px; }
+
+/* AI */
+.agents { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.agent { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.agent .n { width: 36px; height: 36px; border-radius: 10px; background: rgba(52,179,134,.12); color: var(--green-hi); display: grid; place-items: center; }
+.agent h3 { font-size: 16px; margin-bottom: 2px; }
+.agent p { color: var(--muted); font-size: 14.5px; }
+.prog { height: 4px; background: #e6e9eb; border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.prog i { display: block; height: 100%; background: #0a6ed1; width: 72%; }
+@media (prefers-reduced-motion: no-preference) {
+  .prog i { animation: load 3.2s ease-in-out infinite alternate; }
+  @keyframes load { from { width: 38% } to { width: 92% } }
+}
+
+/* release timeline */
+.tl { margin-top: 48px; overflow-x: auto; }
+.tl svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.fact { border-top: 2px solid var(--green); padding-top: 14px; }
+.fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 14px; }
+
+/* extensibility */
+.layers { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.layer { display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.layer .who { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--green-hi); padding-top: 3px; }
+.layer h3 { font-size: 16px; margin-bottom: 4px; }
+.layer p { color: var(--muted); font-size: 14.5px; }
+.layer.core { background: var(--paper); color: var(--ink); border-color: transparent; }
+.layer.core .who { color: var(--green); }
+.layer.core p { color: var(--ink-soft); }
+
+/* activate */
+.phases { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ph { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.ph:last-child { border-right: 0; }
+.ph .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.ph h3 { font-size: 17px; }
+.ph p { color: var(--muted); font-size: 13.5px; }
+.ph .we { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--fg); }
+.ph .we b { color: var(--green-hi); font-weight: 700; }
+
+/* users */
+.users { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+.users table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; }
+.users th, .users td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.users th { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.users td:first-child { font-weight: 700; white-space: nowrap; }
+.users td:nth-child(2) { color: var(--muted); }
+.users tr:last-child td { border-bottom: 0; }
+.note { margin-top: 16px; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+/* faq */
+.faq { margin-top: 36px; display: flex; flex-direction: column; gap: 10px; max-width: 860px; }
+details { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 16.5px; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--green-hi); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 18px; max-width: 70ch; }
+
+/* cta */
+.cta-band { background: linear-gradient(120deg, #0e3a2b, #0a1a14 60%); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.cta-band ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cta-band li { display: flex; gap: 10px; font-size: 15px; }
+.cta-band li::before { content: "✓"; color: var(--green-hi); font-weight: 800; }
+footer { padding-block: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+footer .in { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .hero-grid, .two, .fit, .cta-band { grid-template-columns: 1fr; }
+  .caps { grid-template-columns: 1fr 1fr; }
+  .phases { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .ph:nth-child(3) { border-right: 0; }
+  .ph:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .result { position: static; }
+}
+@media (max-width: 620px) {
+  section { padding-block: 64px; }
+  .caps, .includes { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: 1fr; }
+  .ph { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .tiles .tile:nth-child(3) { display: none; }
+  .split { grid-template-columns: 1fr; }
+  .layer { grid-template-columns: 1fr; gap: 6px; }
+  .cta-band { padding: 36px 24px; }
+  .q { flex-direction: column; align-items: flex-start; }
+}
+
+/* light bands: same components, re-tokened */
+section.light { --bg-2: #ffffff; --line: #d9e2dd; --fg: #142019; --muted: #55655e; --green-hi: #17694b; background: #f2f5f3; color: var(--fg); border-top-color: transparent; }
+section.light .includes { background: var(--line); }
+section.light .cap, section.light details { box-shadow: 0 1px 2px rgba(20,32,25,.05); }
+</style>
+<header class="site">
+  <div class="in">
+    <a class="logo" href="#top" aria-label="Mawkish Technologies">
+      <svg viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L20 4 L32 18 L44 4 L62 28 Z" fill="none" stroke="#eef3f0" stroke-width="4" stroke-linejoin="round"/><path d="M20 28 L32 14 L44 28" fill="#eef3f0"/></svg>
+      MAWKISH
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">ABOUT US</a>
+      <a href="#" class="on">OUR SERVICES</a>
+      <a href="#">INDUSTRIES</a>
+      <a href="#">INSIGHTS &amp; PERSPECTIVES</a>
+      <a href="#book" class="btn pri">Schedule a consultation</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+/* RISE-specific components */
+.paths { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.path { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 26px; display: flex; flex-direction: column; gap: 12px; }
+.path .k { font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--green-hi); }
+.path h3 { font-size: 21px; }
+.path p { color: var(--muted); font-size: 15px; }
+.path dl { margin: 6px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; font-size: 14px; border-top: 1px solid var(--line); padding-top: 14px; }
+.path dt { font-weight: 700; color: var(--fg); }
+.path dd { margin: 0; color: var(--muted); }
+.path svg { width: 100%; height: 54px; }
+.stack { display: flex; flex-direction: column; gap: 8px; }
+.lvl { display: grid; grid-template-columns: 1fr 150px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+.lvl div { padding: 14px 18px; }
+.lvl h3 { font-size: 15.5px; margin-bottom: 2px; }
+.lvl p { color: var(--muted); font-size: 13.5px; }
+.lvl .who { display: flex; align-items: center; justify-content: center; text-align: center; font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.lvl.you .who { background: #2a2f2c; color: #eef3f0; }
+.lvl.mk .who { background: var(--green); color: #fff; }
+.lvl.sap .who { background: #0a6ed1; color: #fff; }
+.lvl > div:first-child { background: var(--bg-2); }
+.legend2 { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 14px; font-size: 13px; color: var(--muted); }
+.legend2 i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; }
+.clock { margin-top: 44px; overflow-x: auto; }
+.clock svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.bars { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+.bar-r { display: grid; grid-template-columns: 170px 1fr 44px; gap: 12px; align-items: center; font-size: 11.5px; }
+.bar-r .tr { height: 14px; background: #eef1f2; border-radius: 4px; overflow: hidden; }
+.bar-r .tr i { display: block; height: 100%; background: #0a6ed1; border-radius: 4px; }
+.bar-r b { text-align: right; font-variant-numeric: tabular-nums; }
+.cmp td:nth-child(2), .cmp td:nth-child(3) { color: var(--fg) !important; }
+.cmp td:first-child { color: var(--muted); font-weight: 600 !important; }
+.cmp th:nth-child(3), .cmp td:nth-child(3) { background: rgba(31,122,90,.07); }
+@media (max-width: 980px) { .paths { grid-template-columns: 1fr; } }
+@media (max-width: 620px) { .lvl { grid-template-columns: 1fr; } .lvl .who { justify-content: flex-start; padding: 8px 18px; } .bar-r { grid-template-columns: 120px 1fr 36px; } }
+</style>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="in">
+      <div class="crumbs"><a href="#">Services</a> / <a href="#">SAP Solutions</a> / RISE with SAP</div>
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">RISE with SAP</span>
+          <h1>Move your SAP ERP to the cloud <em>without starting over.</em></h1>
+          <p class="lede">RISE with SAP takes the SAP system your business already runs on and moves it to SAP Cloud ERP Private, on your own private cloud instance. You keep your history, your processes and the custom work that sets you apart. Mawkish plans the move, runs the conversion, and supports you afterwards.</p>
+          <div class="ctas">
+            <a href="#book" class="btn pri">Book a RISE readiness check →</a>
+            <a href="#paths" class="btn sec">See the three paths</a>
+          </div>
+          <p class="name-note"><b>About the names.</b> RISE with SAP is the offering. The software inside it is SAP Cloud ERP Private, also known as SAP S/4HANA Cloud Private Edition.</p>
+        </div>
+
+        <figure style="margin:0">
+          <div class="screen" role="img" aria-label="Illustration of a readiness check summary for an SAP ECC system, showing simplification items, custom code findings and a custom code triage chart">
+            <div class="shell"><span class="sap">SAP</span><span class="t">Readiness Check · ECC 6.0 → Cloud ERP Private</span><span class="av">MK</span></div>
+            <div class="body-pad">
+              <div class="tiles">
+                <div class="tile"><div><div class="h">Simplification items</div><div class="s">Relevant to your system</div></div><div class="k">142</div></div>
+                <div class="tile"><div><div class="h">Custom code objects</div><div class="s">Analysed</div></div><div class="k">3,812</div></div>
+                <div class="tile"><div><div class="h">Unused in 12 months</div><div class="s">Candidates to retire</div></div><div class="k pos">58<small>%</small></div></div>
+              </div>
+              <div class="split">
+                <div class="card-f">
+                  <div class="h">Custom code triage</div>
+                  <div class="bars">
+                    <div class="bar-r"><span>Retire, not used</span><span class="tr"><i style="width:58%"></i></span><b>58%</b></div>
+                    <div class="bar-r"><span>Replace with standard</span><span class="tr"><i style="width:19%"></i></span><b>19%</b></div>
+                    <div class="bar-r"><span>Adapt and keep</span><span class="tr"><i style="width:17%"></i></span><b>17%</b></div>
+                    <div class="bar-r"><span>Move to SAP BTP</span><span class="tr"><i style="width:6%"></i></span><b>6%</b></div>
+                  </div>
+                </div>
+                <div class="card-f">
+                  <div class="h">Conversion plan</div>
+                  <div class="row"><span>Readiness check</span><span class="pill ok">Done</span></div>
+                  <div class="row"><span>Mock conversion 1</span><span class="pill ok">Done</span></div>
+                  <div class="row"><span>Mock conversion 2</span><span class="pill in">Running</span></div>
+                  <div class="row"><span>Cutover rehearsal</span><span class="pill wr">Planned</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="caption">Illustration of a readiness check summary. Sample data.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU GET -->
+  <section class="light">
+    <div class="in two">
+      <div>
+        <span class="eyebrow">What you get</span>
+        <h2>Your SAP system, run by SAP, on the cloud you choose.</h2>
+        <p class="lede">RISE brings the software, the infrastructure and the technical operations together under one SAP contract. SAP looks after the servers, database and backups. You and Mawkish focus on the business processes that run on them.</p>
+        <p class="lede">Unlike GROW with SAP, you get your own private instance. That means room for deeper customisation, all of SAP's industry solutions, and upgrades on your own schedule.</p>
+      </div>
+      <div class="includes">
+        <div>
+          <svg class="ico" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="5" width="22" height="6" rx="2"/><rect x="4" y="13" width="22" height="6" rx="2"/><rect x="4" y="21" width="22" height="5" rx="2"/></svg>
+          <h3>SAP Cloud ERP Private</h3><p>The full SAP S/4HANA system on a private, single-customer instance.</p>
+        </div>
+        <div>
+          <svg class="ico" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 20a6 6 0 0 1 1-12 8 8 0 0 1 15 2 5 5 0 0 1 0 10z"/></svg>
+          <h3>Your choice of cloud</h3><p>Run on Microsoft Azure, AWS, Google Cloud or SAP's own data centres.</p>
+        </div>
+        <div>
+          <svg class="ico" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="15" cy="15" r="10"/><path d="M15 9v6l4 3"/></svg>
+          <h3>Technical operations</h3><p>SAP runs the infrastructure, database, backups, security patches and technical monitoring.</p>
+        </div>
+        <div>
+          <svg class="ico" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 22l6-7 5 4 9-11"/><path d="M5 26h20"/></svg>
+          <h3>Process insight tools</h3><p>Tools that analyse how your current system is really used, so the move is based on facts.</p>
+        </div>
+        <div>
+          <svg class="ico" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 4v6M15 20v6M4 15h6M20 15h6"/><circle cx="15" cy="15" r="4"/></svg>
+          <h3>Platform credits</h3><p>Credits for SAP BTP, to build extensions and integrations outside the core.</p>
+        </div>
+        <div>
+          <svg class="ico" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 13l4 4 10-10"/><rect x="4" y="4" width="22" height="22" rx="4"/></svg>
+          <h3>Tools to run the project</h3><p>Project management, testing and migration tools to plan and track the move.</p>
+        </div>
+      </div>
+    </div>
+    <div class="in"><p class="note" style="margin-top:28px">What's included in a RISE contract depends on SAP's current package and your negotiation. We'll show you exactly what's in your quote.</p></div>
+  </section>
+
+  <!-- CLOCK -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">Why now</span>
+      <h2>The clock on SAP ECC is running.</h2>
+      <p class="lede">Mainstream maintenance for SAP ECC ends in 2027. Extended maintenance runs to 2030 at extra cost. A conversion takes most companies 12 to 24 months once you include planning, so the companies starting now are the ones that finish on their own terms.</p>
+      <div class="clock">
+        <svg viewBox="0 0 1000 200" role="img" aria-label="Timeline from 2025 to 2033: today is late 2026, ECC mainstream maintenance ends at the end of 2027, extended maintenance ends at the end of 2030, and a transition option for RISE customers runs to 2033.">
+          <line x1="40" y1="110" x2="960" y2="110" stroke="#2a3a33" stroke-width="2"/>
+          <g font-family="Manrope, sans-serif" font-size="13" fill="#9aaaa2">
+            <text x="40" y="140">2025</text><text x="155" y="140">2026</text><text x="270" y="140">2027</text><text x="385" y="140">2028</text><text x="500" y="140">2029</text><text x="615" y="140">2030</text><text x="730" y="140">2031</text><text x="845" y="140">2032</text><text x="935" y="140">2033</text>
+          </g>
+          <rect x="40" y="88" width="345" height="16" rx="4" fill="#1f7a5a"/>
+          <rect x="385" y="88" width="345" height="16" rx="4" fill="#b7791f"/>
+          <rect x="730" y="88" width="230" height="16" rx="4" fill="#5c6c65"/>
+          <line x1="250" y1="50" x2="250" y2="118" stroke="#34b386" stroke-width="2" stroke-dasharray="4 4"/>
+          <circle cx="250" cy="110" r="6" fill="#34b386"/>
+          <text x="258" y="44" font-family="Plus Jakarta Sans, sans-serif" font-weight="800" font-size="15" fill="#eef3f0">Today</text>
+          <g font-family="Manrope, sans-serif" font-size="12.5" fill="#eef3f0">
+            <text x="40" y="78">Mainstream, to 2027</text>
+            <text x="390" y="78">Extended maintenance, extra cost, to 2030</text>
+            <text x="735" y="78">RISE transition option, to 2033</text>
+          </g>
+          <g font-family="Manrope, sans-serif" font-size="13" fill="#9aaaa2">
+            <text x="40" y="184">Typical conversion: 12 to 24 months, including planning.</text>
+          </g>
+        </svg>
+      </div>
+      <div class="facts">
+        <div class="fact"><b>2027</b><span>end of mainstream maintenance for SAP ECC</span></div>
+        <div class="fact"><b>2030</b><span>end of extended maintenance, at extra cost</span></div>
+        <div class="fact"><b>12–24</b><span>months for a typical conversion, including planning</span></div>
+        <div class="fact"><b>1</b><span>contract for software, infrastructure and operations</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATHS -->
+  <section class="light" id="paths">
+    <div class="in">
+      <span class="eyebrow">Three ways to move</span>
+      <h2>Keep what works. Leave behind what doesn't.</h2>
+      <p class="lede">There's no single right way to move to SAP Cloud ERP Private. We recommend a path after looking at your system, your data and how much you want to change.</p>
+      <div class="paths">
+        <div class="path">
+          <span class="k">Brownfield</span>
+          <h3>System conversion</h3>
+          <svg viewBox="0 0 300 54" aria-hidden="true"><rect x="2" y="14" width="90" height="26" rx="6" fill="none" stroke="#9aaaa2" stroke-width="2"/><text x="47" y="32" text-anchor="middle" font-family="Manrope" font-size="12" fill="#55655e">ECC</text><path d="M100 27h96" stroke="#1f7a5a" stroke-width="3"/><path d="M190 20l8 7-8 7" fill="none" stroke="#1f7a5a" stroke-width="3"/><rect x="206" y="14" width="90" height="26" rx="6" fill="#1f7a5a"/><text x="251" y="32" text-anchor="middle" font-family="Manrope" font-size="12" fill="#fff">Cloud ERP</text></svg>
+          <p>Your existing system is converted as a whole. Configuration, history and custom code come across, then get cleaned up.</p>
+          <dl><dt>Keeps</dt><dd>All history, processes and custom code</dd><dt>Best when</dt><dd>Your processes work well and you want the fastest, lowest-risk move</dd></dl>
+        </div>
+        <div class="path">
+          <span class="k">Bluefield</span>
+          <h3>Selective data transition</h3>
+          <svg viewBox="0 0 300 54" aria-hidden="true"><rect x="2" y="14" width="90" height="26" rx="6" fill="none" stroke="#9aaaa2" stroke-width="2"/><text x="47" y="32" text-anchor="middle" font-family="Manrope" font-size="12" fill="#55655e">ECC</text><path d="M100 20h96M100 34h60" stroke="#1f7a5a" stroke-width="3" stroke-dasharray="6 5"/><path d="M190 13l8 7-8 7" fill="none" stroke="#1f7a5a" stroke-width="3"/><rect x="206" y="14" width="90" height="26" rx="6" fill="#1f7a5a"/><text x="251" y="32" text-anchor="middle" font-family="Manrope" font-size="12" fill="#fff">Cloud ERP</text></svg>
+          <p>You choose what to bring: certain company codes, years of history or processes. Other areas get redesigned along the way.</p>
+          <dl><dt>Keeps</dt><dd>The data and processes you select</dd><dt>Best when</dt><dd>You want to merge, split or redesign parts of the business during the move</dd></dl>
+        </div>
+        <div class="path">
+          <span class="k">Greenfield</span>
+          <h3>New implementation</h3>
+          <svg viewBox="0 0 300 54" aria-hidden="true"><rect x="2" y="14" width="90" height="26" rx="6" fill="none" stroke="#9aaaa2" stroke-width="2" stroke-dasharray="4 4"/><text x="47" y="32" text-anchor="middle" font-family="Manrope" font-size="12" fill="#55655e">Legacy</text><path d="M100 27h40" stroke="#9aaaa2" stroke-width="2" stroke-dasharray="3 4"/><rect x="206" y="14" width="90" height="26" rx="6" fill="#1f7a5a"/><text x="251" y="32" text-anchor="middle" font-family="Manrope" font-size="12" fill="#fff">Cloud ERP</text><circle cx="174" cy="27" r="9" fill="none" stroke="#1f7a5a" stroke-width="3"/></svg>
+          <p>A fresh system built on SAP best practices. Only open items and master data come across from the old one.</p>
+          <dl><dt>Keeps</dt><dd>Master data and open balances</dd><dt>Best when</dt><dd>The old system is heavily customised and no longer matches how you work</dd></dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO DOES WHAT -->
+  <section>
+    <div class="in two">
+      <div>
+        <span class="eyebrow">Who does what</span>
+        <h2>Clear lines between SAP, Mawkish and your team.</h2>
+        <p class="lede">The most common surprise in RISE projects is what SAP's technical operations do and don't include. SAP runs everything up to the technical layer of the system. Your business processes, configuration, custom code and users are still yours to manage, with Mawkish as your partner.</p>
+        <p class="lede">We set out this split in writing before you sign, so nobody discovers a gap at go-live.</p>
+      </div>
+      <div>
+        <div class="stack">
+          <div class="lvl you"><div><h3>Business ownership</h3><p>Process owners, decisions, data quality, sign-off.</p></div><span class="who">Your team</span></div>
+          <div class="lvl mk"><div><h3>Application management</h3><p>Configuration, custom code, integrations, roles, user support, testing each upgrade.</p></div><span class="who">Mawkish</span></div>
+          <div class="lvl mk"><div><h3>Transition project</h3><p>Assessment, conversion, data migration, testing, cutover, training.</p></div><span class="who">Mawkish</span></div>
+          <div class="lvl sap"><div><h3>Technical operations</h3><p>System administration, database, backups, technical upgrades and monitoring.</p></div><span class="who">SAP</span></div>
+          <div class="lvl sap"><div><h3>Infrastructure</h3><p>Servers, storage, network and security on your chosen cloud.</p></div><span class="who">SAP</span></div>
+        </div>
+        <div class="legend2"><span><i style="background:#2a2f2c;border:1px solid #55655e"></i>Your team</span><span><i style="background:var(--green)"></i>Mawkish</span><span><i style="background:#0a6ed1"></i>SAP</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RISE vs GROW -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">RISE or GROW?</span>
+      <h2>Two routes to SAP's cloud ERP.</h2>
+      <p class="lede">Both run on SAP's cloud and include AI and operations. The difference is how much you keep and how much control you want over the system.</p>
+      <div class="users cmp">
+        <table>
+          <thead><tr><th></th><th>GROW with SAP</th><th>RISE with SAP</th></tr></thead>
+          <tbody>
+            <tr><td>Product</td><td>SAP Cloud ERP</td><td>SAP Cloud ERP Private</td></tr>
+            <tr><td>Who it's for</td><td>New to SAP, growing mid-sized companies, subsidiaries</td><td>Existing SAP customers and larger, more complex businesses</td></tr>
+            <tr><td>Your instance</td><td>Shared cloud service</td><td>Private instance, just for you</td></tr>
+            <tr><td>Starting point</td><td>Always a fresh start</td><td>Convert, select or start fresh</td></tr>
+            <tr><td>Upgrades</td><td>By SAP, twice a year</td><td>On your schedule</td></tr>
+            <tr><td>Custom code</td><td>Upgrade-safe extensions only</td><td>Classic custom code allowed, with clean core encouraged</td></tr>
+            <tr><td>Industry coverage</td><td>Core industries, growing each release</td><td>All SAP industry solutions</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Many groups use both: RISE at head office and GROW in subsidiaries, connected as one two-tier ERP. <a href="#" style="color:var(--green-hi);font-weight:700">Read about GROW with SAP →</a></p>
+    </div>
+  </section>
+
+  <!-- CLEAN CORE / AI -->
+  <section>
+    <div class="in two">
+      <div>
+        <span class="eyebrow">More than a lift and shift</span>
+        <h2>Come out with a cleaner system, ready for AI.</h2>
+        <p class="lede">Moving to the cloud with all your old workarounds only moves the problem. In most ECC systems, more than half the custom code is never used. We use the move to retire what's dead, replace what the standard now does, and move the rest to upgrade-safe extensions.</p>
+        <p class="lede">A clean core is also what makes SAP's AI useful. Joule and AI agents work best on standard processes and clean data. A cleaner system pays off from day one.</p>
+      </div>
+      <div class="layers">
+        <div class="layer"><span class="who">Retire</span><div><h3>Unused custom code</h3><p>Usage data shows what nobody has run in a year. It doesn't come across.</p></div></div>
+        <div class="layer"><span class="who">Replace</span><div><h3>Workarounds the standard now covers</h3><p>Many old custom programs exist because ECC couldn't do something that SAP S/4HANA now does as standard.</p></div></div>
+        <div class="layer"><span class="who">Rebuild</span><div><h3>What truly differentiates you</h3><p>Moved to upgrade-safe extensions inside the system or on SAP BTP.</p></div></div>
+        <div class="layer core"><span class="who">Result</span><div><h3>A cleaner core</h3><p>Faster upgrades, lower support costs, and a system AI can actually work with.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW WE DELIVER -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">How Mawkish delivers</span>
+      <h2>A conversion you rehearse before you run it.</h2>
+      <p class="lede">We follow SAP Activate, SAP's method for cloud ERP projects, adapted for moving an existing system. The key difference is practice: we run full trial conversions on copies of your system before the real one, so go-live weekend holds no surprises.</p>
+      <div class="phases">
+        <div class="ph"><span class="st">Step 1</span><h3>Discover</h3><p>Business case and path decision.</p><p class="we"><b>We:</b> run the readiness check and analyse your custom code.</p></div>
+        <div class="ph"><span class="st">Step 2</span><h3>Prepare</h3><p>Plan, team and systems in place.</p><p class="we"><b>We:</b> fix data issues early and agree the cleanup scope.</p></div>
+        <div class="ph"><span class="st">Step 3</span><h3>Explore</h3><p>Confirm processes and changes.</p><p class="we"><b>We:</b> review each process with your owners and decide what changes.</p></div>
+        <div class="ph"><span class="st">Step 4</span><h3>Realize</h3><p>Convert, adapt and test.</p><p class="we"><b>We:</b> run trial conversions and adapt custom code and integrations.</p></div>
+        <div class="ph"><span class="st">Step 5</span><h3>Deploy</h3><p>Cutover and go-live.</p><p class="we"><b>We:</b> rehearse the cutover, then run it with minimal downtime.</p></div>
+        <div class="ph"><span class="st">Step 6</span><h3>Run</h3><p>Support and continuous improvement.</p><p class="we"><b>We:</b> manage the application and plan your upgrades.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">Questions we hear</span>
+      <h2>Straight answers.</h2>
+      <div class="faq">
+        <details><summary>Is RISE with SAP just hosting?</summary><p>No. Hosting moves your servers somewhere else. RISE moves you to SAP Cloud ERP Private, with infrastructure, technical operations and tools under one SAP contract. You also move from ECC to SAP S/4HANA along the way.</p></details>
+        <details><summary>Can we keep our custom code?</summary><p>Yes. Private Edition allows classic custom code, unlike GROW with SAP. We still recommend cleaning it up during the move. Most systems carry a lot of code that's no longer used, and every object you keep has to be adapted and tested.</p></details>
+        <details><summary>How long does a conversion take?</summary><p>For most companies, 12 to 24 months from planning to go-live. The main factors are system size, how much custom code there is, data quality, the number of integrations, and which path you take. We give you a firm plan after the readiness check.</p></details>
+        <details><summary>How much downtime is there at go-live?</summary><p>Usually a planned weekend. We rehearse the cutover several times on copies of your system, so the timing is measured, not guessed.</p></details>
+        <details><summary>Do we have to upgrade every year?</summary><p>No. With Private Edition, you decide when to move to a new release, within SAP's maintenance windows. We help you plan upgrades around your business calendar.</p></details>
+        <details><summary>We're not on SAP today. Is RISE still an option?</summary><p>Yes. Larger or more complex companies sometimes choose Private Edition for a new implementation, for example for industry coverage or deeper customisation. If you're a growing mid-sized company, GROW with SAP is often the better fit. We'll recommend one honestly.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="book">
+    <div class="in">
+      <div class="cta-band">
+        <div>
+          <span class="eyebrow">Start here</span>
+          <h2>Know your path, effort and timeline before you commit.</h2>
+          <p class="lede">The Mawkish RISE Readiness Check analyses your current SAP system and gives you a fact-based plan you can take to your board.</p>
+          <div style="margin-top:28px"><a href="#" class="btn pri">Book your readiness check →</a></div>
+        </div>
+        <ul>
+          <li>Recommended path: conversion, selective or new</li>
+          <li>Custom code findings and cleanup plan</li>
+          <li>Data quality and archiving review</li>
+          <li>Timeline, team and budget range</li>
+          <li>What SAP runs, what you run, and what we run</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="in"><span>© Mawkish Technologies · Colombo, Sri Lanka</span><span>SAP, SAP S/4HANA, RISE with SAP and Joule are trademarks of SAP SE. Screens shown are illustrations.</span></div>
+</footer>
+
+</body></html>

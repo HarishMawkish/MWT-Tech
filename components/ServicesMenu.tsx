@@ -73,13 +73,13 @@ function Heading({ children }: { children: string }) {
   );
 }
 
-function AllServicesLink({ className = "" }: { className?: string }) {
+function AllServicesLink({ className = "", href = "/services", label = "All services" }: { className?: string; href?: string; label?: string }) {
   return (
     <Link
-      href="/services"
+      href={href}
       className={`group inline-flex items-center gap-2 text-[13px] font-extrabold uppercase tracking-[0.2em] text-[#1f7a5a] transition-colors hover:text-[#12201a] ${className}`}
     >
-      All services
+      {label}
       <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
         &rarr;
       </span>
@@ -134,17 +134,20 @@ function FeaturedCard({
   f,
   delay,
   current,
+  compact = false,
 }: {
   f: MenuFeatured;
   delay: number;
   current: boolean;
+  /** Three to a row (the cloud platforms) rather than two. */
+  compact?: boolean;
 }) {
   return (
     <li className="sap-rise" style={{ animationDelay: `${delay}ms`, animationDuration: "0.5s" }}>
       <Link
         href={f.href}
         aria-current={current ? "page" : undefined}
-        className="group relative flex items-center gap-4 rounded-[14px] border border-[#cfd9d4] bg-white px-[18px] py-[11px] group-data-[tight=true]/menu:py-2 text-[#12201a] transition-colors duration-200 hover:border-[#1f7a5a]"
+        className={`group relative flex h-full items-center rounded-[14px] border border-[#cfd9d4] bg-white py-[11px] group-data-[tight=true]/menu:py-2 text-[#12201a] transition-colors duration-200 hover:border-[#1f7a5a] ${compact ? "gap-2.5 px-3" : "gap-4 px-[18px]"}`}
       >
         {f.mark ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -155,12 +158,12 @@ function FeaturedCard({
           />
         ) : null}
         <span className="min-w-0 flex-1">
-          <span className="block text-[18px] font-extrabold uppercase leading-[1.25] tracking-[0.03em]">{f.label}</span>
-          <span className="block text-[13.5px] leading-[1.3] text-[#5b6b64]">{f.sub}</span>
+          <span className={`block font-extrabold uppercase leading-[1.25] ${compact ? "whitespace-nowrap text-[14px] tracking-[0.01em]" : "text-[18px] tracking-[0.03em]"}`}>{f.label}</span>
+          <span className={`block leading-[1.3] text-[#5b6b64] ${compact ? "whitespace-nowrap text-[13px]" : "text-[13.5px]"}`}>{f.sub}</span>
         </span>
         <span
           aria-hidden="true"
-          className="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-full bg-[#eef2f0] text-[#1f7a5a] transition-colors duration-200 group-hover:bg-[#1f7a5a] group-hover:text-white"
+          className={`grid shrink-0 place-items-center rounded-full bg-[#eef2f0] text-[#1f7a5a] transition-colors duration-200 group-hover:bg-[#1f7a5a] group-hover:text-white ${compact ? "h-[30px] w-[30px]" : "h-[34px] w-[34px]"}`}
         >
           &rarr;
         </span>
@@ -404,9 +407,9 @@ function Panel({ cat, pathname }: { cat: MenuCategory; pathname: string }) {
     return (
       <div className={MENU_FONT}>
         {cat.cta ? <Eyebrow>{cat.featuredTitle ?? "Featured"}</Eyebrow> : <HeaderRow title={cat.featuredTitle ?? "Featured"} />}
-        <ul className="mb-7 group-data-[tight=true]/menu:mb-[18px] grid grid-cols-2 gap-4">
+        <ul className={`mb-7 group-data-[tight=true]/menu:mb-[18px] grid gap-4 ${cat.featuredCols === 3 ? "grid-cols-3" : "grid-cols-2"}`}>
           {cat.featured.map((f, i) => (
-            <FeaturedCard key={f.href} f={f} delay={i * 80} current={pathname === f.href} />
+            <FeaturedCard key={f.href} f={f} delay={i * 80} current={pathname === f.href} compact={cat.featuredCols === 3} />
           ))}
         </ul>
         <div className="grid grid-cols-3 gap-7 group-data-[tight=true]/menu:gap-y-[18px]">
@@ -427,7 +430,7 @@ function Panel({ cat, pathname }: { cat: MenuCategory; pathname: string }) {
           ))}
           {cat.cta && <CtaCard cta={cat.cta} delay={140 + groups.length * 50} />}
         </div>
-        {cat.cta && <AllServicesLink className="mt-[22px] group-data-[tight=true]/menu:mt-3.5" />}
+        {cat.cta && <AllServicesLink className="mt-[22px] group-data-[tight=true]/menu:mt-3.5" href={cat.allHref} label={cat.allLabel} />}
       </div>
     );
   }

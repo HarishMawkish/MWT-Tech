@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { TwoTierPage } from "@/components/sap-twotier/TwoTierPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "two-tier-erp-for-subsidiaries";
 
@@ -13,6 +14,7 @@ export default function TwoTierErpForSubsidiariesPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <TwoTierPage />
+    <CanaryNote id="sap" />
     </>
   );
 }

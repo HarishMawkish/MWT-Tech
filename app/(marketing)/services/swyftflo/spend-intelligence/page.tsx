@@ -3,6 +3,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { SwPage } from "@/components/swyftflo/SwPage";
 import { SpendBody } from "@/components/swyftflo/pages/SpendBody";
 import { swyftfloLd, swyftfloMetadata } from "@/lib/swyftflo-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "spend-intelligence";
 
@@ -15,6 +16,7 @@ export default function SpendIntelligencePage() {
       <SwPage>
         <SpendBody />
       </SwPage>
+    <CanaryNote id="swyftflo" />
     </>
   );
 }

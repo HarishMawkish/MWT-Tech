@@ -18,6 +18,7 @@ import {
 } from "@/lib/sanity/queries";
 import { urlFor } from "@/lib/sanity/image";
 import { splitContentAtMiddle } from "@/lib/sanity/splitContent";
+import { CanaryNote } from "@/components/CanaryNote";
 
 export const revalidate = 60;
 
@@ -291,6 +292,7 @@ export default async function InsightDetailPage({
       )}
 
       <CtaBand />
+    <CanaryNote id="insights" />
     </>
   );
 }

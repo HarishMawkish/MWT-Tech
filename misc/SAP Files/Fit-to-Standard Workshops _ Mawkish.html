@@ -1,0 +1,554 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Fit-to-Standard Workshops | Mawkish</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Mawkish dark site, full-width bands; each band pairs copy with a drawn SAP Fiori-style screen */
+:root {
+  --bg: #050807;
+  --bg-2: #0a110e;
+  --line: #1c2823;
+  --fg: #eef3f0;
+  --muted: #9aaaa2;
+  --green: #1f7a5a;
+  --green-hi: #34b386;
+  --paper: #f3f6f4;
+  --ink: #142019;
+  --ink-soft: #5c6c65;
+  --fiori: #0a6ed1;
+  --fiori-bg: #f5f6f7;
+  --warn: #e9730c;
+  --display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.in { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 88px; border-top: 1px solid var(--line); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 19px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--green-hi); margin-bottom: 16px; display: block; }
+.lede { color: var(--muted); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border: 1px solid transparent; }
+.btn.pri { background: var(--green); color: #fff; }
+.btn.pri:hover { background: #24906a; }
+.btn.sec { border-color: #2c3d36; color: var(--fg); }
+.btn.sec:hover { border-color: var(--green-hi); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 3px; }
+
+/* header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(5,8,7,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.site .in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; flex-direction: column; align-items: center; font-weight: 800; letter-spacing: .3em; font-size: 9px; color: var(--fg); text-decoration: none; }
+.logo svg { width: 54px; height: 26px; }
+.nav { display: flex; gap: 26px; align-items: center; }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 700; font-size: 12.5px; letter-spacing: .07em; }
+.nav a.on { color: var(--green-hi); }
+.nav .btn { padding: 12px 18px; }
+@media (max-width: 900px) { .nav a:not(.btn) { display: none; } }
+
+/* hero */
+.hero { border-top: 0; padding-block: 56px 88px; background: radial-gradient(900px 420px at 80% 10%, rgba(31,122,90,.22), transparent 70%); }
+.crumbs { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; letter-spacing: -.02em; }
+.hero h1 em { font-style: normal; color: var(--green-hi); }
+.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.name-note { margin-top: 28px; font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--green); padding-left: 14px; max-width: 54ch; }
+.name-note b { color: var(--fg); font-weight: 600; }
+
+/* Fiori mock screens */
+.screen { background: var(--fiori-bg); color: #32363a; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06); font-size: 12px; line-height: 1.4; min-width: 0; }
+.shell { background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; gap: 12px; padding: 9px 14px; }
+.shell .sap { background: linear-gradient(135deg,#0a6ed1,#0854a0); color: #fff; font-weight: 800; font-size: 11px; padding: 3px 7px; border-radius: 3px; letter-spacing: .02em; }
+.shell .t { font-weight: 600; color: #32363a; flex: 1; }
+.shell .search { flex: 1.4; background: #eff1f2; border-radius: 16px; height: 24px; display: flex; align-items: center; padding: 0 10px; color: #8b9196; font-size: 11px; }
+.shell .joule-btn { width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); }
+.shell .av { width: 24px; height: 24px; border-radius: 50%; background: #d1e8ff; color: #0a6ed1; font-weight: 700; font-size: 10px; display: grid; place-items: center; }
+.body-pad { padding: 16px; }
+.greet { font-size: 15px; font-weight: 700; color: #1d2d3e; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.tile { background: #fff; border-radius: 10px; padding: 11px 12px; box-shadow: 0 0 0 1px #e5e5e5; min-height: 92px; display: flex; flex-direction: column; justify-content: space-between; }
+.tile .h { font-weight: 600; color: #1d2d3e; font-size: 11.5px; }
+.tile .s { color: #6a6d70; font-size: 10.5px; }
+.tile .k { font-size: 22px; font-weight: 300; color: #0a6ed1; font-variant-numeric: tabular-nums; }
+.tile .k.neg { color: #bb0000; } .tile .k.pos { color: #107e3e; }
+.tile .k small { font-size: 11px; color: #6a6d70; margin-left: 2px; }
+.spark { height: 26px; width: 100%; }
+.split { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; margin-top: 10px; }
+.card-f { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; padding: 12px; min-width: 0; }
+.card-f .h { font-weight: 700; font-size: 11.5px; color: #1d2d3e; margin-bottom: 8px; }
+.row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid #eee; font-size: 11px; }
+.row:first-of-type { border-top: 0; }
+.pill { font-size: 9.5px; font-weight: 700; border-radius: 9px; padding: 1px 7px; white-space: nowrap; }
+.pill.ok { background: #f1fdf6; color: #107e3e; box-shadow: inset 0 0 0 1px #c6ecd3; }
+.pill.wr { background: #fef7f1; color: #e9730c; box-shadow: inset 0 0 0 1px #f8d3b0; }
+.pill.in { background: #eef6fe; color: #0a6ed1; box-shadow: inset 0 0 0 1px #c5def7; }
+.joule { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px #e5e5e5; display: flex; flex-direction: column; min-width: 0; }
+.joule .jh { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid #eee; font-weight: 700; font-size: 11.5px; }
+.joule .jh i { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 200deg, #5d36ff, #0a6ed1, #34b386, #5d36ff); display: inline-block; }
+.joule .msgs { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.bub { border-radius: 10px; padding: 7px 9px; font-size: 10.8px; max-width: 92%; }
+.bub.u { align-self: flex-end; background: #0a6ed1; color: #fff; border-bottom-right-radius: 3px; }
+.bub.j { background: #f2f2f7; color: #1d2d3e; border-bottom-left-radius: 3px; }
+.bub.j b { color: #0a6ed1; }
+.typing span { display: inline-block; width: 5px; height: 5px; margin-right: 3px; border-radius: 50%; background: #8b9196; }
+@media (prefers-reduced-motion: no-preference) {
+  .typing span { animation: blink 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
+}
+.caption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+/* journey explainer */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.includes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.includes div { background: var(--bg-2); padding: 22px; }
+.includes h3 { font-size: 16px; margin-bottom: 6px; }
+.includes p { color: var(--muted); font-size: 14.5px; }
+.ico { width: 30px; height: 30px; margin-bottom: 12px; color: var(--green-hi); }
+
+/* fit check */
+.fit { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 44px; align-items: start; }
+.qs { display: flex; flex-direction: column; gap: 10px; }
+.q { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.q span { font-size: 15px; min-width: 0; }
+.yn { display: flex; gap: 4px; flex: none; background: #0f1814; border-radius: 9px; padding: 3px; }
+.yn button { font: 700 12px var(--body); letter-spacing: .06em; border: 0; border-radius: 7px; padding: 7px 12px; background: transparent; color: var(--muted); cursor: pointer; }
+.yn button[aria-pressed="true"] { background: var(--green); color: #fff; }
+.yn button.no[aria-pressed="true"] { background: #6b3a12; }
+.result { position: sticky; top: 100px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 28px; }
+.result .lab { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.meter { height: 10px; background: #dde5e1; border-radius: 6px; margin: 14px 0 18px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 6px; transition: width .35s; }
+.result h3 { font-size: 24px; margin-bottom: 10px; }
+.result p { color: var(--ink-soft); font-size: 15px; }
+.result .btn { margin-top: 20px; }
+
+/* capabilities */
+.caps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.cap { background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.cap ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+.cap ul li { margin-bottom: 4px; }
+.cap .tagline { color: var(--fg); font-size: 15px; }
+
+/* AI */
+.agents { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.agent { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+.agent .n { width: 36px; height: 36px; border-radius: 10px; background: rgba(52,179,134,.12); color: var(--green-hi); display: grid; place-items: center; }
+.agent h3 { font-size: 16px; margin-bottom: 2px; }
+.agent p { color: var(--muted); font-size: 14.5px; }
+.prog { height: 4px; background: #e6e9eb; border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.prog i { display: block; height: 100%; background: #0a6ed1; width: 72%; }
+@media (prefers-reduced-motion: no-preference) {
+  .prog i { animation: load 3.2s ease-in-out infinite alternate; }
+  @keyframes load { from { width: 38% } to { width: 92% } }
+}
+
+/* release timeline */
+.tl { margin-top: 48px; overflow-x: auto; }
+.tl svg { min-width: 760px; width: 100%; height: auto; display: block; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.fact { border-top: 2px solid var(--green); padding-top: 14px; }
+.fact b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 14px; }
+
+/* extensibility */
+.layers { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.layer { display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-2); }
+.layer .who { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--green-hi); padding-top: 3px; }
+.layer h3 { font-size: 16px; margin-bottom: 4px; }
+.layer p { color: var(--muted); font-size: 14.5px; }
+.layer.core { background: var(--paper); color: var(--ink); border-color: transparent; }
+.layer.core .who { color: var(--green); }
+.layer.core p { color: var(--ink-soft); }
+
+/* activate */
+.phases { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 0; margin-top: 48px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ph { padding: 22px 18px; border-right: 1px solid var(--line); background: var(--bg-2); display: flex; flex-direction: column; gap: 8px; }
+.ph:last-child { border-right: 0; }
+.ph .st { font-size: 11px; font-weight: 800; letter-spacing: .16em; color: var(--green-hi); text-transform: uppercase; }
+.ph h3 { font-size: 17px; }
+.ph p { color: var(--muted); font-size: 13.5px; }
+.ph .we { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--fg); }
+.ph .we b { color: var(--green-hi); font-weight: 700; }
+
+/* users */
+.users { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+.users table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; }
+.users th, .users td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.users th { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: var(--bg-2); }
+.users td:first-child { font-weight: 700; white-space: nowrap; }
+.users td:nth-child(2) { color: var(--muted); }
+.users tr:last-child td { border-bottom: 0; }
+.note { margin-top: 16px; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+/* faq */
+.faq { margin-top: 36px; display: flex; flex-direction: column; gap: 10px; max-width: 860px; }
+details { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 0 20px; }
+summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 16.5px; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--green-hi); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 18px; max-width: 70ch; }
+
+/* cta */
+.cta-band { background: linear-gradient(120deg, #0e3a2b, #0a1a14 60%); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.cta-band ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cta-band li { display: flex; gap: 10px; font-size: 15px; }
+.cta-band li::before { content: "✓"; color: var(--green-hi); font-weight: 800; }
+footer { padding-block: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+footer .in { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .hero-grid, .two, .fit, .cta-band { grid-template-columns: 1fr; }
+  .caps { grid-template-columns: 1fr 1fr; }
+  .phases { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .ph:nth-child(3) { border-right: 0; }
+  .ph:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .result { position: static; }
+}
+@media (max-width: 620px) {
+  section { padding-block: 64px; }
+  .caps, .includes { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: 1fr; }
+  .ph { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .tiles .tile:nth-child(3) { display: none; }
+  .split { grid-template-columns: 1fr; }
+  .layer { grid-template-columns: 1fr; gap: 6px; }
+  .cta-band { padding: 36px 24px; }
+  .q { flex-direction: column; align-items: flex-start; }
+}
+
+/* light bands: same components, re-tokened */
+section.light { --bg-2: #ffffff; --line: #d9e2dd; --fg: #142019; --muted: #55655e; --green-hi: #17694b; background: #f2f5f3; color: var(--fg); border-top-color: transparent; }
+section.light .includes { background: var(--line); }
+section.light .cap, section.light details { box-shadow: 0 1px 2px rgba(20,32,25,.05); }
+</style>
+<header class="site">
+  <div class="in">
+    <a class="logo" href="#top" aria-label="Mawkish Technologies">
+      <svg viewBox="0 0 64 30" aria-hidden="true"><path d="M2 28 L20 4 L32 18 L44 4 L62 28 Z" fill="none" stroke="#eef3f0" stroke-width="4" stroke-linejoin="round"/><path d="M20 28 L32 14 L44 28" fill="#eef3f0"/></svg>
+      MAWKISH
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">ABOUT US</a>
+      <a href="#" class="on">OUR SERVICES</a>
+      <a href="#">INDUSTRIES</a>
+      <a href="#">INSIGHTS &amp; PERSPECTIVES</a>
+      <a href="#book" class="btn pri">Schedule a consultation</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+/* Fit-to-standard components */
+.vs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 44px; }
+.vs > div { border: 1px solid var(--line); border-radius: 16px; padding: 26px; background: var(--bg-2); }
+.vs > div.new { border-color: var(--green-hi); box-shadow: inset 0 3px 0 var(--green-hi); }
+.vs h3 { font-size: 19px; margin-bottom: 4px; }
+.vs .sub { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+.vs ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.vs li { display: grid; grid-template-columns: 110px 1fr; gap: 12px; font-size: 15px; border-top: 1px solid var(--line); padding-top: 12px; }
+.vs li span { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+.steps { display: flex; flex-direction: column; margin-top: 44px; border-left: 2px solid var(--line); margin-left: 18px; }
+.step { position: relative; padding: 0 0 30px 40px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.3fr); gap: 28px; }
+.step:last-child { padding-bottom: 0; }
+.step .num { position: absolute; left: -19px; top: -2px; width: 36px; height: 36px; border-radius: 50%; background: var(--green); color: #fff; font-family: var(--display); font-weight: 800; display: grid; place-items: center; font-size: 15px; }
+.step h3 { font-size: 19px; margin-bottom: 4px; }
+.step .tm { font-size: 12px; font-weight: 700; letter-spacing: .1em; color: var(--green-hi); text-transform: uppercase; }
+.step p { color: var(--muted); font-size: 15px; }
+.ladder { display: flex; flex-direction: column; gap: 8px; }
+.rung { display: grid; grid-template-columns: 44px 1fr auto; gap: 16px; align-items: center; border-radius: 12px; padding: 14px 18px; border: 1px solid var(--line); background: var(--bg-2); }
+.rung .i { font-family: var(--display); font-weight: 800; font-size: 20px; color: var(--green-hi); }
+.rung h3 { font-size: 16px; }
+.rung p { color: var(--muted); font-size: 13.5px; }
+.rung .cost { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; padding: 4px 9px; border-radius: 6px; }
+.c0 { background: #e3f3eb; color: #17694b; } .c1 { background: #eef3d6; color: #5a6b10; } .c2 { background: #fbefd9; color: #8a5a00; } .c3 { background: #fbe3d3; color: #9a3d00; }
+.rung.never { background: transparent; border-style: dashed; opacity: .8; }
+.rung.never .i { color: #b42318; }
+.c4 { background: #fde2e0; color: #b42318; }
+.tests { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.tests div { border-left: 3px solid var(--green-hi); padding: 4px 0 4px 16px; }
+.tests b { display: block; font-family: var(--display); font-size: 17px; }
+.tests span { color: var(--muted); font-size: 14.5px; }
+.agenda { margin-top: 40px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ag { display: grid; grid-template-columns: 110px 1fr 220px; gap: 18px; padding: 16px 22px; border-top: 1px solid var(--line); align-items: start; background: var(--bg-2); }
+.ag:first-child { border-top: 0; }
+.ag .t { font-family: var(--display); font-weight: 800; font-variant-numeric: tabular-nums; }
+.ag p { color: var(--muted); font-size: 14px; }
+.ag .who { font-size: 13px; color: var(--muted); }
+.ag.brk { background: transparent; padding-block: 10px; }
+.ag.brk .t, .ag.brk p { color: var(--muted); font-weight: 600; font-size: 13px; }
+.sid { display: inline-block; font-size: 11px; font-weight: 800; padding: 1px 7px; border-radius: 5px; background: rgba(52,179,134,.14); color: var(--green-hi); margin-left: 6px; vertical-align: 2px; }
+.prep { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.prep .cap h3 { font-size: 17px; }
+.prep .cap p { color: var(--muted); font-size: 14.5px; }
+.seq { margin-top: 28px; overflow-x: auto; }
+.seq svg { min-width: 720px; width: 100%; height: auto; display: block; }
+.locks { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+.lock { display: grid; grid-template-columns: 28px 1fr; gap: 12px; border: 1px solid var(--line); border-radius: 12px; padding: 16px; background: var(--bg-2); }
+.lock svg { color: var(--green-hi); }
+.lock h3 { font-size: 15.5px; margin-bottom: 2px; }
+.lock p { color: var(--muted); font-size: 13.5px; }
+.outs { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.outs .cap h3 { font-size: 17px; }
+.outs .cap p { color: var(--muted); font-size: 14.5px; }
+.outs .cap .tag2 { font-size: 10.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--green-hi); }
+@media (max-width: 980px) { .prep, .outs { grid-template-columns: 1fr 1fr; } .step { grid-template-columns: 1fr; gap: 6px; } }
+@media (max-width: 720px) { .vs, .locks { grid-template-columns: 1fr; } .ag { grid-template-columns: 80px 1fr; } .ag .who { grid-column: 2; } }
+@media (max-width: 620px) { .prep, .outs { grid-template-columns: 1fr; } .rung { grid-template-columns: 32px 1fr; } .rung .cost { grid-column: 2; justify-self: start; } .vs li { grid-template-columns: 1fr; gap: 2px; } }
+</style>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="in">
+      <div class="crumbs"><a href="#">Services</a> / <a href="#">SAP Solutions</a> / Fit-to-Standard Workshops</div>
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Fit-to-Standard Workshops</span>
+          <h1>See your business running in SAP <em>before you change a thing.</em></h1>
+          <p class="lede">Traditional ERP projects begin with months of specifications describing a system nobody has seen yet. Fit-to-standard flips that around. We show your team SAP's ready-made processes working in a live system, they tell us what really has to be different, and only those gaps get built.</p>
+          <div class="ctas">
+            <a href="#book" class="btn pri">Plan your workshops →</a>
+            <a href="#anatomy" class="btn sec">Inside a workshop</a>
+          </div>
+          <p class="name-note"><b>Part of every Mawkish SAP Cloud ERP project.</b> Fit-to-standard is the Explore phase of SAP Activate, SAP's method for cloud ERP. It runs the same way for GROW and RISE.</p>
+        </div>
+
+        <figure style="margin:0">
+          <div class="screen" role="img" aria-label="Illustration of a requirements list captured during a Sell from Stock workshop, with each requirement classified by how it will be met">
+            <div class="shell"><span class="sap">SAP</span><span class="t">Cloud ALM · Requirements</span><span class="av">MK</span></div>
+            <div class="body-pad">
+              <div class="tiles">
+                <div class="tile"><div><div class="h">Sell from Stock</div><div class="s">BD9 · Workshop 2 of 6</div></div><div class="k pos">Fits<small>with 4 changes</small></div></div>
+                <div class="tile"><div><div class="h">Requirements raised</div><div class="s">This workshop</div></div><div class="k">11</div></div>
+                <div class="tile"><div><div class="h">Solved by standard</div><div class="s">No build needed</div></div><div class="k pos">7</div></div>
+              </div>
+              <div class="card-f" style="margin-top:10px">
+                <div class="h">Requirements · Sell from Stock</div>
+                <div class="row"><span>Customer price list by region</span><span class="pill ok">Configuration</span></div>
+                <div class="row"><span>Product grade field on sales order</span><span class="pill in">Key-user field</span></div>
+                <div class="row"><span>Delivery note with company branding</span><span class="pill in">Form template</span></div>
+                <div class="row"><span>Weighbridge reading at goods issue</span><span class="pill wr">Integration</span></div>
+                <div class="row"><span>Separate approval for every order</span><span class="pill ok">Standard: credit check</span></div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="caption">Illustration of requirements captured in SAP Cloud ALM during a workshop. Sample data.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- OLD VS NEW -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">Why it's different</span>
+      <h2>Stop describing the system you want. Start reacting to the one you'll get.</h2>
+      <p class="lede">In a blueprint project, people imagine requirements and consultants write them down. Most of those requirements describe how the old system worked. Fit-to-standard starts from a working system, so the conversation is about real gaps, not habits.</p>
+      <div class="vs">
+        <div>
+          <h3>Traditional blueprint</h3>
+          <p class="sub">How ERP projects used to start</p>
+          <ul>
+            <li><span>Starting point</span>A blank page and interviews about the current system</li>
+            <li><span>Output</span>Hundreds of pages of specifications</li>
+            <li><span>Users see SAP</span>Months later, at testing</li>
+            <li><span>Typical result</span>The old system rebuilt in SAP, with custom code that slows every upgrade</li>
+          </ul>
+        </div>
+        <div class="new">
+          <h3>Fit-to-standard</h3>
+          <p class="sub">How SAP Cloud ERP projects start</p>
+          <ul>
+            <li><span>Starting point</span>SAP's preconfigured process running with sample data</li>
+            <li><span>Output</span>A short list of real gaps, each with an agreed solution</li>
+            <li><span>Users see SAP</span>On day one, and they click through it themselves</li>
+            <li><span>Typical result</span>Mostly standard processes, a clean core and upgrades that just work</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANATOMY -->
+  <section id="anatomy">
+    <div class="in">
+      <span class="eyebrow">Inside a workshop</span>
+      <h2>Seven steps, the same every time.</h2>
+      <p class="lede">Each workshop covers one or two business processes, such as selling from stock or paying suppliers. Two Mawkish consultants run it: one leads and demonstrates, the other records every decision as it happens.</p>
+      <div class="steps">
+        <div class="step"><span class="num">1</span><div><span class="tm">10 minutes</span><h3>Set the ground rules</h3></div><p>Why we're here and how decisions get made. Standard first. Separate need-to-have from nice-to-have. Configure before extending, and never change SAP's core.</p></div>
+        <div class="step"><span class="num">2</span><div><span class="tm">15 minutes</span><h3>Walk through the process map</h3></div><p>SAP's documented process flow for the scope item, showing who does what and in which order, so everyone sees the whole picture before the detail.</p></div>
+        <div class="step"><span class="num">3</span><div><span class="tm">The core</span><h3>Live demo in SAP</h3></div><p>We run the process end to end in a live SAP system, following SAP's own test scripts. We also show in-app help, learning simulations and Joule along the way.</p></div>
+        <div class="step"><span class="num">4</span><div><span class="tm">Throughout</span><h3>Answer the configuration questions</h3></div><p>SAP's structured questionnaire for each department. Some answers were collected before the workshop, and we confirm them and capture the detailed values: number ranges, document types, approval limits.</p></div>
+        <div class="step"><span class="num">5</span><div><span class="tm">Throughout</span><h3>Log every real gap</h3></div><p>Each gap goes into SAP Cloud ALM as one requirement: a custom field, a form layout, an approval rule, an integration or a report. Each one gets a named owner.</p></div>
+        <div class="step"><span class="num">6</span><div><span class="tm">10 minutes</span><h3>Note the change impact</h3></div><p>Which roles will work differently, and what training they'll need. This goes straight to whoever owns change management and training.</p></div>
+        <div class="step"><span class="num">7</span><div><span class="tm">30 minutes</span><h3>Hands on the keyboard</h3></div><p>Everyone gets a test login and tries the process themselves. People accept what they've used far more readily than what they've only been shown.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAP LADDER -->
+  <section class="light">
+    <div class="in two">
+      <div>
+        <span class="eyebrow">When standard isn't enough</span>
+        <h2>Every gap goes down the same ladder.</h2>
+        <p class="lede">Not every request is a gap. And not every real gap needs code. We always solve a requirement on the lowest rung that works, because every rung higher adds cost to each future upgrade.</p>
+        <div class="tests">
+          <div><b>Is it required by law or a contract?</b><span>Statutory reports, tax and customer-mandated documents are real needs.</span></div>
+          <div><b>Does it make customers choose you?</b><span>If it's a true differentiator, protect it. If it's just "how we've always done it", reconsider.</span></div>
+          <div><b>What will it cost every six months?</b><span>Each extension has to be retested at every upgrade. Some changes aren't worth that.</span></div>
+        </div>
+      </div>
+      <div class="ladder">
+        <div class="rung"><span class="i">1</span><div><h3>Adopt the standard</h3><p>Change the way of working, not the system. More often the answer than people expect.</p></div><span class="cost c0">No upkeep</span></div>
+        <div class="rung"><span class="i">2</span><div><h3>Configure</h3><p>Settings, values and rules in SAP's configuration tools.</p></div><span class="cost c0">No upkeep</span></div>
+        <div class="rung"><span class="i">3</span><div><h3>Key-user extension</h3><p>Custom fields, simple logic, forms and email templates, built in the browser.</p></div><span class="cost c1">Light</span></div>
+        <div class="rung"><span class="i">4</span><div><h3>Developer extension</h3><p>Upgrade-safe custom code inside the system, for logic configuration can't handle.</p></div><span class="cost c2">Moderate</span></div>
+        <div class="rung"><span class="i">5</span><div><h3>Side-by-side on SAP BTP</h3><p>A separate app or integration connected through stable APIs.</p></div><span class="cost c3">Own lifecycle</span></div>
+        <div class="rung never"><span class="i">×</span><div><h3>Modify SAP's core</h3><p>Not possible in SAP Cloud ERP, and strongly discouraged in Private Edition.</p></div><span class="cost c4">Never</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AGENDA -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">A real day</span>
+      <h2>Sample agenda: Order to Cash, day one.</h2>
+      <p class="lede">A full day covers two or three processes that share the same people. Here's what one looks like for a distribution business.</p>
+      <div class="agenda">
+        <div class="ag"><span class="t">09:00</span><div><h3 style="font-size:16px">Kick-off and ground rules</h3><p>Goals for the day, the cloud mindset, how decisions get recorded.</p></div><span class="who">Sales manager, customer service, credit control, billing</span></div>
+        <div class="ag"><span class="t">09:20</span><div><h3 style="font-size:16px">Sell from Stock <span class="sid">BD9</span></h3><p>Quotation, sales order, availability check, delivery, picking, goods issue, invoice.</p></div><span class="who">Customer service, warehouse lead</span></div>
+        <div class="ag brk"><span class="t">11:00</span><p>Break</p><span></span></div>
+        <div class="ag"><span class="t">11:15</span><div><h3 style="font-size:16px">Pricing and credit</h3><p>Price lists, discounts, credit limits and blocked orders, using the questionnaire values.</p></div><span class="who">Sales manager, credit control</span></div>
+        <div class="ag"><span class="t">12:30</span><div><h3 style="font-size:16px">Hands-on: create and ship your own order</h3><p>Every attendee runs an order end to end with a test login.</p></div><span class="who">All</span></div>
+        <div class="ag brk"><span class="t">13:15</span><p>Lunch</p><span></span></div>
+        <div class="ag"><span class="t">14:00</span><div><h3 style="font-size:16px">Accounts Receivable <span class="sid">J59</span></h3><p>Incoming payments, clearing, dunning, customer statements.</p></div><span class="who">Billing, finance</span></div>
+        <div class="ag"><span class="t">16:00</span><div><h3 style="font-size:16px">Requirements review</h3><p>Read back every gap logged today, agree the rung on the ladder, name an owner.</p></div><span class="who">All, plus process owner</span></div>
+        <div class="ag"><span class="t">16:45</span><div><h3 style="font-size:16px">Change impact and close</h3><p>What changes for whom, training needs, open questions for next time.</p></div><span class="who">All</span></div>
+      </div>
+      <p class="note">Scope item codes such as BD9 and J59 are SAP's own references for best-practice processes, documented in SAP Signavio Process Navigator.</p>
+    </div>
+  </section>
+
+  <!-- PREPARATION -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">Preparation</span>
+      <h2>Good workshops are decided before they start.</h2>
+      <p class="lede">Most failed workshops fail for the same reasons: the wrong people in the room, too many processes in one day, or arguing about the chart of accounts in the middle of a sales session. We plan around all three.</p>
+      <div class="prep">
+        <div class="cap"><h3>The right people</h3><p>Two to four people per role who actually do the work, not only their managers. Leadership tells line managers these sessions come first. The same people come back for testing, so they become your champions at go-live.</p></div>
+        <div class="cap"><h3>The right pace</h3><p>One or two processes per half day, two or three per full day. We size each workshop by the length of SAP's test script and time a dry run beforehand.</p></div>
+        <div class="cap"><h3>The right order</h3><p>Chart of accounts and organisation structure come first, because everything else depends on them. After that, departments can run in parallel.</p></div>
+      </div>
+      <div class="seq">
+        <svg viewBox="0 0 1000 170" role="img" aria-label="Workshop sequence: first chart of accounts and organisation structure, then finance, sales, procurement and operations workshops in parallel, then a cross-department review.">
+          <g font-family="Manrope, sans-serif" font-size="13">
+            <rect x="10" y="30" width="200" height="44" rx="10" style="fill:var(--green)"/><text x="110" y="57" text-anchor="middle" fill="#fff" font-weight="700">Chart of accounts</text>
+            <rect x="10" y="96" width="200" height="44" rx="10" style="fill:var(--green)"/><text x="110" y="123" text-anchor="middle" fill="#fff" font-weight="700">Organisation structure</text>
+            <path d="M220 85 H300" style="stroke:var(--muted)" stroke-width="2"/><path d="M292 79 l8 6 -8 6" fill="none" style="stroke:var(--muted)" stroke-width="2"/>
+            <rect x="320" y="8" width="380" height="34" rx="8" style="fill:var(--bg-2);stroke:var(--line)"/><text x="340" y="30" style="fill:var(--fg)">Finance: record to report, payables, receivables</text>
+            <rect x="320" y="48" width="380" height="34" rx="8" style="fill:var(--bg-2);stroke:var(--line)"/><text x="340" y="70" style="fill:var(--fg)">Sales: order to cash</text>
+            <rect x="320" y="88" width="380" height="34" rx="8" style="fill:var(--bg-2);stroke:var(--line)"/><text x="340" y="110" style="fill:var(--fg)">Procurement: source to pay</text>
+            <rect x="320" y="128" width="380" height="34" rx="8" style="fill:var(--bg-2);stroke:var(--line)"/><text x="340" y="150" style="fill:var(--fg)">Operations: plan, make, store</text>
+            <path d="M710 85 H790" style="stroke:var(--muted)" stroke-width="2"/><path d="M782 79 l8 6 -8 6" fill="none" style="stroke:var(--muted)" stroke-width="2"/>
+            <rect x="800" y="63" width="190" height="44" rx="10" style="fill:var(--fg)"/><text x="895" y="90" text-anchor="middle" fill="#ffffff" font-weight="700">Cross-team review</text>
+            <text x="10" y="20" style="fill:var(--muted)" font-size="11" font-weight="700" letter-spacing="1.5">FIRST</text>
+            <text x="320" y="4" style="fill:var(--muted)" font-size="11" font-weight="700" letter-spacing="1.5"> </text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCKS -->
+  <section>
+    <div class="in two">
+      <div>
+        <span class="eyebrow">Decide early</span>
+        <h2>A few decisions can't be undone later.</h2>
+        <p class="lede">In SAP Cloud ERP, most settings can be changed whenever you need to. A handful are fixed once saved, and changing them later means rebuilding the system. We bring these to your leadership in the first week, with a recommendation, so nobody makes them by accident.</p>
+      </div>
+      <div class="locks">
+        <div class="lock"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="14" height="10" rx="2"/><path d="M7 10V7a4 4 0 0 1 8 0v3"/></svg><div><h3>Accounting standards</h3><p>Which parallel ledgers you run, such as local GAAP, IFRS or US GAAP. They can't be added later.</p></div></div>
+        <div class="lock"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="14" height="10" rx="2"/><path d="M7 10V7a4 4 0 0 1 8 0v3"/></svg><div><h3>Fiscal year</h3><p>Your financial calendar and special closing periods, one for the whole system.</p></div></div>
+        <div class="lock"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="14" height="10" rx="2"/><path d="M7 10V7a4 4 0 0 1 8 0v3"/></svg><div><h3>Group currency</h3><p>The currency your group reports in, across every company.</p></div></div>
+        <div class="lock"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="14" height="10" rx="2"/><path d="M7 10V7a4 4 0 0 1 8 0v3"/></svg><div><h3>Organisation units</h3><p>Once confirmed, companies, plants and sales organisations can't be deleted.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTPUTS -->
+  <section class="light">
+    <div class="in">
+      <span class="eyebrow">What you walk away with</span>
+      <h2>Workshops that feed straight into the build.</h2>
+      <p class="lede">Nothing gets retyped into a specification. Everything captured in the workshops goes straight into the build and the test plan.</p>
+      <div class="outs">
+        <div class="cap"><span class="tag2">In SAP Cloud ALM</span><h3>Requirements backlog</h3><p>Every gap, its rung on the ladder, its owner and its status, traceable through to testing.</p></div>
+        <div class="cap"><span class="tag2">In SAP's configuration tool</span><h3>Configuration values</h3><p>The detailed settings from the questionnaires, ready to be applied in the development system.</p></div>
+        <div class="cap"><span class="tag2">For security</span><h3>Roles and data owners</h3><p>Who does what, and who owns which data. This is the basis for role design. SAP's standard demo roles never go to production.</p></div>
+        <div class="cap"><span class="tag2">For change management</span><h3>Change impact log</h3><p>Which roles change and how, with training needs and expected pain points.</p></div>
+        <div class="cap"><span class="tag2">For testing</span><h3>Acceptance test plan</h3><p>Test cases built from the processes you approved. The same experts run them and sign off before go-live.</p></div>
+        <div class="cap"><span class="tag2">For go-live</span><h3>Your champions</h3><p>The people who sat through the workshops already know the system. They become the go-to people in each department.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="in">
+      <span class="eyebrow">Questions we hear</span>
+      <h2>Straight answers.</h2>
+      <div class="faq">
+        <details><summary>Can't we just keep our current processes?</summary><p>Some, yes. But many current processes are workarounds for the limits of the old system. In the workshop you'll see whether SAP's standard already solves the problem. When it doesn't and the need is real, we'll find the simplest upgrade-safe way to support it.</p></details>
+        <details><summary>How many workshops will we need?</summary><p>It depends on how many processes are in scope. A mid-sized company implementing finance, sales, procurement and inventory typically needs eight to fifteen workshop days, spread over three to five weeks, with departments running in parallel after the finance foundations are set.</p></details>
+        <details><summary>Do our people need SAP experience?</summary><p>No. They need to know their own work well. We explain the SAP side, and the hands-on session at the end of each workshop is where they get comfortable with it.</p></details>
+        <details><summary>What if two departments want different things?</summary><p>That's normal, and the workshop is the right place to find out. We log both views, show how the standard handles it, and bring a decision to the process owner or steering committee. Decisions are recorded in SAP Cloud ALM, so they don't get reopened later.</p></details>
+        <details><summary>Is this only for GROW with SAP?</summary><p>No. Fit-to-standard is SAP's method for every cloud ERP project. For RISE projects that convert an existing system, we use it to review processes and decide what to simplify during the move.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="book" class="light">
+    <div class="in">
+      <div class="cta-band" style="color:#eef3f0;--fg:#eef3f0;--muted:#a9bab2;--green-hi:#34b386">
+        <div>
+          <span class="eyebrow">Start here</span>
+          <h2>Let your team see SAP before anyone signs off a requirement.</h2>
+          <p class="lede">We'll plan your workshop calendar, who should attend, and how long each session needs, based on your scope.</p>
+          <div style="margin-top:28px"><a href="#" class="btn pri">Plan your workshops →</a></div>
+        </div>
+        <ul>
+          <li>Live demos in SAP, not slides</li>
+          <li>Gaps solved on the lowest rung that works</li>
+          <li>Every decision recorded in SAP Cloud ALM</li>
+          <li>Irreversible choices flagged in week one</li>
+          <li>Your people ready to champion go-live</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="in"><span>© Mawkish Technologies · Colombo, Sri Lanka</span><span>SAP, SAP Activate, SAP Cloud ALM and SAP Signavio are trademarks of SAP SE. Screens shown are illustrations.</span></div>
+</footer>
+
+</body></html>
