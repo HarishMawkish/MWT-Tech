@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { BdcPage } from "@/components/sap-bdc/BdcPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "sap-business-data-cloud";
 
@@ -13,6 +14,7 @@ export default function SapBusinessDataCloudPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <BdcPage />
+    <CanaryNote id="sap" />
     </>
   );
 }

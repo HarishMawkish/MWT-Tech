@@ -22,6 +22,7 @@ import {
   startSteps,
   useCases,
 } from "@/components/sap-ai/data";
+import { CanaryNote } from "@/components/CanaryNote";
 
 // This route is deliberately its own page, not an entry rendered by the shared
 // /services/[slug] template: a static segment takes precedence over the
@@ -468,6 +469,7 @@ export default function SapBusinessAiPage() {
       </section>
 
       <CtaBand />
+    <CanaryNote id="sap" />
     </>
   );
 }

@@ -4,6 +4,7 @@ import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
 import { ContactForm } from "@/components/ContactForm";
 import { contactServices } from "@/lib/contact-services";
 import "@/components/contact/contact.css";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const jakarta = Plus_Jakarta_Sans({ variable: "--font-pjs", subsets: ["latin"], weight: ["500", "600", "700", "800"] });
 const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
@@ -91,6 +92,7 @@ export default async function ContactPage({
           </div>
         </div>
       </section>
+      <CanaryNote id="contact" />
     </div>
   );
 }

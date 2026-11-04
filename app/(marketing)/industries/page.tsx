@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IndustriesPage } from "@/components/industries/IndustriesPage";
+import { CanaryNote } from "@/components/CanaryNote";
 
 export const metadata: Metadata = {
   title: "Industries",
@@ -8,5 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <IndustriesPage />;
+  return (
+    <>
+      <IndustriesPage />
+      <CanaryNote id="industries" />
+    </>
+  );
 }

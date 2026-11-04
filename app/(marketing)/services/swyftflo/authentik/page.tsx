@@ -3,6 +3,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { SwPage } from "@/components/swyftflo/SwPage";
 import { AuthentikBody } from "@/components/swyftflo/pages/AuthentikBody";
 import { swyftfloLd, swyftfloMetadata } from "@/lib/swyftflo-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "authentik";
 
@@ -15,6 +16,7 @@ export default function AuthentikPage() {
       <SwPage>
         <AuthentikBody />
       </SwPage>
+    <CanaryNote id="swyftflo" />
     </>
   );
 }

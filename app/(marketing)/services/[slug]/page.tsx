@@ -10,6 +10,7 @@ import { services } from "@/lib/site-data";
 import { JsonLd } from "@/components/JsonLd";
 import { sapHubLd } from "@/lib/sap-pages";
 import { brand, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { CanaryNote } from "@/components/CanaryNote";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -221,6 +222,7 @@ export default async function ServiceDetailPage({
       )}
 
       <CtaBand />
+    <CanaryNote id="services" />
     </>
   );
 }

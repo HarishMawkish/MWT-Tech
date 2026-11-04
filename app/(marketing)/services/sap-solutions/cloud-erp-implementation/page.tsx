@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { ImplementationPage } from "@/components/sap-implementation/ImplementationPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "cloud-erp-implementation";
 
@@ -13,6 +14,7 @@ export default function CloudErpImplementationPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <ImplementationPage />
+    <CanaryNote id="sap" />
     </>
   );
 }

@@ -6,6 +6,7 @@ import { ProductBody } from "@/components/anthropic/ProductBody";
 import { contents } from "@/components/anthropic/content";
 import { products, type ProductSlug } from "@/components/anthropic/data";
 import { anthropicLd, anthropicMetadata } from "@/lib/anthropic-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 // One route for every Anthropic page. Only the slugs in the product list exist; anything else is a 404.
 export function generateStaticParams() {
@@ -28,6 +29,7 @@ export default async function AnthropicProductPage({ params }: { params: Promise
       <AnPage>
         <ProductBody c={contents[product]} />
       </AnPage>
+    <CanaryNote id="anthropic" />
     </>
   );
 }

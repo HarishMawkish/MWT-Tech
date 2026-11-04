@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { BtpPage } from "@/components/sap-btp/BtpPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "sap-btp-extensions-and-apps";
 
@@ -13,6 +14,7 @@ export default function SapBtpExtensionsAndAppsPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <BtpPage />
+    <CanaryNote id="sap" />
     </>
   );
 }

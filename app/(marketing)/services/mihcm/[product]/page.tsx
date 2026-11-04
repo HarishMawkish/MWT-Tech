@@ -6,6 +6,7 @@ import { ProductBody } from "@/components/mihcm/ProductBody";
 import { contents } from "@/components/mihcm/content";
 import { products, type ProductSlug } from "@/components/mihcm/data";
 import { mihcmLd, mihcmMetadata } from "@/lib/mihcm-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 // One route for every MiHCM page. Only the slugs in the product list exist; anything else is a 404.
 export function generateStaticParams() {
@@ -28,6 +29,7 @@ export default async function MihcmProductPage({ params }: { params: Promise<{ p
       <MhPage>
         <ProductBody c={contents[product]} />
       </MhPage>
+    <CanaryNote id="mihcm" />
     </>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { MovePage } from "@/components/sap-move/MovePage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "move-from-ecc-on-premise";
 
@@ -13,6 +14,7 @@ export default function MoveFromEccOnPremisePage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <MovePage />
+    <CanaryNote id="sap" />
     </>
   );
 }

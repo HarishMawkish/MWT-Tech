@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { RolloutPage } from "@/components/sap-rollout/RolloutPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "rollouts-and-localisation";
 
@@ -13,6 +14,7 @@ export default function RolloutsAndLocalisationPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <RolloutPage />
+    <CanaryNote id="sap" />
     </>
   );
 }

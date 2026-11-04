@@ -5,6 +5,7 @@ import { Reveal } from "@/components/Reveal";
 import { SpotlightLink } from "@/components/SpotlightLink";
 import { ServiceMark } from "@/components/ServiceMark";
 import { services } from "@/lib/site-data";
+import { CanaryNote } from "@/components/CanaryNote";
 
 export const metadata: Metadata = {
   title: "Our Services",
@@ -46,7 +47,7 @@ export default function ServicesPage() {
       <PageHero
         eyebrow="Our Services"
         title="Enterprise platforms, applied with a business-first lens."
-        description="We help organizations plan, implement, and get lasting value from the platforms that run their business — and the emerging capabilities that will shape its next stage. Every engagement runs under our One Name Rule and the Mawkish Seam Check, so one partner answers for the whole delivery."
+        description="We help organizations plan, implement, and get lasting value from the platforms that run their business — and the emerging capabilities that will shape its next stage. Every engagement runs under One-Signature Delivery, so one partner answers for the whole delivery."
       >
         <a
           href="#core"
@@ -148,6 +149,7 @@ export default function ServicesPage() {
       </section>
 
       <CtaBand />
+    <CanaryNote id="services" />
     </>
   );
 }

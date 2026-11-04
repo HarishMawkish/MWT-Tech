@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { DataMigPage } from "@/components/sap-datamig/DataMigPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "data-migration";
 
@@ -13,6 +14,7 @@ export default function DataMigrationPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <DataMigPage />
+    <CanaryNote id="sap" />
     </>
   );
 }

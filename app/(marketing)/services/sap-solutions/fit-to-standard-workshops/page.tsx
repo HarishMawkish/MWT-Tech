@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { FitPage } from "@/components/sap-fit/FitPage";
 import { sapLd, sapMetadata } from "@/lib/sap-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 const SLUG = "fit-to-standard-workshops";
 
@@ -13,6 +14,7 @@ export default function FitToStandardWorkshopsPage() {
     <>
       <JsonLd data={sapLd(SLUG)} />
       <FitPage />
+    <CanaryNote id="sap" />
     </>
   );
 }

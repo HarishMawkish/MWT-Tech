@@ -152,7 +152,7 @@ export default function AboutPage() {
             <p className="mt-5 text-lg leading-relaxed text-gray-300">
               A collaborative, high-energy environment built around long-term
               client outcomes and innovation. Our working standard is the
-              Cabinet-Back Standard: we look after the details nobody sees,
+              Wallside Standard: we look after the details nobody sees,
               because they decide whether a project succeeds.
             </p>
           </div>

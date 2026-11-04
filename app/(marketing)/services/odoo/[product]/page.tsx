@@ -6,6 +6,7 @@ import { ProductBody } from "@/components/odoo/ProductBody";
 import { contents } from "@/components/odoo/content";
 import { products, type ProductSlug } from "@/components/odoo/data";
 import { odooLd, odooMetadata } from "@/lib/odoo-pages";
+import { CanaryNote } from "@/components/CanaryNote";
 
 // One route for every Odoo page. Only the slugs in the product list exist; anything else is a 404.
 export function generateStaticParams() {
@@ -28,6 +29,7 @@ export default async function OdooProductPage({ params }: { params: Promise<{ pr
       <OdPage>
         <ProductBody c={contents[product]} />
       </OdPage>
+    <CanaryNote id="odoo" />
     </>
   );
 }
