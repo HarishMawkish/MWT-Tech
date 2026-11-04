@@ -1,0 +1,46 @@
+name: Save site to the Wayback Machine
+
+# Sends every page in the live sitemap to the Internet Archive, so each page has a dated snapshot.
+# Run it by hand (Actions tab > this workflow > Run workflow) or let the monthly schedule do it.
+# Optional repository secrets IA_ACCESS_KEY and IA_SECRET_KEY (from archive.org/account/s3.php) make it faster and more reliable.
+
+on:
+  schedule:
+    - cron: "0 3 1 * *" # 08:30 Asia/Colombo on the 1st of each month
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Only the first N pages (0 = all). Use a small number to test."
+        default: "0"
+
+concurrency:
+  group: wayback
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  save:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Save every page
+        env:
+          IA_ACCESS_KEY: ${{ secrets.IA_ACCESS_KEY }}
+          IA_SECRET_KEY: ${{ secrets.IA_SECRET_KEY }}
+        run: node scripts/wayback.mjs --limit "${{ github.event.inputs.limit || 0 }}"
+      - name: Check they were saved
+        if: always()
+        run: node scripts/wayback.mjs --check --limit "${{ github.event.inputs.limit || 0 }}"
+      - name: Keep the results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wayback-results
+          path: wayback-results.csv
+          if-no-files-found: ignore
