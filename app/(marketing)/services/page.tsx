@@ -46,7 +46,7 @@ export default function ServicesPage() {
       <PageHero
         eyebrow="Our Services"
         title="Enterprise platforms, applied with a business-first lens."
-        description="We help organizations plan, implement, and get lasting value from the platforms that run their business — and the emerging capabilities that will shape its next stage."
+        description="We help organizations plan, implement, and get lasting value from the platforms that run their business — and the emerging capabilities that will shape its next stage. Every engagement runs under our One Name Rule and the Mawkish Seam Check, so one partner answers for the whole delivery."
       >
         <a
           href="#core"

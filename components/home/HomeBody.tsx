@@ -163,7 +163,9 @@ export function HomeBody() {
               A typical enterprise deal has several parties. The software
               principal provides the platform and the licences. A specialist
               team configures and deploys it. Most problems hide in the gaps
-              between them, and in the details nobody thinks to check.
+              between them, and in the details nobody thinks to check. Our answer is
+              the Mawkish Seam Check: we inspect every handover between
+              principal, partner and client before the work moves on.
             </p>
             <p className="pullline">
               Whoever does the work, Mawkish checks it, owns it and answers for
@@ -217,7 +219,9 @@ export function HomeBody() {
             <h2>Five stages. One name against all of them.</h2>
             <p className="lede">
               Vendors and specialists come and go as the work demands. The line
-              underneath never changes hands.
+              underneath never changes hands. We call it the One Name Rule:
+              one accountable name against every stage, from the first
+              presales meeting to long after go-live.
             </p>
           </Rv>
 
