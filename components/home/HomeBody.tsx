@@ -61,41 +61,6 @@ const held = [
   "Delivery accountability",
 ];
 
-/* How each platform is delivered. Partner organisations are described by
-   role rather than named: see the note in docs/company-profile. */
-const model = [
-  {
-    p: "SAP",
-    how: "Specialist partner, our governance",
-    d: "Presales and solutioning by our in-house SAP team. The build is delivered by a dedicated S/4HANA practice working to our project office.",
-  },
-  {
-    p: "Salesforce",
-    how: "Partner network, our design",
-    d: "Presales and functional design in house, with delivery through whichever implementation partner is best placed for the work.",
-  },
-  {
-    p: "Odoo",
-    how: "Fully in house",
-    d: "Delivered end to end by our seven Odoo-certified consultants, across finance, inventory, CRM, procurement and HR.",
-  },
-  {
-    p: "Swyftflo AI",
-    how: "Product team, our presales",
-    d: "Procurement, invoice, transport and control tower automation that sits beside the ERP rather than replacing it.",
-  },
-  {
-    p: "MiHCM",
-    how: "Product team, our sales cycle",
-    d: "HR and payroll built for the region, with presales and the full sales cycle managed by our in-house consultants.",
-  },
-  {
-    p: "AWS and data",
-    how: "Fully in house",
-    d: "Cloud migration, infrastructure modernisation and technical support run by our own AWS team, with lakehouse data and AI alongside it.",
-  },
-];
-
 const commitments = [
   {
     h: "Client first, every time",
@@ -285,32 +250,6 @@ export function HomeBody() {
                 ))}
               </ul>
             </Rv>
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------- delivery model ---------------- */}
-      <section>
-        <div className="in">
-          <Rv>
-            <span className="eyebrow">Delivery model</span>
-            <h2>Our own consultants where it counts, specialists where it helps.</h2>
-            <p className="lede">
-              We bring in the team best placed to build each platform, and keep
-              the relationship, the commercials and the governance with us.
-            </p>
-          </Rv>
-
-          <div className="model">
-            {model.map((m, i) => (
-              <Rv key={m.p} delay={i * 45} className="mrow">
-                <div className="mname">{m.p}</div>
-                <div className="mbody">
-                  <div className="mhow">{m.how}</div>
-                  <p>{m.d}</p>
-                </div>
-              </Rv>
-            ))}
           </div>
         </div>
       </section>
