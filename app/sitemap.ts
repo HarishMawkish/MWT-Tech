@@ -26,7 +26,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...sapPages.map((p) => entry(sapPath(p.slug), 0.85, "monthly", p.updated)),
     // Swyftflo: the suite page, then one page per product
     ...swyftfloPages.map((p) => entry(swPath(p.slug), p.slug ? 0.8 : 0.9, "monthly", p.updated)),
-    entry("/services", 0.9, "weekly"),
     // the other services, the SAP hub being listed above
     ...services.filter((s) => s.slug !== "sap-solutions" && s.slug !== "salesforce-solutions" && s.slug !== "odoo-implementation").map((s) => entry(`/services/${s.slug}`, 0.7, "monthly")),
     // Salesforce: the hub, then one page per product

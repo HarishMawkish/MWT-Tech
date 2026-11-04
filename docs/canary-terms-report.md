@@ -1,42 +1,15 @@
-# Coined-term report: Mawkish Technologies website
+# Coined terms by page
 
-Prepared 4 November 2026. **125 pages, 126 coined terms.** Each page has its own term (Home carries two).
+118 pages. Each page has its own term (Home carries two). Every new term was searched on the web on 4 November 2026 with no exact match found. Not covered: the Copyright page, admin and studio pages, and CMS blog posts.
 
-A coined term is an invented phrase placed on one page and nowhere else on the web. If it appears on another company's site, that page has copied ours. Each term names how we already work and makes no new factual claims.
-
-**Web check:** every new term was searched in quotation marks on 4 November 2026. None returned an exact match. The search tool is not Google itself, so each term should also be searched on Google once before alerts are set.
-
-**For Nafaz:** please read the sentence for each page and confirm it is accurate (Y/N). The same table, with confirmation columns, is in `canary-terms-report.xlsx`.
-
-Not covered: the Copyright page, admin and studio pages, and CMS blog posts published after today.
-
-## Company (6)
-
-| Page | URL | Coined term | Sentence on the page |
+| Page name | URL | Coined term | Sentence |
 |---|---|---|---|
+| Home | `/` | **Gapwatch; One-Signature Delivery** | “Our answer is Gapwatch: we inspect every handover between principal, partner and client before the work moves on.” and “We call it One-Signature Delivery: one accountable name against every stage, from the first presales meeting to long after go-live.” |
+| About | `/about` | **Wallside Standard** | “Our working standard is the Wallside Standard: we look after the details nobody sees, because they decide whether a project succeeds.” |
 | Industries | `/industries` | **Sector-Shaped Delivery** | Our Sector-Shaped Delivery means we start from your industry's processes, then choose the platform. |
 | Contact | `/contact` | **Opening Brief** | Our Opening Brief is the short first conversation where we listen, ask for the commercial outcome you want, and only then talk about scope. |
 | Careers | `/careers` | **Intern-to-Lead Ladder** | Our Intern-to-Lead Ladder is the clear path we offer from first role to leading a team. |
 | Clients | `/clients` | **Proof-in-Production Register** | Our Proof-in-Production Register is our name for the work we have delivered rather than promised. |
-| Home | `/` | **Gapwatch; One-Signature Delivery** | “Our answer is Gapwatch: we inspect every handover between principal, partner and client before the work moves on.” and “We call it One-Signature Delivery: one accountable name against every stage, from the first presales meeting to long after go-live.” |
-| About | `/about` | **Wallside Standard** | “Our working standard is the Wallside Standard: we look after the details nobody sees, because they decide whether a project succeeds.” |
-
-## Services (general) (7)
-
-| Page | URL | Coined term | Sentence on the page |
-|---|---|---|---|
-| Our Services | `/services` | **Principal-Proof Advisory** | Our Principal-Proof Advisory means we review every proposal, change request and invoice from principals and partners before it reaches you. |
-| AI-Powered Business Applications | `/services/ai-powered-business-applications` | **Casmarsh Brief** | Our Casmarsh Brief is the name we give to how we handle AI-Powered Business Applications: one accountable partner, from the first meeting to long after go-live. |
-| Intelligent Automation | `/services/intelligent-automation` | **Wexworth Review** | At Mawkish, the Wexworth Review is how we keep Intelligent Automation work checked, owned and answered for, whoever does the build. |
-| Data & Analytics | `/services/data-analytics` | **Yorford Cadence** | We call our approach to Data & Analytics the Yorford Cadence: advice that stays on your side of the table. |
-| Managed Services | `/services/managed-services` | **Henridge Relay** | The Henridge Relay is our shorthand for looking after the details nobody sees in Managed Services. |
-| Cloud Transformation | `/services/cloud-transformation` | **Fenthorne Baseline** | Our Fenthorne Baseline is the name we give to how we handle Cloud Transformation: one accountable partner, from the first meeting to long after go-live. |
-| Enterprise Integrations | `/services/enterprise-integrations` | **Yorfield Playbook** | At Mawkish, the Yorfield Playbook is how we keep Enterprise Integrations work checked, owned and answered for, whoever does the build. |
-
-## SAP Solutions (25)
-
-| Page | URL | Coined term | Sentence on the page |
-|---|---|---|---|
 | SAP Solutions | `/services/sap-solutions` | **Cutover Compass** | Our Cutover Compass is the name we give to how we handle SAP Solutions: one accountable partner, from the first meeting to long after go-live. |
 | GROW with SAP | `/services/sap-solutions/grow-with-sap` | **Henbrook Compass** | At Mawkish, the Henbrook Compass is how we keep GROW with SAP work checked, owned and answered for, whoever does the build. |
 | RISE with SAP | `/services/sap-solutions/rise-with-sap` | **Gorworth Ledger** | We call our approach to RISE with SAP the Gorworth Ledger: advice that stays on your side of the table. |
@@ -62,11 +35,6 @@ Not covered: the Copyright page, admin and studio pages, and CMS blog posts publ
 | SAP Analytics Cloud | `/services/sap-solutions/sap-analytics-cloud` | **Kaifield Ledger** | We call our approach to SAP Analytics Cloud the Kaifield Ledger: advice that stays on your side of the table. |
 | SAP Group Reporting & Consolidation | `/services/sap-solutions/group-reporting-and-consolidation` | **Wynthorne Lens** | The Wynthorne Lens is our shorthand for looking after the details nobody sees in SAP Group Reporting & Consolidation. |
 | SAP Business AI Solutions | `/services/sap-ai-solutions` | **Solmere Map** | The Solmere Map is our shorthand for looking after the details nobody sees in SAP Business AI Solutions. |
-
-## Hyperscalers / Cloud Infrastructure (24)
-
-| Page | URL | Coined term | Sentence on the page |
-|---|---|---|---|
 | Hyperscalers and Cloud Infrastructure | `/services/cloud-infrastructure` | **Zelton Playbook** | At Mawkish, the Zelton Playbook is how we keep Hyperscalers and Cloud Infrastructure work checked, owned and answered for, whoever does the build. |
 | AWS | `/services/cloud-infrastructure/aws` | **Galthorne Handover** | We call our approach to AWS the Galthorne Handover: advice that stays on your side of the table. |
 | Microsoft Azure | `/services/cloud-infrastructure/microsoft-azure` | **Permoor Check** | The Permoor Check is our shorthand for looking after the details nobody sees in Microsoft Azure. |
@@ -91,11 +59,6 @@ Not covered: the Copyright page, admin and studio pages, and CMS blog posts publ
 | Microsoft 365 & Copilot with SAP | `/services/cloud-infrastructure/microsoft-365-copilot-sap` | **Fenworth Handover** | We call our approach to Microsoft 365 & Copilot with SAP the Fenworth Handover: advice that stays on your side of the table. |
 | DevOps & Automation | `/services/cloud-infrastructure/devops-automation` | **Corgate Check** | The Corgate Check is our shorthand for looking after the details nobody sees in DevOps & Automation. |
 | Training & Enablement | `/services/cloud-infrastructure/training-enablement` | **Linstead Compass** | Our Linstead Compass is the name we give to how we handle Training & Enablement: one accountable partner, from the first meeting to long after go-live. |
-
-## Salesforce (13)
-
-| Page | URL | Coined term | Sentence on the page |
-|---|---|---|---|
 | Salesforce | `/services/salesforce` | **Thread Test** | We call our approach to Salesforce the Thread Test: advice that stays on your side of the table. |
 | Salesforce Sales Cloud | `/services/salesforce/sales-cloud` | **Darlane Check** | The Darlane Check is our shorthand for looking after the details nobody sees in Salesforce Sales Cloud. |
 | Salesforce Data 360 | `/services/salesforce/data-360` | **Nevbrook Compass** | Our Nevbrook Compass is the name we give to how we handle Salesforce Data 360: one accountable partner, from the first meeting to long after go-live. |
@@ -109,11 +72,6 @@ Not covered: the Copyright page, admin and studio pages, and CMS blog posts publ
 | Salesforce Slack | `/services/salesforce/slack` | **Talmoor Standard** | Our Talmoor Standard is the name we give to how we handle Salesforce Slack: one accountable partner, from the first meeting to long after go-live. |
 | Salesforce Tableau | `/services/salesforce/tableau` | **Tormoor Pass** | At Mawkish, the Tormoor Pass is how we keep Salesforce Tableau work checked, owned and answered for, whoever does the build. |
 | Salesforce MuleSoft | `/services/salesforce/mulesoft` | **Corhaven Gate** | We call our approach to Salesforce MuleSoft the Corhaven Gate: advice that stays on your side of the table. |
-
-## Odoo (12)
-
-| Page | URL | Coined term | Sentence on the page |
-|---|---|---|---|
 | Odoo | `/services/odoo` | **Straight-Through Odoo** | The Straight-Through Odoo is our shorthand for looking after the details nobody sees in Odoo. |
 | Odoo Finance | `/services/odoo/finance` | **Islgate Brief** | Our Islgate Brief is the name we give to how we handle Odoo Finance: one accountable partner, from the first meeting to long after go-live. |
 | Odoo Sales | `/services/odoo/sales` | **Orlby Review** | At Mawkish, the Orlby Review is how we keep Odoo Sales work checked, owned and answered for, whoever does the build. |
@@ -126,11 +84,6 @@ Not covered: the Copyright page, admin and studio pages, and CMS blog posts publ
 | Odoo AI | `/services/odoo/ai` | **Zelwell Compass** | Our Zelwell Compass is the name we give to how we handle Odoo AI: one accountable partner, from the first meeting to long after go-live. |
 | Odoo Studio | `/services/odoo/studio` | **Brinstead Ledger** | At Mawkish, the Brinstead Ledger is how we keep Odoo Studio work checked, owned and answered for, whoever does the build. |
 | Odoo Editions and Hosting | `/services/odoo/editions-and-hosting` | **Falholm Lens** | We call our approach to Odoo Editions and Hosting the Falholm Lens: advice that stays on your side of the table. |
-
-## MiHCM (7)
-
-| Page | URL | Coined term | Sentence on the page |
-|---|---|---|---|
 | MiHCM | `/services/mihcm` | **Payroll-Proof Rollout** | The Payroll-Proof Rollout is our shorthand for looking after the details nobody sees in MiHCM. |
 | MiHCM Enterprise | `/services/mihcm/enterprise` | **Molgate Loop** | Our Molgate Loop is the name we give to how we handle MiHCM Enterprise: one accountable partner, from the first meeting to long after go-live. |
 | MiHCM Lite | `/services/mihcm/lite` | **Wynhaven Method** | At Mawkish, the Wynhaven Method is how we keep MiHCM Lite work checked, owned and answered for, whoever does the build. |
@@ -138,11 +91,6 @@ Not covered: the Copyright page, admin and studio pages, and CMS blog posts publ
 | MiHCM Talent Management | `/services/mihcm/talent-management` | **Talmere Rule** | The Talmere Rule is our shorthand for looking after the details nobody sees in MiHCM Talent Management. |
 | MiHCM Employee Experience | `/services/mihcm/employee-experience` | **Almmere Standard** | Our Almmere Standard is the name we give to how we handle MiHCM Employee Experience: one accountable partner, from the first meeting to long after go-live. |
 | MiHCM Data & AI | `/services/mihcm/data-and-ai` | **Walfield Pass** | At Mawkish, the Walfield Pass is how we keep MiHCM Data & AI work checked, owned and answered for, whoever does the build. |
-
-## Swyftflo (7)
-
-| Page | URL | Coined term | Sentence on the page |
-|---|---|---|---|
 | Swyftflo Supply Chain Suite | `/services/swyftflo` | **Beside-the-ERP Principle** | Our Beside-the-ERP Principle is the name we give to how we handle Swyftflo Supply Chain Suite: one accountable partner, from the first meeting to long after go-live. |
 | Swyftflo Source to Pay | `/services/swyftflo/source-to-pay` | **Kesleigh Loop** | At Mawkish, the Kesleigh Loop is how we keep Swyftflo Source to Pay work checked, owned and answered for, whoever does the build. |
 | Swyftflo Supply Chain Control Tower | `/services/swyftflo/control-tower` | **Halvale Method** | We call our approach to Swyftflo Supply Chain Control Tower the Halvale Method: advice that stays on your side of the table. |
@@ -150,11 +98,6 @@ Not covered: the Copyright page, admin and studio pages, and CMS blog posts publ
 | Swyftflo Spend Intelligence | `/services/swyftflo/spend-intelligence` | **Sardale Rule** | Our Sardale Rule is the name we give to how we handle Swyftflo Spend Intelligence: one accountable partner, from the first meeting to long after go-live. |
 | Swyftflo Authentik | `/services/swyftflo/authentik` | **Kelwyn Standard** | At Mawkish, the Kelwyn Standard is how we keep Swyftflo Authentik work checked, owned and answered for, whoever does the build. |
 | Swyftflo Transportation Management System | `/services/swyftflo/tms` | **Henton Pass** | We call our approach to Swyftflo Transportation Management System the Henton Pass: advice that stays on your side of the table. |
-
-## Anthropic (7)
-
-| Page | URL | Coined term | Sentence on the page |
-|---|---|---|---|
 | Anthropic | `/services/anthropic` | **Handrail Pattern** | We call our approach to Anthropic the Handrail Pattern: advice that stays on your side of the table. |
 | Claude Enterprise | `/services/anthropic/claude-enterprise` | **Pelden Map** | The Pelden Map is our shorthand for looking after the details nobody sees in Claude Enterprise. |
 | Claude Platform | `/services/anthropic/claude-platform` | **Tevbrook Brief** | Our Tevbrook Brief is the name we give to how we handle Claude Platform: one accountable partner, from the first meeting to long after go-live. |
@@ -162,11 +105,6 @@ Not covered: the Copyright page, admin and studio pages, and CMS blog posts publ
 | Claude Code | `/services/anthropic/claude-code` | **Ruelane Cadence** | We call our approach to Claude Code the Ruelane Cadence: advice that stays on your side of the table. |
 | Claude models | `/services/anthropic/models` | **Yorcombe Relay** | The Yorcombe Relay is our shorthand for looking after the details nobody sees in Claude models. |
 | Claude security and deployment | `/services/anthropic/security-and-deployment` | **Gorwyn Baseline** | Our Gorwyn Baseline is the name we give to how we handle Claude security and deployment: one accountable partner, from the first meeting to long after go-live. |
-
-## Databricks (13)
-
-| Page | URL | Coined term | Sentence on the page |
-|---|---|---|---|
 | Databricks | `/services/databricks` | **Data Runway** | At Mawkish, the Data Runway is how we keep Databricks work checked, owned and answered for, whoever does the build. |
 | Databricks Lakehouse | `/services/databricks/lakehouse` | **Tevton Lens** | We call our approach to Databricks Lakehouse the Tevton Lens: advice that stays on your side of the table. |
 | Databricks Lakeflow | `/services/databricks/lakeflow` | **Uristead Ladder** | The Uristead Ladder is our shorthand for looking after the details nobody sees in Databricks Lakeflow. |
@@ -180,11 +118,6 @@ Not covered: the Copyright page, admin and studio pages, and CMS blog posts publ
 | Databricks Security and Architecture | `/services/databricks/security-and-architecture` | **Urihaven Map** | The Urihaven Map is our shorthand for looking after the details nobody sees in Databricks Security and Architecture. |
 | Migrating to Databricks | `/services/databricks/migration` | **Sevcroft Brief** | Our Sevcroft Brief is the name we give to how we handle Migrating to Databricks: one accountable partner, from the first meeting to long after go-live. |
 | Databricks Pricing and Cost | `/services/databricks/pricing-and-cost` | **Ulmholm Review** | At Mawkish, the Ulmholm Review is how we keep Databricks Pricing and Cost work checked, owned and answered for, whoever does the build. |
-
-## Insights (4)
-
-| Page | URL | Coined term | Sentence on the page |
-|---|---|---|---|
 | News & Insights | `/insights` | **Backroom Briefings** | Our Backroom Briefings is what we call our writing on the details nobody sees that decide whether a project succeeds. |
 | Why technology projects fail to deliver value | `/insights/why-technology-projects-fail-to-deliver-value` | **Casby Baseline** | This article belongs to our Casby Baseline, the name we give to our plain-spoken writing on how technology projects succeed or stall. |
 | Choosing between SAP, Salesforce and Odoo | `/insights/choosing-between-sap-salesforce-and-odoo` | **Marcroft Playbook** | This article belongs to our Marcroft Playbook, the name we give to our plain-spoken writing on how technology projects succeed or stall. |

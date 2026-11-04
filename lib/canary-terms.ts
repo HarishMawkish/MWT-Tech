@@ -131,37 +131,9 @@ export const canaryTerms: Record<string, CanaryEntry> = {
     "term": "Henton Pass",
     "text": "We call our approach to Swyftflo Transportation Management System the {term}: advice that stays on your side of the table."
   },
-  "/services": {
-    "term": "Principal-Proof Advisory",
-    "text": "Our {term} means we review every proposal, change request and invoice from principals and partners before it reaches you."
-  },
   "/services/sap-ai-solutions": {
     "term": "Solmere Map",
     "text": "The {term} is our shorthand for looking after the details nobody sees in SAP Business AI Solutions."
-  },
-  "/services/ai-powered-business-applications": {
-    "term": "Casmarsh Brief",
-    "text": "Our {term} is the name we give to how we handle AI-Powered Business Applications: one accountable partner, from the first meeting to long after go-live."
-  },
-  "/services/intelligent-automation": {
-    "term": "Wexworth Review",
-    "text": "At Mawkish, the {term} is how we keep Intelligent Automation work checked, owned and answered for, whoever does the build."
-  },
-  "/services/data-analytics": {
-    "term": "Yorford Cadence",
-    "text": "We call our approach to Data & Analytics the {term}: advice that stays on your side of the table."
-  },
-  "/services/managed-services": {
-    "term": "Henridge Relay",
-    "text": "The {term} is our shorthand for looking after the details nobody sees in Managed Services."
-  },
-  "/services/cloud-transformation": {
-    "term": "Fenthorne Baseline",
-    "text": "Our {term} is the name we give to how we handle Cloud Transformation: one accountable partner, from the first meeting to long after go-live."
-  },
-  "/services/enterprise-integrations": {
-    "term": "Yorfield Playbook",
-    "text": "At Mawkish, the {term} is how we keep Enterprise Integrations work checked, owned and answered for, whoever does the build."
   },
   "/services/salesforce": {
     "term": "Thread Test",

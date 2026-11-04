@@ -1,6 +1,6 @@
 # Content-copy monitoring (internal, do not publish)
 
-Every public page carries its own coined term (see `lib/canary-terms.ts` for the sentences shown at the foot of each page; Home and About carry theirs in the page text). The full page-to-term list for review is in `canary-terms-report.xlsx` and `canary-terms-report.md`.
+Every public page carries its own coined term (see `lib/canary-terms.ts` for the sentences shown at the foot of each page; Home and About carry theirs in the page text). The full page-to-term list is in `canary-terms-report.xlsx` (one sheet: page name, URL, term, sentence) and `canary-terms-report.md`.
 
 A copier usually swaps "Mawkish" for their own name, so every alert is built on the term itself, never on the brand.
 
@@ -18,7 +18,7 @@ The terms are listed in the report. Alerts are free (limit 1,000 per Google acco
 - Search a new term in quotes before adding it. Retire any term that starts returning other people's pages.
 
 ## Retired (do not reuse)
-Seam Check (too close to a competitor's "Seam-First Delivery"), One Name Rule, Cabinet-Back Standard. The per-section terms from the first round (for example "Cutover Compass" on every SAP page) now sit only on their section's main page.
+Principal-Proof Advisory (it sat on the general Services page, which was taken down on 4 November 2026), Seam Check (too close to a competitor's "Seam-First Delivery"), One Name Rule, Cabinet-Back Standard. The per-section terms from the first round (for example "Cutover Compass" on every SAP page) now sit only on their section's main page.
 
 ## Findings log
 | Date | Term | URL found | Evidence saved | Action | Outcome |
