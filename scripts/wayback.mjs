@@ -9,8 +9,11 @@
 //   node scripts/wayback.mjs --delay 15       seconds to wait between pages (default 12; 6 with keys)
 //   node scripts/wayback.mjs --sitemap FILE   read the address list from a sitemap file or another sitemap URL
 //
-// Optional keys (a free archive.org account, then archive.org/account/s3.php) make saving faster and more reliable:
-//   IA_ACCESS_KEY=... IA_SECRET_KEY=... node scripts/wayback.mjs
+// Keys (a free archive.org account, then archive.org/account/s3.php) make saving faster and more reliable. Put them in a
+// file called .env.wayback.local in the repo folder (it is ignored by git, so it is never committed):
+//   IA_ACCESS_KEY=your-access-key
+//   IA_SECRET_KEY=your-secret-key
+// or set the same two names as environment variables. In GitHub they are the repository secrets of the same names.
 // Results are written to wayback-results.csv, one line per page: when, address, outcome, snapshot link.
 
 import { appendFileSync, existsSync, readFileSync, writeFileSync } from "node:fs";
@@ -20,6 +23,14 @@ const RESULTS = "wayback-results.csv";
 const argv = process.argv.slice(2);
 const flag = (n) => argv.includes(n);
 const value = (n, d) => (argv.includes(n) ? argv[argv.indexOf(n) + 1] : d);
+
+// Read the keys from .env.wayback.local when they are not already in the environment.
+if (!process.env.IA_ACCESS_KEY && existsSync(".env.wayback.local")) {
+  for (const line of readFileSync(".env.wayback.local", "utf8").split("\n")) {
+    const m = line.match(/^\s*(IA_ACCESS_KEY|IA_SECRET_KEY)\s*=\s*(.*?)\s*$/);
+    if (m) process.env[m[1]] = m[2].replace(/^["']|["']$/g, "");
+  }
+}
 
 const KEYS = process.env.IA_ACCESS_KEY && process.env.IA_SECRET_KEY ? `${process.env.IA_ACCESS_KEY}:${process.env.IA_SECRET_KEY}` : "";
 const delay = Number(value("--delay", KEYS ? 6 : 12)) * 1000;
