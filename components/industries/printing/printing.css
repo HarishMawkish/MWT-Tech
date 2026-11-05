@@ -521,3 +521,19 @@
   .pp-page .pp-mkt > div { padding: 20px; }
   .pp-page .mk-cr { align-items: flex-start; } .pp-page .mk-cr a { white-space: normal; }
 }
+/* Section index in the hero (added at the owner's request): every section of the page, one click away. Same palette as the page. */
+.pp-page [id] { scroll-margin-top: 112px; }
+.pp-page .pp-toc { margin-top: 40px; }
+.pp-page .pp-toc-h { display: flex; align-items: center; gap: 14px; margin: 0; font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+.pp-page .pp-toc-h::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.pp-page .pp-toc ol { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+.pp-page .pp-toc a { display: flex; align-items: baseline; gap: 12px; height: 100%; padding: 13px 15px; border: 1px solid var(--line); border-radius: 12px; background: rgba(10,17,14,.6); color: var(--fg); text-decoration: none; font-size: 14.5px; font-weight: 600; line-height: 1.3; transition: border-color .18s ease, background-color .18s ease, transform .16s ease-out; }
+.pp-page .pp-toc .n { flex: none; font-family: var(--display); font-size: 12px; font-weight: 800; letter-spacing: .08em; color: var(--green-hi); font-variant-numeric: tabular-nums; }
+.pp-page .pp-toc a:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .pp-page .pp-toc a:hover { border-color: var(--green-hi); background: rgba(31,122,90,.14); }
+}
+@media (max-width: 620px) {
+  .pp-page .pp-toc ol { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .pp-page .pp-toc a { flex-direction: column; gap: 4px; padding: 12px; font-size: 14px; }
+}
