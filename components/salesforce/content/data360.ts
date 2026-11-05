@@ -188,7 +188,7 @@ export const data360: ProductContent = {
   start: {
     eyebrow: "Getting started",
     title: "Where a Data 360 project begins.",
-    lede: "Salesforce's own pricing guide starts with the use case, not the tool. It asks four questions of every use case before anything is estimated.",
+    lede: "Salesforce's own guide starts with the use case, not the tool. It asks four questions of every use case before anything is planned.",
     steps: [
       { title: "Frame the use case", body: "What problem are you solving, for which people? What is the role of AI: augment human work, automate a process or accelerate a workflow?" },
       { title: "Decide what data it needs", body: "Data types, sources, how fresh it must be, and the governance it requires." },
@@ -218,5 +218,5 @@ export const data360: ProductContent = {
     { label: "Data 360 guide", href: "https://www.salesforce.com/data/guide/" },
     { label: "Trailhead: the stages of Data 360", href: "https://trailhead.salesforce.com/content/learn/modules/data-cloud-explore-the-data-landscape/explore-the-stages-of-data-cloud" },
   ],
-  checked: "Checked against Salesforce's Data 360 page, guide, Trailhead module and pricing guide in November 2026.",
+  checked: "Checked against Salesforce's Data 360 page, guide and Trailhead module in November 2026.",
 };

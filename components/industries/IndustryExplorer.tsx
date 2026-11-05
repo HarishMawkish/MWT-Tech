@@ -1,10 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ICON, INDUSTRIES, LINES, SALESFORCE, type Industry, type Platform } from "./data";
 
 const PN: Record<Platform, string> = { sap: "SAP", sf: "Salesforce" };
+
+// Printing and Packaging has a page of its own instead of the slide-in guide.
+const PRINT_KEY = "print";
+const PRINT_PATH = "/industries/printing-and-packaging";
 
 function Icon({ k }: { k: string }) {
   return (
@@ -27,6 +32,7 @@ const platsOf = (k: string): Platform[] => (SALESFORCE[k] ? ["sap", "sf"] : ["sa
 
 /** The card grid and the slide-in guide for each industry, ported from the supplied page. */
 export function IndustryExplorer() {
+  const router = useRouter();
   const [cur, setCur] = useState<{ k: string; p: Platform } | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const lastFocus = useRef<HTMLElement | null>(null);
@@ -34,6 +40,10 @@ export function IndustryExplorer() {
 
   const open = useCallback((k: string, p: Platform, push: boolean) => {
     if (!INDUSTRIES.some((x) => x.k === k)) return;
+    if (k === PRINT_KEY) {
+      router.push(PRINT_PATH);
+      return;
+    }
     const platform: Platform = p === "sf" && SALESFORCE[k] ? "sf" : "sap";
     setCur((prev) => {
       if (!prev) lastFocus.current = document.activeElement as HTMLElement | null;
@@ -41,7 +51,7 @@ export function IndustryExplorer() {
     });
     setActive(null);
     if (push) history.replaceState(null, "", `#industry-${k}${platform === "sf" ? "/salesforce" : "/sap"}`);
-  }, []);
+  }, [router]);
 
   const close = useCallback(() => {
     setCur(null);
@@ -133,31 +143,42 @@ export function IndustryExplorer() {
   return (
     <>
       <div className="i-grid" id="i-grid">
-        {INDUSTRIES.map((d) => (
-          <button key={d.k} type="button" className="i-card" data-k={d.k} aria-haspopup="dialog" onClick={() => open(d.k, "sap", true)}>
-            <div className="i-head">
-              <Icon k={d.k} />
-              <h2>{d.n}</h2>
-            </div>
-            <div className="i-body">
-              <p className="i-p">{d.p}</p>
-              <div className="i-plats">
-                {platsOf(d.k).map((p) => (
-                  <div key={p}>
-                    <i className={p}>{PN[p]}</i>
-                    <span>{LINES[p][d.k] || ""}</span>
-                  </div>
-                ))}
+        {INDUSTRIES.map((d) => {
+          const inner = (
+            <>
+              <div className="i-head">
+                <Icon k={d.k} />
+                <h2>{d.n}</h2>
               </div>
-              <div className="i-proof">
-                <span className="i-n2">{SALESFORCE[d.k] ? "SAP and Salesforce guides" : "SAP guide"}</span>
-                <span className="i-go">
-                  Open <i>→</i>
-                </span>
+              <div className="i-body">
+                <p className="i-p">{d.p}</p>
+                <div className="i-plats">
+                  {platsOf(d.k).map((p) => (
+                    <div key={p}>
+                      <i className={p}>{PN[p]}</i>
+                      <span>{LINES[p][d.k] || ""}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="i-proof">
+                  <span className="i-n2">{SALESFORCE[d.k] ? "SAP and Salesforce guides" : "SAP guide"}</span>
+                  <span className="i-go">
+                    Open <i>→</i>
+                  </span>
+                </div>
               </div>
-            </div>
-          </button>
-        ))}
+            </>
+          );
+          return d.k === PRINT_KEY ? (
+            <Link key={d.k} href={PRINT_PATH} className="i-card" data-k={d.k}>
+              {inner}
+            </Link>
+          ) : (
+            <button key={d.k} type="button" className="i-card" data-k={d.k} aria-haspopup="dialog" onClick={() => open(d.k, "sap", true)}>
+              {inner}
+            </button>
+          );
+        })}
       </div>
 
       <div className={`i-ov${cur ? " open" : ""}`} id="i-ov" aria-hidden={!cur} onClick={onOverlayClick}>
