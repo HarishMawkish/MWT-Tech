@@ -32,6 +32,16 @@ function formatDate(iso: string) {
   });
 }
 
+// The route hands over the slug still percent-encoded ("a%20b"), but Sanity stores it as typed. A post whose slug has
+// spaces or capitals ("Mawkish Technologies at Salesforce Innovation Day…") would otherwise never match and show a 404.
+function decodeSlug(raw: string) {
+  try {
+    return decodeURIComponent(raw);
+  } catch {
+    return raw;
+  }
+}
+
 export async function generateStaticParams() {
   const blogSlugs = await getAllBlogSlugs();
   const insightSlugs = insights.map((p) => p.slug);
@@ -43,7 +53,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const slug = decodeSlug((await params).slug);
 
   const insight = insights.find((p) => p.slug === slug);
   if (insight) return { title: insight.title, description: insight.excerpt };
@@ -70,7 +80,7 @@ export default async function InsightDetailPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params;
+  const slug = decodeSlug((await params).slug);
 
   // Try the hardcoded Insights first, then fall back to Sanity blog posts —
   // the two live in the same /insights/<slug> URL space.

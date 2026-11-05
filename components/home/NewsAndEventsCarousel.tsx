@@ -115,7 +115,7 @@ export function NewsAndEventsCarousel({ posts }: NewsAndEventsCarouselProps) {
               style={{ flexBasis: `${100 / slides.length}%` }}
             >
               <Link
-                href={`/insights/${post.slug}`}
+                href={`/insights/${encodeURIComponent(post.slug)}`}
                 className="group block overflow-hidden rounded-3xl border border-mw-line bg-mw-paper transition hover:border-mw-secondary hover:shadow-xl hover:shadow-mw-secondary/5"
               >
                 {/* Every blog gets exactly the same image frame. The source
