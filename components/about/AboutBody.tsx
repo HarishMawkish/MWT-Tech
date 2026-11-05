@@ -6,7 +6,7 @@ const stats = [
   { value: "23", label: "consultants, presales and delivery specialists" },
   { value: "50", label: "implementations delivered" },
   { value: "14", label: "featured client case studies" },
-  { value: "4", label: "countries of operation" },
+  { value: "7", label: "Odoo-certified consultants, fully in-house" },
 ];
 
 const pillars = [
@@ -56,37 +56,6 @@ const trustChain = [
   { who: "Leadership and board", what: "awarded the contract" },
 ];
 
-const offices = [
-  {
-    place: "Colombo",
-    country: "Sri Lanka",
-    tag: "Headquarters",
-    body: "Delivery, presales and leadership, all under one roof.",
-    address: "2nd Floor, Oceanica Tower, 490 Galle Road, Colombo 03",
-    hq: true,
-  },
-  {
-    place: "Riyadh",
-    country: "Saudi Arabia",
-    tag: "Presales office",
-    body: "Two presales consultants for local solution consulting and client engagement.",
-  },
-  {
-    place: "Malé",
-    country: "Maldives",
-    tag: "Presales office",
-    body: "Two presales consultants for local solution consulting and client engagement.",
-  },
-  {
-    place: "India",
-    country: "Served from Colombo",
-    tag: "Active market",
-    body: "Clients and delivery, with three featured client case studies, run with delivery partners.",
-  },
-];
-
-const expanding = ["UAE", "Oman", "Switzerland", "USA"];
-
 /** About, in the same page pattern as Careers and Industries: the body only, wrapped by the site's own header and footer. */
 export function AboutBody() {
   return (
@@ -112,7 +81,7 @@ export function AboutBody() {
           </h1>
           <p className="sub">One accountable partner for enterprise applications.</p>
           <p className="lede">
-            We are an enterprise technology consulting firm based in Colombo, with presales teams in Riyadh and Malé.
+            We are an enterprise technology consulting firm based in Colombo, Sri Lanka.
             We bridge business strategy and technology, and we answer for the result.
           </p>
           <div className="ctas">
@@ -319,6 +288,7 @@ export function AboutBody() {
                 <div className="bio">
                   <h3>Hatim Malick</h3>
                   <div className="role">Founder &amp; Director</div>
+                  <a className="li" href="https://www.linkedin.com/in/hathim-malick" target="_blank" rel="noopener noreferrer" aria-label="Hatim Malick on LinkedIn (opens in a new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg><span>LinkedIn</span></a>
                   <p>
                     Provides strategic oversight across Mawkish Group&apos;s portfolio, guiding long-term regional
                     growth and enterprise partnerships across South Asia and the Middle East.
@@ -333,6 +303,7 @@ export function AboutBody() {
                 <div className="bio">
                   <h3>Michael Gunawardena</h3>
                   <div className="role">Director &amp; CEO</div>
+                  <a className="li" href="https://www.linkedin.com/in/michael-gunawardena-9250a9271" target="_blank" rel="noopener noreferrer" aria-label="Michael Gunawardena on LinkedIn (opens in a new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg><span>LinkedIn</span></a>
                   <p>
                     13+ years of leadership in business operations, client management, and enterprise transformation.
                     Michael leads Mawkish&apos;s growth strategy and multi-platform advisory across SAP, Salesforce,
@@ -376,6 +347,7 @@ export function AboutBody() {
                 <div className="bio">
                   <h3>Nafaz Jalaldeen</h3>
                   <div className="role">Director &amp; CRO</div>
+                  <a className="li" href="https://www.linkedin.com/in/nafaz" target="_blank" rel="noopener noreferrer" aria-label="Nafaz Jalaldeen on LinkedIn (opens in a new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg><span>LinkedIn</span></a>
                   <p>
                     Nafaz brings over a decade of experience in technology consulting and enterprise sales across Sri
                     Lanka and the Middle East. At Mawkish Technologies, he connects client priorities with the right
@@ -389,42 +361,6 @@ export function AboutBody() {
               </div>
             </Reveal>
           </div>
-        </div>
-      </section>
-
-      {/* Where we operate */}
-      <section className="light" id="presence">
-        <div className="in">
-          <Reveal>
-            <span className="eyebrow">Where we operate</span>
-            <h2>Regional presence. Global ambition.</h2>
-            <p className="lede">
-              Local solution consulting close to the client, with global delivery standards behind it.
-            </p>
-          </Reveal>
-          <div className="a-map">
-            {offices.map((o, i) => (
-              <Reveal key={o.place} delay={i * 70}>
-                <div className={`a-loc${o.hq ? " hq" : ""}`} style={{ height: "100%" }}>
-                  <span className="tag">{o.tag}</span>
-                  <h3>{o.place}</h3>
-                  <div className="c">{o.country}</div>
-                  <p>{o.body}</p>
-                  {o.address && <address>{o.address}</address>}
-                </div>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal>
-            <div className="a-next">
-              <span>Expanding into</span>
-              <ul>
-                {expanding.map((c) => (
-                  <li key={c}>{c}</li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
         </div>
       </section>
 
