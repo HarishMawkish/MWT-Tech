@@ -49,13 +49,6 @@ const commitments = [
   },
 ];
 
-const trustChain = [
-  { who: "The champion", what: "put our name forward first" },
-  { who: "The evaluation team", what: "tested team, approach and commercials" },
-  { who: "Management", what: "backed the recommendation" },
-  { who: "Leadership and board", what: "awarded the contract" },
-];
-
 const offices = [
   {
     place: "Colombo",
@@ -248,26 +241,6 @@ export function AboutBody() {
               </Reveal>
             ))}
           </div>
-
-          <Reveal>
-            <div className="a-trust">
-              <div>
-                <h3>What a contract award means to us</h3>
-                <p>
-                  Every award is the trust of many people. Each of them put their name behind us, and we protect that
-                  trust as if it were our own.
-                </p>
-              </div>
-              <ol className="a-chain">
-                {trustChain.map((t) => (
-                  <li key={t.who}>
-                    {t.who}
-                    <span>{t.what}</span>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </Reveal>
 
           <Reveal>
             <p className="a-closer">
