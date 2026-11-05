@@ -199,32 +199,19 @@ export const service: ProductContent = {
     },
   },
 
-  editions: {
-    eyebrow: "Editions",
-    title: "How Service Cloud is packaged.",
-    lede: "Prices and allowances change, so this page does not quote them. The official pricing page is the source.",
-    rows: [
-      { name: "Starter Suite, Pro Suite", body: "Suites for smaller teams covering sales, service and marketing, with more customisation in Pro." },
-      { name: "Core", body: "The foundation: case management, a self-service help centre and Slack." },
-      { name: "Advanced", body: "Core plus AI-powered channels, an AI agent for customer service, stronger data protection and a full sandbox." },
-      { name: "Max", body: "The fullest edition: the complete Agentforce for Service suite, an expanded contact centre and an annual pool of Flex Credits." },
-    ],
-    link: { label: "Service Cloud pricing on salesforce.com", href: "https://www.salesforce.com/service/pricing/" },
-  },
 
   faq: [
     { q: "What is Service Cloud?", a: "Salesforce's customer service and support product. It combines case management, a console for reps, knowledge, a contact centre and AI agents on one platform." },
     { q: "Which channels does it cover?", a: "Salesforce names chat, email, WhatsApp, SMS, voice and Slack." },
     { q: "Can AI agents and human reps work together?", a: "Yes. Agents answer customers and hand over to reps. Supervisors can monitor both and step in from the Command Center." },
     { q: "How do I build a service agent?", a: "Salesforce's guide: start from a standard topic, describe the job, scope and instructions, add actions, then test and refine in the planner." },
-    { q: "Does it cover field work?", a: "Field Service is a separate Salesforce product with its own pricing. It requires at least one Service Cloud user licence and covers scheduling, dispatch and technicians on site." },
+    { q: "Does it cover field work?", a: "Field Service is a separate Salesforce product. It requires at least one Service Cloud user licence and covers scheduling, dispatch and technicians on site." },
     { q: "What are the editions?", a: "Core, Advanced and Max for service, plus suites for smaller teams. Many capabilities, such as digital channels and workforce and quality management, are add-ons." },
   ],
 
   sources: [
     { label: "Service overview", href: "https://www.salesforce.com/service/" },
     { label: "Customer Service Management", href: "https://www.salesforce.com/service/cloud/" },
-    { label: "Service Cloud pricing and editions", href: "https://www.salesforce.com/service/pricing/" },
     { label: "How to Get Started with Agentforce (Salesforce Research guide, 2024)", href: "https://www.salesforce.com/en-us/wp-content/uploads/sites/4/documents/PDF/agentforce-implementation-guide.pdf" },
   ],
   checked: "Checked against Salesforce's Service pages and its implementation guide in November 2026. The guide is from 2024, so check Salesforce Help for the latest steps.",

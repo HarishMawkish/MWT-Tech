@@ -112,9 +112,9 @@ export function HubBody() {
     <section className={light ? "light" : undefined} id="delivery" key="delivery">
       <div className="in">
         <Head
-          eyebrow="Implementation and licensing"
+          eyebrow="Implementation"
           title="What a Salesforce project involves."
-          lede="Salesforce's own services page describes four stages. The decisions below are the ones its pricing pages put to a customer."
+          lede="Salesforce's own services page describes four stages. The decisions below are worth settling before you start."
         />
         <FlowSteps
           label="Salesforce's four stages"
@@ -128,10 +128,7 @@ export function HubBody() {
         <div className="decide" data-r style={d(1)}>
           <h3>Decisions to settle before you buy</h3>
           <ul>
-            <li>Which edition, and how many users: most editions are priced per user, per month.</li>
-            <li>Billing terms and support plan: Salesforce offers Standard (included), Premier and Signature plans.</li>
             <li>Add-ons: agent features, Revenue Cloud, partner management and digital channels are among those sold separately.</li>
-            <li>How you will pay for AI and data: Flex Credits, conversations, per-user licences or profile-based pricing, and how you will monitor use.</li>
           </ul>
         </div>
       </div>
