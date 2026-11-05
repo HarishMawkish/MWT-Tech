@@ -56,6 +56,35 @@ const trustChain = [
   { who: "Leadership and board", what: "awarded the contract" },
 ];
 
+const offices = [
+  {
+    place: "Colombo",
+    country: "Sri Lanka",
+    tag: "Headquarters",
+    body: "Delivery, presales and leadership, all under one roof.",
+    address: "2nd Floor, Oceanica Tower, 490 Galle Road, Colombo 03",
+    hq: true,
+  },
+  {
+    place: "Riyadh",
+    country: "Saudi Arabia",
+    tag: "Presales office",
+    body: "Two presales consultants for local solution consulting and client engagement.",
+  },
+  {
+    place: "Malé",
+    country: "Maldives",
+    tag: "Presales office",
+    body: "Two presales consultants for local solution consulting and client engagement.",
+  },
+  {
+    place: "India",
+    country: "Served from Colombo",
+    tag: "Active market",
+    body: "Clients and delivery, with three featured client case studies, run with delivery partners.",
+  },
+];
+
 /** About, in the same page pattern as Careers and Industries: the body only, wrapped by the site's own header and footer. */
 export function AboutBody() {
   return (
@@ -360,6 +389,32 @@ export function AboutBody() {
                 </div>
               </div>
             </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Where we operate */}
+      <section className="light" id="presence">
+        <div className="in">
+          <Reveal>
+            <span className="eyebrow">Where we operate</span>
+            <h2>Regional presence.</h2>
+            <p className="lede">
+              Local solution consulting and client engagement, close to where you work.
+            </p>
+          </Reveal>
+          <div className="a-map">
+            {offices.map((o, i) => (
+              <Reveal key={o.place} delay={i * 70}>
+                <div className={`a-loc${o.hq ? " hq" : ""}`} style={{ height: "100%" }}>
+                  <span className="tag">{o.tag}</span>
+                  <h3>{o.place}</h3>
+                  <div className="c">{o.country}</div>
+                  <p>{o.body}</p>
+                  {o.address && <address>{o.address}</address>}
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
