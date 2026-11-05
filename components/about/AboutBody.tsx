@@ -10,11 +10,11 @@ const stats = [
 ];
 
 const pillars = [
-  { title: "Business-first transformation", body: "Technology aligned to your operational, financial and growth goals." },
-  { title: "Cross-platform expertise", body: "One team that can advise across platforms, not defend one." },
-  { title: "Leadership involvement", body: "Senior leaders stay close to every engagement." },
-  { title: "Lifecycle ownership", body: "From strategy and implementation to managed support." },
-  { title: "Long-term partnership", body: "Sustainable value and continuous improvement after go-live." },
+  { title: "Business-first", body: "Technology built around your goals." },
+  { title: "Cross-platform", body: "One team across every platform." },
+  { title: "Senior involvement", body: "Leaders on every engagement." },
+  { title: "Lifecycle ownership", body: "Strategy through managed support." },
+  { title: "Long-term partnership", body: "Value that lasts beyond go-live." },
 ];
 
 const lanes = [
@@ -137,14 +137,8 @@ export function AboutBody() {
               </div>
               <div className="a-text">
                 <p>
-                  Large companies and fast-growing ones come to us to run their finance, supply chain, sales and
-                  service on world-class platforms. We start with the business objective, not the technology
-                  preference, and we choose the platform to fit the strategy.
-                </p>
-                <p>
-                  That means the attention of a boutique, with senior people close to every engagement, and the
-                  capability of a large integrator behind it. One partner owns the relationship, the contract and the
-                  outcome, so you are never left to manage the gaps between vendors yourself.
+                  We bridge business strategy and technology, and choose the platform to fit the strategy. One partner
+                  owns the relationship, the contract and the outcome.
                 </p>
               </div>
             </div>
