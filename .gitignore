@@ -6,3 +6,6 @@ node_modules
 # local env files hold secrets (write token); only .env.production is committed
 .env.local
 .env*.local
+
+# Output of scripts/wayback.mjs
+wayback-results.csv

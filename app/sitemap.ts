@@ -42,6 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Databricks: the hub, then one page per platform product and supporting topic
     ...databricksPages.map((p) => entry(dbPath(p.slug), p.slug ? 0.7 : 0.85, "monthly", p.updated)),
     entry("/industries", 0.7, "monthly"),
+    entry("/industries/printing-and-packaging", 0.6, "monthly"),
     entry("/insights", 0.6, "weekly"),
     ...insights.map((p) => entry(`/insights/${p.slug}`, 0.5, "monthly")),
     entry("/about", 0.6, "yearly"),

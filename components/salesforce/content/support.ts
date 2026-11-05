@@ -166,19 +166,6 @@ export const fieldService: ProductContent = {
       { title: "For dispatchers", body: "Help managing exceptions. Managers can also monitor customers' conversations with agents." },
     ],
   },
-  editions: {
-    eyebrow: "Editions",
-    title: "Field Service is sold as its own per-user products.",
-    lede: "Salesforce's pricing page says Field Service requires at least one Service Cloud user licence. It lists the products below. This page does not quote prices.",
-    rows: [
-      { name: "Dispatcher", body: "The dispatch console with AI-powered scheduling, route optimisation and job assignment." },
-      { name: "Technician", body: "The mobile app for working orders offline, creating quotes and collecting payment." },
-      { name: "Contractor Plus", body: "A secure portal and mobile app for contractors, with performance tracking." },
-      { name: "Field Service Plus", body: "A bundle of Dispatcher, Technician, Service Cloud and Sales Cloud." },
-      { name: "Agentforce 1 Field Service", body: "Field Service Plus with Salesforce's full AI suite." },
-    ],
-    link: { label: "Field Service pricing on salesforce.com", href: "https://www.salesforce.com/service/field-service-management/pricing/" },
-  },
   faq: [
     { q: "Does the mobile app work without a connection?", a: "Yes. Salesforce says technicians can reach thousands of records offline and sync changes later." },
     { q: "Can contractors use it?", a: "Yes. Contractors get a secure portal and app access." },

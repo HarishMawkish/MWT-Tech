@@ -41,7 +41,7 @@ export const salesforcePages: SfPageMeta[] = [
     name: "Salesforce Data 360",
     title: "Salesforce Data 360 (formerly Data Cloud)",
     description:
-      "Data 360 explained: connecting data, mapping it to a shared model, unifying profiles, and putting segments and agents to work, with how it is priced.",
+      "Data 360 explained: connecting data, mapping it to a shared model, unifying profiles, and putting segments and agents to work.",
     updated: UPDATED,
   },
   {

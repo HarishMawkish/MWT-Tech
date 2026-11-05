@@ -54,7 +54,7 @@ export function BlogCard({
 
   return (
     <SpotlightLink
-      href={`/insights/${post.slug}`}
+      href={`/insights/${encodeURIComponent(post.slug)}`}
       className="group flex h-full w-full flex-col rounded-3xl"
     >
       <div className="relative aspect-[16/9] w-full shrink-0 overflow-hidden bg-black/40">

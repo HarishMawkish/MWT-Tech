@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Manrope } from "next/font/google";
 import { useEffect, useRef, useState } from "react";
 import { industriesMenu } from "@/lib/industries-menu";
@@ -18,6 +19,7 @@ const tabs: { id: Tab; label: string; sub: string }[] = [
 ];
 
 export function IndustriesMenu({ open, onEnter, onLeave, pathname }: { open: boolean; onEnter: () => void; onLeave: () => void; pathname: string }) {
+  const router = useRouter();
   const [tab, setTab] = useState<Tab>("all");
   const intent = useRef<number | undefined>(undefined);
 
@@ -35,7 +37,9 @@ export function IndustriesMenu({ open, onEnter, onLeave, pathname }: { open: boo
   };
 
   const rows = industriesMenu.filter((x) => tab === "all" || x.p.includes(tab));
-  const hrefFor = (k: string) => `/industries#industry-${k}${tab === "all" ? "" : tab === "sf" ? "/salesforce" : "/sap"}`;
+  // Printing and Packaging has a page of its own; every other industry opens its guide on the Industries page.
+  const hrefFor = (k: string) =>
+    k === "print" ? "/industries/printing-and-packaging" : `/industries#industry-${k}${tab === "all" ? "" : tab === "sf" ? "/salesforce" : "/sap"}`;
   const onIndustries = pathname === "/industries";
 
   return (
@@ -73,7 +77,14 @@ export function IndustriesMenu({ open, onEnter, onLeave, pathname }: { open: boo
                     onPointerEnter={() => aim(t.id)}
                     onPointerLeave={() => window.clearTimeout(intent.current)}
                     onFocus={() => setTab(t.id)}
-                    onClick={() => setTab(t.id)}
+                    // Hovering only swaps the list on the right; clicking "All industries" goes to the Industries page.
+                    onClick={() => {
+                      setTab(t.id);
+                      if (t.id === "all") {
+                        onLeave();
+                        router.push("/industries");
+                      }
+                    }}
                     className={`block w-full rounded-xl px-4 py-3 text-left transition-colors duration-200 ${
                       on ? "bg-white shadow-[inset_3px_0_0_#1f7a5a,0_4px_14px_rgba(0,0,0,0.06)]" : "hover:bg-white/55"
                     }`}
@@ -116,7 +127,7 @@ export function IndustriesMenu({ open, onEnter, onLeave, pathname }: { open: boo
                   );
                   const cls = "group/i flex items-start gap-3 rounded-xl px-3 py-[11px] hover:bg-white hover:shadow-[0_4px_14px_rgba(0,0,0,0.05)] focus-visible:bg-white";
                   // On the Industries page itself a hash link opens the guide at once; elsewhere it navigates there.
-                  return onIndustries ? (
+                  return onIndustries && x.k !== "print" ? (
                     <a key={x.k} href={hrefFor(x.k)} onClick={onLeave} className={cls}>
                       {body}
                     </a>

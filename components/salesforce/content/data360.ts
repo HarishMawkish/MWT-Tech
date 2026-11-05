@@ -10,7 +10,6 @@ export const data360: ProductContent = {
   title: ["The data layer", "people and agents share."],
   lede: "Data 360 is Salesforce's data platform. It brings data from Salesforce and from other systems together, often without copying it, and gives that data business meaning so teams, applications and AI agents can act on it.",
   primary: { label: "See how it works", href: "#explore" },
-  secondary: { label: "How it is priced", href: "#editions" },
   note: "Salesforce renamed Data Cloud to Data 360. Some training material and older pages still use the earlier name.",
   hero: {
     app: "Data 360 · Unified profile",
@@ -189,7 +188,7 @@ export const data360: ProductContent = {
   start: {
     eyebrow: "Getting started",
     title: "Where a Data 360 project begins.",
-    lede: "Salesforce's own pricing guide starts with the use case, not the tool. It asks four questions of every use case before anything is estimated.",
+    lede: "Salesforce's own guide starts with the use case, not the tool. It asks four questions of every use case before anything is planned.",
     steps: [
       { title: "Frame the use case", body: "What problem are you solving, for which people? What is the role of AI: augment human work, automate a process or accelerate a workflow?" },
       { title: "Decide what data it needs", body: "Data types, sources, how fresh it must be, and the governance it requires." },
@@ -199,31 +198,18 @@ export const data360: ProductContent = {
     decide: {
       title: "Decisions to settle before you buy",
       items: [
-        "Which pricing model: Flex Credits or profile-based pricing.",
         "How much data, how often it refreshes, and what you will do with it.",
         "Which sources to connect first, and which can stay in place.",
       ],
     },
   },
 
-  editions: {
-    eyebrow: "Pricing",
-    title: "Data 360 is priced by what you use.",
-    lede: "Salesforce says its data and AI products are priced on consumption. Its pricing guide offers two models. Figures change, so this page does not quote them.",
-    rows: [
-      { name: "Flex Credits", body: "A consumption model. One kind of credit is shared across Data 360 and Agentforce, so credits bought for one use case can be applied to another." },
-      { name: "Profile-based pricing", body: "A predictable, flat-rate model aimed at control." },
-      { name: "What drives consumption", body: "For Data 360, three things: data volume, how often it runs, and what is done to it, such as processing, segmentation or activation. The July 2026 guide lists batch ingestion and zero-copy integrations as free in the Flex Credits model." },
-    ],
-    link: { label: "Data 360 pricing on salesforce.com", href: "https://www.salesforce.com/data/pricing/" },
-  },
 
   faq: [
     { q: "What is Data 360, and was it called Data Cloud?", a: "Data 360 is Salesforce's data platform, formerly called Data Cloud. Some training and older pages still use the earlier name." },
     { q: "Is it a customer data platform?", a: "Yes, and Salesforce says it goes further than a traditional one, because it serves sales, service and commerce as well as marketing." },
     { q: "Do we have to copy our data into Salesforce?", a: "Not always. With zero copy, data in warehouses and lakes can be queried where it lives. Data can also be ingested when that suits the use case." },
     { q: "What is identity resolution?", a: "The process that builds unified profiles. A ruleset has match rules, which decide which source profiles are consolidated, and reconciliation rules, which decide which value shows on the profile." },
-    { q: "How is it priced?", a: "By consumption, through Flex Credits, or with a profile-based model. What you pay depends on data volume, how often it runs and what you do with it. Salesforce provides a pricing page and calculator." },
     { q: "How does it help agents?", a: "It gives agents trusted context, including unstructured content, and keeps persistent memory of sessions, so their answers are tied to your data." },
   ],
 
@@ -231,7 +217,6 @@ export const data360: ProductContent = {
     { label: "Data 360 product page", href: "https://www.salesforce.com/data/" },
     { label: "Data 360 guide", href: "https://www.salesforce.com/data/guide/" },
     { label: "Trailhead: the stages of Data 360", href: "https://trailhead.salesforce.com/content/learn/modules/data-cloud-explore-the-data-landscape/explore-the-stages-of-data-cloud" },
-    { label: "Understanding Data 360 pricing (Salesforce guide, July 2026)", href: "https://www.salesforce.com/en-us/wp-content/uploads/sites/4/products/data/resources/understanding-data360-pricing/S-DPM-Pricing-Guide-Ebook-2026-07-23.pdf" },
   ],
-  checked: "Checked against Salesforce's Data 360 page, guide, Trailhead module and pricing guide in November 2026.",
+  checked: "Checked against Salesforce's Data 360 page, guide and Trailhead module in November 2026.",
 };

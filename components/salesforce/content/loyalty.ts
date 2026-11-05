@@ -197,17 +197,6 @@ export const loyalty: ProductContent = {
     },
   },
 
-  editions: {
-    eyebrow: "Pricing",
-    title: "Priced separately from Marketing Cloud.",
-    lede: "Salesforce publishes separate pricing pages for Loyalty Management and for Referral Marketing, and offers free trials of both and of Real-Time Offer Management. This page does not quote prices.",
-    rows: [
-      { name: "Loyalty Management", body: "Programmes, members, points, tiers and vouchers." },
-      { name: "Referral Marketing", body: "Referral campaigns and advocate tracking." },
-      { name: "Real-Time Offer Management", body: "Personalised offers across channels." },
-    ],
-    link: { label: "Loyalty pricing on salesforce.com", href: "https://www.salesforce.com/marketing/loyalty/pricing/" },
-  },
 
   faq: [
     { q: "What can a loyalty programme be built from?", a: "Points, tiers, spend-based cash-back, visit or punch cards, or a hybrid. Rewards can also be given for actions other than buying, such as referrals, reviews or app activity." },

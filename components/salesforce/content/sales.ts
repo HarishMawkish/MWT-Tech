@@ -12,7 +12,7 @@ export const sales: ProductContent = {
   lede: "Sales Cloud is Salesforce's CRM for sales teams. It keeps leads, contacts, accounts and opportunities in one record, logs emails, events and other activity automatically, and adds AI and agents to the work of selling.",
   primary: { label: "See what it does", href: "#explore" },
   secondary: { label: "How to start", href: "#start" },
-  note: "Salesforce's current sales page calls the product Sales Cloud. Agent features are sold as additions to it, covered under editions below.",
+  note: "Salesforce's current sales page calls the product Sales Cloud. Agent features are sold as additions to it.",
   hero: {
     app: "Sales Cloud · Pipeline",
     label: "Illustration of a Sales Cloud pipeline: open opportunities in four stages, a forecast summary and an AI suggestion to follow up on a deal that has gone quiet. Sample data.",
@@ -194,50 +194,34 @@ export const sales: ProductContent = {
   start: {
     eyebrow: "Getting started",
     title: "Where a Sales Cloud project begins.",
-    lede: "Salesforce's own FAQ describes the starting path: a free trial, a choice of plan, then configuration, with consultants available through its marketplace.",
+    lede: "Salesforce's own FAQ describes the starting path: a free trial, then configuration, with consultants available through its marketplace.",
     steps: [
       { title: "Try it", body: "Salesforce offers a free 30-day trial of Sales Cloud." },
-      { title: "Choose a plan", body: "Pick the edition that fits the team and the AI you want. Editions are summarised below." },
       { title: "Configure", body: "Set up the platform for your sales process, with drag-and-drop workflow tools." },
       { title: "Bring in help if needed", body: "Salesforce points customers to consultants and partners listed on AgentExchange." },
     ],
     decide: {
       title: "Decisions to settle before you buy",
       items: [
-        "Which edition, and how many users.",
-        "Which support plan: Standard is included, Premier and Signature are higher.",
         "Which add-ons you need, such as agents, Revenue Cloud or partner management.",
-        "Which AI and agent features you need. Salesforce lists some as additions to the base editions, and its Agentforce pricing page explains how agent use is paid for.",
+        "Which AI and agent features you need. Salesforce lists some as additions to the base editions.",
       ],
     },
   },
 
-  editions: {
-    eyebrow: "Editions",
-    title: "How Sales Cloud is packaged.",
-    lede: "Prices and allowances change, so this page does not quote them. The official pricing page is the source.",
-    rows: [
-      { name: "Free Suite, Starter Suite, Pro Suite", body: "Suites for smaller teams covering sales and more. Pro adds custom objects and apps, a sandbox, sales forecasting and more advanced automation to Starter." },
-      { name: "Core", body: "Sales CRM with built-in AI, plus Slack and Tableau Next. The entry point for AI add-ons." },
-      { name: "Advanced", body: "Core plus enhanced security, more AI, more data capacity and backup and archive tools." },
-      { name: "Max", body: "The fullest edition, combining the AI suite and Agentforce for Sales with Sales Planning and other additions." },
-    ],
-    link: { label: "Sales Cloud pricing on salesforce.com", href: "https://www.salesforce.com/sales/pricing/" },
-  },
 
   faq: [
     { q: "What is Sales Cloud?", a: "Salesforce's CRM for sales teams. It gives teams one platform for leads, accounts, opportunities, forecasting and automation, with AI and agents built in." },
     { q: "What is sales force automation?", a: "Software that handles the repetitive parts of selling, such as updating records, tracking the pipeline and sending reminders, so sellers can spend more time with customers." },
     { q: "How does Sales Cloud handle customer data?", a: "Activity and the information sellers enter are stored in a single secure database. That gives teams deal visibility and accurate real-time reports, and the same data can feed AI agents." },
     { q: "Does it work on a phone?", a: "Yes. Salesforce provides a mobile app and a browser extension so sellers can update the CRM from anywhere." },
-    { q: "How do we get started?", a: "Salesforce describes three steps: sign up for a free trial, choose a pricing plan, and configure the platform. Consultants and partners listed on AgentExchange can help with implementation." },
+    { q: "How do we get started?", a: "Salesforce describes three steps: sign up for a free trial, then configure the platform. Consultants and partners listed on AgentExchange can help with implementation." },
     { q: "Are agent features included?", a: "Not in every edition. Salesforce lists agent capabilities such as prospecting, pipeline management and lead nurture as additions, and the top edition bundles Agentforce for Sales." },
   ],
 
   sources: [
     { label: "Sales Cloud overview", href: "https://www.salesforce.com/sales/" },
     { label: "Sales Cloud capabilities and FAQ", href: "https://www.salesforce.com/sales/cloud/" },
-    { label: "Sales Cloud pricing and editions", href: "https://www.salesforce.com/sales/pricing/" },
     { label: "Starter Suite", href: "https://www.salesforce.com/small-business/starter/" },
   ],
   checked: "Checked against Salesforce's own Sales Cloud pages in November 2026.",
