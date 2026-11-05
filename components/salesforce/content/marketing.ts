@@ -189,6 +189,17 @@ export const marketing: ProductContent = {
     },
   },
 
+  editions: {
+    eyebrow: "Editions",
+    title: "Marketing is licensed by product.",
+    lede: "Marketing Cloud pricing differs by product and changes. Salesforce publishes it on its marketing pages, so this page does not quote it.",
+    rows: [
+      { name: "Marketing Cloud Next", body: "Salesforce's flagship marketing product." },
+      { name: "Account Engagement and Account Engagement+", body: "B2B marketing automation. Account Engagement+ adds Marketing Cloud Next's AI." },
+      { name: "Marketing Cloud Engagement", body: "The established product, with access to Next capabilities." },
+    ],
+    link: { label: "Marketing Cloud on salesforce.com", href: "https://www.salesforce.com/marketing/" },
+  },
 
   faq: [
     { q: "What is Marketing Cloud?", a: "The umbrella name for Salesforce's marketing products. Marketing Cloud Next is the flagship, Account Engagement handles B2B automation, and Marketing Cloud Engagement is the established email and journeys product." },

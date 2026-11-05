@@ -1,7 +1,8 @@
 import type { ProductContent } from "../content-types";
 
 // Loyalty Management. Sources: Salesforce's Loyalty, Offers and Referrals page, and the Loyalty Management pages of
-// Salesforce Help ("Loyalty Management" and "Set Up Loyalty Processes"). Read in November 2026.
+// Salesforce Help ("Loyalty Management" and "Set Up Loyalty Processes"). Read in November 2026. Salesforce publishes no
+// editions or prices on the product page, so none appear here.
 
 export const loyalty: ProductContent = {
   slug: "loyalty-management",
@@ -172,7 +173,7 @@ export const loyalty: ProductContent = {
       { title: "Next-best offers", body: "Agentforce is said to recommend the next-best offer." },
       { title: "Predictive insight", body: "Predictive insights are said to flag the risk that a member disengages and trigger journeys." },
     ],
-    note: "These are capabilities Salesforce describes. Check the current product for what it includes.",
+    note: "These are capabilities Salesforce describes. Check the current product for what your edition includes.",
   },
 
   start: {
@@ -196,6 +197,17 @@ export const loyalty: ProductContent = {
     },
   },
 
+  editions: {
+    eyebrow: "Pricing",
+    title: "Priced separately from Marketing Cloud.",
+    lede: "Salesforce publishes separate pricing pages for Loyalty Management and for Referral Marketing, and offers free trials of both and of Real-Time Offer Management. This page does not quote prices.",
+    rows: [
+      { name: "Loyalty Management", body: "Programmes, members, points, tiers and vouchers." },
+      { name: "Referral Marketing", body: "Referral campaigns and advocate tracking." },
+      { name: "Real-Time Offer Management", body: "Personalised offers across channels." },
+    ],
+    link: { label: "Loyalty pricing on salesforce.com", href: "https://www.salesforce.com/marketing/loyalty/pricing/" },
+  },
 
   faq: [
     { q: "What can a loyalty programme be built from?", a: "Points, tiers, spend-based cash-back, visit or punch cards, or a hybrid. Rewards can also be given for actions other than buying, such as referrals, reviews or app activity." },

@@ -2,12 +2,20 @@ import type { ProductSlug } from "../data";
 
 // One source for both the questions shown on the five main cloud pages and their FAQ structured data, so the two can
 // never drift. Every answer is drawn from what Salesforce publishes. Where its own pages leave something out, or
-// where a detail looks likely to change, the answer says so rather than guessing.
+// where a price looks likely to move, the answer says so rather than guessing.
 
 export type Faq = { q: string; a: string };
 
 export const cloudFaqs: Partial<Record<ProductSlug, Faq[]>> = {
   "sales-cloud": [
+    {
+      q: "What does Sales Cloud actually cost?",
+      a: "Salesforce publishes five rungs, per user per month, billed annually unless stated: Starter Suite at $25 (monthly or annual), Pro Suite at $100, Core at $195, Advanced at $395 and Max at $550. There is also a Free Suite at $0.\n\nThe jump that catches people out is Core to Max. Max is where Agentforce for Sales, Agentforce Coworker, Spiff, Sales Planning, Sales Programs, Maps, Tableau Next and Slack Enterprise+ are included, along with 2.75 million Flex Credits per org per year. Below Max those arrive as add-ons: Agentforce for Sales from $125 per user per month, Sales Programs from $100, Revenue Intelligence from $220, Revenue Cloud from $200.",
+    },
+    {
+      q: "Is the AI included, or is it another line on the invoice?",
+      a: "Both, depending on the rung. Salesforce says AI can be added to Core and above, and the full AI suite is what you are buying at Max. Underneath the per-user price, agent work is metered in Flex Credits.\n\nThat second meter is the one to model before you commit. Billing is per action rather than per answer, so a one-step reply is cheap and a multi-step task is not. Work out the actions per task for your real processes, not for the demo.",
+    },
     {
       q: "Our CRM data is a mess. Will agents make it worse?",
       a: "They will make it visible, which feels worse for a fortnight and is the best thing that could happen to you. An agent researching an account reads the same fields a person would; where those are stale, blank or contradictory, the agent's output shows it plainly rather than quietly working around it the way an experienced rep does.\n\nSo the honest sequence is hygiene first: required fields that are genuinely required, a close-date discipline, owners on accounts, and automatic activity capture so the record reflects what happened rather than what someone remembered to type.",
@@ -33,11 +41,15 @@ export const cloudFaqs: Partial<Record<ProductSlug, Faq[]>> = {
     },
     {
       q: "What does zero copy really mean in practice?",
-      a: "That the query runs against your data where it lives rather than against a copy Salesforce has taken. No extract, no nightly sync to babysit, no second copy drifting out of step with the first, and no second place to govern.\n\nThe caveat worth knowing: zero copy is a connection, not magic. Performance still depends on the system at the other end, and some operations will materialise data. Which ones is a question for your architecture review rather than the product page.",
+      a: "That the query runs against your data where it lives rather than against a copy Salesforce has taken. No extract, no nightly sync to babysit, no second copy drifting out of step with the first, and no second place to govern.\n\nThe caveat worth knowing: zero copy is a connection, not magic. Performance and cost still depend on the system at the other end, and some operations will materialise data. Which ones, and what that costs, is a question for your architecture review rather than the product page.",
     },
     {
       q: "What is the Agent Context Engine?",
       a: "The part of Data 360 that turns unstructured material — PDFs, call logs, wikis — into structured business knowledge an agent can be grounded in, along with persistent agent memory. Salesforce says this reduces hallucinations and model processing costs, though it publishes no figure for either.\n\nIt is the most consequential piece for anyone whose AI pilot disappointed. Most of those failed on retrieval, not on the model: the agent had nothing good to read.",
+    },
+    {
+      q: "How is it priced?",
+      a: "Consumption, in three parts: Consumption Credits, Data Storage and Premium Add-ons. Existing Data Cloud agreements are honoured to the end of their current term, and existing Salesforce customers can start free.\n\nCredits are where the surprises live. Profile unification, identity resolution, segmentation and activation all consume, and a badly scoped ingestion — everything, because we might need it — produces a bill that ends the project's political support. Scope the data to the decisions it serves.",
     },
     {
       q: "Does identity resolution actually work?",
@@ -78,6 +90,10 @@ export const cloudFaqs: Partial<Record<ProductSlug, Faq[]>> = {
 
   "loyalty-management": [
     {
+      q: "How much does it cost?",
+      a: "This is the question that reframes the product, so we put it first. Salesforce prices Loyalty Management per org per month, not per user: Starter at $20,000, Growth at $35,000 and Advanced at $45,000, billed annually. Tableau CRM for Loyalty Management is a further $165 per user per month.\n\nAt those numbers this is not a loyalty scheme for a few thousand members. It is enterprise programme infrastructure, and the business case has to be built on retained revenue rather than on convenience.",
+    },
+    {
       q: "What do the editions actually change?",
       a: "Volume and sophistication. Loyalty events per year run 1 million on Starter, 15 million on Growth and 50 million on Advanced, with API calls at 50,000, 100,000 and 500,000 a day. Benefits management is static on Starter and full on Growth and above. Partner management is absent on Starter, simple on Growth and advanced on Advanced. Starter is a single programme with 100,000 brand advocates; Advanced supports multiple programmes.\n\nThe event ceiling is the one to model first, because loyalty events are generated by behaviour, not by members, and they accumulate faster than anyone expects.",
     },
@@ -93,6 +109,10 @@ export const cloudFaqs: Partial<Record<ProductSlug, Faq[]>> = {
       q: "What connects it to the rest of Salesforce?",
       a: "Loyalty events — a tier upgrade, a points milestone, an expiring reward, an enrolment — can trigger journeys in Marketing Cloud Journey Builder in real time, or flows in Marketing Cloud Next. Data 360 can unify loyalty data with behavioural and transactional signals, and Salesforce says the platform can predict disengagement risk and trigger a journey automatically.\n\nIn practice the expiring-points reminder and the tier-drop warning are the two highest-returning automations, and both are available on day one.",
     },
+    {
+      q: "What if the price is beyond us?",
+      a: "Then say so early and we will design something else. A points ledger, tier rules and a redemption flow can be built on the core platform, or run from your commerce system, for a fraction of this — with the trade-off that you are maintaining it.\n\nThe line we use: buy Loyalty Management when the programme is a material part of how the business makes money and somebody senior owns it. Below that, build the minimum and revisit when the numbers justify it.",
+    },
   ],
 
   "service-cloud": [
@@ -103,6 +123,14 @@ export const cloudFaqs: Partial<Record<ProductSlug, Faq[]>> = {
     {
       q: "Does it really resolve 76% of queries?",
       a: "That is Salesforce's published average for Fin, with Bloomerang cited at 84% of conversations at an 85% CX score and Formula 1 at race-day issues resolved 50% faster. A Forrester Total Economic Impact study is cited at 396% ROI over three years.\n\nBefore you plan around any of them, pin down what resolution means in your contract. Deflection — the customer gave up — is not resolution. Containment is not resolution. Ask whether the rate is measured on conversations started or conversations completed, and what happens to the ones that escalate.",
+    },
+    {
+      q: "What does Service Cloud cost?",
+      a: "Per user per month, billed annually: Starter Suite from $25, Pro Suite from $100, Core at $195, Advanced at $395 and Max at $550.\n\nThe meaningful line is Advanced, which is where an AI agent for customer service first appears, and Max, which includes the full AI suite with Agentforce Coworker unmetered, the contact centre tools, IT service with ten service-desk licences, Tableau Next, Slack Enterprise+ and 2.75 million Flex Credits per org per year.",
+    },
+    {
+      q: "How is the agent work actually metered?",
+      a: "Through Flex Credits, and the important nuance is that you are billed per action rather than per answer. A one-step FAQ reply is cheap; a multi-step task fans out into several actions and the meter climbs with it. Voice actions cost more than standard ones.\n\nSalesforce does not publish a plain rate card on its pricing page, and the per-action figures circulating come from third-party analyses rather than from Salesforce. Get the rate card in writing, and model it on your real conversation mix rather than on an average.",
     },
     {
       q: "Which parts of Service Cloud do we actually need?",

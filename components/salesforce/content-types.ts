@@ -61,6 +61,8 @@ export type ProductContent = {
     decide: { title: string; items: string[] };
   };
 
+  editions?: { eyebrow: string; title: string; lede: string; rows: { name: string; body: string }[]; link: Source };
+
   faq: { q: string; a: string }[];
   sources: Source[];
   /** The facts that were checked, dated. */

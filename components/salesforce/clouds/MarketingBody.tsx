@@ -40,7 +40,7 @@ export function MarketingBody() {
               </div>
               <p className="name-note" data-r style={d(4)}>
                 If a proposal in front of you says only &ldquo;Marketing Cloud&rdquo;, <b>ask which one, in writing</b>,
-                before the conversation goes further. It is the quickest question on this site.
+                before the commercial conversation goes further. It is the cheapest question on this site.
               </p>
             </div>
 
