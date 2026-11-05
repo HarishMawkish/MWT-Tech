@@ -116,23 +116,6 @@ export function ProductBody({ c }: { c: ProductContent }) {
     ));
   }
 
-  if (c.editions) {
-    const e = c.editions;
-    add("editions", (light) => (
-      <section className={light ? "light" : undefined} id="editions" key="editions">
-        <div className="in">
-          <Head eyebrow={e.eyebrow} title={e.title} lede={e.lede} />
-          <Pairs a="Option" b="What it is" rows={e.rows.map((x) => ({ l: x.name, r: x.body }))} />
-          <p className="pairs-note">
-            <a href={e.link.href} target="_blank" rel="noopener noreferrer">
-              {e.link.label} <span aria-hidden="true">↗</span>
-            </a>
-          </p>
-        </div>
-      </section>
-    ));
-  }
-
   add("faq", (light) => (
     <Fragment key="faq-band">
       <CopyrightNotice inline />

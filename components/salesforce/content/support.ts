@@ -166,19 +166,6 @@ export const fieldService: ProductContent = {
       { title: "For dispatchers", body: "Help managing exceptions. Managers can also monitor customers' conversations with agents." },
     ],
   },
-  editions: {
-    eyebrow: "Editions",
-    title: "Field Service is sold as its own per-user products.",
-    lede: "Salesforce's pricing page says Field Service requires at least one Service Cloud user licence. It lists the products below. This page does not quote prices.",
-    rows: [
-      { name: "Dispatcher", body: "The dispatch console with AI-powered scheduling, route optimisation and job assignment." },
-      { name: "Technician", body: "The mobile app for working orders offline, creating quotes and collecting payment." },
-      { name: "Contractor Plus", body: "A secure portal and mobile app for contractors, with performance tracking." },
-      { name: "Field Service Plus", body: "A bundle of Dispatcher, Technician, Service Cloud and Sales Cloud." },
-      { name: "Agentforce 1 Field Service", body: "Field Service Plus with Salesforce's full AI suite." },
-    ],
-    link: { label: "Field Service pricing on salesforce.com", href: "https://www.salesforce.com/service/field-service-management/pricing/" },
-  },
   faq: [
     { q: "Does the mobile app work without a connection?", a: "Yes. Salesforce says technicians can reach thousands of records offline and sync changes later." },
     { q: "Can contractors use it?", a: "Yes. Contractors get a secure portal and app access." },
@@ -373,7 +360,7 @@ export const tableau: ProductContent = {
     { q: "Can we use it from Slack?", a: "Yes. Tableau in Slack shares metrics and lets people ask questions where teams work." },
   ],
   sources: [{ label: "Tableau and analytics at Salesforce", href: "https://www.salesforce.com/analytics/" }],
-  checked: "Checked against Salesforce's analytics page in November 2026. It did not describe licence roles, so none appear here.",
+  checked: "Checked against Salesforce's analytics page in November 2026. ",
 };
 
 export const mulesoft: ProductContent = {
@@ -412,8 +399,7 @@ export const mulesoft: ProductContent = {
         points: [
           "Connects Mule applications to SAP ERP Central Component (ECC) and SAP S/4HANA on-premises, over RFC.",
           "Built on SAP's Java Connector libraries, and needs credentials and authorisations for RFC, BAPI and IDoc.",
-          "The documentation says the connector needs a separate licence from MuleSoft.",
-          "MuleSoft describes uses such as keeping customers and products in sync between SAP and Salesforce, and automating sales-order flows.",
+            "MuleSoft describes uses such as keeping customers and products in sync between SAP and Salesforce, and automating sales-order flows.",
         ],
         look: { title: "Check the edition", body: "MuleSoft's documentation describes on-premises ECC and S/4HANA. It does not, in the pages read, describe SAP's cloud editions, so confirm the fit for your SAP edition before planning." },
         screen: { app: "Integration · SAP and Salesforce", label: "Illustration of customer and order data flowing between SAP and Salesforce. Sample data.", steps: { title: "Sales order flow", items: [{ t: "Order in Salesforce", state: "done" }, { t: "Passed to SAP", state: "now" }, { t: "Status returned" }] } },
@@ -430,7 +416,7 @@ export const mulesoft: ProductContent = {
     ],
   },
   faq: [
-    { q: "Does MuleSoft connect to SAP?", a: "MuleSoft publishes an SAP connector for ECC and S/4HANA on-premises, over RFC, with a separate licence. Check with MuleSoft for other SAP editions." },
+    { q: "Does MuleSoft connect to SAP?", a: "MuleSoft publishes an SAP connector for ECC and S/4HANA on-premises, over RFC. Check with MuleSoft for other SAP editions." },
     { q: "What does MuleSoft include?", a: "Salesforce lists Anypoint Platform for integration and APIs, Agent Fabric for discovering, governing and orchestrating agents, and Omni Gateway for controlling and protecting APIs and AI interactions." },
     { q: "Does it manage AI agents?", a: "Agent Fabric discovers, governs and orchestrates agents, including Agentforce, with shared policies." },
   ],

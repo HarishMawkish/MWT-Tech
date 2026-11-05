@@ -4,9 +4,8 @@ import { ProductChips, d } from "../parts";
 import { Card, CloudCta, Copyright, FaqSection, Fig, Head, Kicker, Onward, Row, Screen, Sources, Tile, Tiles } from "./kit";
 
 /**
- * Loyalty Management. Alone among the five, this one is priced per organisation rather than per user — and the
- * numbers are large enough that they change who the product is for. So the page leads with the price rather than
- * burying it, because that is the fact that saves the most wasted time.
+ * Loyalty Management. Built for programmes that are a material part of how a business makes money, so the page
+ * leads with who it is for, and the honest "should you buy this at all?" question comes before the detail.
  */
 export function LoyaltyBody() {
   return (
@@ -20,27 +19,23 @@ export function LoyaltyBody() {
           <div className="hero-grid">
             <div>
               <div data-r>
-                <Kicker>Retain &middot; priced per organisation</Kicker>
+                <Kicker>Retain &middot; programme infrastructure</Kicker>
               </div>
               <h1 data-r style={d(1)}>
                 Not a points scheme. <em>Programme infrastructure.</em>
               </h1>
               <p className="lede" data-r style={d(2)}>
-                Every other product in these five is priced per user. This one is priced per organisation, and the
-                entry rung is $20,000 a month. That single fact tells you more about what Loyalty Management is for
-                than any feature list: it is built for programmes that are a material part of how a business makes
-                money, with somebody senior accountable for them.
+                Loyalty Management is built for programmes that are a material part of how a business makes money, with
+                somebody senior accountable for them. That tells you more about what it is for than any feature
+                list.
               </p>
               <div className="ctas" data-r style={d(3)}>
-                <a href="#cost" className="btn pri">
-                  The price, first <span className="ar">&rarr;</span>
-                </a>
-                <a href="#fit" className="btn sec">
-                  And if that is too much
+                <a href="#fit" className="btn pri">
+                  Should you buy this at all? <span className="ar">&rarr;</span>
                 </a>
               </div>
               <p className="name-note" data-r style={d(4)}>
-                We lead with cost because almost nobody else does, and because an afternoon spent here saves some
+                We start with fit because almost nobody else does, and because an afternoon spent here saves some
                 organisations a <b>three-month evaluation of a product they were never going to buy.</b>
               </p>
             </div>
@@ -99,82 +94,6 @@ export function LoyaltyBody() {
         </div>
       </section>
 
-      {/* ---------------- price first ---------------- */}
-      <section className="light" id="cost">
-        <div className="in">
-          <Head eyebrow="What it costs" title="Per organisation, per month. Not per user." wide>
-            Salesforce publishes these, billed annually. They are unusual enough in this product set that they deserve
-            to be the second thing you read rather than something you discover in week six.
-          </Head>
-          <div className="tbl stack" data-r>
-            <table>
-              <thead>
-                <tr>
-                  <th>Edition</th>
-                  <th>Price</th>
-                  <th>What it allows</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Starter</td>
-                  <td data-label="Price">
-                    <span className="price">
-                      $20,000<small>per org / month, billed annually</small>
-                    </span>
-                  </td>
-                  <td data-label="What it allows">
-                    A single programme, 100,000 brand advocates, 1 million loyalty events a year, 50,000 API calls a
-                    day, static benefits, quick promotions. No partner management.
-                  </td>
-                </tr>
-                <tr>
-                  <td>Growth</td>
-                  <td data-label="Price">
-                    <span className="price">
-                      $35,000<small>per org / month, billed annually</small>
-                    </span>
-                  </td>
-                  <td data-label="What it allows">
-                    15 million loyalty events a year, 100,000 API calls a day, full benefits management, dynamic
-                    promotions, simple partner management, member and reward administration.
-                  </td>
-                </tr>
-                <tr>
-                  <td>Advanced</td>
-                  <td data-label="Price">
-                    <span className="price">
-                      $45,000<small>per org / month, billed annually</small>
-                    </span>
-                  </td>
-                  <td data-label="What it allows">
-                    50 million loyalty events a year, 500,000 API calls a day, multiple programmes, advanced partner
-                    management, five CRM Analytics base app licences.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div className="callout" data-r>
-            <span className="m">!</span>
-            <div>
-              <h3>Model the events ceiling before the member count</h3>
-              <p>
-                Everyone sizes this on members. The limit that actually binds is <b>loyalty events</b>, because events
-                are produced by behaviour rather than by headcount. A purchase is an event. So is a tier change, a
-                points accrual, an expiry, a redemption, a referral, a review.
-              </p>
-              <p>
-                A 200,000-member programme with engaged members can generate more events than a million-member
-                programme that nobody uses. Count the behaviours you intend to reward, multiply by the members you
-                expect to reward them for, and then check which rung you are on. Tableau CRM for Loyalty Management is
-                a further $165 per user per month on top.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ---------------- anatomy ---------------- */}
       <section>
         <div className="in">
@@ -225,7 +144,7 @@ export function LoyaltyBody() {
               <div>
                 <h3>Benefits worth having</h3>
                 <p>
-                  Static on the Starter edition, full on Growth and above. The best benefits usually cost little and
+                  The best benefits usually cost little and
                   signal much: early access, a dedicated line, free returns. Discount-only programmes train people to
                   wait for discounts.
                 </p>
@@ -263,7 +182,7 @@ export function LoyaltyBody() {
             <div className="cap">
               <span className="n">02</span>
               <h3>Tiered status</h3>
-              <p>Recognition rather than currency. The strongest retention mechanic there is, and the cheapest to run.</p>
+              <p>Recognition rather than currency. The strongest retention mechanic there is, and the simplest to run.</p>
               <div className="foot">
                 <b>Good for</b> high-value members
               </div>
@@ -448,8 +367,8 @@ export function LoyaltyBody() {
       <section id="fit">
         <div className="in">
           <Head eyebrow="Honestly" title="Should you buy this at all?">
-            At $20,000 a month and up, this question deserves a straight answer rather than a feature comparison. Here
-            is the line we use.
+            This is a platform for serious programmes, so the question deserves a straight answer rather than a
+            feature comparison. Here is the line we use.
           </Head>
           <div className="vs">
             <div className="good" data-r>
@@ -483,8 +402,8 @@ export function LoyaltyBody() {
               <p>
                 If you are in the right-hand column, build the minimum on the core platform or in your commerce
                 system, run it for a year, and measure whether the programme moves the behaviour you named. If it
-                does, the business case for this product writes itself and the price stops being the issue. If it does
-                not, you have saved a quarter of a million dollars finding out.
+                does, the business case for this product writes itself. If it does not, you have found that out early and
+                cheaply.
               </p>
               <p>
                 We will help with either, and we will tell you which one we think you are.{" "}
@@ -502,13 +421,9 @@ export function LoyaltyBody() {
       <section>
         <div className="in">
           <Sources
-            checked="Checked against Salesforce's own pages in November 2026. Prices and edition limits change; confirm current figures with Salesforce before building a business case on them."
+            checked="Checked against Salesforce's own pages in November 2026. Product details change; confirm the current details with Salesforce before you commit."
             items={[
               { label: "Salesforce — Loyalty Management", href: "https://www.salesforce.com/marketing/loyalty-management/" },
-              {
-                label: "Salesforce — Loyalty Management pricing",
-                href: "https://www.salesforce.com/marketing/loyalty-management/pricing/",
-              },
             ]}
           />
         </div>
@@ -516,11 +431,11 @@ export function LoyaltyBody() {
 
       <CloudCta
         title="Name the behaviour you want to buy."
-        body="Not loyalty — a specific behaviour, with a number against it. A second visit within thirty days. A renewal before expiry. A partner hitting a category they currently ignore. Give us that, and we will tell you whether this product is the right way to buy it, or whether something far cheaper would do."
+        body="Not loyalty — a specific behaviour, with a number against it. A second visit within thirty days. A renewal before expiry. A partner hitting a category they currently ignore. Give us that, and we will tell you whether this product is the right way to buy it, or whether something simpler would do."
         label="Book a programme review"
         points={[
           "The behaviour, named and measurable",
-          "Loyalty events modelled against the edition ceiling",
+          "Loyalty event volumes modelled against your real programme",
           "Currency arithmetic checked against margin",
           "Partner and rebate use cases considered, not just consumer",
           "An honest answer on whether to buy or build",

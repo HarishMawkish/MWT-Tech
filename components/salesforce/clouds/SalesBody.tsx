@@ -33,16 +33,15 @@ export function SalesBody() {
                 the seller does the selling.
               </p>
               <div className="ctas" data-r style={d(3)}>
-                <a href="#cost" className="btn pri">
-                  What it costs <span className="ar">&rarr;</span>
+                <a href="#hygiene" className="btn pri">
+                  The uncomfortable part <span className="ar">&rarr;</span>
                 </a>
-                <a href="#hygiene" className="btn sec">
-                  The uncomfortable part
+                <a href="#headless" className="btn sec">
+                  Headless Sales
                 </a>
               </div>
               <p className="name-note" data-r style={d(4)}>
-                Everything here comes from what <b>Salesforce publishes</b> — its product pages, its pricing pages and
-                its newsroom. Its customer figures are labelled as its own, because that is what they are.
+                Everything here comes from what <b>Salesforce publishes</b> — its product pages and its newsroom. Its customer figures are labelled as its own, because that is what they are.
               </p>
             </div>
 
@@ -381,160 +380,6 @@ export function SalesBody() {
         </div>
       </section>
 
-      {/* ---------------- pricing ---------------- */}
-      <section id="cost">
-        <div className="in">
-          <Head eyebrow="What it costs" title="Five rungs, and one jump that matters." wide>
-            Salesforce publishes these per user per month, billed annually unless noted. We reproduce them because
-            almost nobody puts them on a page, and because the shape of the ladder tells you where the product&rsquo;s
-            centre of gravity now sits.
-          </Head>
-          <div className="tbl stack" data-r>
-            <table>
-              <thead>
-                <tr>
-                  <th>Edition</th>
-                  <th>Price</th>
-                  <th>What it adds</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Starter Suite</td>
-                  <td data-label="Price">
-                    <span className="price">
-                      $25<small>per user / month, monthly or annual</small>
-                    </span>
-                  </td>
-                  <td data-label="What it adds">
-                    Leads, accounts, contacts and opportunities; built-in sales flows and lead routing; email and event
-                    sync; email marketing and analytics.
-                  </td>
-                </tr>
-                <tr>
-                  <td>Pro Suite</td>
-                  <td data-label="Price">
-                    <span className="price">
-                      $100<small>per user / month, annual</small>
-                    </span>
-                  </td>
-                  <td data-label="What it adds">
-                    More automation and customisation, quoting and forecasting, AgentExchange access. Premier Support
-                    is an add-on here.
-                  </td>
-                </tr>
-                <tr>
-                  <td>Core</td>
-                  <td data-label="Price">
-                    <span className="price">
-                      $195<small>per user / month, annual</small>
-                    </span>
-                  </td>
-                  <td data-label="What it adds">
-                    Built-in AI, Momentum, Premier Success, Slack Business+ and Tableau Next. AI can be added from
-                    here up.
-                  </td>
-                </tr>
-                <tr>
-                  <td>Advanced</td>
-                  <td data-label="Price">
-                    <span className="price">
-                      $395<small>per user / month, annual</small>
-                    </span>
-                  </td>
-                  <td data-label="What it adds">
-                    Stronger security and more AI with expanded data capacity, Sales Programs, Backup &amp; Recover,
-                    Archive, Data Detect and Security Center.
-                  </td>
-                </tr>
-                <tr>
-                  <td>Max</td>
-                  <td data-label="Price">
-                    <span className="price">
-                      $550<small>per user / month, annual</small>
-                    </span>
-                  </td>
-                  <td data-label="What it adds">
-                    The full AI suite with Agentforce for Sales and Agentforce Coworker, plus Spiff, Sales Planning,
-                    Sales Programs, Maps, Tableau Next, Slack Enterprise+ and 2.75m Flex Credits per org per year.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div className="two" style={{ marginTop: 44 }}>
-            <div data-r>
-              <h3 style={{ fontSize: 19, marginBottom: 14 }}>The add-ons, if you stay below Max</h3>
-              <div className="pairs" role="table" aria-label="Sales Cloud add-ons and prices">
-                <div className="pairs-h" role="row">
-                  <span role="columnheader">Add-on</span>
-                  <span role="columnheader">From</span>
-                </div>
-                <div className="pairs-r" role="row">
-                  <b role="rowheader">Agentforce for Sales</b>
-                  <span role="cell">$125 per user / month</span>
-                </div>
-                <div className="pairs-r" role="row">
-                  <b role="rowheader">Revenue Intelligence</b>
-                  <span role="cell">$220 per user / month</span>
-                </div>
-                <div className="pairs-r" role="row">
-                  <b role="rowheader">Revenue Cloud</b>
-                  <span role="cell">$200 per user / month</span>
-                </div>
-                <div className="pairs-r" role="row">
-                  <b role="rowheader">Sales Programs</b>
-                  <span role="cell">$100 per user / month</span>
-                </div>
-                <div className="pairs-r" role="row">
-                  <b role="rowheader">Partner Relationship Management</b>
-                  <span role="cell">$10 per login / month</span>
-                </div>
-                <div className="pairs-r" role="row">
-                  <b role="rowheader">Premier Success Plan</b>
-                  <span role="cell">Included from Core up</span>
-                </div>
-              </div>
-            </div>
-            <div data-r style={d(1)}>
-              <h3 style={{ fontSize: 19, marginBottom: 14 }}>And the meter underneath all of it</h3>
-              <div className="callout" style={{ marginTop: 0 }}>
-                <span className="m">!</span>
-                <div>
-                  <h3>Agent work is not priced per user at all</h3>
-                  <p>
-                    Agent work is metered in <b>Flex Credits</b>. Max includes 2.75 million per org per year; other
-                    editions include fewer or none and buy more. The nuance that decides your bill is that credits are
-                    consumed <b>per action, not per answer</b> — a one-step reply is cheap, a multi-step task fans out
-                    and the meter climbs with it.
-                  </p>
-                  <p>
-                    Salesforce does not publish a plain rate card alongside the edition table. Ask for it in writing,
-                    then model it against the actions your real processes take rather than an average. This is the
-                    single most common source of a surprise in year two.
-                  </p>
-                </div>
-              </div>
-              <p className="note" style={{ marginTop: 18 }}>
-                Every add-on price beside this is a <b>&ldquo;from&rdquo;</b> figure — the floor for the smallest
-                configuration, not the number on your quote. Stack two or three onto a Core or Advanced seat and the
-                arithmetic often lands close to Max, which is worth working out before you decide the top rung is
-                extravagant.
-              </p>
-              <p className="note" style={{ marginTop: 14 }}>
-                All of these are Salesforce&rsquo;s published list prices in US dollars, and it states they are subject
-                to change. Treat them as the opening position in a negotiation rather than as the number you will pay —
-                discounting at the top of this ladder is normal, and the lever you have is term length and seat count
-                rather than the rate card itself. If you are buying for the first time, the end of Salesforce&rsquo;s
-                financial quarter is not a myth, and neither is the willingness to move on add-ons rather than on the
-                seat price.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ---------------- the claims ---------------- */}
       <section className="light">
         <div className="in">
@@ -586,10 +431,9 @@ export function SalesBody() {
       <section>
         <div className="in">
           <Sources
-            checked="Checked against Salesforce's own pages in November 2026. Product names, packaging and prices change; check salesforce.com before you commit to anything."
+            checked="Checked against Salesforce's own pages in November 2026. Product names and packaging change; check salesforce.com before you commit to anything."
             items={[
               { label: "Salesforce — Sales Cloud", href: "https://www.salesforce.com/sales/" },
-              { label: "Salesforce — Sales Cloud pricing", href: "https://www.salesforce.com/sales/pricing/" },
               { label: "Salesforce — Agentforce", href: "https://www.salesforce.com/agentforce/" },
             ]}
           />
@@ -604,7 +448,7 @@ export function SalesBody() {
           "Your forecast against your actuals",
           "The hygiene work that has to come first",
           "Which of the six products you actually need",
-          "Flex Credits modelled on your real tasks",
+          "Agent tasks scoped against your real workload",
           "A first release in weeks, not quarters",
         ]}
       />

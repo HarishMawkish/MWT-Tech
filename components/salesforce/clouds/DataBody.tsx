@@ -34,9 +34,6 @@ export function DataBody() {
                 <a href="#zero-copy" className="btn pri">
                   What zero copy means <span className="ar">&rarr;</span>
                 </a>
-                <a href="#cost" className="btn sec">
-                  How credits work
-                </a>
               </div>
               <p className="name-note" data-r style={d(4)}>
                 It used to be called <b>Data Cloud</b>, and before that Customer 360 Audiences and Salesforce CDP. If
@@ -116,8 +113,8 @@ export function DataBody() {
             </div>
           </div>
           <p className="note" data-r style={d(2)}>
-            <b>The honest caveat:</b> zero copy is a connection, not magic. Performance and cost still depend on the
-            system at the far end, and some operations will materialise data anyway. Which ones, and what that costs,
+            <b>The honest caveat:</b> zero copy is a connection, not magic. Performance still depends on the
+            system at the far end, and some operations will materialise data anyway. Which ones
             belongs in an architecture review rather than on a product page — ours included.
           </p>
         </div>
@@ -349,77 +346,6 @@ export function DataBody() {
         </div>
       </section>
 
-      {/* ---------------- pricing ---------------- */}
-      <section className="light" id="cost">
-        <div className="in">
-          <div className="two mid">
-            <div data-r>
-              <Head eyebrow="What it costs" title="Consumption, in three parts.">
-                Data 360 is not priced per user. Salesforce bills it as consumption credits, data storage and premium
-                add-ons. Existing Data Cloud agreements are honoured to the end of their current term, and existing
-                Salesforce customers can start free.
-              </Head>
-              <p className="body-t">
-                Credits are where the surprises live, because almost everything interesting consumes them: profile
-                unification, identity resolution, segmentation, activation, and the queries agents make. None of that
-                is unreasonable — but it means the cost of this platform is set by how much data you point at it, not
-                by how many people use it.
-              </p>
-              <p className="body-t">
-                <b>The failure mode is predictable.</b> An enthusiastic first scope ingests everything, because
-                storage feels cheap and nobody wants to be the person who left something out. The first full quarter
-                arrives, the number is three times the estimate, and the programme loses its sponsor.
-              </p>
-              <div className="quote">
-                <p>
-                  Scope the data to the decisions it serves. If you cannot name the decision a table changes, it does
-                  not belong in the first release.
-                </p>
-                <span className="by">The sentence that has saved our clients the most money</span>
-              </div>
-            </div>
-
-            <div data-r style={d(1)}>
-              <div className="caps stack" style={{ marginTop: 0 }}>
-                <div className="cap">
-                  <span className="n">01</span>
-                  <h3>Consumption credits</h3>
-                  <p>
-                    Drawn down by the work: unifying profiles, resolving identities, building segments, activating
-                    audiences, answering agent queries.
-                  </p>
-                  <div className="foot">
-                    <b>Model this against your real volumes</b>, not a sample
-                  </div>
-                </div>
-                <div className="cap">
-                  <span className="n">02</span>
-                  <h3>Data storage</h3>
-                  <p>
-                    What you hold in the platform itself. Zero-copy sources reduce this, which is part of the
-                    commercial argument for them as well as the architectural one.
-                  </p>
-                  <div className="foot">
-                    <b>Every ingested source adds here</b>
-                  </div>
-                </div>
-                <div className="cap">
-                  <span className="n">03</span>
-                  <h3>Premium add-ons</h3>
-                  <p>
-                    The optional capabilities on top. Which ones you need depends entirely on what you are building,
-                    and they should be decided after the first release rather than before it.
-                  </p>
-                  <div className="foot">
-                    <b>Defer what you cannot yet justify</b>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ---------------- the record ---------------- */}
       <section>
         <div className="in">
@@ -468,7 +394,6 @@ export function DataBody() {
             checked="Checked against Salesforce's own pages in November 2026. Product names and packaging in this area have changed twice in three years; check salesforce.com before you commit."
             items={[
               { label: "Salesforce — Data 360", href: "https://www.salesforce.com/data/" },
-              { label: "Salesforce — Data 360 pricing", href: "https://www.salesforce.com/data/pricing/" },
             ]}
           />
         </div>
@@ -482,7 +407,7 @@ export function DataBody() {
           "The question, and why it cannot be answered",
           "Which sources connect live and which must be copied",
           "Match rules written down and tested",
-          "Credits modelled against your real volumes",
+          "Data volumes scoped against your real sources",
           "A first release scoped to decisions, not to tables",
         ]}
       />

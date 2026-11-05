@@ -1,6 +1,6 @@
 import type { ProductContent } from "../content-types";
 
-// Agentforce. Sources: Salesforce's Agentforce page and its "how it works" and pricing pages, the Salesforce Architects'
+// Agentforce. Sources: Salesforce's Agentforce page and its "how it works" page, the Salesforce Architects'
 // Agent Development Lifecycle, the trusted-AI page, and two Salesforce guides: "How to Get Started with Agentforce"
 // (Salesforce Research, 2024) and the marketing workbook. Read in November 2026.
 
@@ -152,39 +152,23 @@ export const agentforce: ProductContent = {
       title: "Decisions to settle before you buy",
       items: [
         "Whether the agent serves customers or employees.",
-        "How predictable your usage is, which decides between consumption and per-user models.",
-        "How much commitment you want: prepaid, a baseline, or pay as you go.",
-        "How you will track consumption and set alerts.",
+        "How you will monitor and tune the agent once it is live.",
       ],
     },
   },
 
-  editions: {
-    eyebrow: "Pricing",
-    title: "How Agentforce is paid for.",
-    lede: "Salesforce describes consumption and per-user models. Rates change, so this page does not quote them.",
-    rows: [
-      { name: "Flex Credits", body: "Pay per action an agent performs, from a shared pool used across teams and channels. Voice actions cost more than standard ones. Unused credits do not carry over to a later term." },
-      { name: "Conversations", body: "Pay per customer conversation, which suits agents that face customers. It cannot be used in the same org as Flex Credits." },
-      { name: "Per-user models", body: "An Agentforce user licence for employees, add-ons for Sales, Service, Field Service and industries with unmetered employee use, and a separate licence for Agentforce Coworker." },
-      { name: "Entry point", body: "Salesforce Foundations is a free tier that includes the builder tools." },
-    ],
-    link: { label: "Agentforce pricing on salesforce.com", href: "https://www.salesforce.com/agentforce/pricing/" },
-  },
 
   faq: [
     { q: "What is Agentforce?", a: "Salesforce's platform for building, deploying and monitoring AI agents that work around the clock across channels and hand over to people when needed." },
     { q: "How is an agent different from a chatbot?", a: "A scripted chatbot follows a fixed path. An agent interprets the request, makes a plan and chooses the tools it has, and it can be started by a data change as well as by a person." },
     { q: "How do we test an agent before it goes live?", a: "Salesforce describes generating test cases, simulating conversations in a planner and checking how well guardrails are followed, in a sandbox, because agents can change CRM data." },
     { q: "Is our data used to train other companies' models?", a: "Salesforce says prompts and responses are not stored or used to train third-party models, and that personal details are masked before a prompt reaches the model." },
-    { q: "Can we mix pricing models?", a: "Flex Credits and Conversations cannot be used in the same org. Per-user add-ons are a separate option." },
     { q: "Who builds agents?", a: "Admins and developers. Agent Builder is low-code, and agents can also be built in code." },
   ],
 
   sources: [
     { label: "Agentforce", href: "https://www.salesforce.com/agentforce/" },
     { label: "How Agentforce works", href: "https://www.salesforce.com/ap/agentforce/how-it-works/" },
-    { label: "Agentforce pricing", href: "https://www.salesforce.com/agentforce/pricing/" },
     { label: "Trusted AI at Salesforce", href: "https://www.salesforce.com/artificial-intelligence/trusted-ai/" },
     { label: "Agent Development Lifecycle (Salesforce Architects)", href: "https://architect.salesforce.com/fundamentals/agent-development-lifecycle" },
     { label: "How to Get Started with Agentforce (Salesforce Research, 2024)", href: "https://www.salesforce.com/en-us/wp-content/uploads/sites/4/documents/PDF/agentforce-implementation-guide.pdf" },

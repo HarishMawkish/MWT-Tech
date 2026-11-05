@@ -77,7 +77,7 @@ export function HubBody() {
           a="Where"
           b="What Salesforce's own material says"
           rows={[
-            { l: "MuleSoft and SAP", r: "MuleSoft publishes an SAP connector for SAP ECC and SAP S/4HANA on-premises, over RFC. Its documentation says it needs a separate licence." },
+            { l: "MuleSoft and SAP", r: "MuleSoft publishes an SAP connector for SAP ECC and SAP S/4HANA on-premises, over RFC." },
             { l: "SAP cloud editions", r: "The MuleSoft pages we read describe on-premises systems. They do not say whether SAP's cloud editions are supported, so this needs checking for your edition." },
             { l: "Revenue Cloud", r: "Its product catalogue connects to PIM, PLM and ERP systems." },
             { l: "Manufacturing", r: "Manufacturing Cloud is designed to work alongside ERP and supply chain systems, pulling customer, product and asset data from ERP, PLM, IoT and partner systems into one governed place without moving it." },
@@ -112,9 +112,9 @@ export function HubBody() {
     <section className={light ? "light" : undefined} id="delivery" key="delivery">
       <div className="in">
         <Head
-          eyebrow="Implementation and licensing"
+          eyebrow="Implementation"
           title="What a Salesforce project involves."
-          lede="Salesforce's own services page describes four stages. The decisions below are the ones its pricing pages put to a customer."
+          lede="Salesforce's own services page describes four stages. The decisions below are worth settling before you start."
         />
         <FlowSteps
           label="Salesforce's four stages"
@@ -128,10 +128,8 @@ export function HubBody() {
         <div className="decide" data-r style={d(1)}>
           <h3>Decisions to settle before you buy</h3>
           <ul>
-            <li>Which edition, and how many users: most editions are priced per user, per month.</li>
-            <li>Billing terms and support plan: Salesforce offers Standard (included), Premier and Signature plans.</li>
-            <li>Add-ons: agent features, Revenue Cloud, partner management and digital channels are among those sold separately.</li>
-            <li>How you will pay for AI and data: Flex Credits, conversations, per-user licences or profile-based pricing, and how you will monitor use.</li>
+            <li>Which products and add-ons you need: agent features, Revenue Cloud, partner management and digital channels are among them.</li>
+            <li>How you will use AI and data, and how you will monitor that use.</li>
           </ul>
         </div>
       </div>

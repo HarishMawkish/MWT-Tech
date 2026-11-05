@@ -31,10 +31,6 @@ export const hubFaq: { q: string; a: string }[] = [
     a: "Yes, in principle. MuleSoft publishes an SAP connector for SAP ECC and S/4HANA on-premises, and Salesforce says Manufacturing Cloud is designed to work alongside ERP systems. The pages we read do not confirm support for SAP's cloud editions, so check your edition with Salesforce or MuleSoft.",
   },
   {
-    q: "How is Salesforce priced?",
-    a: "By edition and number of users for the applications, with add-ons, and by consumption for AI and data. Salesforce's pricing pages list the decisions a customer makes. We do not quote prices because they change, and we link the official pages instead.",
-  },
-  {
     q: "Where is our data stored?",
     a: "On Hyperforce, Salesforce's public-cloud infrastructure, customers choose the region where data is stored and processed. Availability varies by product and country.",
   },

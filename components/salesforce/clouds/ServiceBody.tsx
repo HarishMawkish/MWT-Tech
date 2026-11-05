@@ -35,9 +35,6 @@ export function ServiceBody() {
                 <a href="#resolution" className="btn pri">
                   What &ldquo;resolved&rdquo; means <span className="ar">&rarr;</span>
                 </a>
-                <a href="#cost" className="btn sec">
-                  What it costs
-                </a>
               </div>
               <p className="name-note" data-r style={d(4)}>
                 Salesforce publishes an average of <b>76% of queries resolved</b> by Fin. The section below is about
@@ -104,8 +101,8 @@ export function ServiceBody() {
                 describing something already shipped.
               </p>
               <p className="body-t">
-                <b>So ask specifically.</b> Which pieces are native today, which are roadmap, and what the licensing
-                looks like for each. An acquisition closed weeks ago is not the same as a product built together over
+                <b>So ask specifically.</b> Which pieces are native today, which are roadmap, and what is
+                still to come for each. An acquisition closed weeks ago is not the same as a product built together over
                 years, and no amount of keynote language changes that.
               </p>
             </div>
@@ -384,105 +381,6 @@ export function ServiceBody() {
         </div>
       </section>
 
-      {/* ---------------- pricing ---------------- */}
-      <section className="light" id="cost">
-        <div className="in">
-          <Head eyebrow="What it costs" title="Five rungs, and a second meter underneath." wide>
-            Per user per month, billed annually. The rung that matters is Advanced, where an AI agent for customer
-            service first appears at all.
-          </Head>
-          <div className="tbl stack" data-r>
-            <table>
-              <thead>
-                <tr>
-                  <th>Edition</th>
-                  <th>Price</th>
-                  <th>What it adds</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Starter Suite</td>
-                  <td data-label="Price">
-                    <span className="price">
-                      $25<small>per user / month</small>
-                    </span>
-                  </td>
-                  <td data-label="What it adds">
-                    Entry CRM across sales, service, marketing and commerce, with built-in AI and Slack conversations.
-                  </td>
-                </tr>
-                <tr>
-                  <td>Pro Suite</td>
-                  <td data-label="Price">
-                    <span className="price">
-                      $100<small>per user / month</small>
-                    </span>
-                  </td>
-                  <td data-label="What it adds">
-                    Enhanced real-time chat, more customisation and automation, quoting and forecasting, AgentExchange.
-                  </td>
-                </tr>
-                <tr>
-                  <td>Core</td>
-                  <td data-label="Price">
-                    <span className="price">
-                      $195<small>per user / month</small>
-                    </span>
-                  </td>
-                  <td data-label="What it adds">
-                    Case management, a self-service help centre and Slack Business+. No AI agent yet.
-                  </td>
-                </tr>
-                <tr>
-                  <td>Advanced</td>
-                  <td data-label="Price">
-                    <span className="price">
-                      $395<small>per user / month</small>
-                    </span>
-                  </td>
-                  <td data-label="What it adds">
-                    An AI agent for customer service, Premier Success, a full sandbox, Backup &amp; Recover and Data
-                    Detect. <b>This is the rung where the product becomes what the marketing describes.</b>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Max</td>
-                  <td data-label="Price">
-                    <span className="price">
-                      $550<small>per user / month</small>
-                    </span>
-                  </td>
-                  <td data-label="What it adds">
-                    The full AI suite with Agentforce Coworker unmetered, contact centre tools, IT service with ten
-                    service-desk licences, Tableau Next, Slack Enterprise+ and 2.75m Flex Credits per org per year.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div className="callout" data-r>
-            <span className="m">$</span>
-            <div>
-              <h3>Billed per action, not per answer</h3>
-              <p>
-                Agent work is metered in Flex Credits, and the nuance that decides your bill is that an action is the
-                unit, not a reply. A one-step answer is cheap. A task that looks up an order, checks a policy,
-                processes a refund and writes a confirmation is four actions, and the meter climbs with it. Voice
-                actions cost more than standard ones.
-              </p>
-              <p>
-                Salesforce does not publish a plain rate card beside the edition table, and the per-action figures in
-                circulation come from third-party analyses rather than from Salesforce. <b>Get the rate card in
-                writing</b>, then model it against your real conversation mix — the proportion of one-step queries to
-                multi-step tasks — rather than against an average. This is the single most common cause of a second-year
-                surprise in this product.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ---------------- how we'd start ---------------- */}
       <section>
         <div className="in">
@@ -499,7 +397,7 @@ export function ServiceBody() {
                 and in repeat contacts.
               </p>
               <p className="body-t">
-                Fixing it is unglamorous, cheap relative to the licences, and it improves service with or without an
+                Fixing it is unglamorous, quick to start, and it improves service with or without an
                 agent on top. It is also the work that makes every subsequent number believable.
               </p>
             </div>
@@ -566,10 +464,9 @@ export function ServiceBody() {
       <section>
         <div className="in">
           <Sources
-            checked="Checked against Salesforce's own pages, its pricing pages and press coverage of the Fin acquisition in November 2026. This product is changing quickly; confirm what is native today before you sign."
+            checked="Checked against Salesforce's own pages and press coverage of the Fin acquisition in November 2026. This product is changing quickly; confirm what is native today before you sign."
             items={[
               { label: "Salesforce — Service Cloud", href: "https://www.salesforce.com/service/" },
-              { label: "Salesforce — Service Cloud pricing", href: "https://www.salesforce.com/service/pricing/" },
               {
                 label: "CNBC — Salesforce to buy Fin for $3.6 billion",
                 href: "https://www.cnbc.com/2026/06/15/salesforce-ai-customer-service-fin-acquistion.html",
@@ -587,7 +484,7 @@ export function ServiceBody() {
           "Your top fifty questions, counted",
           "Resolution defined before the contract, not after",
           "A written list of what is never automated",
-          "Flex Credits modelled on your conversation mix",
+          "Agent tasks scoped against your conversation mix",
           "Metrics changed before the queue changes",
         ]}
       />
