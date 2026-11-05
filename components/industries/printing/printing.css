@@ -521,19 +521,17 @@
   .pp-page .pp-mkt > div { padding: 20px; }
   .pp-page .mk-cr { align-items: flex-start; } .pp-page .mk-cr a { white-space: normal; }
 }
-/* Section index in the hero (added at the owner's request): every section of the page, one click away. Same palette as the page. */
-.pp-page [id] { scroll-margin-top: 112px; }
-.pp-page .pp-toc { margin-top: 40px; }
-.pp-page .pp-toc-h { display: flex; align-items: center; gap: 14px; margin: 0; font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
-.pp-page .pp-toc-h::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-.pp-page .pp-toc ol { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
-.pp-page .pp-toc a { display: flex; align-items: baseline; gap: 12px; height: 100%; padding: 13px 15px; border: 1px solid var(--line); border-radius: 12px; background: rgba(10,17,14,.6); color: var(--fg); text-decoration: none; font-size: 14.5px; font-weight: 600; line-height: 1.3; transition: border-color .18s ease, background-color .18s ease, transform .16s ease-out; }
-.pp-page .pp-toc .n { flex: none; font-family: var(--display); font-size: 12px; font-weight: 800; letter-spacing: .08em; color: var(--green-hi); font-variant-numeric: tabular-nums; }
-.pp-page .pp-toc a:active { transform: scale(.98); }
-@media (hover: hover) and (pointer: fine) {
-  .pp-page .pp-toc a:hover { border-color: var(--green-hi); background: rgba(31,122,90,.14); }
-}
+/* In-page menu under the hero (added at the owner's request), copied from the SAP Business Data Cloud page: a sticky bar,
+   the current section underlined, and a thin progress line. */
+.pp-page { --hdr: 72px; }
+.pp-page main section[id], .pp-page #top > section[id] { scroll-margin-top: calc(var(--hdr, 72px) + 58px); }
+.pp-page .pp-sub { position: sticky; top: var(--hdr, 72px); z-index: 4; background: rgba(5,8,7,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.pp-page .pp-sub .pp-subin { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.pp-page .pp-sub .pp-subin::-webkit-scrollbar { display: none; }
+.pp-page .pp-sub a { flex: none; color: var(--muted); text-decoration: none; font-size: 13.5px; font-weight: 600; padding: 15px 12px 13px; border-bottom: 2px solid transparent; white-space: nowrap; transition: color .2s, border-color .2s; }
+.pp-page .pp-sub a:hover { color: var(--fg); }
+.pp-page .pp-sub a.on { color: var(--fg); border-bottom-color: var(--green-hi); }
+.pp-page .pp-sub .pp-prog { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, #17694b, #34b386); opacity: .5; }
 @media (max-width: 620px) {
-  .pp-page .pp-toc ol { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  .pp-page .pp-toc a { flex-direction: column; gap: 4px; padding: 12px; font-size: 14px; }
+  .pp-page .pp-sub a { padding: 13px 10px 11px; font-size: 13px; }
 }

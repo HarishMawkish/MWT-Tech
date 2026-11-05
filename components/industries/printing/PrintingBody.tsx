@@ -3,8 +3,8 @@ import { CopyrightNotice } from "@/components/CopyrightNotice";
 
 /**
  * Printing and Packaging on SAP: the body of the supplied page, copied as it was. The markup, text and
- * illustrations are unchanged. Added at the owner's request: a clickable section index in the hero (and ids on the two
- * sections that had none). Links were pointed at this site, and the page's own copyright
+ * illustrations are unchanged. Added at the owner's request: an in-page menu under the hero, built like the SAP Business
+ * Data Cloud page's (and ids on the two sections that had none). Links were pointed at this site, and the page's own copyright
  * line was replaced by the site's notice above the questions, like every other page with an FAQ.
  * Generated from the supplied file; the page's behaviour (tabs, hotspots) lives in PrintingInteractions.
  */
@@ -47,153 +47,6 @@ export function PrintingBody() {
               Follow a job end to end
             </a>
           </div>
-          <nav className="pp-toc" aria-label="On this page">
-            <p className="pp-toc-h">
-              On this page
-            </p>
-            <ol>
-              <li>
-                <a href="#markets">
-                  <span className="n">
-                    01
-                  </span>
-                  <span className="t">
-                    Six markets, six rulebooks
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#margin">
-                  <span className="n">
-                    02
-                  </span>
-                  <span className="t">
-                    Where margin leaks
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#journey">
-                  <span className="n">
-                    03
-                  </span>
-                  <span className="t">
-                    The job journey
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#floor">
-                  <span className="n">
-                    04
-                  </span>
-                  <span className="t">
-                    On the shop floor
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#delivery">
-                  <span className="n">
-                    05
-                  </span>
-                  <span className="t">
-                    Planning and on-time delivery
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#procurement">
-                  <span className="n">
-                    06
-                  </span>
-                  <span className="t">
-                    Procurement
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#finance">
-                  <span className="n">
-                    07
-                  </span>
-                  <span className="t">
-                    Finance
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#quality">
-                  <span className="n">
-                    08
-                  </span>
-                  <span className="t">
-                    Quality and traceability
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#world">
-                  <span className="n">
-                    09
-                  </span>
-                  <span className="t">
-                    Sri Lanka and overseas
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#platform">
-                  <span className="n">
-                    10
-                  </span>
-                  <span className="t">
-                    The platform
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#ai">
-                  <span className="n">
-                    11
-                  </span>
-                  <span className="t">
-                    AI in the plant
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#start">
-                  <span className="n">
-                    12
-                  </span>
-                  <span className="t">
-                    How we start
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#faq">
-                  <span className="n">
-                    13
-                  </span>
-                  <span className="t">
-                    Questions
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#book">
-                  <span className="n">
-                    14
-                  </span>
-                  <span className="t">
-                    Next step
-                  </span>
-                </a>
-              </li>
-            </ol>
-          </nav>
           <div className="pp-facts">
             <div>
               <b>
@@ -421,6 +274,47 @@ export function PrintingBody() {
           </figure>
         </div>
       </section>
+      <nav className="pp-sub" aria-label="On this page">
+        <div className="pp-subin">
+          <a href="#markets">
+            Markets
+          </a>
+          <a href="#margin">
+            Margin leaks
+          </a>
+          <a href="#journey">
+            Job journey
+          </a>
+          <a href="#floor">
+            Shop floor
+          </a>
+          <a href="#delivery">
+            Planning &amp; delivery
+          </a>
+          <a href="#procurement">
+            Procurement
+          </a>
+          <a href="#finance">
+            Finance
+          </a>
+          <a href="#quality">
+            Quality
+          </a>
+          <a href="#world">
+            Sri Lanka &amp; overseas
+          </a>
+          <a href="#platform">
+            Platform
+          </a>
+          <a href="#ai">
+            AI
+          </a>
+          <a href="#start">
+            How we start
+          </a>
+        </div>
+        <span className="pp-prog" aria-hidden="true" />
+      </nav>
       <section className="light" id="markets">
         <div className="in">
           <span className="eyebrow">
