@@ -17,7 +17,7 @@ export function CloudHubBody() {
       <section className="hero cs-hero">
         <div className="in">
           <div className="crumbs">
-            <Link href="/services">Services</Link> / Cloud Infrastructure
+            Services / Cloud Infrastructure
           </div>
           <span className="eyebrow">Cloud Infrastructure</span>
           <h1>

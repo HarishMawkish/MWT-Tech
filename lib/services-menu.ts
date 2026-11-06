@@ -79,7 +79,6 @@ export const servicesMenu: MenuCategory[] = [
     id: "sap",
     mark: "/images/solutions/sap.svg",
     label: "SAP Solutions",
-    href: "/services/sap-solutions",
     blurb: summaryOf("sap-solutions"),
     featuredTitle: "Cloud ERP programmes",
     featured: [

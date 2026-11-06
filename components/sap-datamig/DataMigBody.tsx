@@ -7,7 +7,7 @@ export function DataMigBody() {
     <>
 <section className="hero">
     <div className="in">
-      <div className="crumbs"><Link href="/services">Services</Link> / <Link href="/services/sap-solutions">SAP Solutions</Link> / Data Migration</div>
+      <div className="crumbs">Services / SAP Solutions / Data Migration</div>
       <div className="hero-grid">
         <div>
           <span className="eyebrow">Data Migration</span>

@@ -14,7 +14,7 @@ export function ServiceBody() {
       <section className="hero tinted">
         <div className="in">
           <div className="crumbs">
-            <Link href="/services">Services</Link> / <Link href={SF_HUB}>Salesforce</Link> / Service Cloud
+            Services / <Link href={SF_HUB}>Salesforce</Link> / Service Cloud
           </div>
           <ProductChips current="service-cloud" />
           <div className="hero-grid">

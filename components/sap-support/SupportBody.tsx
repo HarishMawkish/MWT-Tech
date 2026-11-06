@@ -7,7 +7,7 @@ export function SupportBody() {
     <>
 <section className="hero">
     <div className="in">
-      <div className="crumbs"><Link href="/services">Services</Link> / <Link href="/services/sap-solutions">SAP Solutions</Link> / Application Management Support</div>
+      <div className="crumbs">Services / SAP Solutions / Application Management Support</div>
       <div className="hero-grid">
         <div>
           <span className="eyebrow">Application Management Support</span>

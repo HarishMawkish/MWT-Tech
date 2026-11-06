@@ -8,7 +8,7 @@ import { dbFaqs, type Faq } from "./faqs";
 export function Crumbs({ here }: { here?: string }) {
   return (
     <div className="crumbs">
-      <Link href="/services">Services</Link> / {here ? <Link href={DB_HUB}>Databricks</Link> : "Databricks"}
+      Services / {here ? <Link href={DB_HUB}>Databricks</Link> : "Databricks"}
       {here ? ` / ${here}` : null}
     </div>
   );

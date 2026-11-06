@@ -120,7 +120,6 @@ export function mihcmLd(slug: MihcmPageMeta["slug"]) {
   const productName = products.find((x) => x.slug === slug)?.name ?? p.name;
   const crumbs = [
     { name: "Home", path: "/" },
-    { name: "Services", path: "/services" },
     { name: "MiHCM", path: MH_HUB },
     ...(slug ? [{ name: productName, path: mhPath(slug) }] : []),
   ];

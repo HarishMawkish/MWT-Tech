@@ -13,7 +13,7 @@ export function DataBody() {
       <section className="hero tinted">
         <div className="in">
           <div className="crumbs">
-            <Link href="/services">Services</Link> / <Link href={SF_HUB}>Salesforce</Link> / Data 360
+            Services / <Link href={SF_HUB}>Salesforce</Link> / Data 360
           </div>
           <ProductChips current="data-360" />
           <div className="hero-grid">

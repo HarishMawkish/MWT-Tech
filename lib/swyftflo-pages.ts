@@ -269,7 +269,6 @@ export function swyftfloLd(slug: string) {
   const url = absoluteUrl(swPath(slug));
   const crumbs = [
     { name: "Home", path: "/" },
-    { name: "Services", path: "/services" },
     { name: "Swyftflo", path: SWYFTFLO_HUB_PATH },
     ...(slug ? [{ name: p.name, path: swPath(slug) }] : []),
   ];

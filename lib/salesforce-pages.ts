@@ -168,7 +168,6 @@ export function salesforceLd(slug: SfPageMeta["slug"]) {
   const productName = products.find((x) => x.slug === slug)?.name ?? p.name;
   const crumbs = [
     { name: "Home", path: "/" },
-    { name: "Services", path: "/services" },
     { name: "Salesforce", path: SF_HUB },
     ...(slug ? [{ name: productName, path: sfPath(slug) }] : []),
   ];

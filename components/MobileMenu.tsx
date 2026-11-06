@@ -205,10 +205,6 @@ function ServicesRow({ label, href, active, pathname }: { label: string; href: s
       </button>
       <Fold open={open}>
         <div className="pb-2 pl-3">
-          <Link href={href} className="flex min-h-12 items-center justify-between border-b border-white/[0.07] px-1 text-[15px] font-semibold text-white/85 active:bg-white/5">
-            All Services
-            <span aria-hidden="true" className="text-mw-mint">→</span>
-          </Link>
           {servicesMenu.map((c) => (
             <CategoryRow key={c.id} c={c} open={cat === c.id} onToggle={() => setCat((v) => (v === c.id ? null : c.id))} />
           ))}

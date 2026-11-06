@@ -8,7 +8,7 @@ export function ReleaseBody() {
     <>
 <section className="hero">
     <div className="in">
-      <div className="crumbs"><Link href="/services">Services</Link> / <Link href="/services/sap-solutions">SAP Solutions</Link> / Release &amp; Upgrade Management</div>
+      <div className="crumbs">Services / SAP Solutions / Release &amp; Upgrade Management</div>
       <div className="hero-grid">
         <div>
           <span className="eyebrow">Release &amp; Upgrade Management</span>

@@ -160,7 +160,6 @@ export function odooLd(slug: OdooPageMeta["slug"]) {
   const productName = products.find((x) => x.slug === slug)?.name ?? p.name;
   const crumbs = [
     { name: "Home", path: "/" },
-    { name: "Services", path: "/services" },
     { name: "Odoo", path: OD_HUB },
     ...(slug ? [{ name: productName, path: odPath(slug) }] : []),
   ];

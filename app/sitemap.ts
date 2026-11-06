@@ -12,7 +12,6 @@ import { absoluteUrl } from "@/lib/seo";
 
 // Every public page, with the SAP pages listed first and weighted highest. Search engines read this to find pages.
 export default function sitemap(): MetadataRoute.Sitemap {
-  const SAP_HUB = "/services/sap-solutions";
   const entry = (
     path: string,
     priority: number,
@@ -22,7 +21,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     entry("/", 1, "weekly"),
-    entry(SAP_HUB, 0.95, "weekly"),
     ...sapPages.map((p) => entry(sapPath(p.slug), 0.85, "monthly", p.updated)),
     // Swyftflo: the suite page, then one page per product
     ...swyftfloPages.map((p) => entry(swPath(p.slug), p.slug ? 0.8 : 0.9, "monthly", p.updated)),

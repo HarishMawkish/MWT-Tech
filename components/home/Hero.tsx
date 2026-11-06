@@ -108,7 +108,7 @@ export function Hero() {
             </Link>
           </div>
           <Link
-            href="/services"
+            href="/services/sap-solutions/grow-with-sap"
             className="rounded-full border border-white/25 px-7 py-3 text-sm font-semibold text-white transition hover:border-white/60 hover:text-white active:scale-[0.97]"
           >
             Explore Our Services

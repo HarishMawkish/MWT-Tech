@@ -81,27 +81,49 @@ export function Navbar() {
                       : undefined
                   }
                 >
-                  <Link
-                    href={link.href}
-                    aria-current={active ? "page" : undefined}
-                    aria-haspopup={hasMenu ? "true" : undefined}
-                    aria-expanded={hasMenu ? shown : undefined}
-                    className={`relative flex h-full items-center gap-1.5 px-3.5 text-[14px] font-medium tracking-[0.005em] transition-colors duration-150 after:absolute after:inset-x-3.5 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-mw-mint after:transition-transform after:duration-200 after:ease-[cubic-bezier(0.23,1,0.32,1)] aria-[current=page]:after:scale-x-100 aria-expanded:after:scale-x-100 ${
+                  {(() => {
+                    const cls = `relative flex h-full items-center gap-1.5 px-3.5 text-[14px] font-medium tracking-[0.005em] transition-colors duration-150 after:absolute after:inset-x-3.5 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-mw-mint after:transition-transform after:duration-200 after:ease-[cubic-bezier(0.23,1,0.32,1)] aria-[current=page]:after:scale-x-100 aria-expanded:after:scale-x-100 ${
                       active || shown ? "text-white" : "text-white/70 hover:text-white"
-                    }`}
-                  >
-                    {link.label}
-                    {hasMenu && (
-                      <svg
-                        className={`h-3 w-3 opacity-70 transition-transform duration-200 ${shown ? "rotate-180" : ""}`}
-                        viewBox="0 0 12 12"
-                        fill="none"
-                        aria-hidden="true"
+                    }`;
+                    const inner = (
+                      <>
+                        {link.label}
+                        {hasMenu && (
+                          <svg
+                            className={`h-3 w-3 opacity-70 transition-transform duration-200 ${shown ? "rotate-180" : ""}`}
+                            viewBox="0 0 12 12"
+                            fill="none"
+                            aria-hidden="true"
+                          >
+                            <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                          </svg>
+                        )}
+                      </>
+                    );
+                    // "Services" has no page of its own: it only opens the menu.
+                    return link.children ? (
+                      <button
+                        type="button"
+                        aria-current={active ? "page" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={shown}
+                        onClick={() => (shown ? setMenu(null) : openMega("services"))}
+                        className={cls}
                       >
-                        <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                      </svg>
-                    )}
-                  </Link>
+                        {inner}
+                      </button>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        aria-current={active ? "page" : undefined}
+                        aria-haspopup={hasMenu ? "true" : undefined}
+                        aria-expanded={hasMenu ? shown : undefined}
+                        className={cls}
+                      >
+                        {inner}
+                      </Link>
+                    );
+                  })()}
                 </div>
               );
             })}

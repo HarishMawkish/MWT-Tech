@@ -7,7 +7,7 @@ export function AnalyticsBody() {
     <>
 <section className="hero">
     <div className="in">
-      <div className="crumbs"><Link href="/services">Services</Link> / <Link href="/services/sap-solutions">SAP Solutions</Link> / SAP Analytics Cloud</div>
+      <div className="crumbs">Services / SAP Solutions / SAP Analytics Cloud</div>
       <div className="hero-grid">
         <div>
           <span className="eyebrow">SAP Analytics Cloud</span>

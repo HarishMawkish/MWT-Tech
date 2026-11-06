@@ -7,7 +7,7 @@ export function GroupRepBody() {
     <>
 <section className="hero">
     <div className="in">
-      <div className="crumbs"><Link href="/services">Services</Link> / <Link href="/services/sap-solutions">SAP Solutions</Link> / Group Reporting &amp; Consolidation</div>
+      <div className="crumbs">Services / SAP Solutions / Group Reporting &amp; Consolidation</div>
       <div className="hero-grid">
         <div>
           <span className="eyebrow">Group Reporting &amp; Consolidation</span>

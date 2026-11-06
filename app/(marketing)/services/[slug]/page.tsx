@@ -12,8 +12,11 @@ import { sapHubLd } from "@/lib/sap-pages";
 import { brand, DEFAULT_OG_IMAGE } from "@/lib/seo";
 import { CanaryNote } from "@/components/CanaryNote";
 
+// The SAP Solutions overview was taken down on purpose: /services/sap-solutions must not be reachable.
+const UNREACHABLE = new Set(["sap-solutions"]);
+
 export function generateStaticParams() {
-  return services.map((s) => ({ slug: s.slug }));
+  return services.filter((s) => !UNREACHABLE.has(s.slug)).map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({
@@ -22,7 +25,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = services.find((s) => s.slug === slug);
+  const service = UNREACHABLE.has(slug) ? undefined : services.find((s) => s.slug === slug);
   if (!service) return {};
   const url = `/services/${slug}`;
   return {
@@ -48,7 +51,7 @@ export default async function ServiceDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = services.find((s) => s.slug === slug);
+  const service = UNREACHABLE.has(slug) ? undefined : services.find((s) => s.slug === slug);
   if (!service) notFound();
 
   const related = services
@@ -76,7 +79,7 @@ export default async function ServiceDetailPage({
           className="relative mx-auto flex max-w-7xl items-center gap-3 px-6 pt-6 lg:px-8"
         >
           <Link
-            href="/services"
+            href="/"
             className="group inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] pl-3.5 pr-5 text-sm font-semibold text-white/80 backdrop-blur-xl transition-colors hover:border-white/30 hover:bg-white/[0.08] hover:text-white active:scale-[0.97]"
           >
             <span
@@ -85,7 +88,7 @@ export default async function ServiceDetailPage({
             >
               &larr;
             </span>
-            All services
+            Home
           </Link>
           <span aria-hidden="true" className="hidden text-white/25 sm:inline">
             /

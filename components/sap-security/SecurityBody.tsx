@@ -7,7 +7,7 @@ export function SecurityBody() {
     <>
 <section className="hero">
     <div className="in">
-      <div className="crumbs"><Link href="/services">Services</Link> / <Link href="/services/sap-solutions">SAP Solutions</Link> / Security, Roles &amp; Authorisations</div>
+      <div className="crumbs">Services / SAP Solutions / Security, Roles &amp; Authorisations</div>
       <div className="hero-grid">
         <div>
           <span className="eyebrow">Security, Roles &amp; Authorisations</span>
