@@ -73,7 +73,9 @@ function Heading({ children }: { children: string }) {
   );
 }
 
-function AllServicesLink({ className = "", href = "/services", label = "All services" }: { className?: string; href?: string; label?: string }) {
+function AllServicesLink({ className = "", href, label = "All services" }: { className?: string; href?: string; label?: string }) {
+  // There is no general "all services" page, so a link only shows when a category supplies its own.
+  if (!href) return null;
   return (
     <Link
       href={href}

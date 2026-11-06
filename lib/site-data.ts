@@ -16,10 +16,9 @@ export const navLinks = [
   { label: "Copyright", href: "/copyright" },
   {
     label: "Services",
+    // Not a page: "Services" only opens the menu. The href is kept as an identity/active-state key.
     href: "/services",
     children: [
-      { label: "All Services", href: "/services" },
-      { label: "SAP Solutions", href: "/services/sap-solutions" },
       {
         label: "SAP Business AI Solutions",
         href: "/services/sap-ai-solutions",

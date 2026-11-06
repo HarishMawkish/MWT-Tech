@@ -12,7 +12,7 @@ export function CloudBody({ d }: { d: CloudPageData }) {
       <section className="hero cs-hero">
         <div className="in">
           <div className="crumbs">
-            <Link href="/services">Services</Link> / <Link href={CLOUD_HUB_PATH}>Cloud Infrastructure</Link> / {d.crumb}
+            Services / <Link href={CLOUD_HUB_PATH}>Cloud Infrastructure</Link> / {d.crumb}
           </div>
           <span className="eyebrow">{d.eyebrow}</span>
           <h1>

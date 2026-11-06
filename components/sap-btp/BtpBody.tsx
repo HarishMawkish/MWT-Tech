@@ -7,7 +7,7 @@ export function BtpBody() {
     <>
 <section className="hero">
     <div className="in">
-      <div className="crumbs"><Link href="/services">Services</Link> / <Link href="/services/sap-solutions">SAP Solutions</Link> / SAP BTP Extensions &amp; Apps</div>
+      <div className="crumbs">Services / SAP Solutions / SAP BTP Extensions &amp; Apps</div>
       <div className="hero-grid">
         <div>
           <span className="eyebrow">SAP BTP Extensions &amp; Apps</span>

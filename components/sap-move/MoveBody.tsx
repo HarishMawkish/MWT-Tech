@@ -8,7 +8,7 @@ export function MoveBody() {
     <>
 <section className="hero">
     <div className="in">
-      <div className="crumbs"><Link href="/services">Services</Link> / <Link href="/services/sap-solutions">SAP Solutions</Link> / Move from ECC &amp; On-Premise</div>
+      <div className="crumbs">Services / SAP Solutions / Move from ECC &amp; On-Premise</div>
       <div className="hero-grid">
         <div>
           <span className="eyebrow">Move from ECC &amp; S/4HANA On-Premise</span>

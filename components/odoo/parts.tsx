@@ -64,7 +64,7 @@ export function Hero({
     <section className="hero">
       <div className="in">
         <div className="crumbs">
-          <Link href="/services">Services</Link> / {current ? <Link href={OD_HUB}>Odoo</Link> : "Odoo"}
+          Services / {current ? <Link href={OD_HUB}>Odoo</Link> : "Odoo"}
           {current ? ` / ${crumb}` : ""}
         </div>
         <ProductChips current={current} />

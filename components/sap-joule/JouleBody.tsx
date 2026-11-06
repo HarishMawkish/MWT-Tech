@@ -7,7 +7,7 @@ export function JouleBody() {
     <>
 <section className="hero">
     <div className="in">
-      <div className="crumbs"><Link href="/services">Services</Link> / <Link href="/services/sap-solutions">SAP Solutions</Link> / Joule &amp; AI Agents</div>
+      <div className="crumbs">Services / SAP Solutions / Joule &amp; AI Agents</div>
       <div className="hero-grid">
         <div>
           <span className="eyebrow">Joule &amp; AI Agents</span>

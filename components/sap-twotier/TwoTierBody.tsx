@@ -7,7 +7,7 @@ export function TwoTierBody() {
     <>
 <section className="hero">
     <div className="in">
-      <div className="crumbs"><Link href="/services">Services</Link> / <Link href="/services/sap-solutions">SAP Solutions</Link> / Two-Tier ERP for Subsidiaries</div>
+      <div className="crumbs">Services / SAP Solutions / Two-Tier ERP for Subsidiaries</div>
       <div className="hero-grid">
         <div>
           <span className="eyebrow">Two-Tier ERP for Subsidiaries</span>

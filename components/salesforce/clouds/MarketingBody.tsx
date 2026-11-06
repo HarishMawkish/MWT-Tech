@@ -13,7 +13,7 @@ export function MarketingBody() {
       <section className="hero tinted">
         <div className="in">
           <div className="crumbs">
-            <Link href="/services">Services</Link> / <Link href={SF_HUB}>Salesforce</Link> / Marketing Cloud
+            Services / <Link href={SF_HUB}>Salesforce</Link> / Marketing Cloud
           </div>
           <ProductChips current="marketing-cloud" />
           <div className="hero-grid">

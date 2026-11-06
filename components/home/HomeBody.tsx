@@ -109,7 +109,7 @@ export function HomeBody() {
               <Link href="/contact" className="btn pri">
                 Schedule a consultation
               </Link>
-              <Link href="/services" className="btn sec">
+              <Link href="/services/sap-solutions/grow-with-sap" className="btn sec">
                 Explore our services
               </Link>
             </div>

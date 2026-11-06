@@ -112,7 +112,7 @@ export function AiCatalogApp() {
     <>
       <section className="hero cat-hero">
         <div className="in">
-          <div className="crumbs"><Link href="/services">Services</Link> / <Link href="/services/sap-solutions">AI &amp; Data</Link> / AI Catalog</div>
+          <div className="crumbs">Services / AI &amp; Data / AI Catalog</div>
           <span className="eyebrow">Mawkish AI Catalog for SAP Cloud ERP</span>
           <h1>Find the AI that fits <em>your business.</em></h1>
           <p className="lede">SAP adds new AI to SAP Cloud ERP every quarter: features built into the apps, assistants, agents and tools to build your own. This catalog brings together what's available today, in plain language, with what each one does, what you need to use it, and how it's licensed. Shortlist the ones that interest you and we'll show you them working on processes like yours.</p>

@@ -120,7 +120,6 @@ export function anthropicLd(slug: AnthropicPageMeta["slug"]) {
   const productName = products.find((x) => x.slug === slug)?.name ?? p.name;
   const crumbs = [
     { name: "Home", path: "/" },
-    { name: "Services", path: "/services" },
     { name: "Anthropic", path: AN_HUB },
     ...(slug ? [{ name: productName, path: anPath(slug) }] : []),
   ];

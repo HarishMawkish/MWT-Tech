@@ -62,7 +62,7 @@ export function Hero({
     <section className="hero">
       <div className="in">
         <div className="crumbs">
-          <Link href="/services">Services</Link> / {current ? <Link href={SF_HUB}>Salesforce</Link> : "Salesforce"}
+          Services / {current ? <Link href={SF_HUB}>Salesforce</Link> : "Salesforce"}
           {current ? ` / ${crumb}` : ""}
         </div>
         <ProductChips current={current} />

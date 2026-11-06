@@ -10,7 +10,7 @@ export function LoyaltyBody() {
       <section className="hero tinted">
         <div className="in">
           <div className="crumbs">
-            <Link href="/services">Services</Link> / <Link href={SF_HUB}>Salesforce</Link> / Loyalty Management
+            Services / <Link href={SF_HUB}>Salesforce</Link> / Loyalty Management
           </div>
           <ProductChips current="loyalty-management" />
           <div className="hero-grid">

@@ -10,7 +10,7 @@ export function GrowBody() {
     <>
 <section className="hero">
     <div className="in">
-      <div className="crumbs"><Link href="/services">Services</Link> / <Link href="/services/sap-solutions">SAP Solutions</Link> / GROW with SAP</div>
+      <div className="crumbs">Services / SAP Solutions / GROW with SAP</div>
       <div className="hero-grid">
         <div>
           <span className="eyebrow">GROW with SAP</span>

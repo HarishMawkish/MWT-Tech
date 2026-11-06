@@ -80,13 +80,13 @@ export default function SapBusinessAiPage() {
         />
         <nav aria-label="Breadcrumb" className="relative mx-auto flex max-w-7xl items-center gap-3 px-6 pt-6 lg:px-8">
           <Link
-            href="/services"
+            href="/"
             className="group inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] pl-3.5 pr-5 text-sm font-semibold text-white/80 backdrop-blur-xl transition-colors hover:border-white/30 hover:bg-white/[0.08] hover:text-white active:scale-[0.97]"
           >
             <span aria-hidden="true" className="inline-block transition-transform duration-500 group-hover:-translate-x-1">
               &larr;
             </span>
-            All services
+            Home
           </Link>
           <span aria-hidden="true" className="hidden text-white/25 sm:inline">
             /

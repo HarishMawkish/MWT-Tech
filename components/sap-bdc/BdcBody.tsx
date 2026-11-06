@@ -7,7 +7,7 @@ export function BdcBody() {
     <>
   <section className="hero">
     <div className="in">
-      <div className="crumbs"><Link href="/services">Services</Link> / <Link href="/services/sap-solutions">SAP Solutions</Link> / SAP Business Data Cloud</div>
+      <div className="crumbs">Services / SAP Solutions / SAP Business Data Cloud</div>
       <div className="hero-grid">
         <div>
           <span className="eyebrow">SAP Business Data Cloud · Technical guide</span>

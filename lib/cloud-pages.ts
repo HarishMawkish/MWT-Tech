@@ -105,7 +105,6 @@ export function cloudLd(slug: string) {
     {
       ...breadcrumbLd([
         { name: "Home", path: "/" },
-        { name: "Services", path: "/services" },
         { name: "Cloud Infrastructure", path: CLOUD_HUB_PATH },
         { name: p.label, path: cloudPath(slug) },
       ]),
@@ -146,7 +145,6 @@ export function cloudHubLd() {
     },
     breadcrumbLd([
       { name: "Home", path: "/" },
-      { name: "Services", path: "/services" },
       { name: "Cloud Infrastructure", path: CLOUD_HUB_PATH },
     ]),
   ];

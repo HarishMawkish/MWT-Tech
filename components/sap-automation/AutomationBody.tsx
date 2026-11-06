@@ -7,7 +7,7 @@ export function AutomationBody() {
     <>
 <section className="hero">
     <div className="in">
-      <div className="crumbs"><Link href="/services">Services</Link> / <Link href="/services/sap-solutions">SAP Solutions</Link> / Process Automation with SAP Build</div>
+      <div className="crumbs">Services / SAP Solutions / Process Automation with SAP Build</div>
       <div className="hero-grid">
         <div>
           <span className="eyebrow">Process Automation with SAP Build</span>

@@ -27,13 +27,6 @@ const nextConfig = {
         destination: `/services/sap-solutions/${slug}`,
         permanent: true,
       })),
-      // The general "all services" page and its six general service pages were taken down. Old links and search results
-      // go to the SAP Solutions overview, the first thing in the Services menu.
-      ...[
-        "ai-powered-business-applications", "intelligent-automation", "data-analytics",
-        "managed-services", "cloud-transformation", "enterprise-integrations",
-      ].map((slug) => ({ source: `/services/${slug}`, destination: "/services/sap-solutions", permanent: true })),
-      { source: "/services", destination: "/services/sap-solutions", permanent: true },
       // The Salesforce overview used to be the generic service page. It now has its own hub.
       { source: "/services/salesforce-solutions", destination: "/services/salesforce", permanent: true },
       // The Odoo overview used to be the generic service page. It now has its own hub.

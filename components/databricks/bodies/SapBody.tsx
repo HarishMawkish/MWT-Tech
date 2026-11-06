@@ -434,7 +434,6 @@ export function SapBody() {
           </p>
           <div className="chips" data-r>
             <Link href={SAP_BDC}>Our SAP Business Data Cloud page &rarr;</Link>
-            <Link href="/services/sap-solutions">All our SAP work &rarr;</Link>
             <Link href={dbPath("sharing")}>How OpenSharing works &rarr;</Link>
           </div>
         </div>

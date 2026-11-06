@@ -277,8 +277,6 @@ export function sapLd(slug: string) {
     },
     { ...breadcrumbLd([
       { name: "Home", path: "/" },
-      { name: "Services", path: "/services" },
-      { name: "SAP Solutions", path: SAP_HUB_PATH },
       { name: p.name, path: sapPath(slug) },
     ]), "@id": `${url}#breadcrumb` },
   ];
@@ -320,8 +318,6 @@ export function sapHubLd() {
     },
     breadcrumbLd([
       { name: "Home", path: "/" },
-      { name: "Services", path: "/services" },
-      { name: "SAP Solutions", path: SAP_HUB_PATH },
     ]),
   ];
 }

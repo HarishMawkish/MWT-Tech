@@ -53,7 +53,7 @@ export function Footer() {
           <div>
             <h3 className="text-xs font-semibold uppercase tracking-widest text-white/40">Company</h3>
             <ul className="mt-4 space-y-2.5 text-sm">
-              {navLinks.map((l) => (
+              {navLinks.filter((l) => !("children" in l && l.children)).map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className="transition hover:text-mw-mint">
                     {l.label}

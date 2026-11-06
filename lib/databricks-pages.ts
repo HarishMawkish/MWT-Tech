@@ -165,7 +165,6 @@ export function databricksLd(slug: DbPageMeta["slug"]) {
   const productName = bySlug(slug)?.name ?? p.name;
   const crumbs = [
     { name: "Home", path: "/" },
-    { name: "Services", path: "/services" },
     { name: "Databricks", path: DB_HUB },
     ...(slug ? [{ name: productName, path: dbPath(slug) }] : []),
   ];

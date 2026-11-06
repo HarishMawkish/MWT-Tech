@@ -7,7 +7,7 @@ export function IntegrationBody() {
     <>
 <section className="hero">
     <div className="in">
-      <div className="crumbs"><Link href="/services">Services</Link> / <Link href="/services/sap-solutions">SAP Solutions</Link> / SAP &amp; Non-SAP Integration</div>
+      <div className="crumbs">Services / SAP Solutions / SAP &amp; Non-SAP Integration</div>
       <div className="hero-grid">
         <div>
           <span className="eyebrow">SAP &amp; Non-SAP Integration</span>
